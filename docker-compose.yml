@@ -92,6 +92,7 @@ services:
       - static_volume:/app/staticfiles
       - media_volume:/app/media
       - /etc/letsencrypt:/etc/letsencrypt:ro
+      - ./frontend/build:/usr/share/nginx/html
     ports:
       - "80:80"
       - "443:443"
