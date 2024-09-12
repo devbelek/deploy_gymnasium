@@ -1,14 +1,14 @@
-FROM node:alpine AS build
+FROM node:alpine as build
 
 WORKDIR /app
 
 COPY frontend/package*.json ./
 RUN npm install
 RUN npm install sass
-COPY frontend/ ./
+COPY frontend/ .
+
 RUN npm run build
 
-# Stage 2: Serve
 FROM nginx:stable-alpine
 
 COPY --from=build /app/dist /usr/share/nginx/html
