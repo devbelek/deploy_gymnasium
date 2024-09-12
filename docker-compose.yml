@@ -110,23 +110,23 @@ services:
     networks:
       - dev
 
-frontend:
-  build:
-    context: ./frontend
-    dockerfile: Dockerfile
-  container_name: frontend
-  volumes:
-    - ./frontend:/app
-    - /app/node_modules
-  environment:
-    - NEXT_PUBLIC_API=https://3-gymnasium.kg
-    - NEXT_PUBLIC_ENDPOINT=api
-  ports:
-    - "3000:80"
-  depends_on:
-    - web
-  networks:
-    - dev
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - NEXT_PUBLIC_API=https://3-gymnasium.kg
+      - NEXT_PUBLIC_ENDPOINT=api
+    ports:
+      - "3000:80"
+    depends_on:
+      - web
+    networks:
+      - dev
 
 volumes:
   postgres_data:
