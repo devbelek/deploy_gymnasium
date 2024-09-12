@@ -1,0 +1,47 @@
+.GalleryMainContent {
+  .content {
+    .galleryHead {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      gap: 6px;
+      align-items: center;
+
+      h1 {
+        font-size: 28px;
+        font-weight: 600;
+        line-height: 33.6px;
+        color: #333333;
+      }
+
+      hr {
+        width: 40px;
+        height: 2px;
+        background: #333333;
+      }
+    }
+
+    .gallery_card {
+      margin-top: 42px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+
+      .galleryItem {
+        img {
+          cursor: pointer;
+          width: 380px;
+
+          height: 258px;
+          border-radius: 10px;
+
+          &:hover {
+            transform: scale(1.01);
+            box-shadow: 0 10px 16px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+          }
+        }
+      }
+    }
+  }
+}

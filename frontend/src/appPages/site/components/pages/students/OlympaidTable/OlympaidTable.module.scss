@@ -1,0 +1,110 @@
+.content {
+    padding-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.tableTitle {
+    display: grid;
+    grid-template-columns: 0.3fr 2fr 0.5fr 1fr;
+    gap: 50px;
+}
+.studentInfo {
+    display: grid;
+    padding: 10px 0;
+    grid-template-columns: 0.3fr 2fr 0.5fr 1fr;
+    gap: 50px;
+}
+
+.titleText {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 27.24px;
+    text-align: left;
+    color: #afafaf;
+}
+.tableText {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 27.24px;
+    text-align: left;
+    color: #666666;
+    display: flex;
+    align-items: center;
+}
+
+.tableContent {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.tableTextNumber {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 27.24px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    color: #000000;
+}
+
+.tableName {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 27.24px;
+    text-align: left;
+    color: #666666;
+    gap: 10px;
+}
+
+.title {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 27.24px;
+    text-align: center;
+    color: #000000;
+    position: relative;
+}
+
+.title::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    border-bottom: 2px solid black;
+}
+
+.table {
+    padding: 40px 0 0 0;
+}
+
+.studentIcon {
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+}
+
+.isLoadingBlock {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.errorBlock {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+}

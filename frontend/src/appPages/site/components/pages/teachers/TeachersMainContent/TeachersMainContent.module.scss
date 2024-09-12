@@ -1,0 +1,182 @@
+.TeachersMainContent {
+  .content {
+    .head {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      gap: 6px;
+
+      h1 {
+        font-size: 28px;
+        font-weight: 600;
+        line-height: 33.6px;
+        color: #333333;
+      }
+
+      hr {
+        width: 40px;
+        height: 2px;
+        background: #333333;
+      }
+    }
+    .teacher_cards {
+      margin-top: 36px;
+      display: grid;
+      grid-template-columns: 0.9fr 0.9fr 0.9fr 0.9fr;
+      align-items: center;
+      gap: 20px;
+
+      .teacher {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        width: 284px;
+        height: 458px;
+
+        &:hover {
+          transform: scale(1.02);
+          cursor: pointer;
+          transition: transform 0.3s ease;
+        }
+
+        img {
+          width: 284px;
+          height: 324px;
+          border-radius: 10px;
+        }
+        h1 {
+          font-size: 20px;
+          font-weight: 500;
+          text-align: center;
+          color: #000000;
+          margin-top: 12px;
+        }
+
+        hr {
+          width: 100px;
+          height: 0.1px;
+          margin: 10px 0;
+        }
+
+        p {
+          text-align: center;
+          font-size: 15px;
+          font-weight: 200;
+          text-align: center;
+          color: #333333;
+        }
+      }
+    }
+  }
+}
+
+// @media (max-width: 1440px) {
+//   .TeachersMainContent {
+//     .content {
+//       .teacher_cards {
+//         gap: 10px;
+//         display: grid;
+//         grid-template-columns: 0.9fr 0.9fr 0.9fr 1fr;
+//         .teacher {
+//           width: 310px;
+//           height: 458px;
+//           img {
+//             width: 280px;
+//             height: 334px;
+//           }
+//           h1 {
+//             font-size: 23px;
+//           }
+
+//           p {
+//             font-size: 18px;
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+
+@media (max-width: 1200px) {
+  .TeachersMainContent {
+    .content {
+      .teacher_cards {
+        gap: 4px;
+        display: grid;
+        grid-template-columns: 0.6fr 0.3fr 0.3fr 0.2fr;
+        .teacher {
+          width: 288px;
+          height: 448px;
+          img {
+            width: 258px;
+            height: 300px;
+          }
+          h1 {
+            font-size: 19px;
+          }
+
+          p {
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .TeachersMainContent {
+    .content {
+      .teacher_cards {
+        grid-template-columns: 0.8fr 0.8fr 0.8fr;
+        gap: 20px;
+
+        .teacher {
+          width: 300px;
+          height: 458px;
+
+          img {
+            width: 284px;
+            height: 324px;
+          }
+          h1 {
+            font-size: 20px;
+          }
+          p {
+            font-size: 15px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .TeachersMainContent {
+    .content {
+      .teacher_cards {
+        align-items: center;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        .teacher {
+          width: 320px;
+          height: 430px;
+
+          img {
+            width: 260px;
+            height: 290px;
+          }
+          h1 {
+            font-size: 22px;
+          }
+          p {
+            font-size: 18px;
+          }
+        }
+      }
+    }
+  }
+}
