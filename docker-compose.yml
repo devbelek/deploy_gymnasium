@@ -111,21 +111,14 @@ services:
       - dev
 
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: frontend
+    build: ./frontend
     volumes:
       - ./frontend:/app
       - /app/node_modules
-      - ./frontend/nginx.conf:/etc/nginx/conf.d/default.conf
+      - /app/.next
     environment:
       - NEXT_PUBLIC_API=https://3-gymnasium.kg
       - NEXT_PUBLIC_ENDPOINT=api
-#    ports:
-#      - "3000:3000"
-    depends_on:
-      - web
     networks:
       - dev
 
