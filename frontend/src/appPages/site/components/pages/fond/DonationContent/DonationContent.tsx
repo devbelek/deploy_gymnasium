@@ -18,7 +18,6 @@ const DonationContent: React.FC = () => {
     handleSubmit,
     formState: { errors },
     setValue, // Для управления значениями файлов
-    getValues, // Для получения значений формы
   } = useForm<CreateDonationRequest>();
 
   useEffect(() => {
@@ -100,8 +99,13 @@ const DonationContent: React.FC = () => {
                 required: "Файл обязателен",
               })}
               onChange={(e) => {
-                // Обновляем значение файла
-                setValue("confirmation_file", e.target.files);
+                // Проверяем, что e.target.files не null
+                if (e.target.files) {
+                  // Обновляем значение файла
+                  setValue("confirmation_file", e.target.files);
+                } else {
+                  console.error("No files selected");
+                }
               }}
             />
             {errors.confirmation_file && (
