@@ -15,8 +15,8 @@ const GalleryMainContent = () => {
             <hr />
           </div>
           <div className={scss.gallery_card}>
-            {data?.map((item) => (
-              <div key={item.id!} className={scss.galleryItem}>
+            {data?.map((item, index) => (
+              <div key={index} className={scss.galleryItem}>
                 <Image
                   src={item.image}
                   alt="img"

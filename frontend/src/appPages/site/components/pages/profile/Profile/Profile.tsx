@@ -2,6 +2,7 @@
 import { useGetAccountQuery } from "@/redux/api/profile";
 import scss from "./Profile.module.scss";
 import { skipToken } from "@reduxjs/toolkit/query";
+import { useEffect } from "react";
 
 const Profile = () => {
   // Определение условия для получения профиля
@@ -10,8 +11,18 @@ const Profile = () => {
     shouldFetch ? null : skipToken
   );
 
-  // Логирование данных профиля
-  console.log(data, "data");
+  // async function getData() {
+  //   const url = "https://www.3-gymnasium.kg/api/profile/";
+  //   const response = await fetch(url);
+
+  //   const json = await response.json();
+  //   console.log(json, "new profile");
+  // }
+  // useEffect(() => {
+  //   getData();
+  // }, []);
+  // // Логирование данных профиля
+  // console.log(data, "data");
 
   if (isLoading) {
     return <div>Loading...</div>;

@@ -33,7 +33,7 @@ const TeacherDetailedContent = () => {
             <Image
               src={data?.image!}
               alt="img"
-              width={500}
+              width={700}
               height={500}
               quality={70}
               priority

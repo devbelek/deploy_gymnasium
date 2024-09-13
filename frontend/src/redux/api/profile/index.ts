@@ -1,6 +1,6 @@
 import { api as index } from ".."; // Импорт основного API-конфига
 
-const ENDPOINTS = process.env.NEXT_PUBLIC_API;
+// const ENDPOINTS = process.env.NEXT_PUBLIC_API;
 
 const api = index.injectEndpoints({
   endpoints: (build) => ({
@@ -9,7 +9,7 @@ const api = index.injectEndpoints({
       ACCOUNT.GetAccountRequest
     >({
       query: () => ({
-        url: `${ENDPOINTS}/api/profile/`,
+        url: `https://3-gymnasium.kg/api/profile`,
         method: "GET",
         credentials: "include", // Важно для передачи куки сессионного пользователя
       }),

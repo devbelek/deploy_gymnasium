@@ -34,6 +34,7 @@ export const api = createApi({
     "gimnasium_class",
     "olympians",
     "accounts",
+    "donations",
   ],
   endpoints: () => ({}),
 });
