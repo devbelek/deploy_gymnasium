@@ -6,17 +6,30 @@ import Image from "next/image";
 import { useGetDetNewsQuery } from "@/redux/api/news";
 import { useGetCommentsQuery, useAddCommentMutation, useDeleteCommentMutation } from "@/redux/api/comments";
 
-const NewsDetailContent = () => {
-  const params = useParams();
-  const newsDetail = params.newsDetail;
+// Определение типов
+interface Comment {
+  id: number;
+  text: string;
+  created_at: string;
+}
 
-  const { data: newsData, error: newsError, isLoading: newsLoading } = useGetDetNewsQuery(String(newsDetail));
+interface NewsData {
+  description: string;
+  image: string;
+  content: string;
+}
+
+const NewsDetailContent: React.FC = () => {
+  const params = useParams();
+  const newsDetail = params.newsDetail as string;
+
+  const { data: newsData, error: newsError, isLoading: newsLoading } = useGetDetNewsQuery(newsDetail);
   const { data: commentsData, error: commentsError, isLoading: commentsLoading, refetch: refetchComments } = useGetCommentsQuery(Number(newsDetail));
   const [addComment, { isLoading: isAddingComment }] = useAddCommentMutation();
   const [deleteComment] = useDeleteCommentMutation();
 
-  const [newCommentText, setNewCommentText] = useState('');
-  const [alertMessage, setAlertMessage] = useState('');
+  const [newCommentText, setNewCommentText] = useState<string>('');
+  const [alertMessage, setAlertMessage] = useState<string>('');
 
   useEffect(() => {
     if (alertMessage) {
@@ -25,7 +38,7 @@ const NewsDetailContent = () => {
     }
   }, [alertMessage]);
 
-  const handleAddComment = async () => {
+  const handleAddComment = async (): Promise<void> => {
     if (newCommentText.trim()) {
       try {
         await addComment({ news: Number(newsDetail), text: newCommentText }).unwrap();
@@ -38,7 +51,7 @@ const NewsDetailContent = () => {
     }
   };
 
-  const handleDeleteComment = async (commentId) => {
+  const handleDeleteComment = async (commentId: number): Promise<void> => {
     try {
       await deleteComment(commentId).unwrap();
       refetchComments();
@@ -58,15 +71,15 @@ const NewsDetailContent = () => {
 
       <div className="bg-white shadow-md rounded-lg overflow-hidden mb-8">
         <div className="p-6">
-          <h2 className="text-2xl font-semibold mb-4">{newsData?.description}</h2>
+          <h2 className="text-2xl font-semibold mb-4">{(newsData as NewsData)?.description}</h2>
           <Image
-            src={newsData?.image || '/placeholder-image.jpg'}
+            src={(newsData as NewsData)?.image || '/placeholder-image.jpg'}
             alt="News Image"
             width={700}
             height={400}
             className="rounded-lg mb-4 w-full object-cover"
           />
-          <p className="text-gray-700">{newsData?.content}</p>
+          <p className="text-gray-700">{(newsData as NewsData)?.content}</p>
         </div>
       </div>
 
@@ -82,7 +95,7 @@ const NewsDetailContent = () => {
         <div className="p-6">
           <textarea
             value={newCommentText}
-            onChange={(e) => setNewCommentText(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setNewCommentText(e.target.value)}
             placeholder="Напишите комментарий..."
             className="w-full p-2 border border-gray-300 rounded mb-2"
             rows={3}
@@ -100,7 +113,7 @@ const NewsDetailContent = () => {
       {commentsLoading && <p>Загрузка комментариев...</p>}
       {commentsError && <p className="text-red-500">Ошибка загрузки комментариев.</p>}
 
-      {commentsData?.map((comment) => (
+      {(commentsData as Comment[])?.map((comment) => (
         <div key={comment.id} className="bg-white shadow-md rounded-lg overflow-hidden mb-4">
           <div className="p-6">
             <div className="flex items-center gap-4 mb-4">
