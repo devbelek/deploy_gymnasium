@@ -4,8 +4,8 @@ import { Comment, NewComment, Like } from './types';
 export const commentsApi = createApi({
   reducerPath: 'commentsApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.NEXT_PUBLIC_API_URL, // URL бэкенда
-    credentials: 'include',  // Куки будут отправляться автоматически для сессий
+    baseUrl: `${process.env.NEXT_PUBLIC_API}/${process.env.NEXT_PUBLIC_ENDPOINT}/`,
+    credentials: 'include',
   }),
   endpoints: (builder) => ({
     getComments: builder.query<Comment[], number>({
