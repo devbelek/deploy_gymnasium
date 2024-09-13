@@ -36,6 +36,7 @@ const DonationContent: React.FC = () => {
 
     const file = data.confirmation_file[0];
     if (file) {
+      console.log("File type:", file.type);
       if (file.type !== 'application/pdf') {
         alert("Пожалуйста, выберите файл в формате PDF.");
         setIsLoading(false);
@@ -53,17 +54,22 @@ const DonationContent: React.FC = () => {
       formData.append("comment", data.comment);
     }
 
-    console.log("FormData created:", {
-      amount: formData.get("amount"),
-      comment: formData.get("comment"),
-      file: formData.get("confirmation_file"),
-    });
+    console.log("FormData contents:");
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
 
     try {
       const result = await postDonationsMutation(formData).unwrap();
       console.log("API response:", result);
       alert("Пожертвование успешно отправлено!");
     } catch (error) {
+      console.error("Full error object:", error);
+      if (error.response) {
+        console.error("Response data:", error.response.data);
+        console.error("Response status:", error.response.status);
+        console.error("Response headers:", error.response.headers);
+      }
       console.error("Error sending donation:", error);
       alert("Произошла ошибка при отправке пожертвования. Пожалуйста, попробуйте еще раз.");
     } finally {
@@ -104,6 +110,7 @@ const DonationContent: React.FC = () => {
               })}
               onChange={(e) => {
                 if (e.target.files) {
+                  console.log("File selected:", e.target.files[0]);
                   setValue("confirmation_file", e.target.files);
                 } else {
                   console.error("No files selected");
