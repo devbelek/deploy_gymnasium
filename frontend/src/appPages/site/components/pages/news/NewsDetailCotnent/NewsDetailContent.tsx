@@ -1,5 +1,7 @@
+"use client";
+
 import React, { useState, useEffect } from 'react';
-import { useParams } from "next/navigation";
+import { useParams } from 'next/navigation';
 import Image from "next/image";
 import { useGetDetNewsQuery } from "@/redux/api/news";
 import { useGetCommentsQuery, useAddCommentMutation, useDeleteCommentMutation } from "@/redux/api/comments";
@@ -10,7 +12,9 @@ import { Avatar } from '@/components/ui/avatar';
 import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card';
 
 const NewsDetailContent = () => {
-  const { newsDetail } = useParams();
+  const params = useParams();
+  const newsDetail = params.newsDetail;
+
   const { data: newsData, error: newsError, isLoading: newsLoading } = useGetDetNewsQuery(String(newsDetail));
   const { data: commentsData, error: commentsError, isLoading: commentsLoading, refetch: refetchComments } = useGetCommentsQuery(Number(newsDetail));
   const [addComment, { isLoading: isAddingComment }] = useAddCommentMutation();
@@ -63,7 +67,7 @@ const NewsDetailContent = () => {
         </CardHeader>
         <CardContent>
           <Image
-            src={newsData?.image}
+            src={newsData?.image || '/placeholder-image.jpg'}
             alt="News Image"
             width={700}
             height={400}
