@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { usePostDonationsMutation } from "@/redux/api/fond";
 import { SubmitHandler, useForm } from "react-hook-form";
 import styles from "./DonationContent.module.scss";
@@ -11,7 +11,6 @@ interface CreateDonationRequest {
   comment?: string;
 }
 
-// Определение интерфейса для объекта ошибки
 interface ErrorWithResponse extends Error {
   response?: {
     data?: any;
@@ -23,18 +22,32 @@ interface ErrorWithResponse extends Error {
 const DonationContent: React.FC = () => {
   const [postDonationsMutation] = usePostDonationsMutation();
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
+    watch,
   } = useForm<CreateDonationRequest>();
+
+  const watchFile = watch("confirmation_file");
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/csrf/`, {
       credentials: 'include',
     });
   }, []);
+
+  useEffect(() => {
+    if (watchFile && watchFile.length > 0) {
+      setSelectedFileName(watchFile[0].name);
+    } else {
+      setSelectedFileName(null);
+    }
+  }, [watchFile]);
 
   const onSubmit: SubmitHandler<CreateDonationRequest> = async (data) => {
     console.log("onSubmit called with data:", data);
@@ -89,6 +102,10 @@ const DonationContent: React.FC = () => {
     }
   };
 
+  const handleFileButtonClick = () => {
+    fileInputRef.current?.click();
+  };
+
   return (
     <div className={styles.donationContent}>
       <div className={styles.content}>
@@ -117,18 +134,15 @@ const DonationContent: React.FC = () => {
               type="file"
               id="confirmation_file"
               accept=".pdf"
+              ref={fileInputRef}
+              style={{ display: 'none' }}
               {...register("confirmation_file", {
                 required: "Файл обязателен",
               })}
-              onChange={(e) => {
-                if (e.target.files) {
-                  console.log("File selected:", e.target.files[0]);
-                  setValue("confirmation_file", e.target.files);
-                } else {
-                  console.error("No files selected");
-                }
-              }}
             />
+            <button type="button" onClick={handleFileButtonClick} className={styles.fileButton}>
+              {selectedFileName || "Выберите файл"}
+            </button>
             {errors.confirmation_file && (
               <span className={styles.error}>
                 {errors.confirmation_file.message}
