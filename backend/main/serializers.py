@@ -157,10 +157,3 @@ class GallerySerializer(BaseSerializer):
     class Meta(BaseSerializer.Meta):
         model = Gallery
 
-
-class OurAchievementsSerializer(BaseSerializer):
-    comments = CommentSerializers(many=True, read_only=True)
-    author = serializers.ReadOnlyField(source='author.username')
-
-    class Meta(BaseSerializer.Meta):
-        model = OurAchievements

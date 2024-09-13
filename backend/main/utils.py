@@ -4,6 +4,7 @@ import openpyxl
 from .models import Olympians
 from secondary.models import NamesOfOlympia
 
+
 def generate_csv_file(queryset):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="Список_Учеников_Гимназии_№3.csv"'

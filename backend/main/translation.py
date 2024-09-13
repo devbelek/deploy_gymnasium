@@ -3,7 +3,6 @@ from .models import (
     SuccessfulGraduates,
     AppealToStudents,
     News,
-    OurAchievements,
     Teachers,
     ThanksNoteFromGraduates,
     ThanksNoteFromStudents,
@@ -39,11 +38,6 @@ class AppealToStudentsTranslationOptions(TranslationOptions):
 @register(News)
 class NewsTranslationOptions(TranslationOptions):
     fields = ('content', 'description')
-
-
-@register(OurAchievements)
-class OurAchievementsTranslationOptions(TranslationOptions):
-    fields = ('content',)
 
 
 @register(Teachers)

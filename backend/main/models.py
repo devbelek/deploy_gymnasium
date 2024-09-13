@@ -337,15 +337,6 @@ class Gallery(ImageModel, ContentModel):
         return self.title
 
 
-class OurAchievements(ImageModel, ContentModel):
-    class Meta:
-        verbose_name = _('Наши достижения')
-        verbose_name_plural = _('Наши достижения')
-
-    def __str__(self):
-        return self.content[:50]
-
-
 class Teachers(PersonModel, ImageModel):
     EXPERIENCE_CHOICES = [
         ('Год', _('Более 1 года')),

@@ -35,17 +35,9 @@ class UserProfile(models.Model):
 
 
 class Comment(models.Model):
-    our_achievements = models.ForeignKey(
-        'main.OurAchievements', on_delete=models.CASCADE,
-        null=True, blank=True, verbose_name='Связка с "Наши достижения"'
-    )
     news = models.ForeignKey(
         'main.News', on_delete=models.CASCADE,
         null=True, blank=True, verbose_name='Связка с "Новости"'
-    )
-    successful_graduates = models.ForeignKey(
-        'main.SuccessfulGraduates', on_delete=models.CASCADE,
-        null=True, blank=True, verbose_name='Связка с "Успешные студенты"'
     )
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Автор')
     text = models.TextField(verbose_name='Комментарий')

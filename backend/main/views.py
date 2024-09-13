@@ -109,11 +109,6 @@ class GalleryViewSet(BaseViewSet):
     serializer_class = GallerySerializer
 
 
-class OurAchievementsViewSet(BaseViewSet):
-    queryset = OurAchievements.objects.all()
-    serializer_class = OurAchievementsSerializer
-
-
 class TeachersViewSet(BaseViewSet):
     queryset = Teachers.objects.all()
     serializer_class = TeachersSerializer
