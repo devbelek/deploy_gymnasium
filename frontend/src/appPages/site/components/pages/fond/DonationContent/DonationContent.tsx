@@ -50,3 +50,58 @@ const DonationContent: React.FC = () => {
   };
 
   // ... rest of the component remains the same
+
+  return (
+    <div className={styles.donationContent}>
+      <div className={styles.content}>
+        <h2>Сделать пожертвование</h2>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className={styles.formGroup}>
+            <label htmlFor="amount">Сумма (сом):</label>
+            <input
+              type="number"
+              id="amount"
+              step="0.01"
+              {...register("amount", {
+                required: "Сумма обязательна",
+                min: { value: 0.01, message: "Сумма должна быть больше 0" },
+                validate: (value) => !isNaN(parseFloat(value)) || "Введите корректное число"
+              })}
+            />
+            {errors.amount && (
+              <span className={styles.error}>{errors.amount.message}</span>
+            )}
+          </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="confirmation_file">Квитанция о переводе:</label>
+            <input
+              type="file"
+              id="confirmation_file"
+              accept=".pdf,.jpg,.jpeg,.png"
+              {...register("confirmation_file", {
+                required: "Файл обязателен",
+              })}
+            />
+            {errors.confirmation_file && (
+              <span className={styles.error}>
+                {errors.confirmation_file.message}
+              </span>
+            )}
+          </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="comment">Комментарий:</label>
+            <textarea id="comment" {...register("comment")} />
+          </div>
+
+          <button type="submit" className={styles.submitButton} disabled={isLoading}>
+            {isLoading ? 'Отправка...' : 'Отправить'}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default DonationContent;
