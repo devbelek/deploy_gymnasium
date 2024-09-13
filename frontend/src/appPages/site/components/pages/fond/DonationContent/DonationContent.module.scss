@@ -15,21 +15,21 @@
   &:hover {
     transform: translateY(-5px);
   }
+}
 
-  :global(h2) {
-    color: #2c3e50;
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 28px;
-    font-weight: 600;
-  }
+.heading {
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 28px;
+  font-weight: 600;
 }
 
 .formGroup {
   margin-bottom: 25px;
 }
 
-:global(label) {
+.label {
   display: block;
   margin-bottom: 8px;
   color: #34495e;
@@ -37,8 +37,8 @@
   transition: color 0.3s ease;
 }
 
-:global(input[type="number"]),
-:global(textarea),
+.input,
+.textarea,
 .fileButton {
   width: 100%;
   padding: 12px;
@@ -54,7 +54,7 @@
   }
 }
 
-:global(textarea) {
+.textarea {
   height: 120px;
   resize: vertical;
 }

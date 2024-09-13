@@ -108,11 +108,12 @@ const DonationContent: React.FC = () => {
   return (
     <div className={styles.donationContent}>
       <div className={styles.content}>
-        <h2>Сделать пожертвование</h2>
+        <h2 className={styles.heading}>Сделать пожертвование</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.formGroup}>
-            <label htmlFor="amount">Сумма (сом):</label>
+            <label className={styles.label} htmlFor="amount">Сумма (сом):</label>
             <input
+              className={styles.input}
               type="number"
               id="amount"
               step="0.01"
@@ -128,7 +129,7 @@ const DonationContent: React.FC = () => {
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor="confirmation_file">Квитанция о переводе (только PDF):</label>
+            <label className={styles.label} htmlFor="confirmation_file">Квитанция о переводе (только PDF):</label>
             <input
               type="file"
               id="confirmation_file"
@@ -153,8 +154,8 @@ const DonationContent: React.FC = () => {
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor="comment">Комментарий:</label>
-            <textarea id="comment" {...register("comment")} />
+            <label className={styles.label} htmlFor="comment">Комментарий:</label>
+            <textarea className={styles.textarea} id="comment" {...register("comment")} />
           </div>
 
           <button type="submit" className={styles.submitButton} disabled={isLoading}>
