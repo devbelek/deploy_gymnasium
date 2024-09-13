@@ -1,28 +1,23 @@
 namespace DONATIONS {
   interface IDonation {
     id: number;
-    user: string;
-    amount: string;
+    user: number; // Предполагаем, что это ID пользователя
+    amount: string; // DecimalField в Django обычно сериализуется в строку
     date: string;
-    confirmation_file: string;
-    comment: string;
+    comment: string | null;
+    confirmation_file: string; // Путь к файлу
     is_verified: boolean;
+    verification_message: string;
   }
 
   type GetFondResponse = IDonation[];
   type GetFondRequest = void;
 
-  // Обновленный тип для запроса создания пожертвования
   interface CreateDonationRequest {
     amount: string;
+    comment?: string;
     confirmation_file: File;
-    comment: string;
   }
 
-  // Тип ответа при создании пожертвования (предполагаем, что сервер возвращает созданное пожертвование)
   type CreateDonationResponse = IDonation;
-
-  // Оставляем эти типы на случай, если они используются где-то еще в вашем приложении
-  type GetDonationResponse = IDonation[];
-  type GetDonationRequest = Partial<IDonation>;
 }

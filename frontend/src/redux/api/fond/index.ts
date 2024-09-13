@@ -19,7 +19,9 @@ const api = index.injectEndpoints({
         const formData = new FormData();
         formData.append("amount", data.amount);
         formData.append("confirmation_file", data.confirmation_file);
-        formData.append("comment", data.comment);
+        if (data.comment) {
+          formData.append("comment", data.comment);
+        }
 
         return {
           url: `${ENDPOINTS}/donations/`,
