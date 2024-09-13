@@ -27,26 +27,26 @@ export const commentsApi = createApi({
     }),
     deleteComment: builder.mutation<{ success: boolean }, number>({
       query: (commentId) => ({
-        url: `api/comments/${commentId}/`,
+        url: `/comments/${commentId}/`,
         method: 'DELETE',
       }),
     }),
     likeComment: builder.mutation<Like, { commentId: number }>({
       query: ({ commentId }) => ({
-        url: `api/likes/`,
+        url: `/likes/`,
         method: 'POST',
         body: { comment: commentId },
       }),
     }),
     unlikeComment: builder.mutation<{ success: boolean }, number>({
       query: (commentId) => ({
-        url: `api/likes/${commentId}/`,
+        url: `/likes/${commentId}/`,
         method: 'DELETE',
       }),
     }),
     replyToComment: builder.mutation<Comment, { commentId: number; text: string }>({
       query: ({ commentId, text }) => ({
-        url: `api/comment-replies/`,
+        url: `/comment-replies/`,
         method: 'POST',
         body: { comment: commentId, text },
       }),
