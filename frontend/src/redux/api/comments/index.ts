@@ -13,14 +13,14 @@ export const commentsApi = createApi({
     }),
     addComment: builder.mutation<Comment, NewComment>({
       query: (newComment) => ({
-        url: 'api/comments/',
+        url: '/comments/',
         method: 'POST',
         body: newComment,
       }),
     }),
     updateComment: builder.mutation<Comment, { commentId: number; text: string }>({
       query: ({ commentId, text }) => ({
-        url: `api/comments/${commentId}/`,
+        url: `/comments/${commentId}/`,
         method: 'PUT',
         body: { text },
       }),
