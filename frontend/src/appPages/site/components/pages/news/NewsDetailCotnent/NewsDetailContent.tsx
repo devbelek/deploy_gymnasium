@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import Image from "next/image";
 import { useGetDetNewsQuery } from "@/redux/api/news";
 import { useGetCommentsQuery, useAddCommentMutation, useDeleteCommentMutation } from "@/redux/api/comments";
+import scss from "./NewsDetailContent.module.scss";
 
 // Определение типов
 interface Comment {
@@ -61,78 +62,58 @@ const NewsDetailContent: React.FC = () => {
     }
   };
 
-  if (newsLoading) return <div className="flex justify-center items-center h-screen">Загрузка новости...</div>;
-  if (newsError) return <div className="text-red-500 text-center">Ошибка загрузки новости.</div>;
+  if (newsLoading) return <div className={scss.loading}>Загрузка новости...</div>;
+  if (newsError) return <div className={scss.error}>Ошибка загрузки новости.</div>;
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center mb-2">Новости</h1>
-      <div className="w-12 h-1 bg-blue-500 mx-auto mb-8"></div>
-
-      <div className="bg-white shadow-md rounded-lg overflow-hidden mb-8">
-        <div className="p-6">
-          <h2 className="text-2xl font-semibold mb-4">{(newsData as NewsData)?.description}</h2>
-          <Image
-            src={(newsData as NewsData)?.image || '/placeholder-image.jpg'}
-            alt="News Image"
-            width={700}
-            height={400}
-            className="rounded-lg mb-4 w-full object-cover"
-          />
-          <p className="text-gray-700">{(newsData as NewsData)?.content}</p>
-        </div>
-      </div>
-
-      <h3 className="text-xl font-semibold mb-4">Комментарии пользователей:</h3>
-
-      {alertMessage && (
-        <div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-4" role="alert">
-          <p>{alertMessage}</p>
-        </div>
-      )}
-
-      <div className="bg-white shadow-md rounded-lg overflow-hidden mb-4">
-        <div className="p-6">
-          <textarea
-            value={newCommentText}
-            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setNewCommentText(e.target.value)}
-            placeholder="Напишите комментарий..."
-            className="w-full p-2 border border-gray-300 rounded mb-2"
-            rows={3}
-          />
-          <button
-            onClick={handleAddComment}
-            disabled={isAddingComment}
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:bg-blue-300"
-          >
-            {isAddingComment ? 'Отправка...' : 'Отправить'}
-          </button>
-        </div>
-      </div>
-
-      {commentsLoading && <p>Загрузка комментариев...</p>}
-      {commentsError && <p className="text-red-500">Ошибка загрузки комментариев.</p>}
-
-      {(commentsData as Comment[])?.map((comment) => (
-        <div key={comment.id} className="bg-white shadow-md rounded-lg overflow-hidden mb-4">
-          <div className="p-6">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-10 h-10 bg-gray-300 rounded-full"></div>
-              <div>
-                <p className="font-semibold">Пользователь</p>
-                <p className="text-sm text-gray-500">{new Date(comment.created_at).toLocaleString()}</p>
-              </div>
+    <div className={scss.NewsDetailContent}>
+      <div className="container">
+        <div className={scss.content}>
+          <div className={scss.news_head}>
+            <h1>Новости</h1>
+            <hr />
+          </div>
+          <div className={scss.newsContent}>
+            <h1>{(newsData as NewsData)?.description}</h1>
+            <Image
+              src={(newsData as NewsData)?.image || '/placeholder-image.jpg'}
+              alt="img"
+              width={700}
+              height={500}
+              quality={70}
+            />
+            <p>{(newsData as NewsData)?.content}</p>
+            <hr />
+          </div>
+          <div className={scss.newsComments}>
+            <h2>Комментарии пользователей:</h2>
+            {alertMessage && (
+              <div className={scss.alert}>{alertMessage}</div>
+            )}
+            <div className={scss.addComment}>
+              <textarea
+                value={newCommentText}
+                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setNewCommentText(e.target.value)}
+                placeholder="Напишите комментарий..."
+              />
+              <button onClick={handleAddComment} disabled={isAddingComment}>
+                {isAddingComment ? 'Отправка...' : 'Отправить'}
+              </button>
             </div>
-            <p className="mb-4">{comment.text}</p>
-            <button
-              onClick={() => handleDeleteComment(comment.id)}
-              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-            >
-              Удалить
-            </button>
+            <div className={scss.commentList}>
+              {commentsLoading && <p>Загрузка комментариев...</p>}
+              {commentsError && <p className={scss.error}>Ошибка загрузки комментариев.</p>}
+              {(commentsData as Comment[])?.map((comment) => (
+                <div key={comment.id} className={scss.comment}>
+                  <p>{comment.text}</p>
+                  <p className={scss.commentDate}>{new Date(comment.created_at).toLocaleString()}</p>
+                  <button onClick={() => handleDeleteComment(comment.id)}>Удалить</button>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      ))}
+      </div>
     </div>
   );
 };
