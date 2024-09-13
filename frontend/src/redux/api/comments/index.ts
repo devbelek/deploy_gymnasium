@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Comment, NewComment, Like } from './types';
-import { getCookie } from '../utils/csrf'; // Путь к файлу с функцией
+import { getCookie } from '../utils/csrf';
 
 export const commentsApi = createApi({
   reducerPath: 'commentsApi',
