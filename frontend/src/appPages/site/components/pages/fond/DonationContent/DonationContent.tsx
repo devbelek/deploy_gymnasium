@@ -4,6 +4,12 @@ import { usePostDonationsMutation } from "@/redux/api/fond";
 import { SubmitHandler, useForm } from "react-hook-form";
 import styles from "./DonationContent.module.scss";
 
+interface CreateDonationRequest {
+  amount: number;
+  confirmation_file: FileList; // Используем FileList для загрузки файла
+  comment?: string;
+}
+
 const DonationContent: React.FC = () => {
   const [postDonationsMutation] = usePostDonationsMutation();
   const [isLoading, setIsLoading] = useState(false);
@@ -11,7 +17,9 @@ const DonationContent: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<DONATIONS.CreateDonationRequest>();
+    setValue, // Для управления значениями файлов
+    getValues, // Для получения значений формы
+  } = useForm<CreateDonationRequest>();
 
   useEffect(() => {
     // Получаем CSRF токен при монтировании компонента
@@ -20,40 +28,45 @@ const DonationContent: React.FC = () => {
     });
   }, []);
 
-const onSubmit: SubmitHandler<DONATIONS.CreateDonationRequest> = async (data) => {
-  console.log("onSubmit called with data:", data);
-  setIsLoading(true);
+  const onSubmit: SubmitHandler<CreateDonationRequest> = async (data) => {
+    console.log("onSubmit called with data:", data);
+    setIsLoading(true);
 
-  const formData = new FormData();
-  formData.append("amount", data.amount);
+    const formData = new FormData();
+    formData.append("amount", data.amount.toString());
 
-  if (data.confirmation_file) {
-    formData.append("confirmation_file", data.confirmation_file);
-  } else {
-    console.error("No file selected");
-  }
+    // Обрабатываем файл
+    const file = data.confirmation_file[0];
+    if (file) {
+      formData.append("confirmation_file", file);
+    } else {
+      console.error("No file selected");
+      alert("Пожалуйста, выберите файл.");
+      setIsLoading(false);
+      return;
+    }
 
-  if (data.comment) {
-    formData.append("comment", data.comment);
-  }
+    if (data.comment) {
+      formData.append("comment", data.comment);
+    }
 
-  console.log("FormData created:", {
-    amount: formData.get("amount"),
-    comment: formData.get("comment"),
-    file: formData.get("confirmation_file"),
-  });
+    console.log("FormData created:", {
+      amount: formData.get("amount"),
+      comment: formData.get("comment"),
+      file: formData.get("confirmation_file"),
+    });
 
-  try {
-    const result = await postDonationsMutation(formData);
-    console.log("API response:", result);
-    alert("Пожертвование успешно отправлено!");
-  } catch (error) {
-    console.error("Error sending donation:", error);
-    alert("Произошла ошибка при отправке пожертвования. Пожалуйста, попробуйте еще раз.");
-  } finally {
-    setIsLoading(false);
-  }
-};
+    try {
+      const result = await postDonationsMutation(formData).unwrap();
+      console.log("API response:", result);
+      alert("Пожертвование успешно отправлено!");
+    } catch (error) {
+      console.error("Error sending donation:", error);
+      alert("Произошла ошибка при отправке пожертвования. Пожалуйста, попробуйте еще раз.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className={styles.donationContent}>
@@ -69,7 +82,7 @@ const onSubmit: SubmitHandler<DONATIONS.CreateDonationRequest> = async (data) =>
               {...register("amount", {
                 required: "Сумма обязательна",
                 min: { value: 0.01, message: "Сумма должна быть больше 0" },
-                validate: (value) => !isNaN(parseFloat(value)) || "Введите корректное число"
+                validate: (value) => !isNaN(value) || "Введите корректное число"
               })}
             />
             {errors.amount && (
@@ -86,6 +99,10 @@ const onSubmit: SubmitHandler<DONATIONS.CreateDonationRequest> = async (data) =>
               {...register("confirmation_file", {
                 required: "Файл обязателен",
               })}
+              onChange={(e) => {
+                // Обновляем значение файла
+                setValue("confirmation_file", e.target.files);
+              }}
             />
             {errors.confirmation_file && (
               <span className={styles.error}>
