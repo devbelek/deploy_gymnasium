@@ -11,25 +11,25 @@
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out;
-}
 
-.content:hover {
-  transform: translateY(-5px);
-}
+  &:hover {
+    transform: translateY(-5px);
+  }
 
-h2 {
-  color: #2c3e50;
-  text-align: center;
-  margin-bottom: 30px;
-  font-size: 28px;
-  font-weight: 600;
+  :global(h2) {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: 600;
+  }
 }
 
 .formGroup {
   margin-bottom: 25px;
 }
 
-label {
+:global(label) {
   display: block;
   margin-bottom: 8px;
   color: #34495e;
@@ -37,8 +37,8 @@ label {
   transition: color 0.3s ease;
 }
 
-input[type="number"],
-textarea,
+:global(input[type="number"]),
+:global(textarea),
 .fileButton {
   width: 100%;
   padding: 12px;
@@ -46,17 +46,15 @@ textarea,
   border-radius: 8px;
   font-size: 16px;
   transition: all 0.3s ease;
+
+  &:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+    outline: none;
+  }
 }
 
-input[type="number"]:focus,
-textarea:focus,
-.fileButton:focus {
-  border-color: #3498db;
-  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
-  outline: none;
-}
-
-textarea {
+:global(textarea) {
   height: 120px;
   resize: vertical;
 }
@@ -70,10 +68,10 @@ textarea {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
 
-.fileButton:hover {
-  background-color: #e8f4f8;
+  &:hover {
+    background-color: #e8f4f8;
+  }
 }
 
 .submitButton {
@@ -90,19 +88,19 @@ textarea {
   transition: all 0.3s ease;
   text-transform: uppercase;
   letter-spacing: 1px;
-}
 
-.submitButton:hover {
-  background-color: #2980b9;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+  &:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
 
-.submitButton:disabled {
-  background-color: #bdc3c7;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
+  &:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
 }
 
 .error {
@@ -112,14 +110,14 @@ textarea {
   display: block;
   font-weight: 500;
   transition: all 0.3s ease;
+
+  &:not(:empty) {
+    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+  }
 }
 
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
   10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
   20%, 40%, 60%, 80% { transform: translateX(5px); }
-}
-
-.error:not(:empty) {
-  animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
 }
