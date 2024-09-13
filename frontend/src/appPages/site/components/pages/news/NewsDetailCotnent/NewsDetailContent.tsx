@@ -5,11 +5,6 @@ import { useParams } from 'next/navigation';
 import Image from "next/image";
 import { useGetDetNewsQuery } from "@/redux/api/news";
 import { useGetCommentsQuery, useAddCommentMutation, useDeleteCommentMutation } from "@/redux/api/comments";
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
-import { Avatar } from '@/components/ui/avatar';
-import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card';
 
 const NewsDetailContent = () => {
   const params = useParams();
@@ -61,11 +56,9 @@ const NewsDetailContent = () => {
       <h1 className="text-3xl font-bold text-center mb-2">Новости</h1>
       <div className="w-12 h-1 bg-blue-500 mx-auto mb-8"></div>
 
-      <Card className="mb-8">
-        <CardHeader>
-          <h2 className="text-2xl font-semibold">{newsData?.description}</h2>
-        </CardHeader>
-        <CardContent>
+      <div className="bg-white shadow-md rounded-lg overflow-hidden mb-8">
+        <div className="p-6">
+          <h2 className="text-2xl font-semibold mb-4">{newsData?.description}</h2>
           <Image
             src={newsData?.image || '/placeholder-image.jpg'}
             alt="News Image"
@@ -74,52 +67,58 @@ const NewsDetailContent = () => {
             className="rounded-lg mb-4 w-full object-cover"
           />
           <p className="text-gray-700">{newsData?.content}</p>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       <h3 className="text-xl font-semibold mb-4">Комментарии пользователей:</h3>
-      
+
       {alertMessage && (
-        <Alert className="mb-4">
-          <AlertDescription>{alertMessage}</AlertDescription>
-        </Alert>
+        <div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-4" role="alert">
+          <p>{alertMessage}</p>
+        </div>
       )}
 
-      <Card className="mb-4">
-        <CardContent>
-          <Textarea
+      <div className="bg-white shadow-md rounded-lg overflow-hidden mb-4">
+        <div className="p-6">
+          <textarea
             value={newCommentText}
             onChange={(e) => setNewCommentText(e.target.value)}
             placeholder="Напишите комментарий..."
-            className="mb-2"
+            className="w-full p-2 border border-gray-300 rounded mb-2"
+            rows={3}
           />
-          <Button onClick={handleAddComment} disabled={isAddingComment}>
+          <button
+            onClick={handleAddComment}
+            disabled={isAddingComment}
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:bg-blue-300"
+          >
             {isAddingComment ? 'Отправка...' : 'Отправить'}
-          </Button>
-        </CardContent>
-      </Card>
+          </button>
+        </div>
+      </div>
 
       {commentsLoading && <p>Загрузка комментариев...</p>}
       {commentsError && <p className="text-red-500">Ошибка загрузки комментариев.</p>}
-      
+
       {commentsData?.map((comment) => (
-        <Card key={comment.id} className="mb-4">
-          <CardHeader className="flex flex-row items-center gap-4">
-            <Avatar />
-            <div>
-              <p className="font-semibold">Пользователь</p>
-              <p className="text-sm text-gray-500">{new Date(comment.created_at).toLocaleString()}</p>
+        <div key={comment.id} className="bg-white shadow-md rounded-lg overflow-hidden mb-4">
+          <div className="p-6">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-10 h-10 bg-gray-300 rounded-full"></div>
+              <div>
+                <p className="font-semibold">Пользователь</p>
+                <p className="text-sm text-gray-500">{new Date(comment.created_at).toLocaleString()}</p>
+              </div>
             </div>
-          </CardHeader>
-          <CardContent>
-            <p>{comment.text}</p>
-          </CardContent>
-          <CardFooter>
-            <Button variant="destructive" onClick={() => handleDeleteComment(comment.id)}>
+            <p className="mb-4">{comment.text}</p>
+            <button
+              onClick={() => handleDeleteComment(comment.id)}
+              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+            >
               Удалить
-            </Button>
-          </CardFooter>
-        </Card>
+            </button>
+          </div>
+        </div>
       ))}
     </div>
   );
