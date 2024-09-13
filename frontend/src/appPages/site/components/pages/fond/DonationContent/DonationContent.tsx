@@ -55,9 +55,9 @@ const DonationContent: React.FC = () => {
     }
 
     console.log("FormData contents:");
-    for (let [key, value] of formData.entries()) {
+    formData.forEach((value, key) => {
       console.log(key, value);
-    }
+    });
 
     try {
       const result = await postDonationsMutation(formData).unwrap();
