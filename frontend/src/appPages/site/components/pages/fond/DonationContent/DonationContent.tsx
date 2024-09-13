@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState, useEffect } from 'react';
 import { usePostDonationsMutation } from "@/redux/api/fond";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -6,7 +7,7 @@ import styles from "./DonationContent.module.scss";
 
 interface CreateDonationRequest {
   amount: number;
-  confirmation_file: FileList; // Используем FileList для загрузки файла
+  confirmation_file: FileList;
   comment?: string;
 }
 
@@ -17,11 +18,10 @@ const DonationContent: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-    setValue, // Для управления значениями файлов
+    setValue,
   } = useForm<CreateDonationRequest>();
 
   useEffect(() => {
-    // Получаем CSRF токен при монтировании компонента
     fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/csrf/`, {
       credentials: 'include',
     });
@@ -34,9 +34,13 @@ const DonationContent: React.FC = () => {
     const formData = new FormData();
     formData.append("amount", data.amount.toString());
 
-    // Обрабатываем файл
     const file = data.confirmation_file[0];
     if (file) {
+      if (file.type !== 'application/pdf') {
+        alert("Пожалуйста, выберите файл в формате PDF.");
+        setIsLoading(false);
+        return;
+      }
       formData.append("confirmation_file", file);
     } else {
       console.error("No file selected");
@@ -90,18 +94,16 @@ const DonationContent: React.FC = () => {
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor="confirmation_file">Квитанция о переводе:</label>
+            <label htmlFor="confirmation_file">Квитанция о переводе (только PDF):</label>
             <input
               type="file"
               id="confirmation_file"
-              accept=".pdf,.jpg,.jpeg,.png"
+              accept=".pdf"
               {...register("confirmation_file", {
                 required: "Файл обязателен",
               })}
               onChange={(e) => {
-                // Проверяем, что e.target.files не null
                 if (e.target.files) {
-                  // Обновляем значение файла
                   setValue("confirmation_file", e.target.files);
                 } else {
                   console.error("No files selected");
