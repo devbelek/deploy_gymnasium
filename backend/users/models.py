@@ -53,8 +53,9 @@ class Comment(models.Model):
 
     def clean(self):
         super().clean()
-        if sum(bool(x) for x in [self.our_achievements, self.news, self.successful_graduates]) != 1:
-            raise ValidationError('Комментарий должен быть связан только с одной категорией постов.')
+        # Пример проверки, если вы хотите убедиться, что комментарий связан с чем-то:
+        if self.news is None:
+            raise ValidationError('Комментарий должен быть связан с новостью.')
 
     def save(self, *args, **kwargs):
         if not self.pk:
