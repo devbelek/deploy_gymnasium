@@ -4,20 +4,6 @@ import { usePostDonationsMutation } from "@/redux/api/fond";
 import { SubmitHandler, useForm } from "react-hook-form";
 import styles from "./DonationContent.module.scss";
 
-// Обновленный интерфейс IDonation
-interface IDonation {
-  amount: number;
-  confirmation_file?: File;
-  comment?: string;
-}
-
-// Обновленный интерфейс формы
-interface IDonationForm {
-  amount: string; // Оставляем строкой для ввода, но будем преобразовывать в число
-  confirmation_file: FileList;
-  comment: string;
-}
-
 const DonationContent: React.FC = () => {
   const [postDonationsMutation] = usePostDonationsMutation();
   const [isLoading, setIsLoading] = useState(false);
@@ -25,23 +11,14 @@ const DonationContent: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IDonationForm>();
+  } = useForm<DONATIONS.CreateDonationRequest>();
 
-  const onSubmit: SubmitHandler<IDonationForm> = async (data, event) => {
-    event?.preventDefault();
+  const onSubmit: SubmitHandler<DONATIONS.CreateDonationRequest> = async (data) => {
     console.log("onSubmit called", data);
     setIsLoading(true);
 
-    const formData = new FormData();
-    // Преобразуем строку в число с плавающей точкой
-    formData.append("amount", parseFloat(data.amount).toString());
-    if (data.confirmation_file.length > 0) {
-      formData.append("confirmation_file", data.confirmation_file[0]);
-    }
-    formData.append("comment", data.comment);
-
     try {
-      const result = await postDonationsMutation(formData);
+      const result = await postDonationsMutation(data);
       console.log("API response:", result);
       alert("Пожертвование успешно отправлено!");
     } catch (error) {
@@ -62,7 +39,7 @@ const DonationContent: React.FC = () => {
             <input
               type="number"
               id="amount"
-              step="0.01" // Позволяет вводить дробные числа
+              step="0.01"
               {...register("amount", {
                 required: "Сумма обязательна",
                 min: { value: 0.01, message: "Сумма должна быть больше 0" },
@@ -74,7 +51,27 @@ const DonationContent: React.FC = () => {
             )}
           </div>
 
-          {/* Остальные поля формы остаются без изменений */}
+          <div className={styles.formGroup}>
+            <label htmlFor="confirmation_file">Квитанция о переводе:</label>
+            <input
+              type="file"
+              id="confirmation_file"
+              accept=".pdf,.jpg,.jpeg,.png"
+              {...register("confirmation_file", {
+                required: "Файл обязателен",
+              })}
+            />
+            {errors.confirmation_file && (
+              <span className={styles.error}>
+                {errors.confirmation_file.message}
+              </span>
+            )}
+          </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="comment">Комментарий:</label>
+            <textarea id="comment" {...register("comment")} />
+          </div>
 
           <button type="submit" className={styles.submitButton} disabled={isLoading}>
             {isLoading ? 'Отправка...' : 'Отправить'}

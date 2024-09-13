@@ -12,15 +12,21 @@ const api = index.injectEndpoints({
       providesTags: ["donations"],
     }),
     postDonations: build.mutation<
-      DONATIONS.GetDonationResponse,
-      DONATIONS.GetDonationRequest
+      DONATIONS.CreateDonationResponse,
+      DONATIONS.CreateDonationRequest
     >({
-      query: (data) => ({
-        url: `${ENDPOINTS}/donations/`,
-        method: "POST",
-        body: data instanceof FormData ? data : JSON.stringify(data),
-        headers: data instanceof FormData ? {} : { 'Content-Type': 'application/json' },
-      }),
+      query: (data) => {
+        const formData = new FormData();
+        formData.append("amount", data.amount);
+        formData.append("confirmation_file", data.confirmation_file);
+        formData.append("comment", data.comment);
+
+        return {
+          url: `${ENDPOINTS}/donations/`,
+          method: "POST",
+          body: formData,
+        };
+      },
       invalidatesTags: ["donations"],
     }),
   }),
