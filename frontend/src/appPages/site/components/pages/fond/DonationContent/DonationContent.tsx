@@ -23,13 +23,12 @@ const DonationContent: React.FC = () => {
   const [postDonationsMutation] = usePostDonationsMutation();
   const [isLoading, setIsLoading] = useState(false);
   const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
     watch,
   } = useForm<CreateDonationRequest>();
 
@@ -134,11 +133,14 @@ const DonationContent: React.FC = () => {
               type="file"
               id="confirmation_file"
               accept=".pdf"
-              ref={fileInputRef}
               style={{ display: 'none' }}
               {...register("confirmation_file", {
                 required: "Файл обязателен",
               })}
+              ref={(e) => {
+                register("confirmation_file").ref(e);
+                fileInputRef.current = e;
+              }}
             />
             <button type="button" onClick={handleFileButtonClick} className={styles.fileButton}>
               {selectedFileName || "Выберите файл"}
