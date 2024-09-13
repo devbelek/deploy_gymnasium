@@ -11,6 +11,15 @@ interface CreateDonationRequest {
   comment?: string;
 }
 
+// Определение интерфейса для объекта ошибки
+interface ErrorWithResponse extends Error {
+  response?: {
+    data?: any;
+    status?: number;
+    headers?: any;
+  };
+}
+
 const DonationContent: React.FC = () => {
   const [postDonationsMutation] = usePostDonationsMutation();
   const [isLoading, setIsLoading] = useState(false);
@@ -65,10 +74,13 @@ const DonationContent: React.FC = () => {
       alert("Пожертвование успешно отправлено!");
     } catch (error) {
       console.error("Full error object:", error);
-      if (error.response) {
-        console.error("Response data:", error.response.data);
-        console.error("Response status:", error.response.status);
-        console.error("Response headers:", error.response.headers);
+      if (error && typeof error === 'object' && 'response' in error) {
+        const errorWithResponse = error as ErrorWithResponse;
+        if (errorWithResponse.response) {
+          console.error("Response data:", errorWithResponse.response.data);
+          console.error("Response status:", errorWithResponse.response.status);
+          console.error("Response headers:", errorWithResponse.response.headers);
+        }
       }
       console.error("Error sending donation:", error);
       alert("Произошла ошибка при отправке пожертвования. Пожалуйста, попробуйте еще раз.");
