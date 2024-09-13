@@ -18,7 +18,8 @@ const api = index.injectEndpoints({
       query: (data) => ({
         url: `${ENDPOINTS}/donations/`,
         method: "POST",
-        body: JSON.stringify(data),
+        body: data instanceof FormData ? data : JSON.stringify(data),
+        headers: data instanceof FormData ? {} : { 'Content-Type': 'application/json' },
       }),
       invalidatesTags: ["donations"],
     }),
