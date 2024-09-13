@@ -1,7 +1,7 @@
 "use client";
 
 import { useGetFondQuery } from "@/redux/api/fond";
-import scss from "./FondContent.module.scss";
+import scss from "./DonationContent.module.scss";
 import Link from "next/link";
 
 const FondContent = () => {
@@ -10,10 +10,10 @@ const FondContent = () => {
   return (
     <div className={scss.donationContent}>
       <div className={scss.content}>
-        <h2>Фонд</h2>
+        <h2 className={scss.title}>Фонд</h2>
 
-        {isLoading && <p className={scss.message}>Loading donations...</p>}
-        {isError && <p className={scss.message}>Error loading donations. Please try again later.</p>}
+        {isLoading && <p className={scss.message}>Загрузка пожертвований...</p>}
+        {isError && <p className={scss.message}>Ошибка при загрузке пожертвований. Пожалуйста, попробуйте позже.</p>}
 
         {data && data.length > 0 ? (
           <div className={scss.donationsList}>
@@ -26,7 +26,7 @@ const FondContent = () => {
             ))}
           </div>
         ) : (
-          <p className={scss.message}>No donations found.</p>
+          <p className={scss.message}>Пожертвований не найдено.</p>
         )}
 
         <Link href="/fond/donation" className={scss.donateLink}>
