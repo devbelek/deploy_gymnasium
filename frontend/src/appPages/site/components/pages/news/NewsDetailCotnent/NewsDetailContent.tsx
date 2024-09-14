@@ -4,7 +4,7 @@ import scss from "./NewsDetailContent.module.scss";
 import { useGetDetNewsQuery, useGetCommentsQuery, useAddCommentMutation } from "@/redux/api/news";
 import Image from "next/image";
 import { useState } from "react";
-import { getCSRFToken } from '@/utils/csrf';  // Измените путь в соответствии с вашей структурой проекта
+import { getCSRFToken } from './csrf';
 
 const NewsDetailContent: React.FC = () => {
   const params = useParams();
