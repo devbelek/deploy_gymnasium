@@ -86,15 +86,14 @@ const NewsCommentsContent: React.FC = () => {
     }
   };
 
-  const handleLikeComment = async (commentId: number) => {
-    try {
-      await likeComment(commentId).unwrap();
-      refetch();
-    } catch (error) {
-      console.error('Не удалось поставить лайк:', error);
-      alert('Не удалось поставить лайк. Пожалуйста, попробуйте еще раз.');
-    }
-  };
+const handleLikeComment = async (commentId: number) => {
+  try {
+    await likeComment({ commentId }).unwrap();
+    refetch();
+  } catch (error) {
+    console.error('Не удалось поставить лайк:', error);
+  }
+};
 
   const handleAddReply = async (commentId: number) => {
     if (replyText.trim()) {
