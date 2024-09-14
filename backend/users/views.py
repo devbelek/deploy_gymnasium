@@ -103,6 +103,15 @@ class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializers
     permission_classes = [IsAuthenticatedOrReadOnly]
 
+    @action(detail=False, methods=['GET'])
+    def for_news(self, request):
+        news_id = request.query_params.get('news_id')
+        if news_id:
+            comments = self.queryset.filter(news_id=news_id)
+            serializer = self.get_serializer(comments, many=True)
+            return Response(serializer.data)
+        return Response({"error": "news_id is required"}, status=400)
+
     def list(self, request, *args, **kwargs):
         logger.info(f"Пользователь {request.user.username} запросил список комментариев.")
         return super().list(request, *args, **kwargs)

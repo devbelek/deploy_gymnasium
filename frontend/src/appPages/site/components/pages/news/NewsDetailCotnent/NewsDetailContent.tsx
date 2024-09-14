@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from 'react';
 import { useGetCommentsQuery, useAddCommentMutation, useUpdateCommentMutation, useDeleteCommentMutation, useLikeCommentMutation } from "@/redux/api/comments";
 import { Comment } from '@/redux/api/comments/types';
