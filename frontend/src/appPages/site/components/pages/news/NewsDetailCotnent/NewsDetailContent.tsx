@@ -74,17 +74,17 @@ const NewsDetailContent: React.FC = () => {
     }
   };
 
-  const handleReplyToComment = async (parentCommentId: number) => {
-    if (replyText.trim()) {
-      try {
-        await addComment({ newsId, text: replyText, parentCommentId }).unwrap();
-        setReplyingToCommentId(null);
-        setReplyText("");
-      } catch (error) {
-        console.error("Ошибка при добавлении ответа:", error);
-      }
-    }
-  };
+//   const handleReplyToComment = async (parentCommentId: number) => {
+//     if (replyText.trim()) {
+//       try {
+//         await addComment({ newsId, text: replyText, parentCommentId }).unwrap();
+//         setReplyingToCommentId(null);
+//         setReplyText("");
+//       } catch (error) {
+//         console.error("Ошибка при добавлении ответа:", error);
+//       }
+//     }
+//   };
 
   return (
     <div className={scss.NewsDetailContent}>
