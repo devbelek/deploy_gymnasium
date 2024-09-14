@@ -17,21 +17,19 @@ export interface Comment {
   isLiked: boolean;
 }
 
-// Тип для нового комментария, который отправляется при создании
 export interface NewComment {
-  news: number;  // ID новости, к которой привязан комментарий
-  text: string;  // Текст комментария
+  news: number;
+  text: string;
 }
 
-// Тип для ответа на комментарий
 export interface CommentReply {
   id: number;
-  comment: number;  // ID комментария, к которому привязан ответ
+  comment: number;
   author: {
     id: number;
     username: string;
   };
-  user?: {  //
+  user?: {
     id: number;
     username: string;
   };
@@ -40,16 +38,11 @@ export interface CommentReply {
   updated_at: string;
 }
 
-// Тип для лайка
 export interface Like {
   id: number;
-  comment: number;  // ID комментария, который был лайкнут
+  comment: number;
   user: {
     id: number;
     username: string;
   };
 }
-
-
-
-
