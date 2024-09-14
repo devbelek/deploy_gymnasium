@@ -20,17 +20,17 @@ const api = index.injectEndpoints({
     }),
     getComments: build.query<NEWS.GetCommentsResponse, number>({
       query: (newsId) => ({
-        url: `${ENDPOINTS}/comments/news/${newsId}/comments/`,
+        url: `${ENDPOINTS}/news/${newsId}/comments/`,
         method: "GET",
       }),
       providesTags: ["comments"],
     }),
     addComment: build.mutation<NEWS.AddCommentResponse, { newsId: number; text: string }>({
       query: ({ newsId, text }) => ({
-        url: `${ENDPOINTS}/comments/news/${newsId}/comments/`,
+        url: `${ENDPOINTS}/news/${newsId}/comments/`,
         method: "POST",
         body: { text },
-        credentials: 'include', // Для отправки куки с CSRF токеном
+        credentials: 'include',
       }),
       invalidatesTags: ["comments"],
     }),
