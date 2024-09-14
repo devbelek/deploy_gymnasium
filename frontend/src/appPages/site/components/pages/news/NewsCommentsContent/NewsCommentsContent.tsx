@@ -2,17 +2,31 @@
 
 import React, { useState } from 'react';
 import { useParams } from 'next/navigation';
-import { useGetCommentsQuery, useAddCommentMutation, useUpdateCommentMutation, useDeleteCommentMutation, useLikeCommentMutation, useAddReplyMutation } from '@/redux/api/news';
+import {
+  useGetCommentsQuery,
+  useAddCommentMutation,
+  useUpdateCommentMutation,
+  useDeleteCommentMutation,
+  useLikeCommentMutation,
+  useAddReplyMutation
+} from '@/redux/api/news';
 import scss from './NewsCommentsContent.module.scss';
 
-interface Comment {
+interface BaseComment {
   id: number;
   author: string;
   text: string;
+  created_at: string;
+  updated_at: string;
+}
+
+interface Comment extends BaseComment {
   is_liked: boolean;
   likes_count: number;
-  replies?: Comment[];
+  replies?: Reply[];
 }
+
+interface Reply extends BaseComment {}
 
 const NewsCommentsContent: React.FC = () => {
   const params = useParams();
@@ -163,7 +177,7 @@ const NewsCommentsContent: React.FC = () => {
                 <button onClick={() => setReplyingToCommentId(null)}>Отмена</button>
               </div>
             )}
-            {comment.replies && comment.replies.map((reply) => (
+            {comment.replies && comment.replies.map((reply: Reply) => (
               <div key={reply.id} className={scss.reply}>
                 <p><strong>{reply.author}</strong>: {reply.text}</p>
               </div>
