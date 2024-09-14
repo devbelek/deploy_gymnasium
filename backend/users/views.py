@@ -139,16 +139,20 @@ class CommentViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['get'])
     def news_comments(self, request, news_id=None):
-        comments = self.get_queryset()
+        """Получение комментариев по новости."""
+        news = get_object_or_404(News, pk=news_id)
+        comments = Comment.objects.filter(news=news)
         serializer = self.get_serializer(comments, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @action(detail=False, methods=['post'])
     def create_comment(self, request, news_id=None):
+        """Создание комментария под новостью."""
         news = get_object_or_404(News, pk=news_id)
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             serializer.save(author=request.user, news=news)
+            logger.info(f"Комментарий создан под новостью ID: {news.id}")
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
