@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from .tasks import verify_receipt
 from loguru import logger
 from django.core.exceptions import PermissionDenied
-
+from rest_framework.decorators import action
 
 class RegisterView(APIView):
     permission_classes = [AllowAny]
@@ -123,6 +123,17 @@ class CommentViewSet(viewsets.ModelViewSet):
         else:
             logger.warning(f"Пользователь {self.request.user.username} попытался обновить чужой комментарий ID: {self.get_object().id}")
             raise PermissionDenied("Вы не можете редактировать этот комментарий")
+
+
+    @action(detail=True, methods=['post'])
+    def like(self, request, pk=None):
+        comment = self.get_object()
+        user = request.user
+        like, created = Like.objects.get_or_create(comment=comment, user=user)
+        if not created:
+            like.delete()
+            return Response({"detail": "Лайк удален."})
+        return Response({"detail": "Лайк добавлен."})
 
 
 class CommentReplyViewSet(viewsets.ModelViewSet):

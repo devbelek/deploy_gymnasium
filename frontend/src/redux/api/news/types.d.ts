@@ -9,11 +9,49 @@ namespace NEWS {
     created_at: string;
     updated_at: string;
     description: string;
-    description_ky: null;
-    description_ru: null;
+    description_ky: null | string;
+    description_ru: null | string;
   }
+
+  interface IComment {
+    id: number;
+    author: string;
+    text: string;
+    created_at: string;
+    updated_at: string;
+    likes_count: number;
+    is_liked: boolean;
+    replies: IReply[];
+  }
+
+  interface IReply {
+    id: number;
+    author: string;
+    text: string;
+    created_at: string;
+    updated_at: string;
+  }
+
   type GetNewsResponse = INews[];
   type GetNewsRequest = void;
   type GetDetNewsResponse = INews;
   type GetDetNewsRequest = string | number;
+
+  type GetCommentsResponse = IComment[];
+  type GetCommentsRequest = number;
+
+  type AddCommentResponse = IComment;
+  type AddCommentRequest = { newsId: number; text: string };
+
+  type UpdateCommentResponse = IComment;
+  type UpdateCommentRequest = { commentId: number; text: string };
+
+  type DeleteCommentResponse = void;
+  type DeleteCommentRequest = number;
+
+  type LikeCommentResponse = { detail: string };
+  type LikeCommentRequest = number;
+
+  type AddReplyResponse = IReply;
+  type AddReplyRequest = { commentId: number; text: string };
 }
