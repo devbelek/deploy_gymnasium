@@ -35,6 +35,7 @@ export const api = createApi({
     "olympians",
     "accounts",
     "donations",
+    "comments",
   ],
   endpoints: () => ({}),
 });
