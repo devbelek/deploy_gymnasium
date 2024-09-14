@@ -1,19 +1,15 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { useGetCommentsQuery, useAddCommentMutation, useUpdateCommentMutation, useDeleteCommentMutation, useLikeCommentMutation, useAddReplyMutation } from '@/redux/api/news';
 import scss from './NewsCommentsContent.module.scss';
 
 const NewsCommentsContent: React.FC = () => {
   const params = useParams();
-  const newsDetail = params.newsDetail;
+  const newsId = typeof params.newsDetail === 'string' ? parseInt(params.newsDetail, 10) : NaN;
 
-  const newsId = Array.isArray(newsDetail)
-    ? parseInt(newsDetail[0], 10)
-    : parseInt(newsDetail, 10);
-
-  const { data: comments, isLoading, error } = useGetCommentsQuery(newsId);
+  const { data: comments, isLoading, error, refetch } = useGetCommentsQuery(newsId);
   const [addComment] = useAddCommentMutation();
   const [updateComment] = useUpdateCommentMutation();
   const [deleteComment] = useDeleteCommentMutation();
@@ -26,14 +22,22 @@ const NewsCommentsContent: React.FC = () => {
   const [replyingToCommentId, setReplyingToCommentId] = useState<number | null>(null);
   const [replyText, setReplyText] = useState('');
 
+  useEffect(() => {
+    console.log('NewsId:', newsId);
+    console.log('Is Loading:', isLoading);
+    console.log('Error:', error);
+    console.log('Comments:', comments);
+  }, [newsId, isLoading, error, comments]);
+
   const handleAddComment = async () => {
     if (newCommentText.trim() && !isNaN(newsId)) {
       try {
         await addComment({ newsId, text: newCommentText });
         setNewCommentText('');
+        refetch();
       } catch (error) {
         console.error('Failed to add comment:', error);
-        // Handle error (e.g., show error message to user)
+        alert('Не удалось добавить комментарий. Пожалуйста, попробуйте еще раз.');
       }
     }
   };
@@ -44,9 +48,10 @@ const NewsCommentsContent: React.FC = () => {
         await updateComment({ commentId, text: editingCommentText });
         setEditingCommentId(null);
         setEditingCommentText('');
+        refetch();
       } catch (error) {
         console.error('Failed to update comment:', error);
-        // Handle error
+        alert('Не удалось обновить комментарий. Пожалуйста, попробуйте еще раз.');
       }
     }
   };
@@ -55,9 +60,10 @@ const NewsCommentsContent: React.FC = () => {
     if (window.confirm('Вы уверены, что хотите удалить этот комментарий?')) {
       try {
         await deleteComment(commentId);
+        refetch();
       } catch (error) {
         console.error('Failed to delete comment:', error);
-        // Handle error
+        alert('Не удалось удалить комментарий. Пожалуйста, попробуйте еще раз.');
       }
     }
   };
@@ -65,9 +71,10 @@ const NewsCommentsContent: React.FC = () => {
   const handleLikeComment = async (commentId: number) => {
     try {
       await likeComment(commentId);
+      refetch();
     } catch (error) {
       console.error('Failed to like comment:', error);
-      // Handle error
+      alert('Не удалось поставить лайк. Пожалуйста, попробуйте еще раз.');
     }
   };
 
@@ -77,16 +84,29 @@ const NewsCommentsContent: React.FC = () => {
         await addReply({ commentId, text: replyText });
         setReplyingToCommentId(null);
         setReplyText('');
+        refetch();
       } catch (error) {
         console.error('Failed to add reply:', error);
-        // Handle error
+        alert('Не удалось добавить ответ. Пожалуйста, попробуйте еще раз.');
       }
     }
   };
 
+  if (isNaN(newsId)) {
+    return <div>Некорректный идентификатор новости</div>;
+  }
+
   if (isLoading) return <div>Загрузка комментариев...</div>;
-  if (error) return <div>Ошибка при загрузке комментариев</div>;
-  if (!comments) return <div>Комментарии не найдены</div>;
+
+  if (error) {
+    console.error('Error loading comments:', error);
+    return (
+      <div>
+        <div>Ошибка при загрузке комментариев. Пожалуйста, попробуйте обновить страницу.</div>
+        <button onClick={() => refetch()}>Попробовать снова</button>
+      </div>
+    );
+  }
 
   return (
     <div className={scss.NewsCommentsContent}>
@@ -99,52 +119,56 @@ const NewsCommentsContent: React.FC = () => {
         />
         <button onClick={handleAddComment}>Отправить</button>
       </div>
-      {comments.map((comment) => (
-        <div key={comment.id} className={scss.comment}>
-          <p><strong>{comment.author}</strong>: {comment.text}</p>
-          <div className={scss.commentActions}>
-            <button onClick={() => handleLikeComment(comment.id)}>
-              {comment.is_liked ? 'Убрать лайк' : 'Лайк'} ({comment.likes_count})
-            </button>
-            <button onClick={() => setReplyingToCommentId(comment.id)}>Ответить</button>
-            {comment.author === 'Текущий пользователь' && (
-              <>
-                <button onClick={() => {
-                  setEditingCommentId(comment.id);
-                  setEditingCommentText(comment.text);
-                }}>Редактировать</button>
-                <button onClick={() => handleDeleteComment(comment.id)}>Удалить</button>
-              </>
+      {comments && comments.length > 0 ? (
+        comments.map((comment) => (
+          <div key={comment.id} className={scss.comment}>
+            <p><strong>{comment.author}</strong>: {comment.text}</p>
+            <div className={scss.commentActions}>
+              <button onClick={() => handleLikeComment(comment.id)}>
+                {comment.is_liked ? 'Убрать лайк' : 'Лайк'} ({comment.likes_count})
+              </button>
+              <button onClick={() => setReplyingToCommentId(comment.id)}>Ответить</button>
+              {comment.author === 'Текущий пользователь' && (
+                <>
+                  <button onClick={() => {
+                    setEditingCommentId(comment.id);
+                    setEditingCommentText(comment.text);
+                  }}>Редактировать</button>
+                  <button onClick={() => handleDeleteComment(comment.id)}>Удалить</button>
+                </>
+              )}
+            </div>
+            {editingCommentId === comment.id && (
+              <div className={scss.editCommentForm}>
+                <textarea
+                  value={editingCommentText}
+                  onChange={(e) => setEditingCommentText(e.target.value)}
+                />
+                <button onClick={() => handleUpdateComment(comment.id)}>Сохранить</button>
+                <button onClick={() => setEditingCommentId(null)}>Отмена</button>
+              </div>
             )}
+            {replyingToCommentId === comment.id && (
+              <div className={scss.replyForm}>
+                <textarea
+                  value={replyText}
+                  onChange={(e) => setReplyText(e.target.value)}
+                  placeholder="Написать ответ..."
+                />
+                <button onClick={() => handleAddReply(comment.id)}>Отправить ответ</button>
+                <button onClick={() => setReplyingToCommentId(null)}>Отмена</button>
+              </div>
+            )}
+            {comment.replies.map((reply) => (
+              <div key={reply.id} className={scss.reply}>
+                <p><strong>{reply.author}</strong>: {reply.text}</p>
+              </div>
+            ))}
           </div>
-          {editingCommentId === comment.id && (
-            <div className={scss.editCommentForm}>
-              <textarea
-                value={editingCommentText}
-                onChange={(e) => setEditingCommentText(e.target.value)}
-              />
-              <button onClick={() => handleUpdateComment(comment.id)}>Сохранить</button>
-              <button onClick={() => setEditingCommentId(null)}>Отмена</button>
-            </div>
-          )}
-          {replyingToCommentId === comment.id && (
-            <div className={scss.replyForm}>
-              <textarea
-                value={replyText}
-                onChange={(e) => setReplyText(e.target.value)}
-                placeholder="Написать ответ..."
-              />
-              <button onClick={() => handleAddReply(comment.id)}>Отправить ответ</button>
-              <button onClick={() => setReplyingToCommentId(null)}>Отмена</button>
-            </div>
-          )}
-          {comment.replies.map((reply) => (
-            <div key={reply.id} className={scss.reply}>
-              <p><strong>{reply.author}</strong>: {reply.text}</p>
-            </div>
-          ))}
-        </div>
-      ))}
+        ))
+      ) : (
+        <div>Комментариев пока нет.</div>
+      )}
     </div>
   );
 };

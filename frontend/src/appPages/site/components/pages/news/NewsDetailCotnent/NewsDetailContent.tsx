@@ -7,13 +7,13 @@ import NewsCommentsContent from "../NewsCommentsContent/NewsCommentsContent";
 
 const NewsDetailContent: React.FC = () => {
   const params = useParams();
-  const newsDetail = params.newsDetail;
-
-  const newsId = Array.isArray(newsDetail)
-    ? parseInt(newsDetail[0], 10)
-    : parseInt(newsDetail, 10);
+  const newsId = typeof params.newsDetail === 'string' ? parseInt(params.newsDetail, 10) : NaN;
 
   const { data, isLoading, error } = useGetDetNewsQuery(newsId);
+
+  if (isNaN(newsId)) {
+    return <div>Некорректный идентификатор новости</div>;
+  }
 
   if (isLoading) return <div>Загрузка новости...</div>;
   if (error) return <div>Ошибка при загрузке новости</div>;
