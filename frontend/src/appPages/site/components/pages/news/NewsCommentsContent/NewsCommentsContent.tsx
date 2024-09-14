@@ -9,7 +9,11 @@ const NewsCommentsContent: React.FC = () => {
   const params = useParams();
   const newsDetail = params.newsDetail;
 
-  const { data: comments, isLoading, error } = useGetCommentsQuery(newsDetail);
+  const newsId = Array.isArray(newsDetail)
+    ? parseInt(newsDetail[0], 10)
+    : parseInt(newsDetail, 10);
+
+  const { data: comments, isLoading, error } = useGetCommentsQuery(newsId);
   const [addComment] = useAddCommentMutation();
   const [updateComment] = useUpdateCommentMutation();
   const [deleteComment] = useDeleteCommentMutation();
@@ -23,9 +27,9 @@ const NewsCommentsContent: React.FC = () => {
   const [replyText, setReplyText] = useState('');
 
   const handleAddComment = async () => {
-    if (newCommentText.trim() && newsDetail) {
+    if (newCommentText.trim() && !isNaN(newsId)) {
       try {
-        await addComment({ newsId: newsDetail, text: newCommentText });
+        await addComment({ newsId, text: newCommentText });
         setNewCommentText('');
       } catch (error) {
         console.error('Failed to add comment:', error);
