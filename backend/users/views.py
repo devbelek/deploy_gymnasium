@@ -102,6 +102,9 @@ class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializers
     permission_classes = [IsAuthenticatedOrReadOnly]
 
+    def get_queryset(self):
+        return Comment.objects.filter(news_id=self.kwargs.get('news_pk'))
+
     def list(self, request, *args, **kwargs):
         logger.info(f"Пользователь {request.user.username} запросил список комментариев.")
         return super().list(request, *args, **kwargs)
