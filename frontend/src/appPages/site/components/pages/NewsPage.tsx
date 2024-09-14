@@ -1,3 +1,5 @@
+"use client";
+
 import { useParams } from 'next/navigation';
 import NewsCommentsContent from "./news/NewsCommentsContent/NewsCommentsContent";
 import NewsMainContent from "./news/NewsMainContent/NewsMainContent";
