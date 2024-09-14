@@ -16,7 +16,7 @@ urlpatterns = [
     path('news/<int:pk>/comments/',
          CommentViewSet.as_view({'get': 'get_comments_by_news', 'post': 'create_comment_for_news'}),
          name='news-comments'),
-    path('comments/<int:pk>/reply/', CommentViewSet.as_view({'post': 'reply'}), name='comment-reply'),  # Маршрут для ответа на комментарий
+    path('comments/<int:pk>/replies/', CommentViewSet.as_view({'post': 'reply'}), name='comment-reply'),
     path('register/', RegisterView.as_view(), name='register'),
     path('likes/toggle/', LikeViewSet.as_view({'post': 'toggle'}), name='toggle-like'),
     path('likes/status/', LikeViewSet.as_view({'get': 'status'}), name='like-status'),

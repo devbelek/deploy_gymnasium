@@ -13,7 +13,6 @@ from django.core.exceptions import PermissionDenied
 from rest_framework.decorators import action
 from django.shortcuts import get_object_or_404
 from .permissions import IsAuthorOrReadOnly
-
 from main.models import News
 
 
@@ -79,13 +78,11 @@ class ConfirmedDonationViewSet(viewsets.ModelViewSet):
         return super().create(request, *args, **kwargs)
 
     def update(self, request, *args, **kwargs):
-        logger.info(
-            f"Пользователь {request.user.username} обновляет подтвержденное пожертвование ID: {kwargs.get('pk')}")
+        logger.info(f"Пользователь {request.user.username} обновляет подтвержденное пожертвование ID: {kwargs.get('pk')}")
         return super().update(request, *args, **kwargs)
 
     def destroy(self, request, *args, **kwargs):
-        logger.info(
-            f"Пользователь {request.user.username} пытается удалить подтвержденное пожертвование ID: {kwargs.get('pk')}")
+        logger.info(f"Пользователь {request.user.username} пытается удалить подтвержденное пожертвование ID: {kwargs.get('pk')}")
         return super().destroy(request, *args, **kwargs)
 
 
@@ -162,18 +159,8 @@ class CommentReplyViewSet(viewsets.ModelViewSet):
         return super().list(request, *args, **kwargs)
 
     def perform_create(self, serializer):
-        parent_comment_id = self.request.data.get('parent_comment_id')
-        parent_comment = get_object_or_404(Comment, pk=parent_comment_id)
-        serializer.save(author=self.request.user, parent_comment=parent_comment)
-        logger.info(
-            f"Пользователь {self.request.user.username} создал ответ ID: {serializer.instance.id} на комментарий ID: {parent_comment.id}")
-
-    @action(detail=False, methods=['get'])
-    def replies_for_comment(self, request, *args, **kwargs):
-        comment_id = request.query_params.get('comment_id')
-        replies = CommentReply.objects.filter(parent_comment_id=comment_id)
-        serializer = self.get_serializer(replies, many=True)
-        return Response(serializer.data)
+        serializer.save(author=self.request.user)
+        logger.info(f"Пользователь {self.request.user.username} создал ответ ID: {serializer.instance.id} на комментарий ID: {serializer.instance.comment.id}")
 
     def perform_destroy(self, instance):
         if instance.author == self.request.user:
@@ -181,16 +168,14 @@ class CommentReplyViewSet(viewsets.ModelViewSet):
             instance.delete()
         else:
             logger.warning(f"Пользователь {self.request.user.username} попытался удалить чужой ответ ID: {instance.id}")
-            raise PermissionDenied("Вы не можете удалить этот ответ.")
 
     def perform_update(self, serializer):
         if self.get_object().author == self.request.user:
             logger.info(f"Пользователь {self.request.user.username} обновил ответ ID: {self.get_object().id}")
             serializer.save()
         else:
-            logger.warning(
-                f"Пользователь {self.request.user.username} попытался обновить чужой ответ ID: {self.get_object().id}")
-            raise PermissionDenied("Вы не можете редактировать этот ответ.")
+            logger.warning(f"Пользователь {self.request.user.username} попытался обновить чужой ответ ID: {self.get_object().id}")
+            raise PermissionDenied("Вы не можете редактировать этот ответ")
 
 
 class LikeViewSet(viewsets.ModelViewSet):
