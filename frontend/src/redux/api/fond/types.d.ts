@@ -1,17 +1,23 @@
 namespace DONATIONS {
   interface IDonation {
     id: number;
-    user: string;
+    user: number;
     amount: string;
     date: string;
+    comment: string | null;
     confirmation_file: string;
-    comment: string;
     is_verified: boolean;
+    verification_message: string;
   }
 
   type GetFondResponse = IDonation[];
   type GetFondRequest = void;
 
-  type GetDonationResponse = IDonation[];
-  type GetDonationRequest = IDonation;
+  interface CreateDonationRequest {
+    amount: string;
+    comment?: string;
+    confirmation_file: File;
+  }
+
+  type CreateDonationResponse = IDonation;
 }

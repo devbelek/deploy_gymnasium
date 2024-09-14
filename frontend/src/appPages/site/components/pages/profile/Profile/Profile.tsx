@@ -11,19 +11,6 @@ const Profile = () => {
     shouldFetch ? null : skipToken
   );
 
-  // async function getData() {
-  //   const url = "https://www.3-gymnasium.kg/api/profile/";
-  //   const response = await fetch(url);
-
-  //   const json = await response.json();
-  //   console.log(json, "new profile");
-  // }
-  // useEffect(() => {
-  //   getData();
-  // }, []);
-  // // Логирование данных профиля
-  // console.log(data, "data");
-
   if (isLoading) {
     return <div>Loading...</div>;
   }

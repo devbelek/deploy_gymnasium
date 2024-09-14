@@ -1,68 +1,137 @@
 .donationContent {
   margin-top: 100px;
-  .content {
-    max-width: 500px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 20px;
-    margin-bottom: 60px;
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-    h2 {
-      color: #333;
-      text-align: center;
-      margin-bottom: 20px;
-    }
+.content {
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto 60px;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
 
-    .formGroup {
-      margin-bottom: 20px;
+  &:hover {
+    transform: translateY(-5px);
+  }
+}
 
-      label {
-        display: block;
-        margin-bottom: 5px;
-        color: #555;
-      }
+.heading {
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 28px;
+  font-weight: 600;
+}
 
-      input[type="number"],
-      input[type="file"],
-      textarea {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        font-size: 16px;
-      }
+.formGroup {
+  margin-bottom: 25px;
+}
 
-      textarea {
-        height: 100px;
-        resize: vertical;
-      }
-    }
+.label {
+  display: block;
+  margin-bottom: 8px;
+  color: #34495e;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
 
-    .submitButton {
-      display: block;
-      width: 100%;
-      padding: 10px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background-color 0.3s;
+.input,
+.textarea,
+.fileButton {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all 0.3s ease;
 
-      &:hover {
-        background-color: #0056b3;
-      }
-    }
+  &:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+    outline: none;
+  }
+}
 
-    .error {
-      color: #dc3545;
-      font-size: 14px;
-      margin-top: 5px;
-      display: block;
-    }
+.textarea {
+  height: 120px;
+  resize: vertical;
+}
+
+.fileButton {
+  display: inline-block;
+  background-color: #f7f9fa;
+  color: #2c3e50;
+  cursor: pointer;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: #e8f4f8;
+  }
+}
+
+.submitButton {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+
+  &:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  &:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+.error {
+  color: #e74c3c;
+  font-size: 14px;
+  margin-top: 5px;
+  display: block;
+  font-weight: 500;
+  transition: all 0.3s ease;
+
+  &:not(:empty) {
+    animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-5px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(5px);
   }
 }
