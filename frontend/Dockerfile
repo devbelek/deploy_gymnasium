@@ -1,4 +1,3 @@
-# frontend/Dockerfile
 FROM node:alpine
 
 WORKDIR /app
@@ -6,7 +5,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 
-COPY . .
+COPY ../frontend .
 RUN npm run build
 
 EXPOSE 3000

@@ -1,127 +1,58 @@
 "use client";
-
-import React, { useState, useEffect, useRef } from 'react';
 import { usePostDonationsMutation } from "@/redux/api/fond";
 import { SubmitHandler, useForm } from "react-hook-form";
 import styles from "./DonationContent.module.scss";
 
-interface CreateDonationRequest {
-  amount: number;
-  confirmation_file: FileList;
-  comment?: string;
-}
+// Используем интерфейс из пространства имен DONATIONS
+type IDonation = DONATIONS.IDonation;
 
-interface ErrorWithResponse extends Error {
-  response?: {
-    data?: any;
-    status?: number;
-    headers?: any;
-  };
+// Создаем отдельный интерфейс для формы
+interface IDonationForm {
+  amount: string;
+  confirmation_file: FileList;
+  comment: string;
 }
 
 const DonationContent: React.FC = () => {
   const [postDonationsMutation] = usePostDonationsMutation();
-  const [isLoading, setIsLoading] = useState(false);
-  const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
-
   const {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
-  } = useForm<CreateDonationRequest>();
+  } = useForm<IDonationForm>();
 
-  const watchFile = watch("confirmation_file");
-
-  useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/csrf/`, {
-      credentials: 'include',
-    });
-  }, []);
-
-  useEffect(() => {
-    if (watchFile && watchFile.length > 0) {
-      setSelectedFileName(watchFile[0].name);
-    } else {
-      setSelectedFileName(null);
-    }
-  }, [watchFile]);
-
-  const onSubmit: SubmitHandler<CreateDonationRequest> = async (data) => {
-    console.log("onSubmit called with data:", data);
-    setIsLoading(true);
-
+  const onSubmit: SubmitHandler<IDonationForm> = async (data) => {
     const formData = new FormData();
-    formData.append("amount", data.amount.toString());
-
-    const file = data.confirmation_file[0];
-    if (file) {
-      console.log("File type:", file.type);
-      if (file.type !== 'application/pdf') {
-        alert("Пожалуйста, выберите файл в формате PDF.");
-        setIsLoading(false);
-        return;
-      }
-      formData.append("confirmation_file", file);
-    } else {
-      console.error("No file selected");
-      alert("Пожалуйста, выберите файл.");
-      setIsLoading(false);
-      return;
+    formData.append("amount", data.amount);
+    if (data.confirmation_file.length > 0) {
+      formData.append("confirmation_file", data.confirmation_file[0]);
     }
-
-    if (data.comment) {
-      formData.append("comment", data.comment);
-    }
-
-    console.log("FormData contents:");
-    formData.forEach((value, key) => {
-      console.log(key, value);
-    });
+    formData.append("comment", data.comment);
 
     try {
-      const result = await postDonationsMutation(formData).unwrap();
-      console.log("API response:", result);
-      alert("Пожертвование успешно отправлено!");
-    } catch (error) {
-      console.error("Full error object:", error);
-      if (error && typeof error === 'object' && 'response' in error) {
-        const errorWithResponse = error as ErrorWithResponse;
-        if (errorWithResponse.response) {
-          console.error("Response data:", errorWithResponse.response.data);
-          console.error("Response status:", errorWithResponse.response.status);
-          console.error("Response headers:", errorWithResponse.response.headers);
-        }
-      }
-      console.error("Error sending donation:", error);
-      alert("Произошла ошибка при отправке пожертвования. Пожалуйста, попробуйте еще раз.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+      const donationData: Partial<IDonation> = {
+        amount: data.amount,
+        comment: data.comment,
+      };
 
-  const handleFileButtonClick = () => {
-    fileInputRef.current?.click();
+      await postDonationsMutation(donationData as IDonation);
+      console.log("Donation sent successfully");
+    } catch (error) {
+      console.error("Error sending donation:", error);
+    }
   };
 
   return (
     <div className={styles.donationContent}>
       <div className={styles.content}>
-        <h2 className={styles.heading}>Сделать пожертвование</h2>
+        <h2>Сделать пожертвование</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.formGroup}>
-            <label className={styles.label} htmlFor="amount">Сумма (сом):</label>
+            <label htmlFor="amount">Сумма (сом):</label>
             <input
-              className={styles.input}
               type="number"
               id="amount"
-              step="0.01"
-              {...register("amount", {
-                required: "Сумма обязательна",
-                min: { value: 0.01, message: "Сумма должна быть больше 0" },
-                validate: (value) => !isNaN(value) || "Введите корректное число"
-              })}
+              {...register("amount", { required: "Сумма обязательна" })}
             />
             {errors.amount && (
               <span className={styles.error}>{errors.amount.message}</span>
@@ -129,23 +60,15 @@ const DonationContent: React.FC = () => {
           </div>
 
           <div className={styles.formGroup}>
-            <label className={styles.label} htmlFor="confirmation_file">Квитанция о переводе (только PDF):</label>
+            <label htmlFor="confirmation_file">Квитанция о переводе:</label>
             <input
               type="file"
               id="confirmation_file"
-              accept=".pdf"
-              style={{ display: 'none' }}
+              accept=".pdf,.jpg,.jpeg,.png"
               {...register("confirmation_file", {
                 required: "Файл обязателен",
               })}
-              ref={(e) => {
-                register("confirmation_file").ref(e);
-                fileInputRef.current = e;
-              }}
             />
-            <button type="button" onClick={handleFileButtonClick} className={styles.fileButton}>
-              {selectedFileName || "Выберите файл"}
-            </button>
             {errors.confirmation_file && (
               <span className={styles.error}>
                 {errors.confirmation_file.message}
@@ -154,12 +77,12 @@ const DonationContent: React.FC = () => {
           </div>
 
           <div className={styles.formGroup}>
-            <label className={styles.label} htmlFor="comment">Комментарий:</label>
-            <textarea className={styles.textarea} id="comment" {...register("comment")} />
+            <label htmlFor="comment">Комментарий:</label>
+            <textarea id="comment" {...register("comment")} />
           </div>
 
-          <button type="submit" className={styles.submitButton} disabled={isLoading}>
-            {isLoading ? 'Отправка...' : 'Отправить'}
+          <button type="submit" className={styles.submitButton}>
+            Отправить
           </button>
         </form>
       </div>

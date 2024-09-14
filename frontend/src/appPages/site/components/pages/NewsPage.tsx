@@ -1,22 +1,14 @@
-"use client";
-
-import NewsDetailContent from "./news/NewsDetailContent/NewsDetailContent"; // Исправлена опечатка
+import NewsCommentsContent from "./news/NewsCommentsContent/NewsCommentsContent";
 import NewsMainContent from "./news/NewsMainContent/NewsMainContent";
 import scss from "./NewsPage.module.scss";
-
-interface NewsPageProps {
-  newsId?: number;
-}
-
-const NewsPage: React.FC<NewsPageProps> = ({ newsId }) => {
+const NewsPage = () => {
   return (
-    <div className={scss.content}>
-      {newsId ? (
-        <NewsDetailContent newsId={newsId} />
-      ) : (
+    <>
+      <div className={scss.content}>
         <NewsMainContent />
-      )}
-    </div>
+        <NewsCommentsContent />
+      </div>
+    </>
   );
 };
 
