@@ -1,6 +1,6 @@
 "use client";
 
-import NewsDetailContent from "./NewsDetailContent";
+import NewsDetailContent from "./news/NewsDetailCotnent/NewsDetailContent";
 import scss from "./NewsPage.module.scss";
 
 interface NewsPageProps {
