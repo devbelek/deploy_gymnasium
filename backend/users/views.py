@@ -13,6 +13,9 @@ from django.core.exceptions import PermissionDenied
 from rest_framework.decorators import action
 from django.shortcuts import get_object_or_404
 
+from ..main.models import News
+
+
 class RegisterView(APIView):
     permission_classes = [AllowAny]
 
@@ -134,20 +137,22 @@ class CommentViewSet(viewsets.ModelViewSet):
             logger.warning(f"Пользователь {self.request.user.username} попытался обновить чужой комментарий ID: {self.get_object().id}")
             raise PermissionDenied("Вы не можете редактировать этот комментарий")
 
-    @action(detail=False, methods=['get'], url_path='news/(?P<news_id>[^/.]+)/comments', url_name='news-comments')
-    def get_comments_by_news(self, request, news_id=None):
+    @action(detail=False, methods=['get'])
+    def news_comments(self, request, news_id=None):
         comments = self.get_queryset()
         serializer = self.get_serializer(comments, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    @action(detail=False, methods=['post'], url_path='news/(?P<news_id>[^/.]+)/comments', url_name='create-comment')
-    def create_comment_for_news(self, request, news_id=None):
+    @action(detail=False, methods=['post'])
+    def create_comment(self, request, news_id=None):
         news = get_object_or_404(News, pk=news_id)
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             serializer.save(author=request.user, news=news)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 class CommentReplyViewSet(viewsets.ModelViewSet):
     queryset = CommentReply.objects.all()
     serializer_class = CommentReplySerializers
