@@ -13,23 +13,24 @@ const api = index.injectEndpoints({
     }),
     getDetNews: build.query<NEWS.GetDetNewsResponse, number>({
       query: (id) => ({
-        url: `${ENDPOINTS}/news/${id}`,
+        url: `${ENDPOINTS}/news/${id}/`,
         method: "GET",
       }),
       providesTags: ["news"],
     }),
     getComments: build.query<NEWS.GetCommentsResponse, number>({
       query: (newsId) => ({
-        url: `${ENDPOINTS}/news/${newsId}/comments/`,
+        url: `${ENDPOINTS}/comments/news/${newsId}/comments/`,
         method: "GET",
       }),
       providesTags: ["comments"],
     }),
     addComment: build.mutation<NEWS.AddCommentResponse, { newsId: number; text: string }>({
       query: ({ newsId, text }) => ({
-        url: `${ENDPOINTS}/news/${newsId}/comments/`,
+        url: `${ENDPOINTS}/comments/news/${newsId}/comments/`,
         method: "POST",
         body: { text },
+        credentials: 'include', // Для отправки куки с CSRF токеном
       }),
       invalidatesTags: ["comments"],
     }),
@@ -38,6 +39,7 @@ const api = index.injectEndpoints({
         url: `${ENDPOINTS}/comments/${commentId}/`,
         method: "PATCH",
         body: { text },
+        credentials: 'include',
       }),
       invalidatesTags: ["comments"],
     }),
@@ -45,6 +47,7 @@ const api = index.injectEndpoints({
       query: (commentId) => ({
         url: `${ENDPOINTS}/comments/${commentId}/`,
         method: "DELETE",
+        credentials: 'include',
       }),
       invalidatesTags: ["comments"],
     }),
@@ -52,6 +55,7 @@ const api = index.injectEndpoints({
       query: (commentId) => ({
         url: `${ENDPOINTS}/comments/${commentId}/like/`,
         method: "POST",
+        credentials: 'include',
       }),
       invalidatesTags: ["comments"],
     }),
@@ -60,6 +64,7 @@ const api = index.injectEndpoints({
         url: `${ENDPOINTS}/comments/${commentId}/replies/`,
         method: "POST",
         body: { text },
+        credentials: 'include',
       }),
       invalidatesTags: ["comments"],
     }),
