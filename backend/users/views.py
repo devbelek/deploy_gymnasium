@@ -103,14 +103,19 @@ class CommentViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
-        return Comment.objects.filter(news_id=self.kwargs.get('news_pk'))
+        news_id = self.kwargs.get('news_id')
+        if news_id:
+            return Comment.objects.filter(news_id=news_id)
+        return Comment.objects.all()
 
     def list(self, request, *args, **kwargs):
         logger.info(f"Пользователь {request.user.username} запросил список комментариев.")
         return super().list(request, *args, **kwargs)
 
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
+        news_id = self.kwargs.get('news_id')
+        news = get_object_or_404(News, pk=news_id)
+        serializer.save(author=self.request.user, news=news)
         logger.info(f"Пользователь {self.request.user.username} создал комментарий ID: {serializer.instance.id}")
 
     def perform_destroy(self, instance):
@@ -119,6 +124,7 @@ class CommentViewSet(viewsets.ModelViewSet):
             instance.delete()
         else:
             logger.warning(f"Пользователь {self.request.user.username} попытался удалить чужой комментарий ID: {instance.id}")
+            raise PermissionDenied("Вы не можете удалить этот комментарий")
 
     def perform_update(self, serializer):
         if self.get_object().author == self.request.user:
@@ -128,22 +134,20 @@ class CommentViewSet(viewsets.ModelViewSet):
             logger.warning(f"Пользователь {self.request.user.username} попытался обновить чужой комментарий ID: {self.get_object().id}")
             raise PermissionDenied("Вы не можете редактировать этот комментарий")
 
-    @action(detail=True, methods=['get'], url_path='comments', url_name='news-comments')
-    def get_comments_by_news(self, request, pk=None):
-        comments = Comment.objects.filter(news_id=pk)
+    @action(detail=False, methods=['get'], url_path='news/(?P<news_id>[^/.]+)/comments', url_name='news-comments')
+    def get_comments_by_news(self, request, news_id=None):
+        comments = self.get_queryset()
         serializer = self.get_serializer(comments, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    @action(detail=True, methods=['post'], url_path='comments', url_name='create-comment')
-    def create_comment_for_news(self, request, pk=None):
-        news = get_object_or_404(News, pk=pk)
+    @action(detail=False, methods=['post'], url_path='news/(?P<news_id>[^/.]+)/comments', url_name='create-comment')
+    def create_comment_for_news(self, request, news_id=None):
+        news = get_object_or_404(News, pk=news_id)
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             serializer.save(author=request.user, news=news)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 class CommentReplyViewSet(viewsets.ModelViewSet):
     queryset = CommentReply.objects.all()
     serializer_class = CommentReplySerializers
