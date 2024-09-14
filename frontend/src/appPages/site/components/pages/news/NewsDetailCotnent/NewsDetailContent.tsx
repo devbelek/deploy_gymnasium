@@ -58,17 +58,17 @@ const NewsDetailContent: React.FC = () => {
     }
   };
 
-    const handleDeleteComment = async (commentId: number) => {
-      try {
-        await deleteComment(commentId).unwrap();
-      } catch (error) {
-        console.error("Ошибка при удалении комментария:", error);
-      }
-    };
+  const handleDeleteComment = async (commentId: number) => {
+    try {
+      await deleteComment(commentId).unwrap();
+    } catch (error) {
+      console.error("Ошибка при удалении комментария:", error);
+    }
+  };
 
   const handleLikeComment = async (commentId: number) => {
     try {
-      await likeComment({ commentId }).unwrap();
+      await likeComment(commentId).unwrap();
     } catch (error) {
       console.error("Ошибка при лайке комментария:", error);
     }
