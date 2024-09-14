@@ -4,6 +4,7 @@ import scss from "./NewsDetailContent.module.scss";
 import { useGetDetNewsQuery, useGetCommentsQuery, useAddCommentMutation } from "@/redux/api/news";
 import Image from "next/image";
 import { useState } from "react";
+import { getCSRFToken } from '@/utils/csrf';  // Измените путь в соответствии с вашей структурой проекта
 
 const NewsDetailContent: React.FC = () => {
   const params = useParams();
@@ -24,6 +25,12 @@ const NewsDetailContent: React.FC = () => {
 
   const handleAddComment = async () => {
     if (commentText.trim()) {
+      const csrfToken = getCSRFToken();
+      if (!csrfToken) {
+        console.error("CSRF token not found");
+        // Здесь можно добавить логику обработки отсутствия токена
+        return;
+      }
       try {
         await addComment({ newsId, text: commentText }).unwrap();
         setCommentText("");
