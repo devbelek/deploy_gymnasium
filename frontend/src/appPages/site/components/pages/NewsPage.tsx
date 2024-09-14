@@ -1,20 +1,18 @@
 "use client";
 
-import { useParams } from 'next/navigation';
-import NewsCommentsContent from "./news/NewsCommentsContent/NewsCommentsContent";
-import NewsMainContent from "./news/NewsMainContent/NewsMainContent";
-import NewsDetailContent from "./news/NewsDetailCotnent/NewsDetailContent";
+import NewsDetailContent from "./NewsDetailContent";
 import scss from "./NewsPage.module.scss";
 
-const Page = () => {
-  const params = useParams();
-  const newsId = parseInt(params.newsDetail as string, 10);
+interface NewsPageProps {
+  newsId: number;
+}
 
-  if (isNaN(newsId)) {
-    return <div>Неверный идентификатор новости</div>;
-  }
-
-  return <NewsDetailContent newsId={newsId} />;
+const NewsPage: React.FC<NewsPageProps> = ({ newsId }) => {
+  return (
+    <div className={scss.content}>
+      <NewsDetailContent newsId={newsId} />
+    </div>
+  );
 };
 
-export default Page;
+export default NewsPage;
