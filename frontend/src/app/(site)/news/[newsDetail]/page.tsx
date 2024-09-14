@@ -2,7 +2,7 @@
 
 import { useParams } from 'next/navigation';
 import NewsDetailContent from "@/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent";
-
+console.log('Page component rendered, newsId:', newsId);
 const Page = () => {
   const params = useParams();
   const newsId = typeof params.newsDetail === 'string' ? parseInt(params.newsDetail, 10) : null;
