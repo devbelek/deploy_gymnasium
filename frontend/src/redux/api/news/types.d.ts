@@ -22,6 +22,7 @@ namespace NEWS {
     likes_count: number;
     is_liked: boolean;
     replies: IReply[];
+    likes: number;
   }
 
   interface IReply {
