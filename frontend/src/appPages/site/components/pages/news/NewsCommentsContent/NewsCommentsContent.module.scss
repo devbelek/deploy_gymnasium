@@ -39,3 +39,25 @@
     }
   }
 }
+
+.editCommentForm, .replyForm {
+  margin-top: 1rem;
+
+  textarea {
+    width: 100%;
+    min-height: 80px;
+    margin-bottom: 0.5rem;
+  }
+
+  button {
+    margin-right: 0.5rem;
+  }
+}
+
+.reply {
+  margin-left: 2rem;
+  padding: 0.5rem;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+}
