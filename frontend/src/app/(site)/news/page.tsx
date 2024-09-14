@@ -1,3 +1,5 @@
+"use client"; // Это позволит использовать клиентские хуки, такие как useParams
+
 import { useParams } from 'next/navigation';
 import NewsPage from "@/appPages/site/components/pages/NewsPage";
 
