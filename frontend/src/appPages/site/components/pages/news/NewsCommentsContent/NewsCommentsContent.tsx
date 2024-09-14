@@ -6,8 +6,10 @@ import { useGetCommentsQuery, useAddCommentMutation, useUpdateCommentMutation, u
 import scss from './NewsCommentsContent.module.scss';
 
 const NewsCommentsContent: React.FC = () => {
-  const { newsDetail } = useParams();
-  const { data: comments, isLoading } = useGetCommentsQuery(Number(newsDetail));
+  const params = useParams();
+  const newsDetail = params.newsDetail;
+
+  const { data: comments, isLoading, error } = useGetCommentsQuery(newsDetail);
   const [addComment] = useAddCommentMutation();
   const [updateComment] = useUpdateCommentMutation();
   const [deleteComment] = useDeleteCommentMutation();
@@ -21,39 +23,66 @@ const NewsCommentsContent: React.FC = () => {
   const [replyText, setReplyText] = useState('');
 
   const handleAddComment = async () => {
-    if (newCommentText.trim()) {
-      await addComment({ newsId: Number(newsDetail), text: newCommentText });
-      setNewCommentText('');
+    if (newCommentText.trim() && newsDetail) {
+      try {
+        await addComment({ newsId: newsDetail, text: newCommentText });
+        setNewCommentText('');
+      } catch (error) {
+        console.error('Failed to add comment:', error);
+        // Handle error (e.g., show error message to user)
+      }
     }
   };
 
   const handleUpdateComment = async (commentId: number) => {
     if (editingCommentText.trim()) {
-      await updateComment({ commentId, text: editingCommentText });
-      setEditingCommentId(null);
-      setEditingCommentText('');
+      try {
+        await updateComment({ commentId, text: editingCommentText });
+        setEditingCommentId(null);
+        setEditingCommentText('');
+      } catch (error) {
+        console.error('Failed to update comment:', error);
+        // Handle error
+      }
     }
   };
 
   const handleDeleteComment = async (commentId: number) => {
     if (window.confirm('Вы уверены, что хотите удалить этот комментарий?')) {
-      await deleteComment(commentId);
+      try {
+        await deleteComment(commentId);
+      } catch (error) {
+        console.error('Failed to delete comment:', error);
+        // Handle error
+      }
     }
   };
 
   const handleLikeComment = async (commentId: number) => {
-    await likeComment(commentId);
+    try {
+      await likeComment(commentId);
+    } catch (error) {
+      console.error('Failed to like comment:', error);
+      // Handle error
+    }
   };
 
   const handleAddReply = async (commentId: number) => {
     if (replyText.trim()) {
-      await addReply({ commentId, text: replyText });
-      setReplyingToCommentId(null);
-      setReplyText('');
+      try {
+        await addReply({ commentId, text: replyText });
+        setReplyingToCommentId(null);
+        setReplyText('');
+      } catch (error) {
+        console.error('Failed to add reply:', error);
+        // Handle error
+      }
     }
   };
 
   if (isLoading) return <div>Загрузка комментариев...</div>;
+  if (error) return <div>Ошибка при загрузке комментариев</div>;
+  if (!comments) return <div>Комментарии не найдены</div>;
 
   return (
     <div className={scss.NewsCommentsContent}>
@@ -66,7 +95,7 @@ const NewsCommentsContent: React.FC = () => {
         />
         <button onClick={handleAddComment}>Отправить</button>
       </div>
-      {comments?.map((comment) => (
+      {comments.map((comment) => (
         <div key={comment.id} className={scss.comment}>
           <p><strong>{comment.author}</strong>: {comment.text}</p>
           <div className={scss.commentActions}>
