@@ -10,7 +10,7 @@ import scss from "./NewsDetailContent.module.scss";
 const NewsDetailContent: React.FC<{ newsId: number }> = ({ newsId }) => {
   const { data: commentsData, isLoading: commentsLoading, error: commentsError, refetch: refetchComments } = useGetCommentsQuery(newsId);
   const [addComment] = useAddCommentMutation();
-  const [editComment] = useEditCommentMutation();
+  const [editComment] = useUpdateCommentMutation();
   const [deleteComment] = useDeleteCommentMutation();
   const [likeComment] = useLikeCommentMutation();
 
