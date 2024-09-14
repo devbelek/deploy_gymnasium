@@ -58,10 +58,17 @@ class CommentSerializers(serializers.ModelSerializer):
 
 class CommentReplySerializers(serializers.ModelSerializer):
     author = serializers.ReadOnlyField(source='author.username')
+    parent_comment_id = serializers.IntegerField(write_only=True)
 
     class Meta:
         model = CommentReply
-        fields = ['id', 'author', 'text', 'created_at']
+        fields = ['id', 'author', 'text', 'created_at', 'parent_comment_id']
+
+    def create(self, validated_data):
+        parent_comment_id = validated_data.pop('parent_comment_id')
+        parent_comment = Comment.objects.get(id=parent_comment_id)
+        reply = CommentReply.objects.create(parent_comment=parent_comment, **validated_data)
+        return reply
 
 
 class LikeSerializers(serializers.ModelSerializer):

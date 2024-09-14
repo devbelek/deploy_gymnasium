@@ -162,9 +162,18 @@ class CommentReplyViewSet(viewsets.ModelViewSet):
         return super().list(request, *args, **kwargs)
 
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
+        parent_comment_id = self.request.data.get('parent_comment_id')
+        parent_comment = get_object_or_404(Comment, pk=parent_comment_id)
+        serializer.save(author=self.request.user, parent_comment=parent_comment)
         logger.info(
-            f"Пользователь {self.request.user.username} создал ответ ID: {serializer.instance.id} на комментарий ID: {serializer.instance.comment.id}")
+            f"Пользователь {self.request.user.username} создал ответ ID: {serializer.instance.id} на комментарий ID: {parent_comment.id}")
+
+    @action(detail=False, methods=['get'])
+    def replies_for_comment(self, request, *args, **kwargs):
+        comment_id = request.query_params.get('comment_id')
+        replies = CommentReply.objects.filter(parent_comment_id=comment_id)
+        serializer = self.get_serializer(replies, many=True)
+        return Response(serializer.data)
 
     def perform_destroy(self, instance):
         if instance.author == self.request.user:
@@ -172,6 +181,7 @@ class CommentReplyViewSet(viewsets.ModelViewSet):
             instance.delete()
         else:
             logger.warning(f"Пользователь {self.request.user.username} попытался удалить чужой ответ ID: {instance.id}")
+            raise PermissionDenied("Вы не можете удалить этот ответ.")
 
     def perform_update(self, serializer):
         if self.get_object().author == self.request.user:
@@ -180,7 +190,7 @@ class CommentReplyViewSet(viewsets.ModelViewSet):
         else:
             logger.warning(
                 f"Пользователь {self.request.user.username} попытался обновить чужой ответ ID: {self.get_object().id}")
-            raise PermissionDenied("Вы не можете редактировать этот ответ")
+            raise PermissionDenied("Вы не можете редактировать этот ответ.")
 
 
 class LikeViewSet(viewsets.ModelViewSet):
