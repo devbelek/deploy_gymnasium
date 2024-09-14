@@ -1,4 +1,4 @@
-from symbol import decorators
+from rest_framework.decorators import action
 
 from rest_framework.views import APIView
 from .models import UserProfile, Comment, CommentReply, Like, Donation, ConfirmedDonation
@@ -132,7 +132,7 @@ class CommentReplyViewSet(viewsets.ModelViewSet):
     serializer_class = CommentReplySerializers
     permission_classes = [IsAuthenticatedOrReadOnly]
 
-    @decorators.action(detail=False, methods=['GET'])
+    @action(detail=False, methods=['GET'])
     def for_comment(self, request):
         comment_id = request.query_params.get('comment_id')
         if comment_id:
