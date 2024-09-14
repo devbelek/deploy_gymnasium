@@ -31,7 +31,7 @@ const CommentReplies: React.FC<{ commentId: number }> = ({ commentId }) => {
     <div className={scss.replies}>
       {replies?.map((reply: CommentReply) => (
         <div key={reply.id} className={scss.reply}>
-          <p><strong>{reply.user?.username || reply.author.username || 'Неизвестный пользователь'}</strong></p>
+          <p><strong>{reply.author.username || 'Неизвестный пользователь'}</strong></p>
           <p>{reply.text}</p>
           <p className={scss.replyDate}>{new Date(reply.created_at).toLocaleString()}</p>
         </div>

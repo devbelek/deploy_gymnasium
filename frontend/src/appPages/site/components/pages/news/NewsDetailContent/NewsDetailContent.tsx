@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from 'react';
 import { useGetCommentsQuery, useAddCommentMutation, useUpdateCommentMutation, useDeleteCommentMutation, useLikeCommentMutation } from "@/redux/api/comments";
 import { Comment } from '@/redux/api/comments/types';
@@ -54,7 +55,7 @@ const NewsDetailContent: React.FC<{ newsId: number }> = ({ newsId }) => {
 
   const handleLikeComment = async (commentId: number) => {
     try {
-      await likeComment({ commentId }).unwrap();  // Исправлено
+      await likeComment({ commentId }).unwrap();
       refetchComments();
     } catch (error) {
       console.error('Failed to like comment:', error);
@@ -69,7 +70,7 @@ const NewsDetailContent: React.FC<{ newsId: number }> = ({ newsId }) => {
         {commentsError && <p className={scss.error}>Ошибка загрузки комментариев.</p>}
         {commentsData && commentsData.map((comment: Comment) => (
           <div key={comment.id} className={scss.comment}>
-            <p><strong>{comment.user.username}</strong></p>
+            <p><strong>{comment.author.username}</strong></p>
             {editingCommentId === comment.id ? (
               <div>
                 <textarea
@@ -83,7 +84,7 @@ const NewsDetailContent: React.FC<{ newsId: number }> = ({ newsId }) => {
               <>
                 <p>{comment.text}</p>
                 <p className={scss.commentDate}>{new Date(comment.created_at).toLocaleString()}</p>
-                {user && user.id === comment.user.id && (
+                {user && user.id === comment.author.id && (
                   <>
                     <button onClick={() => {
                       setEditingCommentId(comment.id);

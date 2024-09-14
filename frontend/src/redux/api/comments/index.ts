@@ -31,6 +31,13 @@ export const commentsApi = createApi({
         body: newComment,
       }),
     }),
+    replyToComment: builder.mutation<CommentReply, { commentId: number; text: string }>({
+      query: ({ commentId, text }) => ({
+        url: 'comment_replies/',
+        method: 'POST',
+        body: { comment: commentId, text },
+      }),
+    }),
     updateComment: builder.mutation<Comment, { commentId: number; text: string }>({
       query: ({ commentId, text }) => ({
         url: `comments/${commentId}/`,
@@ -38,7 +45,7 @@ export const commentsApi = createApi({
         body: { text },
       }),
     }),
-    deleteComment: builder.mutation<{ success: boolean }, number>({
+    deleteComment: builder.mutation<void, number>({
       query: (commentId) => ({
         url: `comments/${commentId}/`,
         method: 'DELETE',
@@ -46,22 +53,8 @@ export const commentsApi = createApi({
     }),
     likeComment: builder.mutation<Like, { commentId: number }>({
       query: ({ commentId }) => ({
-        url: 'likes/',
+        url: `comments/${commentId}/like/`,
         method: 'POST',
-        body: { comment: commentId },
-      }),
-    }),
-    unlikeComment: builder.mutation<{ success: boolean }, number>({
-      query: (commentId) => ({
-        url: `likes/${commentId}/`,
-        method: 'DELETE',
-      }),
-    }),
-    replyToComment: builder.mutation<CommentReply, { commentId: number; text: string }>({
-      query: ({ commentId, text }) => ({
-        url: 'comment_replies/',
-        method: 'POST',
-        body: { comment: commentId, text },
       }),
     }),
   }),
@@ -71,9 +64,8 @@ export const {
   useGetCommentsQuery,
   useGetRepliesQuery,
   useAddCommentMutation,
+  useReplyToCommentMutation,
   useUpdateCommentMutation,
   useDeleteCommentMutation,
   useLikeCommentMutation,
-  useUnlikeCommentMutation,
-  useReplyToCommentMutation,
 } = commentsApi;
