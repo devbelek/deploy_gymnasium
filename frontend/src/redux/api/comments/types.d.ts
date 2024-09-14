@@ -1,16 +1,20 @@
-// Тип для комментария
 export interface Comment {
   id: number;
-  news: number;  // ID новости, к которой привязан комментарий
+  news: number;
   author: {
+    id: number;
+    username: string;
+  };
+  user: {
     id: number;
     username: string;
   };
   text: string;
   created_at: string;
   updated_at: string;
-  replies: CommentReply[];  // Массив ответов на комментарий
-  likes: Like[];  // Массив лайков комментария
+  replies: CommentReply[];
+  likes: Like[];
+  isLiked: boolean;
 }
 
 // Тип для нового комментария, который отправляется при создании
