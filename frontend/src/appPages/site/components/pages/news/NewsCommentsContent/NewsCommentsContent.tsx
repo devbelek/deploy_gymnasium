@@ -1,11 +1,8 @@
-"use client";
-
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { useGetCommentsQuery, useAddCommentMutation, useUpdateCommentMutation, useDeleteCommentMutation, useLikeCommentMutation, useAddReplyMutation } from '@/redux/api/news';
-import scss from './NewsCommentsContent.module.scss';
 
-const NewsCommentsContent: React.FC = () => {
+const NewsCommentsContent = () => {
   const params = useParams();
   const newsId = typeof params.newsDetail === 'string' ? parseInt(params.newsDetail, 10) : NaN;
 
@@ -19,17 +16,10 @@ const NewsCommentsContent: React.FC = () => {
   const [addReply] = useAddReplyMutation();
 
   const [newCommentText, setNewCommentText] = useState('');
-  const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
+  const [editingCommentId, setEditingCommentId] = useState(null);
   const [editingCommentText, setEditingCommentText] = useState('');
-  const [replyingToCommentId, setReplyingToCommentId] = useState<number | null>(null);
+  const [replyingToCommentId, setReplyingToCommentId] = useState(null);
   const [replyText, setReplyText] = useState('');
-
-  useEffect(() => {
-    console.log('NewsId:', newsId);
-    console.log('Is Loading:', isLoading);
-    console.log('Error:', error);
-    console.log('Comments:', comments);
-  }, [newsId, isLoading, error, comments]);
 
   const handleAddComment = async () => {
     if (newCommentText.trim() && !isNaN(newsId)) {
@@ -38,13 +28,13 @@ const NewsCommentsContent: React.FC = () => {
         setNewCommentText('');
         refetch();
       } catch (error) {
-        console.error('Failed to add comment:', error);
+        console.error('Не удалось добавить комментарий:', error);
         alert('Не удалось добавить комментарий. Пожалуйста, попробуйте еще раз.');
       }
     }
   };
 
-  const handleUpdateComment = async (commentId: number) => {
+  const handleUpdateComment = async (commentId) => {
     if (editingCommentText.trim()) {
       try {
         await updateComment({ commentId, text: editingCommentText }).unwrap();
@@ -52,35 +42,35 @@ const NewsCommentsContent: React.FC = () => {
         setEditingCommentText('');
         refetch();
       } catch (error) {
-        console.error('Failed to update comment:', error);
+        console.error('Не удалось обновить комментарий:', error);
         alert('Не удалось обновить комментарий. Пожалуйста, попробуйте еще раз.');
       }
     }
   };
 
-  const handleDeleteComment = async (commentId: number) => {
+  const handleDeleteComment = async (commentId) => {
     if (window.confirm('Вы уверены, что хотите удалить этот комментарий?')) {
       try {
         await deleteComment(commentId).unwrap();
         refetch();
       } catch (error) {
-        console.error('Failed to delete comment:', error);
+        console.error('Не удалось удалить комментарий:', error);
         alert('Не удалось удалить комментарий. Пожалуйста, попробуйте еще раз.');
       }
     }
   };
 
-  const handleLikeComment = async (commentId: number) => {
+  const handleLikeComment = async (commentId) => {
     try {
       await likeComment(commentId).unwrap();
       refetch();
     } catch (error) {
-      console.error('Failed to like comment:', error);
+      console.error('Не удалось поставить лайк:', error);
       alert('Не удалось поставить лайк. Пожалуйста, попробуйте еще раз.');
     }
   };
 
-  const handleAddReply = async (commentId: number) => {
+  const handleAddReply = async (commentId) => {
     if (replyText.trim()) {
       try {
         await addReply({ commentId, text: replyText }).unwrap();
@@ -88,89 +78,193 @@ const NewsCommentsContent: React.FC = () => {
         setReplyText('');
         refetch();
       } catch (error) {
-        console.error('Failed to add reply:', error);
+        console.error('Не удалось добавить ответ:', error);
         alert('Не удалось добавить ответ. Пожалуйста, попробуйте еще раз.');
       }
     }
   };
 
   if (isNaN(newsId)) {
-    return <div>Некорректный идентификатор новости</div>;
+    return <div className="error-message">Некорректный идентификатор новости</div>;
   }
 
-  if (isLoading) return <div>Загрузка комментариев...</div>;
+  if (isLoading) return <div className="loading-message">Загрузка комментариев...</div>;
 
   if (error) {
-    console.error('Error loading comments:', error);
+    console.error('Ошибка при загрузке комментариев:', error);
     return (
-      <div>
-        <div>Ошибка при загрузке комментариев. Пожалуйста, попробуйте обновить страницу.</div>
-        <button onClick={() => refetch()}>Попробовать снова</button>
+      <div className="error-container">
+        <div className="error-message">Ошибка при загрузке комментариев. Пожалуйста, попробуйте обновить страницу.</div>
+        <button className="retry-button" onClick={() => refetch()}>Попробовать снова</button>
       </div>
     );
   }
 
   return (
-    <div className={scss.NewsCommentsContent}>
-      <h2>Комментарии</h2>
-      <div className={scss.addCommentForm}>
+    <div className="news-comments-content">
+      <h2 className="comments-title">Комментарии</h2>
+      <div className="add-comment-form">
         <textarea
+          className="comment-textarea"
           value={newCommentText}
           onChange={(e) => setNewCommentText(e.target.value)}
           placeholder="Написать комментарий..."
         />
-        <button onClick={handleAddComment}>Отправить</button>
+        <button className="submit-button" onClick={handleAddComment}>Отправить</button>
       </div>
       {Array.isArray(comments) && comments.length > 0 ? (
         comments.map((comment) => (
-          <div key={comment.id} className={scss.comment}>
-            <p><strong>{comment.author}</strong>: {comment.text}</p>
-            <div className={scss.commentActions}>
-              <button onClick={() => handleLikeComment(comment.id)}>
+          <div key={comment.id} className="comment">
+            <p className="comment-text"><strong>{comment.author}</strong>: {comment.text}</p>
+            <div className="comment-actions">
+              <button className="action-button" onClick={() => handleLikeComment(comment.id)}>
                 {comment.is_liked ? 'Убрать лайк' : 'Лайк'} ({comment.likes_count})
               </button>
-              <button onClick={() => setReplyingToCommentId(comment.id)}>Ответить</button>
+              <button className="action-button" onClick={() => setReplyingToCommentId(comment.id)}>Ответить</button>
               {comment.author === 'Текущий пользователь' && (
                 <>
-                  <button onClick={() => {
+                  <button className="action-button" onClick={() => {
                     setEditingCommentId(comment.id);
                     setEditingCommentText(comment.text);
                   }}>Редактировать</button>
-                  <button onClick={() => handleDeleteComment(comment.id)}>Удалить</button>
+                  <button className="action-button delete" onClick={() => handleDeleteComment(comment.id)}>Удалить</button>
                 </>
               )}
             </div>
             {editingCommentId === comment.id && (
-              <div className={scss.editCommentForm}>
+              <div className="edit-comment-form">
                 <textarea
+                  className="comment-textarea"
                   value={editingCommentText}
                   onChange={(e) => setEditingCommentText(e.target.value)}
                 />
-                <button onClick={() => handleUpdateComment(comment.id)}>Сохранить</button>
-                <button onClick={() => setEditingCommentId(null)}>Отмена</button>
+                <button className="submit-button" onClick={() => handleUpdateComment(comment.id)}>Сохранить</button>
+                <button className="cancel-button" onClick={() => setEditingCommentId(null)}>Отмена</button>
               </div>
             )}
             {replyingToCommentId === comment.id && (
-              <div className={scss.replyForm}>
+              <div className="reply-form">
                 <textarea
+                  className="comment-textarea"
                   value={replyText}
                   onChange={(e) => setReplyText(e.target.value)}
                   placeholder="Написать ответ..."
                 />
-                <button onClick={() => handleAddReply(comment.id)}>Отправить ответ</button>
-                <button onClick={() => setReplyingToCommentId(null)}>Отмена</button>
+                <button className="submit-button" onClick={() => handleAddReply(comment.id)}>Отправить ответ</button>
+                <button className="cancel-button" onClick={() => setReplyingToCommentId(null)}>Отмена</button>
               </div>
             )}
             {comment.replies && comment.replies.map((reply) => (
-              <div key={reply.id} className={scss.reply}>
-                <p><strong>{reply.author}</strong>: {reply.text}</p>
+              <div key={reply.id} className="reply">
+                <p className="reply-text"><strong>{reply.author}</strong>: {reply.text}</p>
               </div>
             ))}
           </div>
         ))
       ) : (
-        <div>Комментариев пока нет.</div>
+        <div className="no-comments">Комментариев пока нет.</div>
       )}
+      <style jsx>{`
+        .news-comments-content {
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 20px;
+          font-family: Arial, sans-serif;
+        }
+        .comments-title {
+          font-size: 24px;
+          margin-bottom: 20px;
+        }
+        .add-comment-form, .edit-comment-form, .reply-form {
+          margin-bottom: 20px;
+        }
+        .comment-textarea {
+          width: 100%;
+          min-height: 100px;
+          padding: 10px;
+          margin-bottom: 10px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+        }
+        .submit-button, .action-button, .cancel-button {
+          padding: 8px 16px;
+          margin-right: 10px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          transition: background-color 0.3s;
+        }
+        .submit-button {
+          background-color: #4CAF50;
+          color: white;
+        }
+        .submit-button:hover {
+          background-color: #45a049;
+        }
+        .action-button {
+          background-color: #008CBA;
+          color: white;
+        }
+        .action-button:hover {
+          background-color: #007B9A;
+        }
+        .action-button.delete {
+          background-color: #f44336;
+        }
+        .action-button.delete:hover {
+          background-color: #da190b;
+        }
+        .cancel-button {
+          background-color: #f1f1f1;
+          color: black;
+        }
+        .cancel-button:hover {
+          background-color: #ddd;
+        }
+        .comment, .reply {
+          margin-bottom: 15px;
+          padding: 10px;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+        }
+        .reply {
+          margin-left: 20px;
+          background-color: #f9f9f9;
+        }
+        .comment-actions {
+          margin-top: 10px;
+        }
+        .error-message, .loading-message, .no-comments {
+          text-align: center;
+          padding: 20px;
+          background-color: #f8d7da;
+          color: #721c24;
+          border: 1px solid #f5c6cb;
+          border-radius: 4px;
+        }
+        .loading-message {
+          background-color: #e9ecef;
+          color: #495057;
+          border-color: #ced4da;
+        }
+        .no-comments {
+          background-color: #f8f9fa;
+          color: #6c757d;
+          border-color: #dee2e6;
+        }
+        .retry-button {
+          margin-top: 10px;
+          padding: 8px 16px;
+          background-color: #007bff;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+        }
+        .retry-button:hover {
+          background-color: #0056b3;
+        }
+      `}</style>
     </div>
   );
 };
