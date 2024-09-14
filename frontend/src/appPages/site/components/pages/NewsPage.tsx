@@ -3,7 +3,7 @@
 import { useParams } from 'next/navigation';
 import NewsCommentsContent from "./news/NewsCommentsContent/NewsCommentsContent";
 import NewsMainContent from "./news/NewsMainContent/NewsMainContent";
-import NewsDetailContent from "@/appPages/site/components/pages/NewsDetailContent";
+import NewsDetailContent from "./news/NewsDetailCotnent/NewsDetailContent";
 import scss from "./NewsPage.module.scss";
 
 const Page = () => {
