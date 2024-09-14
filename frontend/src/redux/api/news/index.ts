@@ -11,21 +11,21 @@ const api = index.injectEndpoints({
       }),
       providesTags: ["news"],
     }),
-    getDetNews: build.query<NEWS.GetDetNewsResponse, NEWS.GetDetNewsRequest>({
+    getDetNews: build.query<NEWS.GetDetNewsResponse, number>({
       query: (id) => ({
         url: `${ENDPOINTS}/news/${id}`,
         method: "GET",
       }),
       providesTags: ["news"],
     }),
-    getComments: build.query<NEWS.GetCommentsResponse, NEWS.GetCommentsRequest>({
+    getComments: build.query<NEWS.GetCommentsResponse, number>({
       query: (newsId) => ({
         url: `${ENDPOINTS}/news/${newsId}/comments/`,
         method: "GET",
       }),
       providesTags: ["comments"],
     }),
-    addComment: build.mutation<NEWS.AddCommentResponse, NEWS.AddCommentRequest>({
+    addComment: build.mutation<NEWS.AddCommentResponse, { newsId: number; text: string }>({
       query: ({ newsId, text }) => ({
         url: `${ENDPOINTS}/news/${newsId}/comments/`,
         method: "POST",
@@ -33,7 +33,7 @@ const api = index.injectEndpoints({
       }),
       invalidatesTags: ["comments"],
     }),
-    updateComment: build.mutation<NEWS.UpdateCommentResponse, NEWS.UpdateCommentRequest>({
+    updateComment: build.mutation<NEWS.UpdateCommentResponse, { commentId: number; text: string }>({
       query: ({ commentId, text }) => ({
         url: `${ENDPOINTS}/comments/${commentId}/`,
         method: "PATCH",
@@ -41,21 +41,21 @@ const api = index.injectEndpoints({
       }),
       invalidatesTags: ["comments"],
     }),
-    deleteComment: build.mutation<NEWS.DeleteCommentResponse, NEWS.DeleteCommentRequest>({
+    deleteComment: build.mutation<NEWS.DeleteCommentResponse, number>({
       query: (commentId) => ({
         url: `${ENDPOINTS}/comments/${commentId}/`,
         method: "DELETE",
       }),
       invalidatesTags: ["comments"],
     }),
-    likeComment: build.mutation<NEWS.LikeCommentResponse, NEWS.LikeCommentRequest>({
+    likeComment: build.mutation<NEWS.LikeCommentResponse, number>({
       query: (commentId) => ({
         url: `${ENDPOINTS}/comments/${commentId}/like/`,
         method: "POST",
       }),
       invalidatesTags: ["comments"],
     }),
-    addReply: build.mutation<NEWS.AddReplyResponse, NEWS.AddReplyRequest>({
+    addReply: build.mutation<NEWS.AddReplyResponse, { commentId: number; text: string }>({
       query: ({ commentId, text }) => ({
         url: `${ENDPOINTS}/comments/${commentId}/replies/`,
         method: "POST",

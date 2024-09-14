@@ -6,8 +6,14 @@ import Image from "next/image";
 import NewsCommentsContent from "../NewsCommentsContent/NewsCommentsContent";
 
 const NewsDetailContent: React.FC = () => {
-  const { newsDetail } = useParams();
-  const { data, isLoading, error } = useGetDetNewsQuery(String(newsDetail));
+  const params = useParams();
+  const newsDetail = params.newsDetail;
+
+  const newsId = Array.isArray(newsDetail)
+    ? parseInt(newsDetail[0], 10)
+    : parseInt(newsDetail, 10);
+
+  const { data, isLoading, error } = useGetDetNewsQuery(newsId);
 
   if (isLoading) return <div>Загрузка новости...</div>;
   if (error) return <div>Ошибка при загрузке новости</div>;
