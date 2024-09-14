@@ -1,17 +1,5 @@
-"use client";
+import NewsPage from "@/appPages/site/components/pages/NewsPage";
 
-import { useParams } from 'next/navigation';
-import NewsDetailContent from "@/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent";
+const page = () => <NewsPage />;
 
-const Page = () => {
-  const params = useParams();
-  const newsId = typeof params.newsDetail === 'string' ? parseInt(params.newsDetail, 10) : null;
-
-  if (newsId === null || isNaN(newsId)) {
-    return <div>Неверный идентификатор новости</div>;
-  }
-
-  return <NewsDetailContent newsId={newsId} />;
-};
-
-export default Page;
+export default page;
