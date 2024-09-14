@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { useGetCommentsQuery, useAddCommentMutation, useUpdateCommentMutation, useDeleteCommentMutation, useLikeCommentMutation, useAddReplyMutation } from '@/redux/api/news';
 
-const NewsCommentsContent = () => {
+const NewsCommentsContent: React.FC = () => {
   const params = useParams();
   const newsId = typeof params.newsDetail === 'string' ? parseInt(params.newsDetail, 10) : NaN;
 
@@ -18,9 +18,9 @@ const NewsCommentsContent = () => {
   const [addReply] = useAddReplyMutation();
 
   const [newCommentText, setNewCommentText] = useState('');
-  const [editingCommentId, setEditingCommentId] = useState(null);
+  const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
   const [editingCommentText, setEditingCommentText] = useState('');
-  const [replyingToCommentId, setReplyingToCommentId] = useState(null);
+  const [replyingToCommentId, setReplyingToCommentId] = useState<number | null>(null);
   const [replyText, setReplyText] = useState('');
 
   const handleAddComment = async () => {
@@ -36,7 +36,7 @@ const NewsCommentsContent = () => {
     }
   };
 
-  const handleUpdateComment = async (commentId) => {
+  const handleUpdateComment = async (commentId: number) => {
     if (editingCommentText.trim()) {
       try {
         await updateComment({ commentId, text: editingCommentText }).unwrap();
@@ -50,7 +50,7 @@ const NewsCommentsContent = () => {
     }
   };
 
-  const handleDeleteComment = async (commentId) => {
+  const handleDeleteComment = async (commentId: number) => {
     if (window.confirm('Вы уверены, что хотите удалить этот комментарий?')) {
       try {
         await deleteComment(commentId).unwrap();
@@ -62,7 +62,7 @@ const NewsCommentsContent = () => {
     }
   };
 
-  const handleLikeComment = async (commentId) => {
+  const handleLikeComment = async (commentId: number) => {
     try {
       await likeComment(commentId).unwrap();
       refetch();
@@ -72,7 +72,7 @@ const NewsCommentsContent = () => {
     }
   };
 
-  const handleAddReply = async (commentId) => {
+  const handleAddReply = async (commentId: number) => {
     if (replyText.trim()) {
       try {
         await addReply({ commentId, text: replyText }).unwrap();
