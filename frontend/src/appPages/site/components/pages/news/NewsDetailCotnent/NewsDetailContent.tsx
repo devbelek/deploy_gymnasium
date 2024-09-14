@@ -5,10 +5,13 @@ import { useGetDetNewsQuery } from "@/redux/api/news";
 import Image from "next/image";
 import NewsCommentsContent from "../NewsCommentsContent/NewsCommentsContent";
 
-const NewsDetailContent = () => {
+const NewsDetailContent: React.FC = () => {
   const { newsDetail } = useParams();
-  const { data } = useGetDetNewsQuery(String(newsDetail));
-  // console.log(data, "data");
+  const { data, isLoading, error } = useGetDetNewsQuery(String(newsDetail));
+
+  if (isLoading) return <div>Загрузка новости...</div>;
+  if (error) return <div>Ошибка при загрузке новости</div>;
+  if (!data) return <div>Новость не найдена</div>;
 
   return (
     <div className={scss.NewsDetailContent}>
@@ -19,24 +22,24 @@ const NewsDetailContent = () => {
             <hr />
           </div>
           <div className={scss.newsContent}>
-            <h1>{data?.description}</h1>
+            <h1>{data.description}</h1>
             <Image
-              src={data?.image!}
-              alt="img"
+              src={data.image}
+              alt={data.description}
               width={700}
               height={500}
               quality={70}
               property="img"
             />
-            <p>{data?.content}</p>
-            {/* <p>{data?.content.slice(0, 558)}</p>
-            <p>{data?.content.slice(558)}</p> */}
+            <p>{data.content}</p>
+            <div className={scss.newsInfo}>
+              <p>Автор: {data.author}</p>
+              <p>Дата публикации: {new Date(data.created_at).toLocaleString()}</p>
+              <p>Последнее обновление: {new Date(data.updated_at).toLocaleString()}</p>
+            </div>
             <hr />
           </div>
-          <div className={scss.newsComments}>
-            <h2>Комментарии пользователей : </h2>
-            <div className={scss.comment}></div>
-          </div>
+          <NewsCommentsContent />
         </div>
       </div>
     </div>
