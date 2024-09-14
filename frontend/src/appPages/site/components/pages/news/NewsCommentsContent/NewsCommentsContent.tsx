@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { useGetCommentsQuery, useAddCommentMutation, useUpdateCommentMutation, useDeleteCommentMutation, useLikeCommentMutation, useAddReplyMutation } from '@/redux/api/news';
@@ -9,7 +7,9 @@ const NewsCommentsContent: React.FC = () => {
   const params = useParams();
   const newsId = typeof params.newsDetail === 'string' ? parseInt(params.newsDetail, 10) : NaN;
 
-  const { data: comments, isLoading, error, refetch } = useGetCommentsQuery(newsId);
+  const { data: comments, isLoading, error, refetch } = useGetCommentsQuery(newsId, {
+    skip: isNaN(newsId)
+  });
   const [addComment] = useAddCommentMutation();
   const [updateComment] = useUpdateCommentMutation();
   const [deleteComment] = useDeleteCommentMutation();
@@ -32,7 +32,7 @@ const NewsCommentsContent: React.FC = () => {
   const handleAddComment = async () => {
     if (newCommentText.trim() && !isNaN(newsId)) {
       try {
-        await addComment({ newsId, text: newCommentText });
+        await addComment({ newsId, text: newCommentText }).unwrap();
         setNewCommentText('');
         refetch();
       } catch (error) {
@@ -45,7 +45,7 @@ const NewsCommentsContent: React.FC = () => {
   const handleUpdateComment = async (commentId: number) => {
     if (editingCommentText.trim()) {
       try {
-        await updateComment({ commentId, text: editingCommentText });
+        await updateComment({ commentId, text: editingCommentText }).unwrap();
         setEditingCommentId(null);
         setEditingCommentText('');
         refetch();
@@ -59,7 +59,7 @@ const NewsCommentsContent: React.FC = () => {
   const handleDeleteComment = async (commentId: number) => {
     if (window.confirm('Вы уверены, что хотите удалить этот комментарий?')) {
       try {
-        await deleteComment(commentId);
+        await deleteComment(commentId).unwrap();
         refetch();
       } catch (error) {
         console.error('Failed to delete comment:', error);
@@ -70,7 +70,7 @@ const NewsCommentsContent: React.FC = () => {
 
   const handleLikeComment = async (commentId: number) => {
     try {
-      await likeComment(commentId);
+      await likeComment(commentId).unwrap();
       refetch();
     } catch (error) {
       console.error('Failed to like comment:', error);
@@ -81,7 +81,7 @@ const NewsCommentsContent: React.FC = () => {
   const handleAddReply = async (commentId: number) => {
     if (replyText.trim()) {
       try {
-        await addReply({ commentId, text: replyText });
+        await addReply({ commentId, text: replyText }).unwrap();
         setReplyingToCommentId(null);
         setReplyText('');
         refetch();
@@ -119,7 +119,7 @@ const NewsCommentsContent: React.FC = () => {
         />
         <button onClick={handleAddComment}>Отправить</button>
       </div>
-      {comments && comments.length > 0 ? (
+      {Array.isArray(comments) && comments.length > 0 ? (
         comments.map((comment) => (
           <div key={comment.id} className={scss.comment}>
             <p><strong>{comment.author}</strong>: {comment.text}</p>
@@ -159,7 +159,7 @@ const NewsCommentsContent: React.FC = () => {
                 <button onClick={() => setReplyingToCommentId(null)}>Отмена</button>
               </div>
             )}
-            {comment.replies.map((reply) => (
+            {comment.replies && comment.replies.map((reply) => (
               <div key={reply.id} className={scss.reply}>
                 <p><strong>{reply.author}</strong>: {reply.text}</p>
               </div>
