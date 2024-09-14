@@ -138,7 +138,7 @@ class CommentViewSet(viewsets.ModelViewSet):
             raise PermissionDenied("Вы не можете редактировать этот комментарий")
 
     @action(detail=False, methods=['get'])
-    def news_comments(self, request, news_id=None):
+    def get_comments_by_news(self, request, news_id=None):
         """Получение комментариев по новости."""
         news = get_object_or_404(News, pk=news_id)
         comments = Comment.objects.filter(news=news)
