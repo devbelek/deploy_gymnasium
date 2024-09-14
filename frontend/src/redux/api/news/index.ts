@@ -26,11 +26,11 @@ const api = index.injectEndpoints({
       }),
       providesTags: ["comments"],
     }),
-    addComment: build.mutation<NEWS.AddCommentResponse, { newsId: number; text: string }>({
-      query: ({ newsId, text }) => ({
+    addComment: build.mutation<NEWS.AddCommentResponse, AddCommentRequest>({
+      query: ({ newsId, text, parentCommentId }) => ({
         url: `${ENDPOINTS}/news/${newsId}/comments/`,
         method: "POST",
-        body: { text },
+        body: { text, parentCommentId }, // добавляем parentCommentId
         credentials: 'include',
         headers: {
           'X-CSRFToken': getCSRFToken() || '',
