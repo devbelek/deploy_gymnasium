@@ -2,7 +2,7 @@
 
 import NewsDetailContent from "./news/NewsDetailCotnent/NewsDetailContent";
 import scss from "./NewsPage.module.scss";
-import NewsDetailContent from "./news/NewsMainContent/NewsMainContent";
+import NewsMainContent from "./news/NewsMainContent/NewsMainContent";
 interface NewsPageProps {
   newsId: number;
 }
