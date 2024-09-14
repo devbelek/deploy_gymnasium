@@ -3,24 +3,18 @@
 import { useParams } from 'next/navigation';
 import NewsCommentsContent from "./news/NewsCommentsContent/NewsCommentsContent";
 import NewsMainContent from "./news/NewsMainContent/NewsMainContent";
+import NewsDetailContent from "@/appPages/site/components/pages/NewsDetailContent";
 import scss from "./NewsPage.module.scss";
 
-const NewsPage = () => {
+const Page = () => {
   const params = useParams();
-  const newsId = params.newsId;
+  const newsId = parseInt(params.newsDetail as string, 10);
 
-  const parsedNewsId = typeof newsId === 'string' ? parseInt(newsId, 10) : null;
-
-  if (parsedNewsId === null || isNaN(parsedNewsId)) {
+  if (isNaN(newsId)) {
     return <div>Неверный идентификатор новости</div>;
   }
 
-  return (
-    <div className={scss.content}>
-      <NewsMainContent newsId={parsedNewsId} />
-      <NewsCommentsContent newsId={parsedNewsId} />
-    </div>
-  );
+  return <NewsDetailContent newsId={newsId} />;
 };
 
-export default NewsPage;
+export default Page;
