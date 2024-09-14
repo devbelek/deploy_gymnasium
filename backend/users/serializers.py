@@ -58,11 +58,10 @@ class CommentSerializers(serializers.ModelSerializer):
 
 class CommentReplySerializers(serializers.ModelSerializer):
     author = serializers.ReadOnlyField(source='author.username')
-    parent_comment_id = serializers.IntegerField(write_only=True)
 
     class Meta:
         model = CommentReply
-        fields = ['id', 'author', 'text', 'created_at', 'parent_comment_id']
+        fields = ['id', 'author', 'text', 'created_at']
 
     def create(self, validated_data):
         parent_comment_id = validated_data.pop('parent_comment_id')
