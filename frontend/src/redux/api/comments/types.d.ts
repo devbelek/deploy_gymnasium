@@ -27,6 +27,10 @@ export interface CommentReply {
     id: number;
     username: string;
   };
+  user?: {  //
+    id: number;
+    username: string;
+  };
   text: string;
   created_at: string;
   updated_at: string;
@@ -41,3 +45,7 @@ export interface Like {
     username: string;
   };
 }
+
+
+
+
