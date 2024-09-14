@@ -1,58 +1,74 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { api as index } from "..";
 
-export const api = createApi({
-  baseQuery: fetchBaseQuery({
-    baseUrl: '/api/',
-    credentials: 'include',
-  }),
-  tagTypes: ['Comments'],
-  endpoints: (builder) => ({
-    getComments: builder.query({
-      query: (newsId) => `news/${newsId}/comments/`,
-      providesTags: ['Comments'],
+const ENDPOINTS = process.env.NEXT_PUBLIC_ENDPOINT;
+
+const api = index.injectEndpoints({
+  endpoints: (build) => ({
+    getNews: build.query<NEWS.GetNewsResponse, NEWS.GetNewsRequest>({
+      query: () => ({
+        url: `${ENDPOINTS}/news/`,
+        method: "GET",
+      }),
+      providesTags: ["news"],
     }),
-    addComment: builder.mutation({
+    getDetNews: build.query<NEWS.GetDetNewsResponse, number>({
+      query: (id) => ({
+        url: `${ENDPOINTS}/news/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["news"],
+    }),
+    getComments: build.query<NEWS.GetCommentsResponse, number>({
+      query: (newsId) => ({
+        url: `${ENDPOINTS}/news/${newsId}/comments/`,
+        method: "GET",
+      }),
+      providesTags: ["comments"],
+    }),
+    addComment: build.mutation<NEWS.AddCommentResponse, { newsId: number; text: string }>({
       query: ({ newsId, text }) => ({
-        url: `news/${newsId}/comments/`,
-        method: 'POST',
+        url: `${ENDPOINTS}/news/${newsId}/comments/`,
+        method: "POST",
         body: { text },
       }),
-      invalidatesTags: ['Comments'],
+      invalidatesTags: ["comments"],
     }),
-    updateComment: builder.mutation({
+    updateComment: build.mutation<NEWS.UpdateCommentResponse, { commentId: number; text: string }>({
       query: ({ commentId, text }) => ({
-        url: `comments/${commentId}/`,
-        method: 'PATCH',
+        url: `${ENDPOINTS}/comments/${commentId}/`,
+        method: "PATCH",
         body: { text },
       }),
-      invalidatesTags: ['Comments'],
+      invalidatesTags: ["comments"],
     }),
-    deleteComment: builder.mutation({
+    deleteComment: build.mutation<NEWS.DeleteCommentResponse, number>({
       query: (commentId) => ({
-        url: `comments/${commentId}/`,
-        method: 'DELETE',
+        url: `${ENDPOINTS}/comments/${commentId}/`,
+        method: "DELETE",
       }),
-      invalidatesTags: ['Comments'],
+      invalidatesTags: ["comments"],
     }),
-    likeComment: builder.mutation({
+    likeComment: build.mutation<NEWS.LikeCommentResponse, number>({
       query: (commentId) => ({
-        url: `comments/${commentId}/like/`,
-        method: 'POST',
+        url: `${ENDPOINTS}/comments/${commentId}/like/`,
+        method: "POST",
       }),
-      invalidatesTags: ['Comments'],
+      invalidatesTags: ["comments"],
     }),
-    addReply: builder.mutation({
+    addReply: build.mutation<NEWS.AddReplyResponse, { commentId: number; text: string }>({
       query: ({ commentId, text }) => ({
-        url: `comments/${commentId}/reply/`,
-        method: 'POST',
+        url: `${ENDPOINTS}/comments/${commentId}/replies/`,
+        method: "POST",
         body: { text },
       }),
-      invalidatesTags: ['Comments'],
+      invalidatesTags: ["comments"],
     }),
   }),
 });
 
 export const {
+  useGetNewsQuery,
+  useGetDetNewsQuery,
   useGetCommentsQuery,
   useAddCommentMutation,
   useUpdateCommentMutation,
