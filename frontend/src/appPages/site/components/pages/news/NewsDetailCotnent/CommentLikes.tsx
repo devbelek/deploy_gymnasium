@@ -1,29 +1,40 @@
+import React, { useState } from 'react';
 import { useLikeCommentMutation, useUnlikeCommentMutation } from "@/redux/api/comments";
-import { useState } from "react";
+import { useSelector } from 'react-redux';
+import scss from "./CommentLikes.module.scss";
 
 interface LikeProps {
   commentId: number;
   initialLiked: boolean;
 }
 
-const CommentLikes = ({ commentId, initialLiked }: LikeProps) => {
+const CommentLikes: React.FC<LikeProps> = ({ commentId, initialLiked }) => {
   const [liked, setLiked] = useState(initialLiked);
+  const [likeCount, setLikeCount] = useState(0);
   const [likeComment] = useLikeCommentMutation();
   const [unlikeComment] = useUnlikeCommentMutation();
+  const user = useSelector((state: any) => state.auth.user);
 
   const toggleLike = async () => {
-    if (liked) {
-      await unlikeComment(commentId);
-    } else {
-      await likeComment({ commentId });
+    if (user) {
+      if (liked) {
+        await unlikeComment(commentId);
+        setLikeCount(prev => prev - 1);
+      } else {
+        await likeComment({ commentId });
+        setLikeCount(prev => prev + 1);
+      }
+      setLiked(!liked);
     }
-    setLiked(!liked);
   };
 
   return (
-    <button onClick={toggleLike}>
-      {liked ? 'Убрать лайк' : 'Лайк'}
-    </button>
+    <div className={scss.likes}>
+      <button onClick={toggleLike} disabled={!user}>
+        {liked ? '👍 ' : '👍 '}
+        {likeCount}
+      </button>
+    </div>
   );
 };
 
