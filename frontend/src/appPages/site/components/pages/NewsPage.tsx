@@ -2,7 +2,7 @@
 
 import NewsDetailContent from "./news/NewsDetailCotnent/NewsDetailContent";
 import scss from "./NewsPage.module.scss";
-
+import NewsDetailContent from "./news/NewsMainContent/NewsMainContent";
 interface NewsPageProps {
   newsId: number;
 }
@@ -10,7 +10,7 @@ interface NewsPageProps {
 const NewsPage: React.FC<NewsPageProps> = ({ newsId }) => {
   return (
     <div className={scss.content}>
-      <NewsDetailContent newsId={newsId} />
+      <NewsMainContent newsId={newsId} />
     </div>
   );
 };
