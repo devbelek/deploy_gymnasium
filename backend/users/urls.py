@@ -3,7 +3,6 @@ from rest_framework.routers import DefaultRouter
 from .views import UserProfileDetail, CommentViewSet, CommentReplyViewSet, LikeViewSet, DonationsViewSet, \
     ConfirmedDonationViewSet, RegisterView
 
-
 router = DefaultRouter()
 router.register(r'comments', CommentViewSet)
 router.register(r'comment_replies', CommentReplyViewSet)
@@ -18,4 +17,6 @@ urlpatterns = [
          CommentViewSet.as_view({'get': 'get_comments_by_news', 'post': 'create_comment_for_news'}),
          name='news-comments'),
     path('register/', RegisterView.as_view(), name='register'),
+    path('likes/toggle/', LikeViewSet.as_view({'post': 'toggle'}), name='toggle-like'),
+    path('likes/status/', LikeViewSet.as_view({'get': 'status'}), name='like-status'),
 ]

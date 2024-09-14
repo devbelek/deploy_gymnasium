@@ -3,7 +3,6 @@ import { getCSRFToken } from './csrf';
 
 const ENDPOINTS = process.env.NEXT_PUBLIC_ENDPOINT;
 
-// Добавляем интерфейс
 interface AddCommentRequest {
   newsId: number;
   text: string;
@@ -37,7 +36,7 @@ const api = index.injectEndpoints({
       query: ({ newsId, text, parentCommentId }) => ({
         url: `${ENDPOINTS}/news/${newsId}/comments/`,
         method: "POST",
-        body: { text, parentCommentId }, // добавляем parentCommentId
+        body: { text, parent_comment_id: parentCommentId },
         credentials: 'include',
         headers: {
           'X-CSRFToken': getCSRFToken() || '',
@@ -68,10 +67,11 @@ const api = index.injectEndpoints({
       }),
       invalidatesTags: ["comments"],
     }),
-    likeComment: build.mutation<NEWS.LikeCommentResponse, number>({
-      query: (commentId) => ({
-        url: `${ENDPOINTS}/comments/${commentId}/like/`,
+    likeComment: build.mutation<NEWS.LikeCommentResponse, { commentId: number }>({
+      query: ({ commentId }) => ({
+        url: `${ENDPOINTS}/likes/toggle/`,
         method: "POST",
+        body: { comment_id: commentId },
         credentials: 'include',
         headers: {
           'X-CSRFToken': getCSRFToken() || '',
