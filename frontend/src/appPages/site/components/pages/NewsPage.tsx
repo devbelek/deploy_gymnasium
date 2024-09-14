@@ -1,11 +1,11 @@
-import { useRouter } from 'next/router';
+import { useParams } from 'next/navigation';
 import NewsCommentsContent from "./news/NewsCommentsContent/NewsCommentsContent";
 import NewsMainContent from "./news/NewsMainContent/NewsMainContent";
 import scss from "./NewsPage.module.scss";
 
 const NewsPage = () => {
-  const router = useRouter();
-  const { newsId } = router.query;
+  const params = useParams();
+  const newsId = params.newsId;
 
   const parsedNewsId = typeof newsId === 'string' ? parseInt(newsId, 10) : null;
 
