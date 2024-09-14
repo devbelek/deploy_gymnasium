@@ -3,6 +3,7 @@ import { useParams } from "next/navigation";
 import scss from "./NewsDetailContent.module.scss";
 import { useGetDetNewsQuery } from "@/redux/api/news";
 import Image from "next/image";
+import NewsCommentsContent from "../NewsCommentsContent/NewsCommentsContent";
 
 const NewsDetailContent = () => {
   const { newsDetail } = useParams();
@@ -33,7 +34,7 @@ const NewsDetailContent = () => {
             <hr />
           </div>
           <div className={scss.newsComments}>
-            <h2>Комментарии пользователей :</h2>
+            <h2>Комментарии пользователей : </h2>
             <div className={scss.comment}></div>
           </div>
         </div>

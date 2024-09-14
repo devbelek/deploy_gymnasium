@@ -1,3 +1,143 @@
-.FondContent {
+.fondContent {
   margin-top: 100px;
+
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .content {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+  }
+
+  .title {
+    font-size: 36px;
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .divider {
+    border: none;
+    height: 2px;
+    background-color: #e0e0e0;
+    margin: 30px 0;
+  }
+
+  .donationsList {
+    display: grid;
+    gap: 30px;
+  }
+
+  .donationItem {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .donor {
+    font-size: 20px;
+    color: #34495e;
+    margin-bottom: 10px;
+  }
+
+  .amount {
+    font-size: 24px;
+    color: #27ae60;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .totalPrice {
+    margin-top: 20px;
+
+    span {
+      font-size: 22px;
+      color: #27ae60;
+      font-weight: bold;
+    }
+  }
+
+  .comment {
+    font-size: 16px;
+    color: #7f8c8d;
+    font-style: italic;
+  }
+
+  .message {
+    text-align: center;
+    font-size: 18px;
+    color: #7f8c8d;
+    margin: 20px 0;
+  }
+
+  .donateLink {
+    display: block;
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .donateButton {
+    background-color: #3498db;
+    color: #ffffff;
+    border: none;
+    border-radius: 30px;
+    padding: 15px 40px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    &:hover {
+      background-color: #2980b9;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .fondContent {
+    .content {
+      padding: 30px;
+    }
+
+    .title {
+      font-size: 28px;
+    }
+
+    .donationItem {
+      padding: 15px;
+    }
+
+    .donor {
+      font-size: 18px;
+    }
+
+    .amount {
+      font-size: 20px;
+    }
+
+    .donateButton {
+      padding: 12px 30px;
+      font-size: 16px;
+    }
+  }
 }
