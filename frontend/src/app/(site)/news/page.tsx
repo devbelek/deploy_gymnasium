@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from 'next/navigation';
-import NewsPage from "@/appPages/site/components/pages/NewsPage";
+import NewsDetailContent from "@/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent";
 
 const Page = () => {
   const params = useParams();
@@ -11,7 +11,7 @@ const Page = () => {
     return <div>Неверный идентификатор новости</div>;
   }
 
-  return <NewsPage newsId={newsId} />;
+  return <NewsDetailContent newsId={newsId} />;
 };
 
 export default Page;
