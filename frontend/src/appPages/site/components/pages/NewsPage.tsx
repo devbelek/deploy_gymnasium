@@ -1,6 +1,6 @@
 "use client";
 
-import NewsDetailContent from "./news/NewsDetailContent/NewsDetailContent";
+import NewsDetailContent from "./news/NewsDetailCotnent/NewsDetailContent";
 import NewsMainContent from "./news/NewsMainContent/NewsMainContent";
 import scss from "./NewsPage.module.scss";
 import { useRouter } from "next/navigation";
