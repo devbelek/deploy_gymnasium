@@ -13,7 +13,7 @@ from django.core.exceptions import PermissionDenied
 from rest_framework.decorators import action
 from django.shortcuts import get_object_or_404
 
-from ..main.models import News
+from main.models import News
 
 
 class RegisterView(APIView):
