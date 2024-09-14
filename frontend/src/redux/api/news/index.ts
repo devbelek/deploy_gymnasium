@@ -1,4 +1,5 @@
 import { api as index } from "..";
+import { getCSRFToken } from './csrf';
 
 const ENDPOINTS = process.env.NEXT_PUBLIC_ENDPOINT;
 
@@ -31,6 +32,9 @@ const api = index.injectEndpoints({
         method: "POST",
         body: { text },
         credentials: 'include',
+        headers: {
+          'X-CSRFToken': getCSRFToken() || '',
+        },
       }),
       invalidatesTags: ["comments"],
     }),
@@ -40,6 +44,9 @@ const api = index.injectEndpoints({
         method: "PATCH",
         body: { text },
         credentials: 'include',
+        headers: {
+          'X-CSRFToken': getCSRFToken() || '',
+        },
       }),
       invalidatesTags: ["comments"],
     }),
@@ -48,6 +55,9 @@ const api = index.injectEndpoints({
         url: `${ENDPOINTS}/comments/${commentId}/`,
         method: "DELETE",
         credentials: 'include',
+        headers: {
+          'X-CSRFToken': getCSRFToken() || '',
+        },
       }),
       invalidatesTags: ["comments"],
     }),
@@ -56,6 +66,9 @@ const api = index.injectEndpoints({
         url: `${ENDPOINTS}/comments/${commentId}/like/`,
         method: "POST",
         credentials: 'include',
+        headers: {
+          'X-CSRFToken': getCSRFToken() || '',
+        },
       }),
       invalidatesTags: ["comments"],
     }),
@@ -65,6 +78,9 @@ const api = index.injectEndpoints({
         method: "POST",
         body: { text },
         credentials: 'include',
+        headers: {
+          'X-CSRFToken': getCSRFToken() || '',
+        },
       }),
       invalidatesTags: ["comments"],
     }),
