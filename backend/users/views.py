@@ -138,17 +138,17 @@ class CommentViewSet(viewsets.ModelViewSet):
             raise PermissionDenied("Вы не можете редактировать этот комментарий")
 
     @action(detail=False, methods=['get'])
-    def get_comments_by_news(self, request, news_id=None):
+    def get_comments_by_news(self, request, pk=None):
         """Получение комментариев по новости."""
-        news = get_object_or_404(News, pk=news_id)
+        news = get_object_or_404(News, pk=pk)
         comments = Comment.objects.filter(news=news)
         serializer = self.get_serializer(comments, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @action(detail=False, methods=['post'])
-    def create_comment(self, request, news_id=None):
+    def create_comment_for_news(self, request, pk=None):
         """Создание комментария под новостью."""
-        news = get_object_or_404(News, pk=news_id)
+        news = get_object_or_404(News, pk=pk)
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             serializer.save(author=request.user, news=news)
