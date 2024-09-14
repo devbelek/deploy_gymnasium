@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react';
 import { useReplyToCommentMutation, useGetRepliesQuery } from "@/redux/api/comments";
 import { useSelector } from 'react-redux';

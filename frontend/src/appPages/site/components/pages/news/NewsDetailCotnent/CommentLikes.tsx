@@ -1,39 +1,41 @@
+"use client";
+
 import React, { useState } from 'react';
 import { useLikeCommentMutation, useUnlikeCommentMutation } from "@/redux/api/comments";
-import { useSelector } from 'react-redux';
 import scss from "./CommentLikes.module.scss";
 
-interface LikeProps {
+interface CommentLikesProps {
   commentId: number;
   initialLiked: boolean;
 }
 
-const CommentLikes: React.FC<LikeProps> = ({ commentId, initialLiked }) => {
-  const [liked, setLiked] = useState(initialLiked);
+const CommentLikes: React.FC<CommentLikesProps> = ({ commentId, initialLiked }) => {
+  const [isLiked, setIsLiked] = useState(initialLiked);
   const [likeCount, setLikeCount] = useState(0);
   const [likeComment] = useLikeCommentMutation();
   const [unlikeComment] = useUnlikeCommentMutation();
-  const user = useSelector((state: any) => state.auth.user);
 
-  const toggleLike = async () => {
-    if (user) {
-      if (liked) {
-        await unlikeComment(commentId);
+  const handleLikeToggle = async () => {
+    try {
+      if (isLiked) {
+        await unlikeComment(commentId).unwrap();
         setLikeCount(prev => prev - 1);
       } else {
-        await likeComment({ commentId });
+        await likeComment({ commentId }).unwrap();
         setLikeCount(prev => prev + 1);
       }
-      setLiked(!liked);
+      setIsLiked(!isLiked);
+    } catch (error) {
+      console.error('Failed to toggle like:', error);
     }
   };
 
   return (
     <div className={scss.likes}>
-      <button onClick={toggleLike} disabled={!user}>
-        {liked ? '👍 ' : '👍 '}
-        {likeCount}
+      <button onClick={handleLikeToggle} className={isLiked ? scss.liked : ''}>
+        {isLiked ? 'Убрать лайк' : 'Лайк'}
       </button>
+      <span>{likeCount} лайков</span>
     </div>
   );
 };
