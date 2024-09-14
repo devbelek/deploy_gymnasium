@@ -10,7 +10,7 @@ import scss from "./NewsDetailContent.module.scss";
 const NewsDetailContent: React.FC<{ newsId: number }> = ({ newsId }) => {
   const { data: commentsData, isLoading: commentsLoading, error: commentsError, refetch: refetchComments } = useGetCommentsQuery(newsId);
   const [addComment] = useAddCommentMutation();
-  const [editComment] = useUpdateCommentMutation();  // Правильный хук
+  const [editComment] = useUpdateCommentMutation();
   const [deleteComment] = useDeleteCommentMutation();
   const [likeComment] = useLikeCommentMutation();
 
@@ -35,7 +35,7 @@ const NewsDetailContent: React.FC<{ newsId: number }> = ({ newsId }) => {
   const handleEditComment = async (commentId: number) => {
     if (editingCommentText.trim()) {
       try {
-        await editComment({ commentId, text: editingCommentText }).unwrap();  // Исправлено
+        await editComment({ commentId, text: editingCommentText }).unwrap();
         setEditingCommentId(null);
         refetchComments();
       } catch (error) {
@@ -55,7 +55,7 @@ const NewsDetailContent: React.FC<{ newsId: number }> = ({ newsId }) => {
 
   const handleLikeComment = async (commentId: number) => {
     try {
-      await likeComment(commentId).unwrap();
+      await likeComment({ commentId }).unwrap();  // Исправлено
       refetchComments();
     } catch (error) {
       console.error('Failed to like comment:', error);
