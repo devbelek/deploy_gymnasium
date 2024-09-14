@@ -3,6 +3,13 @@ import { getCSRFToken } from './csrf';
 
 const ENDPOINTS = process.env.NEXT_PUBLIC_ENDPOINT;
 
+// Добавляем интерфейс
+interface AddCommentRequest {
+  newsId: number;
+  text: string;
+  parentCommentId?: number;
+}
+
 const api = index.injectEndpoints({
   endpoints: (build) => ({
     getNews: build.query<NEWS.GetNewsResponse, NEWS.GetNewsRequest>({
