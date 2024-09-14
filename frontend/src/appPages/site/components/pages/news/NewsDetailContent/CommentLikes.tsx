@@ -1,17 +1,18 @@
 "use client";
 
-import React, { useState } from 'react';
-import { useLikeCommentMutation, useUnlikeCommentMutation } from "@/redux/api/comments";
+import React, { useState, useEffect } from 'react';
+import { useLikeCommentMutation, useUnlikeCommentMutation } from "@/redux/api/comments"; // Теперь оба мутации
 import scss from "./CommentLikes.module.scss";
 
 interface CommentLikesProps {
   commentId: number;
   initialLiked: boolean;
+  initialLikesCount: number;  // добавлено для инициализации количества лайков
 }
 
-const CommentLikes: React.FC<CommentLikesProps> = ({ commentId, initialLiked }) => {
+const CommentLikes: React.FC<CommentLikesProps> = ({ commentId, initialLiked, initialLikesCount }) => {
   const [isLiked, setIsLiked] = useState(initialLiked);
-  const [likeCount, setLikeCount] = useState(0);
+  const [likeCount, setLikeCount] = useState(initialLikesCount);
   const [likeComment] = useLikeCommentMutation();
   const [unlikeComment] = useUnlikeCommentMutation();
 
@@ -29,6 +30,11 @@ const CommentLikes: React.FC<CommentLikesProps> = ({ commentId, initialLiked }) 
       console.error('Failed to toggle like:', error);
     }
   };
+
+  useEffect(() => {
+    setIsLiked(initialLiked);
+    setLikeCount(initialLikesCount);
+  }, [initialLiked, initialLikesCount]);
 
   return (
     <div className={scss.likes}>
