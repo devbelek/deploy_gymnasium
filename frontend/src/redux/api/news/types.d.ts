@@ -22,7 +22,6 @@ namespace NEWS {
     likes_count: number;
     is_liked: boolean;
     replies: IReply[];
-    likes: number;
   }
 
   interface IReply {
@@ -51,7 +50,7 @@ namespace NEWS {
   type DeleteCommentRequest = number;
 
   type LikeCommentResponse = { detail: string };
-  type LikeCommentRequest = number;
+  type LikeCommentRequest = { commentId: number };
 
   type AddReplyResponse = IReply;
   type AddReplyRequest = { commentId: number; text: string };
