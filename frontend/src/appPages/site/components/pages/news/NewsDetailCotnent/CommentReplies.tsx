@@ -3,29 +3,44 @@ import { useReplyToCommentMutation, useGetRepliesQuery } from "@/redux/api/comme
 import { useSelector } from 'react-redux';
 import scss from "./CommentReplies.module.scss";
 
-interface ReplyProps {
-  commentId: number;
+interface CommentReply {
+  id: number;
+  text: string;
+  created_at: string;
+  user: {
+    id: number;
+    username: string;
+  };
 }
 
-const CommentReplies: React.FC<ReplyProps> = ({ commentId }) => {
-  const [replyText, setReplyText] = useState('');
+const CommentReplies: React.FC<{ commentId: number }> = ({ commentId }) => {
+  const { data: replies, isLoading, error, refetch } = useGetRepliesQuery(commentId);
   const [replyToComment] = useReplyToCommentMutation();
-  const { data: replies, refetch: refetchReplies } = useGetRepliesQuery(commentId);
+  const [replyText, setReplyText] = useState('');
   const user = useSelector((state: any) => state.auth.user);
 
-  const handleReplySubmit = async () => {
+  const handleReply = async () => {
     if (replyText.trim()) {
-      await replyToComment({ commentId, text: replyText });
-      setReplyText('');
-      refetchReplies();
+      try {
+        await replyToComment({ commentId, text: replyText }).unwrap();
+        setReplyText('');
+        refetch();
+      } catch (error) {
+        console.error('Failed to reply to comment:', error);
+      }
     }
   };
 
+  if (isLoading) return <p>Загрузка ответов...</p>;
+  if (error) return <p>Ошибка загрузки ответов.</p>;
+
   return (
     <div className={scss.replies}>
-      {replies && replies.map((reply: any) => (
+      {replies?.map((reply: CommentReply) => (
         <div key={reply.id} className={scss.reply}>
-          <p><strong>{reply.user.username}</strong>: {reply.text}</p>
+          <p><strong>{reply.user.username}</strong></p>
+          <p>{reply.text}</p>
+          <p className={scss.replyDate}>{new Date(reply.created_at).toLocaleString()}</p>
         </div>
       ))}
       {user && (
@@ -35,7 +50,7 @@ const CommentReplies: React.FC<ReplyProps> = ({ commentId }) => {
             onChange={(e) => setReplyText(e.target.value)}
             placeholder="Напишите ответ..."
           />
-          <button onClick={handleReplySubmit}>Ответить</button>
+          <button onClick={handleReply}>Ответить</button>
         </div>
       )}
     </div>

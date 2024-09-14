@@ -1,3 +1,5 @@
+from symbol import decorators
+
 from rest_framework.views import APIView
 from .models import UserProfile, Comment, CommentReply, Like, Donation, ConfirmedDonation
 from .serializers import (
@@ -129,6 +131,15 @@ class CommentReplyViewSet(viewsets.ModelViewSet):
     queryset = CommentReply.objects.all()
     serializer_class = CommentReplySerializers
     permission_classes = [IsAuthenticatedOrReadOnly]
+
+    @decorators.action(detail=False, methods=['GET'])
+    def for_comment(self, request):
+        comment_id = request.query_params.get('comment_id')
+        if comment_id:
+            replies = self.queryset.filter(comment_id=comment_id)
+            serializer = self.get_serializer(replies, many=True)
+            return Response(serializer.data)
+        return Response({"error": "comment_id is required"}, status=400)
 
     def list(self, request, *args, **kwargs):
         logger.info(f"Пользователь {request.user.username} запросил список ответов на комментарии.")
