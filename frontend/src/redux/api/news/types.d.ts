@@ -26,6 +26,7 @@ namespace NEWS {
 
   interface IReply {
     id: number;
+    parent_comment: number;
     author: string;
     text: string;
     created_at: string;
