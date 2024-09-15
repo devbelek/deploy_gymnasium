@@ -85,7 +85,7 @@ class CommentReply(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.pk:
-            logger.info(f"Создание ответа от пользователя: {self.author.username} на комментарий ID: {self.comment.id}")
+            logger.info(f"Создание ответа от пользователя: {self.author.username} на комментарий ID: {self.parent_comment.id}")
         else:
             logger.info(f"Обновление ответа (ID: {self.pk}) от пользователя: {self.author.username}")
         super().save(*args, **kwargs)
