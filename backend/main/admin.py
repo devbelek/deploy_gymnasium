@@ -11,10 +11,9 @@ admin.site.register(Olympians)
 
 @admin.register(Video)
 class VideoAdmin(admin.ModelAdmin):
-    list_display = ('title', 'youtube_id', 'published_at')
-    list_filter = ('published_at',)
+    list_display = ('title', 'youtube_id')
     search_fields = ('title', 'description', 'youtube_id')
-    readonly_fields = ('youtube_id', 'published_at')
+    readonly_fields = ('youtube_id',)
 
 
 @admin.register(Gallery)
