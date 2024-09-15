@@ -19,7 +19,7 @@ class VideoAdmin(admin.ModelAdmin):
 
 @admin.register(Gallery)
 class GalleryAdmin(admin.ModelAdmin):
-    list_display = ('title', 'image', 'content', 'url_video')
+    list_display = ('title', 'image', 'content')
 
 
 @admin.register(ThanksNoteFromGraduates)
