@@ -161,7 +161,9 @@ class CommentReplyViewSet(viewsets.ModelViewSet):
         return super().list(request, *args, **kwargs)
 
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
+        comment_id = self.kwargs.get('comment_pk')
+        comment = Comment.objects.get(pk=comment_id)
+        serializer.save(author=self.request.user, parent_comment=comment)
         logger.info(f"Пользователь {self.request.user.username} создал ответ ID: {serializer.instance.id} на комментарий ID: {serializer.instance.comment.id}")
 
     def perform_destroy(self, instance):
