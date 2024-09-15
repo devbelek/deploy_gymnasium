@@ -92,6 +92,29 @@ const api = index.injectEndpoints({
       }),
       invalidatesTags: ["comments"],
     }),
+    updateReply: build.mutation<NEWS.UpdateReplyResponse, { replyId: number; text: string }>({
+      query: ({ replyId, text }) => ({
+        url: `${ENDPOINTS}/comment_replies/${replyId}/`,
+        method: "PATCH",
+        body: { text },
+        credentials: 'include',
+        headers: {
+          'X-CSRFToken': getCSRFToken() || '',
+        },
+      }),
+      invalidatesTags: ["comments"],
+    }),
+    deleteReply: build.mutation<NEWS.DeleteReplyResponse, number>({
+      query: (replyId) => ({
+        url: `${ENDPOINTS}/comment_replies/${replyId}/`,
+        method: "DELETE",
+        credentials: 'include',
+        headers: {
+          'X-CSRFToken': getCSRFToken() || '',
+        },
+      }),
+      invalidatesTags: ["comments"],
+    }),
   }),
 });
 
@@ -104,4 +127,6 @@ export const {
   useDeleteCommentMutation,
   useLikeCommentMutation,
   useAddReplyMutation,
+  useUpdateReplyMutation,
+  useDeleteReplyMutation,
 } = api;
