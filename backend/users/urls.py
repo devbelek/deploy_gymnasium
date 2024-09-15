@@ -2,6 +2,7 @@ from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 from .views import UserProfileDetail, CommentViewSet, CommentReplyViewSet, LikeViewSet, DonationsViewSet, \
     ConfirmedDonationViewSet, RegisterView
+from .views import views
 
 router = DefaultRouter()
 router.register(r'comments', CommentViewSet)
@@ -10,7 +11,9 @@ router.register(r'likes', LikeViewSet)
 router.register(r'donations', DonationsViewSet)
 router.register(r'confirmed_donations', ConfirmedDonationViewSet)
 
+
 urlpatterns = [
+    path('accounts/user/', views.user_auth_status, name='user_auth_status'),
     path('', include(router.urls)),
     path('profile/', UserProfileDetail.as_view(), name='user-profile'),
     path('news/<int:pk>/comments/',
