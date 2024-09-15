@@ -28,18 +28,18 @@ export const profileApi = api.injectEndpoints({
       query: () => ({
         url: `${ENDPOINTS}/profile/`,
         method: "GET",
+        credentials: 'include',
       }),
     }),
     updateAccount: build.mutation<UpdateAccountResponse, UpdateAccountRequest>({
       query: (body) => ({
         url: `${ENDPOINTS}/profile/`,
         method: "PUT",
+        body,
         credentials: 'include',
         headers: {
           'X-CSRFToken': getCSRFToken() || '',
-          'Content-Type': 'application/json',
         },
-        body,
       }),
     }),
   }),

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useGetAccountQuery, useUpdateAccountMutation } from "@/redux/api/profile";
 import { useForm } from "react-hook-form";
 import { FaEdit, FaUser, FaCamera, FaSave, FaTimes } from 'react-icons/fa';
@@ -14,12 +14,22 @@ interface ProfileFormData {
 
 const Profile: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
-  const { data, error, isLoading } = useGetAccountQuery(null);
+  const { data, error, isLoading, refetch } = useGetAccountQuery(null);
   const [updateAccount, { isLoading: isUpdating }] = useUpdateAccountMutation();
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const { register, handleSubmit, reset, setValue } = useForm<ProfileFormData>();
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (data) {
+      reset({
+        user: data.user,
+        about: data.about || '',
+      });
+      setPreviewUrl(data.avatar || null);
+    }
+  }, [data, reset]);
 
   if (isLoading) return <div className={styles.loading}>Загрузка...</div>;
   if (error) return <div className={styles.error}>Ошибка загрузки данных</div>;
@@ -35,21 +45,15 @@ const Profile: React.FC = () => {
 
       await updateAccount(formDataToSend).unwrap();
       setIsEditing(false);
-      // Здесь можно добавить уведомление об успешном обновлении
+      refetch(); // Обновляем данные после успешного сохранения
+      alert('Профиль успешно обновлен');
     } catch (error) {
-      console.error("Failed to update profile", error);
-      // Здесь можно добавить обработку ошибок
+      console.error("Не удалось обновить профиль", error);
+      alert('Произошла ошибка при обновлении профиля');
     }
   };
 
   const handleEdit = () => {
-    if (data) {
-      reset({
-        user: data.user,
-        about: data.about || '',
-      });
-      setPreviewUrl(data.avatar || null);
-    }
     setIsEditing(true);
   };
 
@@ -72,7 +76,7 @@ const Profile: React.FC = () => {
           {previewUrl || data?.avatar ? (
             <img
               src={previewUrl || data?.avatar || '/default-avatar.png'}
-              alt="Avatar"
+              alt="Аватар"
               className={styles.avatar}
             />
           ) : (
@@ -82,6 +86,7 @@ const Profile: React.FC = () => {
             <button
               className={styles.changeAvatarButton}
               onClick={() => fileInputRef.current?.click()}
+              type="button"
             >
               <FaCamera />
             </button>
@@ -112,7 +117,7 @@ const Profile: React.FC = () => {
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className={styles.formField}>
                 <label htmlFor="user">Имя</label>
-                <input id="user" {...register("user")} />
+                <input id="user" {...register("user", { required: true })} />
               </div>
               <div className={styles.formField}>
                 <label htmlFor="about">О себе</label>
