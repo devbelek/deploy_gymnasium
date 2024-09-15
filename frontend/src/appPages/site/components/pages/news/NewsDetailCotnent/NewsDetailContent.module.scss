@@ -1,5 +1,6 @@
 .NewsDetailContent {
   margin-top: 100px;
+
   .content {
     .news_head {
       display: flex;
@@ -22,6 +23,7 @@
         color: #333333;
       }
     }
+
     .newsContent {
       margin-top: 20px;
       display: flex;
@@ -61,6 +63,7 @@
         color: #333333;
       }
     }
+
     .commentsSection {
       margin-top: 40px;
       display: flex;
@@ -196,6 +199,19 @@
           }
         }
       }
+
+      .loginPrompt {
+        text-align: center;
+        color: #666;
+        font-style: italic;
+      }
     }
+  }
+
+  .loading, .error {
+    text-align: center;
+    font-size: 18px;
+    color: #666;
+    margin-top: 20px;
   }
 }
