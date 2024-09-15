@@ -55,4 +55,10 @@ namespace NEWS {
 
   type AddReplyResponse = IReply;
   type AddReplyRequest = { commentId: number; text: string };
+
+  type UpdateReplyResponse = IReply;
+  type UpdateReplyRequest = { replyId: number; text: string };
+
+  type DeleteReplyResponse = void;
+  type DeleteReplyRequest = number;
 }
