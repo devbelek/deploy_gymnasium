@@ -133,8 +133,6 @@ const NewsDetailContent: React.FC = () => {
     }
   };
 
-  const sortedComments = commentsData?.slice().sort((a, b) => b.likes_count - a.likes_count) || [];
-
   const renderComment = (comment: any, isReply = false) => (
     <div key={comment.id} className={`${scss.comment} ${isReply ? scss.reply : ''}`}>
       <p>{comment.text}</p>
@@ -150,10 +148,7 @@ const NewsDetailContent: React.FC = () => {
               <MoreVertical size={16} />
             </MenuButton>
             <MenuList>
-              <MenuItem onClick={() => {
-                setEditingCommentId(comment.id);
-                setEditedCommentText(comment.text);
-              }}>
+              <MenuItem onClick={() => setEditingCommentId(comment.id)}>
                 <Edit size={16} />
                 <span>Edit</span>
               </MenuItem>
@@ -171,14 +166,14 @@ const NewsDetailContent: React.FC = () => {
           </button>
         )}
       </div>
-      {editingCommentId === comment.id && !isReply && (
+      {editingCommentId === comment.id && (
         <div className={scss.editCommentForm}>
           <textarea
             value={editedCommentText}
             onChange={(e) => setEditedCommentText(e.target.value)}
             placeholder="Edit your comment"
           />
-          <button onClick={() => handleUpdateComment(comment.id)}>Save</button>
+          <button onClick={() => isReply ? handleUpdateReply(comment.id, editedCommentText) : handleUpdateComment(comment.id)}>Save</button>
           <button onClick={() => setEditingCommentId(null)}>Cancel</button>
         </div>
       )}
@@ -225,7 +220,7 @@ const NewsDetailContent: React.FC = () => {
           </div>
           <div className={scss.commentsSection}>
             <h2>Comments</h2>
-            {sortedComments.map((comment) => renderComment(comment))}
+            {commentsData && commentsData.map((comment) => renderComment(comment))}
             {isLoggedIn ? (
               <div className={scss.addComment}>
                 <textarea
