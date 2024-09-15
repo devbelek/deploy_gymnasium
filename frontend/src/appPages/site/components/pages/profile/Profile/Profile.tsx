@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react';
 import { useGetAccountQuery, useUpdateAccountMutation } from "@/redux/api/profile";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
