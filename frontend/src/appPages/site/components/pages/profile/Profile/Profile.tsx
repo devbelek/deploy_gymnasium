@@ -5,7 +5,6 @@ import { skipToken } from "@reduxjs/toolkit/query";
 import { useEffect } from "react";
 
 const Profile = () => {
-  // Определение условия для получения профиля
   const shouldFetch = true;
   const { data, error, isLoading } = useGetAccountQuery(
     shouldFetch ? null : skipToken
