@@ -26,6 +26,11 @@ export const profileApi = api.injectEndpoints({
       query: (body) => ({
         url: `${ENDPOINTS}/profile/`,
         method: "PUT",
+        credentials: 'include',
+        headers: {
+          'X-CSRFToken': getCSRFToken() || '',
+          'Content-Type': 'application/json',
+        },
         body,
       }),
     }),
