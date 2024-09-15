@@ -19,7 +19,7 @@ const NewsDetailContent: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const { data: newsData, isLoading: newsLoading, error: newsError } = useGetDetNewsQuery(newsId);
-  const { data: commentsData, isLoading: commentsLoading, error: commentsError } = useGetCommentsQuery(newsId);
+  const { data: commentsData, isLoading: commentsLoading, error: commentsError, refetch: refetchComments } = useGetCommentsQuery(newsId);
   const [addComment, { isLoading: isAddingComment }] = useAddCommentMutation();
   const [updateComment] = useUpdateCommentMutation();
   const [deleteComment] = useDeleteCommentMutation();
@@ -65,6 +65,7 @@ const NewsDetailContent: React.FC = () => {
       try {
         await addComment({ newsId, text: commentText }).unwrap();
         setCommentText("");
+        refetchComments();
       } catch (error) {
         console.error("Error adding comment:", error);
       }
@@ -77,6 +78,7 @@ const NewsDetailContent: React.FC = () => {
         await updateComment({ commentId, text: editedCommentText }).unwrap();
         setEditingCommentId(null);
         setEditedCommentText("");
+        refetchComments();
       } catch (error) {
         console.error("Error updating comment:", error);
       }
@@ -86,6 +88,7 @@ const NewsDetailContent: React.FC = () => {
   const handleDeleteComment = async (commentId: number) => {
     try {
       await deleteComment(commentId).unwrap();
+      refetchComments();
     } catch (error) {
       console.error("Error deleting comment:", error);
     }
@@ -95,6 +98,7 @@ const NewsDetailContent: React.FC = () => {
     if (isLoggedIn) {
       try {
         await likeComment({ commentId }).unwrap();
+        refetchComments();
       } catch (error) {
         console.error("Error liking comment:", error);
       }
@@ -107,6 +111,7 @@ const NewsDetailContent: React.FC = () => {
         await addReply({ commentId: parentCommentId, text: replyText }).unwrap();
         setReplyingToCommentId(null);
         setReplyText("");
+        refetchComments();
       } catch (error) {
         console.error("Error adding reply:", error);
       }
@@ -117,6 +122,7 @@ const NewsDetailContent: React.FC = () => {
     <div key={comment.id} className={`${scss.comment} ${isReply ? scss.reply : ''}`}>
       <p>{comment.text}</p>
       <small>Author: {comment.author} | Date: {new Date(comment.created_at).toLocaleString()}</small>
+      <small>Last updated: {new Date(comment.updated_at).toLocaleString()}</small>
       <div className={scss.commentActions}>
         <button onClick={() => handleLikeComment(comment.id)} className={scss.likeButton}>
           <ThumbsUp size={16} />
@@ -128,7 +134,10 @@ const NewsDetailContent: React.FC = () => {
               <MoreVertical size={16} />
             </MenuButton>
             <MenuList>
-              <MenuItem onClick={() => setEditingCommentId(comment.id)}>
+              <MenuItem onClick={() => {
+                setEditingCommentId(comment.id);
+                setEditedCommentText(comment.text);
+              }}>
                 <Edit size={16} />
                 <span>Edit</span>
               </MenuItem>
