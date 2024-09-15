@@ -15,6 +15,7 @@ router.register(r'teachers', TeachersViewSet)
 router.register(r'school-parliament', SchoolParliamentViewSet)
 router.register(r'gimnasium-class', GimnasiumClassViewSet)
 router.register(r'olympians', OlympiansViewSet)
+router.register(r'videos', VideoViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

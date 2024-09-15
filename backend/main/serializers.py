@@ -6,6 +6,12 @@ from secondary.serializers import NameOfGradesSerializer, NamesOfOlympiaSerializ
 from django.conf import settings
 
 
+class VideoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Video
+        fields = ['id', 'title', 'description', 'youtube_id', 'published_at']
+
+
 class MinimalSerializer(serializers.ModelSerializer):
     class Meta:
         fields = ['name', 'surname']

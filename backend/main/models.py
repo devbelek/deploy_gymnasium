@@ -327,11 +327,20 @@ class News(ImageModel, ContentModel, TimestampedModel):
 
 class Gallery(ImageModel, ContentModel):
     title = models.CharField(max_length=200, verbose_name=_('Заголовок'))
-    url_video = models.URLField(verbose_name=_('Ссылка на видео'), blank=True)
 
     class Meta:
-        verbose_name = _('Галерея')
-        verbose_name_plural = _('Галерея')
+        verbose_name = _('Фото-Галерея')
+        verbose_name_plural = _('Фото-Галерея')
+
+    def __str__(self):
+        return self.title
+
+
+class Video(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+    youtube_id = models.CharField(max_length=20, unique=True)
+    published_at = models.DateTimeField()
 
     def __str__(self):
         return self.title
