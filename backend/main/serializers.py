@@ -9,7 +9,7 @@ from django.conf import settings
 class VideoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Video
-        fields = ['id', 'title', 'description', 'youtube_id', 'published_at']
+        fields = ['id', 'title', 'description', 'youtube_id']
 
 
 class MinimalSerializer(serializers.ModelSerializer):
