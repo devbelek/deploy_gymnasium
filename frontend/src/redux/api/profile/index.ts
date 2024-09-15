@@ -1,4 +1,4 @@
-import { api } from "../store";
+import { api } from "..";
 
 export const profileApi = api.injectEndpoints({
   endpoints: (build) => ({
