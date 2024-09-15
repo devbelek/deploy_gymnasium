@@ -1,25 +1,35 @@
-import { api as index } from "..";
+import { api } from "../store";
 
-const api = index.injectEndpoints({
+export const profileApi = api.injectEndpoints({
   endpoints: (build) => ({
     getAccount: build.query<ACCOUNT.GetAccountResponse, ACCOUNT.GetAccountRequest>({
       query: () => ({
-        url: `https://3-gymnasium.kg/api/profile`,
+        url: `profile`,
         method: "GET",
-        credentials: "include",
       }),
-      providesTags: ["accounts"],
     }),
     updateAccount: build.mutation<ACCOUNT.UpdateAccountResponse, ACCOUNT.UpdateAccountRequest>({
       query: (body) => ({
-        url: `https://3-gymnasium.kg/api/profile`,
+        url: `profile`,
         method: "PUT",
         body,
-        credentials: "include",
       }),
-      invalidatesTags: ["accounts"],
     }),
   }),
 });
 
-export const { useGetAccountQuery, useUpdateAccountMutation } = api;
+export const { useGetAccountQuery, useUpdateAccountMutation } = profileApi;
+
+export namespace ACCOUNT {
+  export interface IAccount {
+    user: string;
+    avatar: string | null;
+    about: string | null;
+  }
+
+  export type GetAccountResponse = IAccount;
+  export type GetAccountRequest = null;
+
+  export type UpdateAccountResponse = IAccount;
+  export type UpdateAccountRequest = Partial<IAccount>;
+}

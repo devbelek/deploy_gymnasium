@@ -8,7 +8,7 @@ RUN npm install
 RUN npm i sharp
 RUN npm install @chakra-ui/react
 RUN npm install lucide-react
-RUN npm install @mui/material @emotion/react @emotion/styled
+npm install @radix-ui/react-dialog @radix-ui/react-label @radix-ui/react-avatar
 
 COPY . .
 RUN npm run build
