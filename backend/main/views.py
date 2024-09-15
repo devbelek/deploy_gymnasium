@@ -16,6 +16,11 @@ class CachedViewSetMixin:
         return super().dispatch(*args, **kwargs)
 
 
+class VideoViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Video.objects.all().order_by('-published_at')
+    serializer_class = VideoSerializer
+
+
 class BaseViewSet(CachedViewSetMixin, viewsets.ModelViewSet):
     permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]

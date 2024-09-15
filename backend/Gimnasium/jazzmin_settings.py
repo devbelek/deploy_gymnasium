@@ -29,6 +29,7 @@ JAZZMIN_SETTINGS = {
         "socialaccount.SocialToken": "fas fa-solid fa-key",
         "auth.Group": "fas fa-users",
         "auth.User": "fas fa-user",
+        "main.VideoGallery": "fas fa-film",
         "main.Students": "fas fa-solid fa-graduation-cap",
         "main.SchoolParliament": "fas fa-solid fa-university",
         "main.GimnasiumClass": "fas fa-solid fa-chalkboard",

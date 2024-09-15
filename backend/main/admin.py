@@ -3,18 +3,23 @@ from .models import *
 from modeltranslation.admin import TranslationAdmin
 from .utils import generate_csv_file, generate_excel_file
 
-
 admin.site.register(Graduates)
 admin.site.register(SchoolParliament)
 admin.site.register(GimnasiumClass)
 admin.site.register(Olympians)
 
 
+@admin.register(Video)
+class VideoAdmin(admin.ModelAdmin):
+    list_display = ('title', 'youtube_id', 'published_at')
+    list_filter = ('published_at',)
+    search_fields = ('title', 'description', 'youtube_id')
+    readonly_fields = ('youtube_id', 'published_at')
+
+
 @admin.register(Gallery)
 class GalleryAdmin(admin.ModelAdmin):
-        list_display = ('title', 'image', 'content', 'url_video')
-
-
+    list_display = ('title', 'image', 'content', 'url_video')
 
 
 @admin.register(ThanksNoteFromGraduates)
@@ -122,4 +127,3 @@ class TeachersAdmin(TranslationAdmin):
         css = {
             'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
         }
-
