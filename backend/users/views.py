@@ -14,6 +14,26 @@ from rest_framework.decorators import action
 from django.shortcuts import get_object_or_404
 # from .permissions import IsAuthorOrReadOnly
 from main.models import News
+from django.http import JsonResponse
+from django.views.decorators.http import require_GET
+from django.contrib.auth.decorators import login_required
+from django.middleware.csrf import get_token
+
+
+@require_GET
+def user_auth_status(request):
+    if request.user.is_authenticated:
+        return JsonResponse({
+            'isAuthenticated': True,
+            'username': request.user.username,
+            'csrf_token': get_token(request)
+        })
+    else:
+        return JsonResponse({
+            'isAuthenticated': False,
+            'username': None,
+            'csrf_token': get_token(request)
+        })
 
 
 class RegisterView(APIView):
