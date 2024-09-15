@@ -176,15 +176,11 @@ class CommentReplyViewSet(viewsets.ModelViewSet):
     serializer_class = CommentReplySerializers
     permission_classes = [IsAuthenticatedOrReadOnly]
 
-    def list(self, request, *args, **kwargs):
-        logger.info(f"Пользователь {request.user.username} запросил список ответов на комментарии.")
-        return super().list(request, *args, **kwargs)
-
     def perform_create(self, serializer):
         comment_id = self.kwargs.get('comment_pk')
-        comment = Comment.objects.get(pk=comment_id)
+        comment = get_object_or_404(Comment, pk=comment_id)
         serializer.save(author=self.request.user, parent_comment=comment)
-        logger.info(f"Пользователь {self.request.user.username} создал ответ ID: {serializer.instance.id} на комментарий ID: {serializer.instance.comment.id}")
+        logger.info(f"Пользователь {self.request.user.username} создал ответ ID: {serializer.instance.id} на комментарий ID: {comment.id}")
 
     def perform_destroy(self, instance):
         if instance.author == self.request.user:
@@ -192,6 +188,7 @@ class CommentReplyViewSet(viewsets.ModelViewSet):
             instance.delete()
         else:
             logger.warning(f"Пользователь {self.request.user.username} попытался удалить чужой ответ ID: {instance.id}")
+            raise PermissionDenied("Вы не можете удалить этот ответ")
 
     def perform_update(self, serializer):
         if self.get_object().author == self.request.user:
