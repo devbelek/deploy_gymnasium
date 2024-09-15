@@ -69,8 +69,12 @@ const Profile: React.FC = () => {
     <div className={styles.profileContainer}>
       <div className={styles.profileCard}>
         <div className={styles.avatarContainer}>
-          {data?.avatar || previewUrl ? (
-            <img src={previewUrl || data?.avatar} alt="Avatar" className={styles.avatar} />
+          {previewUrl || data?.avatar ? (
+            <img
+              src={previewUrl || data?.avatar || '/default-avatar.png'}
+              alt="Avatar"
+              className={styles.avatar}
+            />
           ) : (
             <FaUser className={styles.avatarPlaceholder} />
           )}
