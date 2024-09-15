@@ -84,9 +84,9 @@ const api = index.injectEndpoints({
     }),
     addReply: build.mutation<NEWS.AddReplyResponse, NEWS.AddReplyRequest>({
       query: ({ commentId, text }) => ({
-        url: `${ENDPOINTS}/comment_replies/`,
+        url: `${ENDPOINTS}/comments/${commentId}/reply/`,
         method: "POST",
-        body: JSON.stringify({ parent_comment: commentId, text }),
+        body: JSON.stringify({ text }),
         credentials: 'include',
         headers: {
           'X-CSRFToken': getCSRFToken() || '',
