@@ -36,6 +36,17 @@ const Profile: React.FC = () => {
     }
   };
 
+  const handleEdit = () => {
+    if (data) {
+      reset({
+        user: data.user,
+        about: data.about || '',
+        avatar: data.avatar || '',
+      });
+    }
+    setIsEditing(true);
+  };
+
   return (
     <div className={styles.profileContainer}>
       <div className={styles.profileCard}>
@@ -52,7 +63,7 @@ const Profile: React.FC = () => {
         </div>
         <Dialog.Root open={isEditing} onOpenChange={setIsEditing}>
           <Dialog.Trigger asChild>
-            <button className={styles.editButton} onClick={() => reset(data)}>
+            <button className={styles.editButton} onClick={handleEdit}>
               <FaEdit /> Редактировать профиль
             </button>
           </Dialog.Trigger>
