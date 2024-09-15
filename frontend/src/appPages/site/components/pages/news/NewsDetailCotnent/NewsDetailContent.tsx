@@ -27,16 +27,27 @@ const NewsDetailContent: React.FC = () => {
   const [addReply] = useAddReplyMutation();
 
   useEffect(() => {
-    // Simulating user authentication check
-    const checkAuth = async () => {
-      // Replace this with your actual authentication logic
-      const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
-      setIsLoggedIn(loggedIn);
-      if (loggedIn) {
-        setCurrentUser(localStorage.getItem('currentUser') || null);
+    const checkAuthStatus = async () => {
+      try {
+        const response = await fetch('/api/auth/user/', {
+          credentials: 'include',
+        });
+        if (response.ok) {
+          const userData = await response.json();
+          setIsLoggedIn(true);
+          setCurrentUser(userData.username);
+        } else {
+          setIsLoggedIn(false);
+          setCurrentUser(null);
+        }
+      } catch (error) {
+        console.error('Error checking auth status:', error);
+        setIsLoggedIn(false);
+        setCurrentUser(null);
       }
     };
-    checkAuth();
+
+    checkAuthStatus();
   }, []);
 
   if (isNaN(newsId)) {
