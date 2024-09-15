@@ -17,7 +17,7 @@ class CachedViewSetMixin:
 
 
 class VideoViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Video.objects.all().order_by('-published_at')
+    queryset = Video.objects.all()
     serializer_class = VideoSerializer
 
 
