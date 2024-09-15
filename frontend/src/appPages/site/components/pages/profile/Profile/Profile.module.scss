@@ -1,5 +1,59 @@
-.Profile {
-  .content {
-    margin-top: 90px;
-  }
+.profileContainer {
+  @apply container mx-auto mt-10;
+}
+
+.profileCard {
+  @apply w-full max-w-2xl mx-auto;
+}
+
+.profileTitle {
+  @apply text-2xl font-bold;
+}
+
+.profileInfo {
+  @apply flex items-center space-x-4 mb-4;
+}
+
+.avatar {
+  @apply w-24 h-24;
+}
+
+.userName {
+  @apply text-xl font-semibold;
+}
+
+.userAbout {
+  @apply text-gray-500;
+}
+
+.editButton {
+  @apply mt-4;
+}
+
+.dialogContent {
+  @apply sm:max-w-[425px];
+}
+
+.formGrid {
+  @apply grid gap-4 py-4;
+}
+
+.formField {
+  @apply grid grid-cols-4 items-center gap-4;
+}
+
+.label {
+  @apply text-right;
+}
+
+.input, .textarea {
+  @apply col-span-3;
+}
+
+.saveButton {
+  @apply w-full mt-4;
+}
+
+.loading, .error {
+  @apply text-center text-lg mt-10;
 }
