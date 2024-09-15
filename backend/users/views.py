@@ -103,7 +103,7 @@ class UserProfileDetail(generics.RetrieveUpdateAPIView):
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializers
-    permission_classes = [IsAuthenticatedOrReadOnly,
+    permission_classes = [AllowAny,
                           # IsAuthorOrReadOnly]
     ]
 
@@ -154,7 +154,7 @@ class CommentViewSet(viewsets.ModelViewSet):
 class CommentReplyViewSet(viewsets.ModelViewSet):
     queryset = CommentReply.objects.all()
     serializer_class = CommentReplySerializers
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [AllowAny]
 
     def list(self, request, *args, **kwargs):
         logger.info(f"Пользователь {request.user.username} запросил список ответов на комментарии.")
