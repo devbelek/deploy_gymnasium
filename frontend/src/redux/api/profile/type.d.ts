@@ -1,4 +1,4 @@
-namespace ACCOUNT {
+export namespace ACCOUNT {
   export interface IAccount {
     user: string;
     avatar: string | null;
@@ -7,4 +7,7 @@ namespace ACCOUNT {
 
   export type GetAccountResponse = IAccount;
   export type GetAccountRequest = null;
+
+  export type UpdateAccountResponse = IAccount;
+  export type UpdateAccountRequest = Partial<IAccount>;
 }
