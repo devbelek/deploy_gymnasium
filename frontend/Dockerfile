@@ -8,6 +8,8 @@ RUN npm install
 RUN npm i sharp
 RUN npm install @chakra-ui/react
 RUN npm install lucide-react
+RUN npm install @your-library/ui
+
 COPY . .
 RUN npm run build
 
