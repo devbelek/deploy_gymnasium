@@ -339,7 +339,7 @@ class Gallery(ImageModel, ContentModel):
 class Video(models.Model):
     title = models.CharField(max_length=200, verbose_name=_('Заголовок'))
     description = models.TextField(blank=True, verbose_name=_('Описание'))
-    youtube_id = models.CharField(max_length=20, unique=True, verbose_name=_('Ссылка на видео'))
+    youtube_id = models.CharField(max_length=200, unique=True, verbose_name=_('Ссылка на видео'))
 
     class Meta:
         verbose_name = _('Видео-Галерея')
