@@ -4,7 +4,6 @@ import scss from "./NewsDetailContent.module.scss";
 import { useGetDetNewsQuery, useGetCommentsQuery, useAddCommentMutation, useUpdateCommentMutation, useDeleteCommentMutation, useLikeCommentMutation, useAddReplyMutation } from "@/redux/api/news";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { getCSRFToken } from './csrf';
 import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
 import { MoreVertical, Edit, Trash2, MessageCircle, ThumbsUp } from 'lucide-react';
 
@@ -17,6 +16,7 @@ const NewsDetailContent: React.FC = () => {
   const [replyingToCommentId, setReplyingToCommentId] = useState<number | null>(null);
   const [replyText, setReplyText] = useState("");
   const [currentUser, setCurrentUser] = useState<string | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const { data: newsData, isLoading: newsLoading, error: newsError } = useGetDetNewsQuery(newsId);
   const { data: commentsData, isLoading: commentsLoading, error: commentsError } = useGetCommentsQuery(newsId);
@@ -27,26 +27,33 @@ const NewsDetailContent: React.FC = () => {
   const [addReply] = useAddReplyMutation();
 
   useEffect(() => {
-    // Здесь должна быть логика получения текущего пользователя
-    // Для примера используем моковые данные
-    setCurrentUser("CurrentUser");
+    // Simulating user authentication check
+    const checkAuth = async () => {
+      // Replace this with your actual authentication logic
+      const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+      setIsLoggedIn(loggedIn);
+      if (loggedIn) {
+        setCurrentUser(localStorage.getItem('currentUser') || null);
+      }
+    };
+    checkAuth();
   }, []);
 
   if (isNaN(newsId)) {
-    return <div>Некорректный идентификатор новости</div>;
+    return <div className={scss.error}>Invalid news identifier</div>;
   }
 
-  if (newsLoading || commentsLoading) return <div>Загрузка...</div>;
-  if (newsError || commentsError) return <div>Произошла ошибка при загрузке данных</div>;
-  if (!newsData) return <div>Новость не найдена</div>;
+  if (newsLoading || commentsLoading) return <div className={scss.loading}>Loading...</div>;
+  if (newsError || commentsError) return <div className={scss.error}>An error occurred while loading data</div>;
+  if (!newsData) return <div className={scss.error}>News not found</div>;
 
   const handleAddComment = async () => {
-    if (commentText.trim()) {
+    if (commentText.trim() && isLoggedIn) {
       try {
         await addComment({ newsId, text: commentText }).unwrap();
         setCommentText("");
       } catch (error) {
-        console.error("Ошибка при добавлении комментария:", error);
+        console.error("Error adding comment:", error);
       }
     }
   };
@@ -58,7 +65,7 @@ const NewsDetailContent: React.FC = () => {
         setEditingCommentId(null);
         setEditedCommentText("");
       } catch (error) {
-        console.error("Ошибка при обновлении комментария:", error);
+        console.error("Error updating comment:", error);
       }
     }
   };
@@ -67,26 +74,28 @@ const NewsDetailContent: React.FC = () => {
     try {
       await deleteComment(commentId).unwrap();
     } catch (error) {
-      console.error("Ошибка при удалении комментария:", error);
+      console.error("Error deleting comment:", error);
     }
   };
 
   const handleLikeComment = async (commentId: number) => {
-    try {
-      await likeComment({ commentId }).unwrap();
-    } catch (error) {
-      console.error("Ошибка при лайке комментария:", error);
+    if (isLoggedIn) {
+      try {
+        await likeComment({ commentId }).unwrap();
+      } catch (error) {
+        console.error("Error liking comment:", error);
+      }
     }
   };
 
   const handleReplyToComment = async (parentCommentId: number) => {
-    if (replyText.trim()) {
+    if (replyText.trim() && isLoggedIn) {
       try {
         await addReply({ commentId: parentCommentId, text: replyText }).unwrap();
         setReplyingToCommentId(null);
         setReplyText("");
       } catch (error) {
-        console.error("Ошибка при добавлении ответа:", error);
+        console.error("Error adding reply:", error);
       }
     }
   };
@@ -94,7 +103,7 @@ const NewsDetailContent: React.FC = () => {
   const renderComment = (comment: any, isReply = false) => (
     <div key={comment.id} className={`${scss.comment} ${isReply ? scss.reply : ''}`}>
       <p>{comment.text}</p>
-      <small>Автор: {comment.author} | Дата: {new Date(comment.created_at).toLocaleString()}</small>
+      <small>Author: {comment.author} | Date: {new Date(comment.created_at).toLocaleString()}</small>
       <div className={scss.commentActions}>
         <button onClick={() => handleLikeComment(comment.id)} className={scss.likeButton}>
           <ThumbsUp size={16} />
@@ -108,19 +117,19 @@ const NewsDetailContent: React.FC = () => {
             <MenuList>
               <MenuItem onClick={() => setEditingCommentId(comment.id)}>
                 <Edit size={16} />
-                <span>Редактировать</span>
+                <span>Edit</span>
               </MenuItem>
               <MenuItem onClick={() => handleDeleteComment(comment.id)}>
                 <Trash2 size={16} />
-                <span>Удалить</span>
+                <span>Delete</span>
               </MenuItem>
             </MenuList>
           </Menu>
         )}
-        {!isReply && (
+        {!isReply && isLoggedIn && (
           <button onClick={() => setReplyingToCommentId(comment.id)} className={scss.replyButton}>
             <MessageCircle size={16} />
-            <span>Ответить</span>
+            <span>Reply</span>
           </button>
         )}
       </div>
@@ -129,10 +138,10 @@ const NewsDetailContent: React.FC = () => {
           <textarea
             value={editedCommentText}
             onChange={(e) => setEditedCommentText(e.target.value)}
-            placeholder="Отредактируйте комментарий"
+            placeholder="Edit your comment"
           />
-          <button onClick={() => handleUpdateComment(comment.id)}>Сохранить</button>
-          <button onClick={() => setEditingCommentId(null)}>Отмена</button>
+          <button onClick={() => handleUpdateComment(comment.id)}>Save</button>
+          <button onClick={() => setEditingCommentId(null)}>Cancel</button>
         </div>
       )}
       {replyingToCommentId === comment.id && (
@@ -140,10 +149,10 @@ const NewsDetailContent: React.FC = () => {
           <textarea
             value={replyText}
             onChange={(e) => setReplyText(e.target.value)}
-            placeholder="Напишите ваш ответ"
+            placeholder="Write your reply"
           />
-          <button onClick={() => handleReplyToComment(comment.id)}>Ответить</button>
-          <button onClick={() => setReplyingToCommentId(null)}>Отмена</button>
+          <button onClick={() => handleReplyToComment(comment.id)}>Reply</button>
+          <button onClick={() => setReplyingToCommentId(null)}>Cancel</button>
         </div>
       )}
       {comment.replies && comment.replies.map((reply: any) => renderComment(reply, true))}
@@ -155,7 +164,7 @@ const NewsDetailContent: React.FC = () => {
       <div className="container">
         <div className={scss.content}>
           <div className={scss.news_head}>
-            <h1>Новости</h1>
+            <h1>News</h1>
             <hr />
           </div>
           <div className={scss.newsContent}>
@@ -170,25 +179,29 @@ const NewsDetailContent: React.FC = () => {
             />
             <p>{newsData.content}</p>
             <div className={scss.newsInfo}>
-              <p>Автор: {newsData.author}</p>
-              <p>Дата публикации: {new Date(newsData.created_at).toLocaleString()}</p>
-              <p>Последнее обновление: {new Date(newsData.updated_at).toLocaleString()}</p>
+              <p>Author: {newsData.author}</p>
+              <p>Publication date: {new Date(newsData.created_at).toLocaleString()}</p>
+              <p>Last update: {new Date(newsData.updated_at).toLocaleString()}</p>
             </div>
             <hr />
           </div>
           <div className={scss.commentsSection}>
-            <h2>Комментарии</h2>
+            <h2>Comments</h2>
             {commentsData && commentsData.map((comment) => renderComment(comment))}
-            <div className={scss.addComment}>
-              <textarea
-                value={commentText}
-                onChange={(e) => setCommentText(e.target.value)}
-                placeholder="Напишите ваш комментарий"
-              />
-              <button onClick={handleAddComment} disabled={isAddingComment}>
-                {isAddingComment ? "Добавление..." : "Добавить комментарий"}
-              </button>
-            </div>
+            {isLoggedIn ? (
+              <div className={scss.addComment}>
+                <textarea
+                  value={commentText}
+                  onChange={(e) => setCommentText(e.target.value)}
+                  placeholder="Write your comment"
+                />
+                <button onClick={handleAddComment} disabled={isAddingComment}>
+                  {isAddingComment ? "Adding..." : "Add comment"}
+                </button>
+              </div>
+            ) : (
+              <p className={scss.loginPrompt}>Please log in to leave a comment.</p>
+            )}
           </div>
         </div>
       </div>
