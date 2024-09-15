@@ -1,7 +1,7 @@
 "use client";
 import { useParams } from "next/navigation";
 import scss from "./NewsDetailContent.module.scss";
-import { useGetDetNewsQuery, useGetCommentsQuery, useAddCommentMutation, useUpdateCommentMutation, useDeleteCommentMutation, useLikeCommentMutation, useAddReplyMutation } from "@/redux/api/news";
+import { useGetDetNewsQuery, useGetCommentsQuery, useAddCommentMutation, useUpdateCommentMutation, useDeleteCommentMutation, useLikeCommentMutation, useAddReplyMutation, useUpdateReplyMutation, useDeleteReplyMutation } from "@/redux/api/news";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
@@ -25,6 +25,8 @@ const NewsDetailContent: React.FC = () => {
   const [deleteComment] = useDeleteCommentMutation();
   const [likeComment] = useLikeCommentMutation();
   const [addReply] = useAddReplyMutation();
+  const [updateReply] = useUpdateReplyMutation();
+  const [deleteReply] = useDeleteReplyMutation();
 
   useEffect(() => {
     const checkAuthStatus = async () => {
@@ -32,10 +34,8 @@ const NewsDetailContent: React.FC = () => {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API}/${process.env.NEXT_PUBLIC_ENDPOINT}/accounts/user/`, {
           credentials: 'include',
         });
-        console.log('Auth response:', response);
         if (response.ok) {
           const userData = await response.json();
-          console.log('Auth data:', userData);
           setIsLoggedIn(userData.isAuthenticated);
           setCurrentUser(userData.username);
         } else {
@@ -113,6 +113,26 @@ const NewsDetailContent: React.FC = () => {
     }
   };
 
+  const handleUpdateReply = async (replyId: number, text: string) => {
+    if (text.trim()) {
+      try {
+        await updateReply({ replyId, text }).unwrap();
+        setEditingCommentId(null);
+        setEditedCommentText("");
+      } catch (error) {
+        console.error("Error updating reply:", error);
+      }
+    }
+  };
+
+  const handleDeleteReply = async (replyId: number) => {
+    try {
+      await deleteReply(replyId).unwrap();
+    } catch (error) {
+      console.error("Error deleting reply:", error);
+    }
+  };
+
   const renderComment = (comment: any, isReply = false) => (
     <div key={comment.id} className={`${scss.comment} ${isReply ? scss.reply : ''}`}>
       <p>{comment.text}</p>
@@ -132,7 +152,7 @@ const NewsDetailContent: React.FC = () => {
                 <Edit size={16} />
                 <span>Edit</span>
               </MenuItem>
-              <MenuItem onClick={() => handleDeleteComment(comment.id)}>
+              <MenuItem onClick={() => isReply ? handleDeleteReply(comment.id) : handleDeleteComment(comment.id)}>
                 <Trash2 size={16} />
                 <span>Delete</span>
               </MenuItem>
@@ -153,7 +173,7 @@ const NewsDetailContent: React.FC = () => {
             onChange={(e) => setEditedCommentText(e.target.value)}
             placeholder="Edit your comment"
           />
-          <button onClick={() => handleUpdateComment(comment.id)}>Save</button>
+          <button onClick={() => isReply ? handleUpdateReply(comment.id, editedCommentText) : handleUpdateComment(comment.id)}>Save</button>
           <button onClick={() => setEditingCommentId(null)}>Cancel</button>
         </div>
       )}
