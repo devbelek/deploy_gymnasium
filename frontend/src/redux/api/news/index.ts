@@ -83,10 +83,11 @@ const api = index.injectEndpoints({
       query: ({ commentId, text }) => ({
         url: `${ENDPOINTS}/comments/${commentId}/reply/`,
         method: "POST",
-        body: { text },
+        body: JSON.stringify({ text }),
         credentials: 'include',
         headers: {
           'X-CSRFToken': getCSRFToken() || '',
+          'Content-Type': 'application/json',
         },
       }),
       invalidatesTags: ["comments"],
