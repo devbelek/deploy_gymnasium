@@ -18,8 +18,10 @@ const Profile: React.FC = () => {
   const [updateAccount, { isLoading: isUpdating }] = useUpdateAccountMutation();
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
-  const { register, handleSubmit, reset, setValue } = useForm<ProfileFormData>();
+  const { register, handleSubmit, reset, setValue, watch } = useForm<ProfileFormData>();
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const watchAvatar = watch("avatar");
 
   useEffect(() => {
     if (data) {
@@ -31,6 +33,17 @@ const Profile: React.FC = () => {
     }
   }, [data, reset]);
 
+  useEffect(() => {
+    if (watchAvatar && watchAvatar.length > 0) {
+      const file = watchAvatar[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewUrl(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  }, [watchAvatar]);
+
   if (isLoading) return <div className={styles.loading}>Загрузка...</div>;
   if (error) return <div className={styles.error}>Ошибка загрузки данных</div>;
 
@@ -39,13 +52,13 @@ const Profile: React.FC = () => {
       const formDataToSend = new FormData();
       formDataToSend.append('user', formData.user);
       formDataToSend.append('about', formData.about);
-      if (formData.avatar) {
-        formDataToSend.append('avatar', formData.avatar);
+      if (formData.avatar && formData.avatar.length > 0) {
+        formDataToSend.append('avatar', formData.avatar[0]);
       }
 
       await updateAccount(formDataToSend).unwrap();
       setIsEditing(false);
-      refetch(); // Обновляем данные после успешного сохранения
+      refetch();
       alert('Профиль успешно обновлен');
     } catch (error) {
       console.error("Не удалось обновить профиль", error);
@@ -55,18 +68,6 @@ const Profile: React.FC = () => {
 
   const handleEdit = () => {
     setIsEditing(true);
-  };
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setValue('avatar', file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewUrl(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
   };
 
   return (
@@ -82,22 +83,6 @@ const Profile: React.FC = () => {
           ) : (
             <FaUser className={styles.avatarPlaceholder} />
           )}
-          {isEditing && (
-            <button
-              className={styles.changeAvatarButton}
-              onClick={() => fileInputRef.current?.click()}
-              type="button"
-            >
-              <FaCamera />
-            </button>
-          )}
-          <input
-            type="file"
-            ref={fileInputRef}
-            onChange={handleFileChange}
-            className={styles.hiddenFileInput}
-            accept="image/*"
-          />
         </div>
         <div className={styles.profileInfo}>
           <h2 className={styles.userName}>{data?.user}</h2>
@@ -122,6 +107,16 @@ const Profile: React.FC = () => {
               <div className={styles.formField}>
                 <label htmlFor="about">О себе</label>
                 <textarea id="about" {...register("about")} />
+              </div>
+              <div className={styles.formField}>
+                <label htmlFor="avatar">Изменить аватар</label>
+                <input
+                  type="file"
+                  id="avatar"
+                  accept="image/*"
+                  {...register("avatar")}
+                  className={styles.fileInput}
+                />
               </div>
               <div className={styles.formActions}>
                 <button type="submit" disabled={isUpdating} className={styles.saveButton}>
