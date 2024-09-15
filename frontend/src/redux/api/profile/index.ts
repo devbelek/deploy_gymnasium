@@ -14,6 +14,14 @@ type GetAccountRequest = null;
 type UpdateAccountResponse = IAccount;
 type UpdateAccountRequest = Partial<IAccount>;
 
+const getCSRFToken = (): string | null => {
+  const csrfToken = document.cookie
+    .split('; ')
+    .find((row) => row.startsWith('csrftoken='))
+    ?.split('=')[1];
+  return csrfToken || null;
+};
+
 export const profileApi = api.injectEndpoints({
   endpoints: (build) => ({
     getAccount: build.query<GetAccountResponse, GetAccountRequest>({
