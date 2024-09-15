@@ -81,7 +81,7 @@ const api = index.injectEndpoints({
     }),
     addReply: build.mutation<NEWS.AddReplyResponse, { commentId: number; text: string }>({
       query: ({ commentId, text }) => ({
-        url: `${ENDPOINTS}/comments/${commentId}/replies/`,
+        url: `${ENDPOINTS}/comments/${commentId}/reply/`,
         method: "POST",
         body: { text },
         credentials: 'include',
