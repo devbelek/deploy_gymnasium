@@ -3,13 +3,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useGetAccountQuery, useUpdateAccountMutation } from "@/redux/api/profile";
 import { useForm } from "react-hook-form";
-import { FaEdit, FaUser, FaCamera, FaSave, FaTimes } from 'react-icons/fa';
+import { FaEdit, FaUser, FaSave, FaTimes } from 'react-icons/fa';
 import styles from './Profile.module.scss';
 
 interface ProfileFormData {
   user: string;
   about: string;
-  avatar: File | null;
+  avatar: FileList | null;
 }
 
 const Profile: React.FC = () => {
@@ -18,8 +18,7 @@ const Profile: React.FC = () => {
   const [updateAccount, { isLoading: isUpdating }] = useUpdateAccountMutation();
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
-  const { register, handleSubmit, reset, setValue, watch } = useForm<ProfileFormData>();
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const { register, handleSubmit, reset, watch } = useForm<ProfileFormData>();
 
   const watchAvatar = watch("avatar");
 
