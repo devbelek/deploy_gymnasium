@@ -48,14 +48,6 @@ class UserProfileSerializers(serializers.ModelSerializer):
         exclude = ['id']
 
 
-class CommentSerializers(serializers.ModelSerializer):
-    author = serializers.ReadOnlyField(source='author.username')
-
-    class Meta:
-        model = Comment
-        fields = ['id', 'author', 'text', 'created_at']
-
-
 class CommentReplySerializers(serializers.ModelSerializer):
     author = serializers.ReadOnlyField(source='author.username')
 
@@ -68,6 +60,15 @@ class CommentReplySerializers(serializers.ModelSerializer):
         parent_comment = Comment.objects.get(id=parent_comment_id)
         reply = CommentReply.objects.create(parent_comment=parent_comment, **validated_data)
         return reply
+
+
+class CommentSerializers(serializers.ModelSerializer):
+    author = serializers.ReadOnlyField(source='author.username')
+    replies = CommentReplySerializers(many=True, read_only=True)
+
+    class Meta:
+        model = Comment
+        fields = ['id', 'author', 'text', 'created_at', 'updated_at', 'replies']
 
 
 class LikeSerializers(serializers.ModelSerializer):
