@@ -12,7 +12,7 @@ type GetAccountResponse = IAccount;
 type GetAccountRequest = null;
 
 type UpdateAccountResponse = IAccount;
-type UpdateAccountRequest = Partial<IAccount>;
+type UpdateAccountRequest = FormData;
 
 const getCSRFToken = (): string | null => {
   const csrfToken = document.cookie
