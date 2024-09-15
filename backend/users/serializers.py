@@ -61,7 +61,7 @@ class CommentReplySerializers(serializers.ModelSerializer):
 
     class Meta:
         model = CommentReply
-        fields = ['id', 'author', 'text', 'created_at']
+        fields = ['id', 'parent_comment', 'author', 'text', 'created_at']
 
     def create(self, validated_data):
         parent_comment_id = validated_data.pop('parent_comment_id')
