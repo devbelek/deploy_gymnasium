@@ -81,12 +81,13 @@ const api = index.injectEndpoints({
     }),
     addReply: build.mutation<NEWS.AddReplyResponse, { commentId: number; text: string }>({
       query: ({ commentId, text }) => ({
-        url: `${ENDPOINTS}/comments/${commentId}/replies/`,
+        url: `${ENDPOINTS}/comments/${commentId}/reply/`,
         method: "POST",
-        body: { text },
+        body: JSON.stringify({ text }),
         credentials: 'include',
         headers: {
           'X-CSRFToken': getCSRFToken() || '',
+          'Content-Type': 'application/json',
         },
       }),
       invalidatesTags: ["comments"],
