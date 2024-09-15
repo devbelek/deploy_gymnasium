@@ -29,7 +29,7 @@ const NewsDetailContent: React.FC = () => {
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
-        const response = await fetch('/accounts/user/', {
+        const response = await fetch('/accounts/', {
           credentials: 'include',
         });
         if (response.ok) {
