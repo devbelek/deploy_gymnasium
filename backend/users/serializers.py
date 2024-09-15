@@ -50,15 +50,22 @@ class UserProfileSerializers(serializers.ModelSerializer):
 
 class CommentReplySerializers(serializers.ModelSerializer):
     author = serializers.ReadOnlyField(source='author.username')
+    parent_comment = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = CommentReply
-        fields = ['id', 'author', 'text', 'created_at']
+        fields = ['id', 'author', 'parent_comment', 'text', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'author', 'parent_comment', 'created_at', 'updated_at']
 
     def create(self, validated_data):
-        parent_comment = validated_data.pop('parent_comment')
+        parent_comment = self.context['parent_comment']
         reply = CommentReply.objects.create(parent_comment=parent_comment, **validated_data)
         return reply
+
+    def update(self, instance, validated_data):
+        instance.text = validated_data.get('text', instance.text)
+        instance.save()
+        return instance
 
 
 class CommentSerializers(serializers.ModelSerializer):

@@ -36,27 +36,29 @@ const api = index.injectEndpoints({
       query: ({ newsId, text, parentCommentId }) => ({
         url: `${ENDPOINTS}/news/${newsId}/comments/`,
         method: "POST",
-        body: { text, parent_comment_id: parentCommentId },
+        body: JSON.stringify({ text, parent_comment_id: parentCommentId }),
         credentials: 'include',
         headers: {
           'X-CSRFToken': getCSRFToken() || '',
+          'Content-Type': 'application/json',
         },
       }),
       invalidatesTags: ["comments"],
     }),
-    updateComment: build.mutation<NEWS.UpdateCommentResponse, { commentId: number; text: string }>({
+    updateComment: build.mutation<NEWS.UpdateCommentResponse, NEWS.UpdateCommentRequest>({
       query: ({ commentId, text }) => ({
         url: `${ENDPOINTS}/comments/${commentId}/`,
         method: "PATCH",
-        body: { text },
+        body: JSON.stringify({ text }),
         credentials: 'include',
         headers: {
           'X-CSRFToken': getCSRFToken() || '',
+          'Content-Type': 'application/json',
         },
       }),
       invalidatesTags: ["comments"],
     }),
-    deleteComment: build.mutation<NEWS.DeleteCommentResponse, number>({
+    deleteComment: build.mutation<NEWS.DeleteCommentResponse, NEWS.DeleteCommentRequest>({
       query: (commentId) => ({
         url: `${ENDPOINTS}/comments/${commentId}/`,
         method: "DELETE",
@@ -67,22 +69,36 @@ const api = index.injectEndpoints({
       }),
       invalidatesTags: ["comments"],
     }),
-    likeComment: build.mutation<NEWS.LikeCommentResponse, { commentId: number }>({
+    likeComment: build.mutation<NEWS.LikeCommentResponse, NEWS.LikeCommentRequest>({
       query: ({ commentId }) => ({
         url: `${ENDPOINTS}/likes/toggle/`,
         method: "POST",
-        body: { comment_id: commentId },
+        body: JSON.stringify({ comment_id: commentId }),
         credentials: 'include',
         headers: {
           'X-CSRFToken': getCSRFToken() || '',
+          'Content-Type': 'application/json',
         },
       }),
       invalidatesTags: ["comments"],
     }),
-    addReply: build.mutation<NEWS.AddReplyResponse, { commentId: number; text: string }>({
+    addReply: build.mutation<NEWS.AddReplyResponse, NEWS.AddReplyRequest>({
       query: ({ commentId, text }) => ({
-        url: `${ENDPOINTS}/comments/${commentId}/reply/`,
+        url: `${ENDPOINTS}/comment_replies/`,
         method: "POST",
+        body: JSON.stringify({ parent_comment: commentId, text }),
+        credentials: 'include',
+        headers: {
+          'X-CSRFToken': getCSRFToken() || '',
+          'Content-Type': 'application/json',
+        },
+      }),
+      invalidatesTags: ["comments"],
+    }),
+    updateReply: build.mutation<NEWS.UpdateReplyResponse, NEWS.UpdateReplyRequest>({
+      query: ({ replyId, text }) => ({
+        url: `${ENDPOINTS}/comment_replies/${replyId}/`,
+        method: "PATCH",
         body: JSON.stringify({ text }),
         credentials: 'include',
         headers: {
@@ -92,19 +108,7 @@ const api = index.injectEndpoints({
       }),
       invalidatesTags: ["comments"],
     }),
-    updateReply: build.mutation<NEWS.UpdateReplyResponse, { replyId: number; text: string }>({
-      query: ({ replyId, text }) => ({
-        url: `${ENDPOINTS}/comment_replies/${replyId}/`,
-        method: "PATCH",
-        body: { text },
-        credentials: 'include',
-        headers: {
-          'X-CSRFToken': getCSRFToken() || '',
-        },
-      }),
-      invalidatesTags: ["comments"],
-    }),
-    deleteReply: build.mutation<NEWS.DeleteReplyResponse, number>({
+    deleteReply: build.mutation<NEWS.DeleteReplyResponse, NEWS.DeleteReplyRequest>({
       query: (replyId) => ({
         url: `${ENDPOINTS}/comment_replies/${replyId}/`,
         method: "DELETE",
