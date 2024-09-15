@@ -2,7 +2,7 @@ from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 from .views import UserProfileDetail, CommentViewSet, CommentReplyViewSet, LikeViewSet, DonationsViewSet, \
     ConfirmedDonationViewSet, RegisterView
-from .views import views
+from . import views
 
 router = DefaultRouter()
 router.register(r'comments', CommentViewSet)
