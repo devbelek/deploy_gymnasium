@@ -29,12 +29,14 @@ const NewsDetailContent: React.FC = () => {
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
-        const response = await fetch('/accounts/user/', {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API}/${process.env.NEXT_PUBLIC_ENDPOINT}/accounts/user/`, {
           credentials: 'include',
         });
+        console.log('Auth response:', response);
         if (response.ok) {
           const userData = await response.json();
-          setIsLoggedIn(true);
+          console.log('Auth data:', userData);
+          setIsLoggedIn(userData.isAuthenticated);
           setCurrentUser(userData.username);
         } else {
           setIsLoggedIn(false);
