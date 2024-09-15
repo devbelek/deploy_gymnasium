@@ -70,7 +70,7 @@ class Comment(models.Model):
 
 
 class CommentReply(models.Model):
-    comment = models.ForeignKey(Comment, related_name='replies', on_delete=models.CASCADE, verbose_name='Комментарий')
+    parent_comment = models.ForeignKey(Comment, related_name='replies', on_delete=models.CASCADE, verbose_name='Комментарий')
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Автор')
     text = models.TextField(verbose_name='Ответ')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
