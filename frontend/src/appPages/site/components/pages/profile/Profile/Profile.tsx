@@ -21,6 +21,7 @@ const Profile: React.FC = () => {
   const { register, handleSubmit, reset, watch } = useForm<ProfileFormData>();
 
   const watchAvatar = watch("avatar");
+  const watchAbout = watch("about", "");
 
   useEffect(() => {
     if (data) {
@@ -105,7 +106,13 @@ const Profile: React.FC = () => {
               </div>
               <div className={styles.formField}>
                 <label htmlFor="about">О себе</label>
-                <textarea id="about" {...register("about")} />
+                <textarea id="about" {...register("about", {
+                    maxLength: {
+                      value: 300,
+                      message: "Максимум 300 символов" // Сообщение об ошибке
+                    }
+                  })}
+                />
               </div>
               <div className={styles.formField}>
                 <label htmlFor="avatar">Изменить аватар</label>
