@@ -12,7 +12,7 @@ from loguru import logger
 from django.core.exceptions import PermissionDenied
 from rest_framework.decorators import action
 from django.shortcuts import get_object_or_404
-from .permissions import IsAuthorOrReadOnly
+# from .permissions import IsAuthorOrReadOnly
 from main.models import News
 
 
@@ -103,7 +103,9 @@ class UserProfileDetail(generics.RetrieveUpdateAPIView):
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializers
-    permission_classes = [IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly,
+                          # IsAuthorOrReadOnly]
+    ]
 
     def get_queryset(self):
         news_id = self.kwargs.get('news_id')
