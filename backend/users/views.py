@@ -121,7 +121,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['post'])
     def reply(self, request, pk=None):
         comment = self.get_object()
-        serializer = CommentReplySerializers(data=request.data, context={'request': request}, 'parent_comment': comment)
+        serializer = CommentReplySerializers(data=request.data, context={'request': request, 'parent_comment': comment})
         if serializer.is_valid():
             serializer.save(author=request.user, parent_comment=comment)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
