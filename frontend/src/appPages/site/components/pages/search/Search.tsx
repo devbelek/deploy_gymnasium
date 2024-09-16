@@ -16,7 +16,8 @@ const Search = () => {
     return { full_name: query };
   }, [query]);
 
-  const { data, error, isLoading } = useGetSearchQuery(searchRequest, {
+  // Проверка, что searchRequest не равен null
+  const { data, error, isLoading } = useGetSearchQuery(searchRequest ?? {}, {
     skip: !searchRequest,
   });
 
@@ -38,8 +39,6 @@ const Search = () => {
       ) : !isLoading && !error ? (
         <p>Результатов не найдено</p>
       ) : null}
-      <h1>Студенты</h1>
-      <h1>Студенты</h1>
       <h1>Студенты</h1>
     </div>
   );
