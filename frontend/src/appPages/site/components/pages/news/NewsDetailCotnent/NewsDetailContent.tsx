@@ -57,36 +57,39 @@ const NewsDetailContent: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const fetchUserAvatars = async () => {
-      if (commentsData) {
-        const uniqueUsers = Array.from(new Set(commentsData.map(comment => comment.author)));
-        const avatarPromises = uniqueUsers.map(async username => {
-          try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API}/profile/${username}/`, {
-              credentials: 'include',
-            });
-            if (response.ok) {
-              const userData = await response.json();
-              return { username, avatar: userData.avatar };
-            }
-          } catch (error) {
-            console.error(`Ошибка при получении аватара для ${username}:`, error);
+  const fetchUserAvatars = async () => {
+    if (commentsData) {
+      const uniqueUsers = Array.from(new Set(commentsData.map(comment => comment.author)));
+
+      const avatarPromises = uniqueUsers.map(async username => {
+        try {
+          const response = await fetch(`${process.env.NEXT_PUBLIC_API}/profile/${username}/`, {
+            credentials: 'include',
+          });
+          if (response.ok) {
+            const userData = await response.json();
+            return { username, avatar: userData.avatar };
           }
-          return { username, avatar: null };
-        });
+        } catch (error) {
+          console.error(`Ошибка при получении аватара для ${username}:`, error);
+        }
+        return { username, avatar: null };
+      });
 
-        const avatarResults = await Promise.all(avatarPromises);
-        const avatarMap = avatarResults.reduce((acc, { username, avatar }) => {
-          acc[username] = avatar || `https://api.dicebear.com/6.x/initials/svg?seed=${username}`;
-          return acc;
-        }, {});
+      const avatarResults = await Promise.all(avatarPromises);
 
-        setUserAvatars(avatarMap);
-      }
-    };
+      const avatarMap: { [key: string]: string | null } = avatarResults.reduce((acc, { username, avatar }) => {
+        acc[username] = avatar || `https://api.dicebear.com/6.x/initials/svg?seed=${username}`;
+        return acc;
+      }, {} as { [key: string]: string | null });
 
-    fetchUserAvatars();
-  }, [commentsData]);
+      setUserAvatars(avatarMap);
+    }
+  };
+
+  fetchUserAvatars();
+}, [commentsData]);
+
 
   const handleAddComment = useCallback(async () => {
     if (commentText.trim() && isLoggedIn) {
