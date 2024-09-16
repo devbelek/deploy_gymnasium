@@ -131,6 +131,14 @@ class CommentViewSet(viewsets.ModelViewSet):
             return Comment.objects.filter(news_id=news_id, parent=None)
         return Comment.objects.filter(parent=None)
 
+    def get_object(self):
+        queryset = Comment.objects.all()
+        comment_pk = self.kwargs.get('comment_pk')
+        pk = self.kwargs.get('pk')
+        if comment_pk:
+            return get_object_or_404(queryset, parent_id=comment_pk, pk=pk)
+        return get_object_or_404(queryset, pk=pk)
+
     def perform_create(self, serializer):
         news_id = self.kwargs.get('news_id')
         news = get_object_or_404(News, pk=news_id)
