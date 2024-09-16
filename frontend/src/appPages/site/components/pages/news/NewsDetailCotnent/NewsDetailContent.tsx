@@ -225,7 +225,7 @@ useEffect(() => {
 
   return (
     <div className={scss.newsDetailContent}>
-      <h2>{newsData?.title}</h2>
+      <h2>{newsData?.description}</h2>
       <p>{newsData?.content}</p>
       <div className={scss.commentsSection}>
         <h3>Комментарии</h3>
