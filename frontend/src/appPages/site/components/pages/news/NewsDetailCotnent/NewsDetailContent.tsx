@@ -56,7 +56,7 @@ const NewsDetailContent: React.FC = () => {
     checkAuthStatus();
   }, []);
 
-  useEffect(() => {
+useEffect(() => {
   const fetchUserAvatars = async () => {
     if (commentsData) {
       const uniqueUsers = Array.from(new Set(commentsData.map(comment => comment.author)));
@@ -78,10 +78,11 @@ const NewsDetailContent: React.FC = () => {
 
       const avatarResults = await Promise.all(avatarPromises);
 
-      const avatarMap: { [key: string]: string | null } = avatarResults.reduce((acc, { username, avatar }) => {
-        acc[username] = avatar || `https://api.dicebear.com/6.x/initials/svg?seed=${username}`;
+      // Создаем карту аватаров, заменяя null на URL с генерацией аватара по имени
+      const avatarMap: { [key: string]: string } = avatarResults.reduce((acc, { username, avatar }) => {
+        acc[username] = avatar ?? `https://api.dicebear.com/6.x/initials/svg?seed=${username}`;
         return acc;
-      }, {} as { [key: string]: string | null });
+      }, {} as { [key: string]: string });
 
       setUserAvatars(avatarMap);
     }
@@ -89,6 +90,7 @@ const NewsDetailContent: React.FC = () => {
 
   fetchUserAvatars();
 }, [commentsData]);
+
 
 
   const handleAddComment = useCallback(async () => {
