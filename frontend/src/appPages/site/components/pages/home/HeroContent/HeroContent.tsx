@@ -1,6 +1,6 @@
 import Image from "next/image";
 import scss from "./HeroContent.module.scss";
-import heroImage from "../../../../../../assets/images/image 3.png";
+import heroImage from "../../../../../../assets/images/6W3A8903.jpg";
 
 const HeroContent = () => {
   return (
