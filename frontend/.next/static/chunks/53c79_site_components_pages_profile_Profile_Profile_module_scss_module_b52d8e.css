@@ -1,0 +1,233 @@
+/* [project]/src/appPages/site/components/pages/profile/Profile/Profile.module.scss.module.css [app-client] (css) */
+.Profile-module-scss-module__gE3Shq__profileContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f2f5;
+  padding: 20px;
+}
+
+.Profile-module-scss-module__gE3Shq__profileCard {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px #0000001a;
+  padding: 30px;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all .3s;
+}
+
+.Profile-module-scss-module__gE3Shq__profileCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px #00000026;
+}
+
+.Profile-module-scss-module__gE3Shq__avatarContainer {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.Profile-module-scss-module__gE3Shq__avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 4px #0000001a;
+}
+
+.Profile-module-scss-module__gE3Shq__avatarPlaceholder {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 48px;
+  color: #bdbdbd;
+}
+
+.Profile-module-scss-module__gE3Shq__changeAvatarButton {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #4a90e2;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.Profile-module-scss-module__gE3Shq__changeAvatarButton:hover {
+  background-color: #3a78c2;
+  transform: scale(1.1);
+}
+
+.Profile-module-scss-module__gE3Shq__hiddenFileInput {
+  display: none;
+}
+
+.Profile-module-scss-module__gE3Shq__profileInfo {
+  text-align: center;
+  width: 100%;
+}
+
+.Profile-module-scss-module__gE3Shq__userName {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.Profile-module-scss-module__gE3Shq__userAbout {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.Profile-module-scss-module__gE3Shq__editButton {
+  background-color: #4a90e2;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.Profile-module-scss-module__gE3Shq__editButton:hover {
+  background-color: #3a78c2;
+}
+
+.Profile-module-scss-module__gE3Shq__editFormOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #00000080;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.Profile-module-scss-module__gE3Shq__editForm {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 6px #0000001a;
+}
+
+.Profile-module-scss-module__gE3Shq__editFormTitle {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.Profile-module-scss-module__gE3Shq__formField {
+  margin-bottom: 20px;
+}
+
+.Profile-module-scss-module__gE3Shq__formField label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+.Profile-module-scss-module__gE3Shq__formField input, .Profile-module-scss-module__gE3Shq__formField textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.Profile-module-scss-module__gE3Shq__formField input:focus, .Profile-module-scss-module__gE3Shq__formField textarea:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 2px #4a90e233;
+}
+
+.Profile-module-scss-module__gE3Shq__formField textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.Profile-module-scss-module__gE3Shq__formActions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.Profile-module-scss-module__gE3Shq__saveButton, .Profile-module-scss-module__gE3Shq__cancelButton {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.Profile-module-scss-module__gE3Shq__saveButton {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.Profile-module-scss-module__gE3Shq__saveButton:hover {
+  background-color: #45a049;
+}
+
+.Profile-module-scss-module__gE3Shq__saveButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.Profile-module-scss-module__gE3Shq__cancelButton {
+  background-color: #f44336;
+  color: #fff;
+}
+
+.Profile-module-scss-module__gE3Shq__cancelButton:hover {
+  background-color: #da3131;
+}
+
+.Profile-module-scss-module__gE3Shq__loading, .Profile-module-scss-module__gE3Shq__error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 18px;
+  color: #666;
+}
+
+.Profile-module-scss-module__gE3Shq__error {
+  color: #f44336;
+}
+
+/*# sourceMappingURL=53c79_site_components_pages_profile_Profile_Profile_module_scss_module_b52d8e.css.map*/

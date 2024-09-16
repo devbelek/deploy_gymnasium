@@ -1,0 +1,145 @@
+/* [project]/src/appPages/site/components/pages/fond/FondContent/FondContent.module.scss.module.css [app-client] (css) */
+.FondContent-module-scss-module__zBo9Xq__fondContent {
+  margin-top: 100px;
+}
+
+.FondContent-module-scss-module__zBo9Xq__fondContent .FondContent-module-scss-module__zBo9Xq__container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.FondContent-module-scss-module__zBo9Xq__fondContent .FondContent-module-scss-module__zBo9Xq__content {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px #0000001a;
+  padding: 40px;
+  transition: transform .3s;
+}
+
+.FondContent-module-scss-module__zBo9Xq__fondContent .FondContent-module-scss-module__zBo9Xq__content:hover {
+  transform: translateY(-5px);
+}
+
+.FondContent-module-scss-module__zBo9Xq__fondContent .FondContent-module-scss-module__zBo9Xq__title {
+  font-size: 36px;
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.FondContent-module-scss-module__zBo9Xq__fondContent .FondContent-module-scss-module__zBo9Xq__divider {
+  border: none;
+  height: 2px;
+  background-color: #e0e0e0;
+  margin: 30px 0;
+}
+
+.FondContent-module-scss-module__zBo9Xq__fondContent .FondContent-module-scss-module__zBo9Xq__donationsList {
+  display: grid;
+  gap: 30px;
+}
+
+.FondContent-module-scss-module__zBo9Xq__fondContent .FondContent-module-scss-module__zBo9Xq__donationItem {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  transition: all .3s;
+}
+
+.FondContent-module-scss-module__zBo9Xq__fondContent .FondContent-module-scss-module__zBo9Xq__donationItem:hover {
+  box-shadow: 0 5px 15px #0000001a;
+}
+
+.FondContent-module-scss-module__zBo9Xq__fondContent .FondContent-module-scss-module__zBo9Xq__donor {
+  font-size: 20px;
+  color: #34495e;
+  margin-bottom: 10px;
+}
+
+.FondContent-module-scss-module__zBo9Xq__fondContent .FondContent-module-scss-module__zBo9Xq__amount {
+  font-size: 24px;
+  color: #27ae60;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.FondContent-module-scss-module__zBo9Xq__fondContent .FondContent-module-scss-module__zBo9Xq__totalPrice {
+  margin-top: 20px;
+}
+
+.FondContent-module-scss-module__zBo9Xq__fondContent .FondContent-module-scss-module__zBo9Xq__totalPrice span {
+  font-size: 22px;
+  color: #27ae60;
+  font-weight: bold;
+}
+
+.FondContent-module-scss-module__zBo9Xq__fondContent .FondContent-module-scss-module__zBo9Xq__comment {
+  font-size: 16px;
+  color: #7f8c8d;
+  font-style: italic;
+}
+
+.FondContent-module-scss-module__zBo9Xq__fondContent .FondContent-module-scss-module__zBo9Xq__message {
+  text-align: center;
+  font-size: 18px;
+  color: #7f8c8d;
+  margin: 20px 0;
+}
+
+.FondContent-module-scss-module__zBo9Xq__fondContent .FondContent-module-scss-module__zBo9Xq__donateLink {
+  display: block;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.FondContent-module-scss-module__zBo9Xq__fondContent .FondContent-module-scss-module__zBo9Xq__donateButton {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  padding: 15px 40px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all .3s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.FondContent-module-scss-module__zBo9Xq__fondContent .FondContent-module-scss-module__zBo9Xq__donateButton:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px #3498db66;
+}
+
+@media (width <= 768px) {
+  .FondContent-module-scss-module__zBo9Xq__fondContent .FondContent-module-scss-module__zBo9Xq__content {
+    padding: 30px;
+  }
+
+  .FondContent-module-scss-module__zBo9Xq__fondContent .FondContent-module-scss-module__zBo9Xq__title {
+    font-size: 28px;
+  }
+
+  .FondContent-module-scss-module__zBo9Xq__fondContent .FondContent-module-scss-module__zBo9Xq__donationItem {
+    padding: 15px;
+  }
+
+  .FondContent-module-scss-module__zBo9Xq__fondContent .FondContent-module-scss-module__zBo9Xq__donor {
+    font-size: 18px;
+  }
+
+  .FondContent-module-scss-module__zBo9Xq__fondContent .FondContent-module-scss-module__zBo9Xq__amount {
+    font-size: 20px;
+  }
+
+  .FondContent-module-scss-module__zBo9Xq__fondContent .FondContent-module-scss-module__zBo9Xq__donateButton {
+    padding: 12px 30px;
+    font-size: 16px;
+  }
+}
+
+
+/*# sourceMappingURL=53c79_site_components_pages_fond_FondContent_FondContent_module_scss_module_d102c3.css.map*/
