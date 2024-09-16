@@ -56,42 +56,37 @@ const NewsDetailContent: React.FC = () => {
     checkAuthStatus();
   }, []);
 
-useEffect(() => {
-  const fetchUserAvatars = async () => {
-    if (commentsData) {
-      const uniqueUsers = Array.from(new Set(commentsData.map(comment => comment.author)));
-
-      const avatarPromises = uniqueUsers.map(async username => {
-        try {
-          const response = await fetch(`${process.env.NEXT_PUBLIC_API}/profile/${username}/`, {
-            credentials: 'include',
-          });
-          if (response.ok) {
-            const userData = await response.json();
-            return { username, avatar: userData.avatar };
+  useEffect(() => {
+    const fetchUserAvatars = async () => {
+      if (commentsData) {
+        const uniqueUsers = Array.from(new Set(commentsData.map(comment => comment.author)));
+        const avatarPromises = uniqueUsers.map(async username => {
+          try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API}/profile/${username}/`, {
+              credentials: 'include',
+            });
+            if (response.ok) {
+              const userData = await response.json();
+              return { username, avatar: userData.avatar };
+            }
+          } catch (error) {
+            console.error(`Ошибка при получении аватара для ${username}:`, error);
           }
-        } catch (error) {
-          console.error(`Ошибка при получении аватара для ${username}:`, error);
-        }
-        return { username, avatar: null };
-      });
+          return { username, avatar: null };
+        });
 
-      const avatarResults = await Promise.all(avatarPromises);
+        const avatarResults = await Promise.all(avatarPromises);
+        const avatarMap = avatarResults.reduce((acc, { username, avatar }) => {
+          acc[username] = avatar || `https://api.dicebear.com/6.x/initials/svg?seed=${username}`;
+          return acc;
+        }, {});
 
-      // Создаем карту аватаров, заменяя null на URL с генерацией аватара по имени
-      const avatarMap: { [key: string]: string } = avatarResults.reduce((acc, { username, avatar }) => {
-        acc[username] = avatar ?? `https://api.dicebear.com/6.x/initials/svg?seed=${username}`;
-        return acc;
-      }, {} as { [key: string]: string });
+        setUserAvatars(avatarMap);
+      }
+    };
 
-      setUserAvatars(avatarMap);
-    }
-  };
-
-  fetchUserAvatars();
-}, [commentsData]);
-
-
+    fetchUserAvatars();
+  }, [commentsData]);
 
   const handleAddComment = useCallback(async () => {
     if (commentText.trim() && isLoggedIn) {
@@ -216,28 +211,69 @@ useEffect(() => {
           )}
         </div>
       )}
-      {comment.children && comment.children.map((child: any) => renderComment(child, depth + 1))}
+      {comment.replies && comment.replies.map((reply: any) => (
+        <div key={reply.id} className={scss.replyWrapper}>
+          {renderComment(reply, depth + 1)}
+        </div>
+      ))}
     </div>
-  ), [editingComment, handleAddComment, handleUpdateComment, renderCommentActions, renderCommentForm, replyingTo, userAvatars]);
+  ), [editingComment, handleUpdateComment, renderCommentActions, renderCommentForm, replyingTo, handleAddComment, userAvatars]);
 
-  if (newsLoading || commentsLoading) return <div>Загрузка...</div>;
-  if (newsError || commentsError) return <div>Ошибка при загрузке данных</div>;
+  if (isNaN(newsId)) {
+    return <div className={scss.error}>Неверный идентификатор новости</div>;
+  }
+
+  if (newsLoading || commentsLoading) return <div className={scss.loading}>Загрузка...</div>;
+  if (newsError || commentsError) return <div className={scss.error}>Произошла ошибка при загрузке данных</div>;
+  if (!newsData) return <div className={scss.error}>Новость не найдена</div>;
 
   return (
-    <div className={scss.newsDetailContent}>
-      <h2>{newsData?.description}</h2>
-      <p>{newsData?.content}</p>
-      <div className={scss.commentsSection}>
-        <h3>Комментарии</h3>
-        {isLoggedIn && renderCommentForm(handleAddComment, () => setCommentText(""), "Оставьте ваш комментарий")}
-        {commentsData && commentsData.length > 0 ? (
-          commentsData.map((comment: any) => renderComment(comment))
-        ) : (
-          <p>Комментариев пока нет</p>
-        )}
+    <div className={scss.NewsDetailContent}>
+      <div className="container">
+        <div className={scss.content}>
+          <div className={scss.news_head}>
+            <h1>Новости</h1>
+            <hr />
+          </div>
+          <div className={scss.newsContent}>
+            <h1>{newsData.description}</h1>
+            <Image
+              src={newsData.image}
+              alt={newsData.description}
+              width={700}
+              height={500}
+              quality={70}
+              property="img"
+            />
+            <p>{newsData.content}</p>
+            <div className={scss.newsInfo}>
+              <p>Автор: {newsData.author}</p>
+              <p>Дата публикации: {new Date(newsData.created_at).toLocaleString()}</p>
+              <p>Последнее обновление: {new Date(newsData.updated_at).toLocaleString()}</p>
+            </div>
+            <hr />
+          </div>
+          <div className={scss.commentsSection}>
+            <h2>Комментарии</h2>
+            {commentsData && commentsData.map((comment) => renderComment(comment))}
+            {isLoggedIn && !replyingTo && (
+              <div className={scss.addComment}>
+                <p className={scss.addNewComment}>Добавить новый комментарий:</p>
+                {renderCommentForm(
+                  handleAddComment,
+                  () => setCommentText(""),
+                  "Напишите ваш комментарий"
+                )}
+              </div>
+            )}
+            {!isLoggedIn && (
+              <p className={scss.loginPrompt}>Пожалуйста, войдите в систему, чтобы оставить комментарий.</p>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
-export default NewsDetailContent;
+export default React.memo(NewsDetailContent);
