@@ -179,8 +179,8 @@ const NewsDetailContent: React.FC = () => {
     >
       <div className={scss.commentHeader}>
         <Image
-          src={comment.author_avatar || '/default-avatar.png'}
-          alt={`Аватар ${comment.author}`}
+          src={comment.avatar || '/default-avatar.png'}
+          alt={`Аватар ${comment.avatar}`}
           width={40}
           height={40}
           className={scss.avatar}
