@@ -153,7 +153,8 @@
     color: #555555;
   }
 
-  input, textarea {
+  input,
+  textarea {
     width: 100%;
     padding: 10px;
     border: 1px solid #dddddd;
@@ -179,7 +180,8 @@
   gap: 10px;
 }
 
-.saveButton, .cancelButton {
+.saveButton,
+.cancelButton {
   flex: 1;
   padding: 10px;
   border: none;
@@ -212,11 +214,12 @@
   color: #ffffff;
 
   &:hover {
-    background-color: #d32f2f;
+    background-color: #da3131;
   }
 }
 
-.loading, .error {
+.loading,
+.error {
   display: flex;
   justify-content: center;
   align-items: center;
