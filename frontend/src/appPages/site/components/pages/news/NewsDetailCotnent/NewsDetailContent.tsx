@@ -107,59 +107,73 @@ const NewsDetailContent: React.FC = () => {
         onChange={(e) => editingComment ? setEditingComment({...editingComment, text: e.target.value}) : setCommentText(e.target.value)}
         placeholder="Напишите ваш комментарий"
       />
-      <button onClick={onSubmit}>Отправить</button>
-      <button onClick={cancelAction}>Отмена</button>
+      <div className={scss.formActions}>
+        <button onClick={onSubmit} className={scss.submitButton}>Отправить</button>
+        <button onClick={cancelAction} className={scss.cancelButton}>Отмена</button>
+      </div>
     </div>
   ), [editingComment, commentText]);
 
-const renderCommentActions = useCallback((comment: any, depth: number) => (
-  <div className={scss.commentActions}>
-    <button onClick={() => handleLikeComment(comment.id)} className={scss.likeButton}>
-      <ThumbsUp size={16} />
-      <span>{comment.likes_count}</span>
-    </button>
-    {currentUser === comment.author && (
-      <Menu>
-        <MenuButton as="button" className={scss.moreButton}>
-          <MoreVertical size={16} />
-        </MenuButton>
-        <MenuList>
-          <MenuItem onClick={() => setEditingComment({ id: comment.id, text: comment.text, parentId: comment.parent })}>
-            <Edit size={16} />
-            <span>Редактировать</span>
-          </MenuItem>
-          <MenuItem onClick={() => handleDeleteComment(comment.id, comment.parent)}>
-            <Trash2 size={16} />
-            <span>Удалить</span>
-          </MenuItem>
-        </MenuList>
-      </Menu>
-    )}
-    {isLoggedIn && depth === 0 && ( // Показывать кнопку "Ответить" только для комментариев первого уровня
-      <button onClick={() => setReplyingTo({ id: comment.id, author: comment.author })} className={scss.replyButton}>
-        <MessageCircle size={16} />
-        <span>Ответить</span>
+  const renderCommentActions = useCallback((comment: any, depth: number) => (
+    <div className={scss.commentActions}>
+      <button onClick={() => handleLikeComment(comment.id)} className={scss.actionButton}>
+        <ThumbsUp size={16} />
+        <span>{comment.likes_count}</span>
       </button>
-    )}
-  </div>
-), [currentUser, handleDeleteComment, handleLikeComment, isLoggedIn]);
+      {isLoggedIn && depth === 0 && (
+        <button onClick={() => setReplyingTo({ id: comment.id, author: comment.author })} className={scss.actionButton}>
+          <MessageCircle size={16} />
+          <span>Ответить</span>
+        </button>
+      )}
+      {currentUser === comment.author && (
+        <Menu>
+          <MenuButton as="button" className={scss.moreButton}>
+            <MoreVertical size={16} />
+          </MenuButton>
+          <MenuList>
+            <MenuItem onClick={() => setEditingComment({ id: comment.id, text: comment.text, parentId: comment.parent })}>
+              <Edit size={16} />
+              <span>Редактировать</span>
+            </MenuItem>
+            <MenuItem onClick={() => handleDeleteComment(comment.id, comment.parent)}>
+              <Trash2 size={16} />
+              <span>Удалить</span>
+            </MenuItem>
+          </MenuList>
+        </Menu>
+      )}
+    </div>
+  ), [currentUser, handleDeleteComment, handleLikeComment, isLoggedIn]);
 
-const renderComment = useCallback((comment: any, depth = 0) => (
-  <div key={comment.id} className={scss.comment}>
-    <p>{comment.text}</p>
-    <small>Автор: {comment.author} | Дата: {new Date(comment.created_at).toLocaleString()}</small>
-    {renderCommentActions(comment, depth)}
-    {editingComment && editingComment.id === comment.id && renderCommentForm(
-      handleUpdateComment,
-      () => setEditingComment(null)
-    )}
-    {comment.replies && comment.replies.map((reply: any) => (
-      <div key={reply.id} className={scss.reply}>
-        {renderComment(reply, depth + 1)}
+  const renderComment = useCallback((comment: any, depth = 0) => (
+    <div key={comment.id} className={`${scss.comment} ${depth > 0 ? scss.reply : ''}`}>
+      <div className={scss.commentHeader}>
+        <Image
+          src={`https://api.dicebear.com/6.x/initials/svg?seed=${comment.author}`}
+          alt={comment.author}
+          width={40}
+          height={40}
+          className={scss.avatar}
+        />
+        <div className={scss.commentInfo}>
+          <span className={scss.commentAuthor}>{comment.author}</span>
+          <span className={scss.commentDate}>{new Date(comment.created_at).toLocaleString()}</span>
+        </div>
       </div>
-    ))}
-  </div>
-), [editingComment, handleUpdateComment, renderCommentActions, renderCommentForm]);
+      <p className={scss.commentContent}>{comment.text}</p>
+      {renderCommentActions(comment, depth)}
+      {editingComment && editingComment.id === comment.id && renderCommentForm(
+        handleUpdateComment,
+        () => setEditingComment(null)
+      )}
+      {comment.replies && comment.replies.map((reply: any) => (
+        <div key={reply.id} className={scss.replyWrapper}>
+          {renderComment(reply, depth + 1)}
+        </div>
+      ))}
+    </div>
+  ), [editingComment, handleUpdateComment, renderCommentActions, renderCommentForm]);
 
   if (isNaN(newsId)) {
     return <div className={scss.error}>Неверный идентификатор новости</div>;
@@ -201,9 +215,9 @@ const renderComment = useCallback((comment: any, depth = 0) => (
             {isLoggedIn ? (
               <div className={scss.addComment}>
                 {replyingTo ? (
-                  <p>Ответ на комментарий пользователя {replyingTo.author}:</p>
+                  <p className={scss.replyingTo}>Ответ на комментарий пользователя {replyingTo.author}:</p>
                 ) : (
-                  <p>Добавить новый комментарий:</p>
+                  <p className={scss.addNewComment}>Добавить новый комментарий:</p>
                 )}
                 {renderCommentForm(
                   handleAddComment,
