@@ -47,7 +47,7 @@ const api = index.injectEndpoints({
     }),
     updateComment: build.mutation<NEWS.UpdateCommentResponse, NEWS.UpdateCommentRequest>({
       query: ({ commentId, text }) => ({
-        url: `${ENDPOINTS}/comments/${commentId}/reply`,
+        url: `${ENDPOINTS}/comments_replies/${commentId}/`,
         method: "PATCH",
         body: JSON.stringify({ text }),
         credentials: 'include',
