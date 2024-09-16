@@ -112,54 +112,54 @@ const NewsDetailContent: React.FC = () => {
     </div>
   ), [editingComment, commentText]);
 
-  const renderCommentActions = useCallback((comment: any) => (
-    <div className={scss.commentActions}>
-      <button onClick={() => handleLikeComment(comment.id)} className={scss.likeButton}>
-        <ThumbsUp size={16} />
-        <span>{comment.likes_count}</span>
+const renderCommentActions = useCallback((comment: any, depth: number) => (
+  <div className={scss.commentActions}>
+    <button onClick={() => handleLikeComment(comment.id)} className={scss.likeButton}>
+      <ThumbsUp size={16} />
+      <span>{comment.likes_count}</span>
+    </button>
+    {currentUser === comment.author && (
+      <Menu>
+        <MenuButton as="button" className={scss.moreButton}>
+          <MoreVertical size={16} />
+        </MenuButton>
+        <MenuList>
+          <MenuItem onClick={() => setEditingComment({ id: comment.id, text: comment.text, parentId: comment.parent })}>
+            <Edit size={16} />
+            <span>Редактировать</span>
+          </MenuItem>
+          <MenuItem onClick={() => handleDeleteComment(comment.id, comment.parent)}>
+            <Trash2 size={16} />
+            <span>Удалить</span>
+          </MenuItem>
+        </MenuList>
+      </Menu>
+    )}
+    {isLoggedIn && depth === 0 && ( // Показывать кнопку "Ответить" только для комментариев первого уровня
+      <button onClick={() => setReplyingTo({ id: comment.id, author: comment.author })} className={scss.replyButton}>
+        <MessageCircle size={16} />
+        <span>Ответить</span>
       </button>
-      {currentUser === comment.author && (
-        <Menu>
-          <MenuButton as="button" className={scss.moreButton}>
-            <MoreVertical size={16} />
-          </MenuButton>
-          <MenuList>
-            <MenuItem onClick={() => setEditingComment({ id: comment.id, text: comment.text, parentId: comment.parent })}>
-              <Edit size={16} />
-              <span>Редактировать</span>
-            </MenuItem>
-            <MenuItem onClick={() => handleDeleteComment(comment.id, comment.parent)}>
-              <Trash2 size={16} />
-              <span>Удалить</span>
-            </MenuItem>
-          </MenuList>
-        </Menu>
-      )}
-      {isLoggedIn && (
-        <button onClick={() => setReplyingTo({ id: comment.id, author: comment.author })} className={scss.replyButton}>
-          <MessageCircle size={16} />
-          <span>Ответить</span>
-        </button>
-      )}
-    </div>
-  ), [currentUser, handleDeleteComment, handleLikeComment, isLoggedIn]);
+    )}
+  </div>
+), [currentUser, handleDeleteComment, handleLikeComment, isLoggedIn]);
 
-  const renderComment = useCallback((comment: any) => (
-    <div key={comment.id} className={scss.comment}>
-      <p>{comment.text}</p>
-      <small>Автор: {comment.author} | Дата: {new Date(comment.created_at).toLocaleString()}</small>
-      {renderCommentActions(comment)}
-      {editingComment && editingComment.id === comment.id && renderCommentForm(
-        handleUpdateComment,
-        () => setEditingComment(null)
-      )}
-      {comment.replies && comment.replies.map((reply: any) => (
-        <div key={reply.id} className={scss.reply}>
-          {renderComment(reply)}
-        </div>
-      ))}
-    </div>
-  ), [editingComment, handleUpdateComment, renderCommentActions, renderCommentForm]);
+const renderComment = useCallback((comment: any, depth = 0) => (
+  <div key={comment.id} className={scss.comment}>
+    <p>{comment.text}</p>
+    <small>Автор: {comment.author} | Дата: {new Date(comment.created_at).toLocaleString()}</small>
+    {renderCommentActions(comment, depth)}
+    {editingComment && editingComment.id === comment.id && renderCommentForm(
+      handleUpdateComment,
+      () => setEditingComment(null)
+    )}
+    {comment.replies && comment.replies.map((reply: any) => (
+      <div key={reply.id} className={scss.reply}>
+        {renderComment(reply, depth + 1)}
+      </div>
+    ))}
+  </div>
+), [editingComment, handleUpdateComment, renderCommentActions, renderCommentForm]);
 
   if (isNaN(newsId)) {
     return <div className={scss.error}>Неверный идентификатор новости</div>;

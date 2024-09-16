@@ -147,9 +147,11 @@ class CommentViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['post'])
     def reply(self, request, pk=None):
         parent_comment = self.get_object()
+        if parent_comment.depth >= 2:
+            return Response({"detail": "Maximum comment depth exceeded"}, status=status.HTTP_400_BAD_REQUEST)
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(author=request.user, news=parent_comment.news, parent=parent_comment)
+            serializer.save(author=request.user, news=parent_comment.news, parent=parent_comment, depth=parent_comment.depth + 1)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
