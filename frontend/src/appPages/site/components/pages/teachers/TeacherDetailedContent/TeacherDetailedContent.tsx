@@ -7,8 +7,6 @@ import { FaFacebook } from "react-icons/fa";
 import { FaTelegram } from "react-icons/fa";
 import { FaVk } from "react-icons/fa6";
 import { AiFillInstagram } from "react-icons/ai";
-// import Zoom from "react-medium-image-zoom";
-// import "react-medium-image-zoom/dist/styles.css";
 
 const TeacherDetailedContent = () => {
   const { teacher } = useParams();
