@@ -28,7 +28,7 @@ const NewsDetailContent: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const { data: newsData, isLoading: newsLoading, error: newsError } = useGetDetNewsQuery(newsId);
-  const { data: commentsData, isLoading: commentsLoading, error: commentsError } = useGetCommentsQuery(newsId);
+  const { data: commentsData, isLoading: commentsLoading, error: commentsError, refetch: refetchComments } = useGetCommentsQuery(newsId);
   const [addComment] = useAddCommentMutation();
   const [updateComment] = useUpdateCommentMutation();
   const [deleteComment] = useDeleteCommentMutation();
@@ -66,12 +66,12 @@ const NewsDetailContent: React.FC = () => {
       try {
         await addComment({ newsId, text: commentText }).unwrap();
         setCommentText("");
-        setReplyingTo(null);
+        refetchComments();
       } catch (error) {
         console.error("Ошибка при добавлении комментария:", error);
       }
     }
-  }, [addComment, commentText, isLoggedIn, newsId]);
+  }, [addComment, commentText, isLoggedIn, newsId, refetchComments]);
 
   const handleUpdateItem = useCallback(async () => {
     if (editingItem && editingItem.text.trim()) {
@@ -82,11 +82,12 @@ const NewsDetailContent: React.FC = () => {
           await updateComment({ commentId: editingItem.id, text: editingItem.text }).unwrap();
         }
         setEditingItem(null);
+        refetchComments();
       } catch (error) {
         console.error("Ошибка при обновлении:", error);
       }
     }
-  }, [editingItem, updateComment, updateReply]);
+  }, [editingItem, updateComment, updateReply, refetchComments]);
 
   const handleDeleteItem = useCallback(async (itemId: number, isReply: boolean) => {
     try {
@@ -95,20 +96,22 @@ const NewsDetailContent: React.FC = () => {
       } else {
         await deleteComment(itemId).unwrap();
       }
+      refetchComments();
     } catch (error) {
       console.error("Ошибка при удалении:", error);
     }
-  }, [deleteComment, deleteReply]);
+  }, [deleteComment, deleteReply, refetchComments]);
 
   const handleLikeComment = useCallback(async (commentId: number) => {
     if (isLoggedIn) {
       try {
         await likeComment({ commentId }).unwrap();
+        refetchComments();
       } catch (error) {
         console.error("Ошибка при лайке комментария:", error);
       }
     }
-  }, [isLoggedIn, likeComment]);
+  }, [isLoggedIn, likeComment, refetchComments]);
 
   const handleReplyToComment = useCallback(async () => {
     if (commentText.trim() && isLoggedIn && replyingTo) {
@@ -116,18 +119,19 @@ const NewsDetailContent: React.FC = () => {
         await addReply({ commentId: replyingTo.id, text: commentText }).unwrap();
         setCommentText("");
         setReplyingTo(null);
+        refetchComments();
       } catch (error) {
         console.error("Ошибка при добавлении ответа:", error);
       }
     }
-  }, [addReply, commentText, isLoggedIn, replyingTo]);
+  }, [addReply, commentText, isLoggedIn, replyingTo, refetchComments]);
 
-  const renderCommentForm = useCallback((onSubmit: () => void, cancelAction: () => void) => (
+  const renderCommentForm = useCallback((onSubmit: () => void, cancelAction: () => void, placeholder: string) => (
     <div className={scss.commentForm}>
       <textarea
         value={editingItem ? editingItem.text : commentText}
         onChange={(e) => editingItem ? setEditingItem({...editingItem, text: e.target.value}) : setCommentText(e.target.value)}
-        placeholder="Напишите ваш комментарий"
+        placeholder={placeholder}
       />
       <button onClick={onSubmit}>Отправить</button>
       <button onClick={cancelAction}>Отмена</button>
@@ -173,7 +177,8 @@ const NewsDetailContent: React.FC = () => {
       {renderCommentActions(comment, isReply)}
       {editingItem && editingItem.id === comment.id && renderCommentForm(
         handleUpdateItem,
-        () => setEditingItem(null)
+        () => setEditingItem(null),
+        "Редактировать комментарий"
       )}
       {!isReply && comment.replies && comment.replies.map((reply: any) => renderComment(reply, true))}
     </div>
@@ -216,22 +221,30 @@ const NewsDetailContent: React.FC = () => {
           <div className={scss.commentsSection}>
             <h2>Комментарии</h2>
             {commentsData && commentsData.map((comment) => renderComment(comment))}
-            {isLoggedIn ? (
+            {isLoggedIn && !editingItem && !replyingTo && (
               <div className={scss.addComment}>
-                {replyingTo ? (
-                  <p>Ответ на комментарий пользователя {replyingTo.author}:</p>
-                ) : (
-                  <p>Добавить новый комментарий:</p>
-                )}
+                <p>Добавить новый комментарий:</p>
                 {renderCommentForm(
-                  replyingTo ? handleReplyToComment : handleAddComment,
+                  handleAddComment,
+                  () => setCommentText(""),
+                  "Напишите ваш комментарий"
+                )}
+              </div>
+            )}
+            {isLoggedIn && replyingTo && !editingItem && (
+              <div className={scss.addComment}>
+                <p>Ответ на комментарий пользователя {replyingTo.author}:</p>
+                {renderCommentForm(
+                  handleReplyToComment,
                   () => {
                     setReplyingTo(null);
                     setCommentText("");
-                  }
+                  },
+                  "Напишите ваш ответ"
                 )}
               </div>
-            ) : (
+            )}
+            {!isLoggedIn && (
               <p className={scss.loginPrompt}>Пожалуйста, войдите в систему, чтобы оставить комментарий.</p>
             )}
           </div>
