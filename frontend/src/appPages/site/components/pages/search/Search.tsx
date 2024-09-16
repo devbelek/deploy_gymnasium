@@ -16,16 +16,18 @@ const Search = () => {
     return { full_name: query };
   }, [query]);
 
-  // Проверка, что searchRequest не равен null
   const { data, error, isLoading } = useGetSearchQuery(searchRequest ?? {}, {
     skip: !searchRequest,
   });
+
+  // Приведение ошибки к строке, если она существует
+  const errorMessage = error instanceof Error ? error.message : String(error);
 
   return (
     <div style={{ paddingTop: "100px" }}>
       <h1>Результаты поиска для: {query}</h1>
       {isLoading && <p>Загрузка...</p>}
-      {error && <p>Произошла ошибка при поиске</p>}
+      {error && <p>Произошла ошибка при поиске: {errorMessage}</p>}
       {!isLoading && !error && data && data.length > 0 ? (
         <ul>
           {data.map((result) => (
