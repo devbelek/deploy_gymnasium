@@ -1,0 +1,42 @@
+/* [project]/src/appPages/site/components/pages/students/StudentsParliament/StudentsParliament.module.scss.module.css [app-client] (css) */
+.StudentsParliament-module-scss-module__3Rn5_G__content {
+  display: flex;
+  align-items: center;
+}
+
+.StudentsParliament-module-scss-module__3Rn5_G__ParliamBlock {
+  width: 249px;
+  height: 324px;
+  padding: 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  background: linear-gradient(#fff0 0%, #000000b3 80%), url("../media/students_parlament.28762b3d.svg");
+  background-size: cover;
+  background-position: center;
+}
+
+.StudentsParliament-module-scss-module__3Rn5_G__ParliamBlock_text {
+  display: flex;
+  font-size: 26px;
+  color: #fff;
+  height: 100%;
+  text-decoration: none;
+  text-align: left;
+}
+
+@media (width <= 1100px) {
+  .StudentsParliament-module-scss-module__3Rn5_G__ParliamBlock {
+    width: 276px;
+    height: 164px;
+  }
+
+  .StudentsParliament-module-scss-module__3Rn5_G__ParliamBlock_text {
+    font-size: 16px;
+    color: #fff;
+    text-decoration: none;
+    align-items: flex-end;
+    justify-content: center;
+  }
+}
+
+/*# sourceMappingURL=9cda6_pages_students_StudentsParliament_StudentsParliament_module_scss_module_b52d8e.css.map*/

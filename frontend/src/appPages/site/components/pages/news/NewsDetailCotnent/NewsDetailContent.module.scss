@@ -61,138 +61,110 @@
         color: #333333;
       }
     }
+
     .commentsSection {
       margin-top: 40px;
       display: flex;
       flex-direction: column;
       gap: 20px;
 
-      .comment {
-        background-color: #f9f9f9;
-        padding: 15px;
-        border-radius: 6px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        margin-bottom: 15px;
+      h2 {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 20px;
+      }
 
-        &.reply {
-          margin-left: 30px;
-          background-color: #f0f0f0;
+      .comment {
+        background-color: #fff5f5;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        margin-bottom: 20px;
+        border: 1px solid #ffd7d7;
+
+        .commentHeader {
+          display: flex;
+          align-items: center;
+          margin-bottom: 10px;
+
+          img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+          }
+
+          .commentAuthor {
+            font-weight: 600;
+            font-size: 16px;
+            color: #333;
+          }
+        }
+
+        p {
+          font-size: 14px;
+          line-height: 1.5;
+          color: #555;
+          margin-bottom: 10px;
         }
 
         .commentActions {
           display: flex;
-          gap: 10px;
-          margin-top: 10px;
+          justify-content: space-between;
+          align-items: center;
 
-          button {
+          .commentDate {
+            font-size: 12px;
+            color: #888;
+          }
+
+          .likeButton {
+            background: none;
+            border: none;
+            color: #888;
+            cursor: pointer;
             display: flex;
             align-items: center;
             gap: 5px;
-            background: none;
-            border: none;
-            color: #007bff;
-            cursor: pointer;
 
             &:hover {
-              color: #0056b3;
-            }
-          }
-
-          .likeButton, .replyButton {
-            padding: 5px 10px;
-            border-radius: 4px;
-            background-color: #f0f0f0;
-            transition: background-color 0.2s;
-
-            &:hover {
-              background-color: #e0e0e0;
-            }
-          }
-
-          .moreButton {
-            padding: 5px;
-            border-radius: 50%;
-            transition: background-color 0.2s;
-
-            &:hover {
-              background-color: #e0e0e0;
-            }
-          }
-        }
-
-        .editCommentForm,
-        .replyForm {
-          margin-top: 10px;
-
-          textarea {
-            width: 100%;
-            padding: 10px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-            resize: vertical;
-          }
-
-          button {
-            margin-top: 5px;
-            padding: 6px 12px;
-            background-color: #28a745;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-
-            &:hover {
-              background-color: #218838;
-            }
-
-            &:nth-child(2) {
-              background-color: #dc3545;
-              margin-left: 10px;
-
-              &:hover {
-                background-color: #c82333;
-              }
+              color: #333;
             }
           }
         }
       }
 
       .addComment {
-        display: flex;
-        flex-direction: column;
+        margin-top: 20px;
 
         textarea {
+          width: 100%;
+          padding: 15px;
+          border: 1px solid #ffd7d7;
+          border-radius: 10px;
           resize: vertical;
-          padding: 10px;
-          font-size: 16px;
-          border-radius: 4px;
-          border: 1px solid #ddd;
+          font-size: 14px;
           margin-bottom: 10px;
-          transition: border-color 0.2s;
 
-          &:focus {
-            border-color: #007bff;
-            outline: none;
+          &::placeholder {
+            color: #888;
           }
         }
 
         button {
-          align-self: flex-start;
-          padding: 8px 16px;
-          background-color: #007bff;
-          color: #fff;
+          width: 100%;
+          padding: 15px;
+          background-color: #ff9b9b;
+          color: white;
           border: none;
-          border-radius: 4px;
+          border-radius: 10px;
+          font-size: 16px;
+          font-weight: 600;
           cursor: pointer;
           transition: background-color 0.3s;
 
           &:hover {
-            background-color: #0056b3;
-          }
-
-          &:disabled {
-            background-color: #cccccc;
-            cursor: not-allowed;
+            background-color: #ff7f7f;
           }
         }
       }

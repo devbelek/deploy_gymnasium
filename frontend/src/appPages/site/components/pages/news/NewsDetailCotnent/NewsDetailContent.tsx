@@ -280,11 +280,6 @@ const NewsDetailContent: React.FC = () => {
             />
             <p>{newsData.content}</p>
             <div className={scss.newsInfo}>
-              <p>Author: {newsData.author}</p>
-              <p>
-                Publication date:{" "}
-                {new Date(newsData.created_at).toLocaleString()}
-              </p>
               <p>
                 Last update: {new Date(newsData.updated_at).toLocaleString()}
               </p>
@@ -298,6 +293,7 @@ const NewsDetailContent: React.FC = () => {
             {isLoggedIn ? (
               <div className={scss.addComment}>
                 <textarea
+                
                   value={commentText}
                   onChange={(e) => setCommentText(e.target.value)}
                   placeholder="Write your comment"
