@@ -3,7 +3,7 @@ import { useGetSearchQuery } from "@/redux/api/search";
 import { useSearchParams } from "next/navigation";
 import React, { useMemo } from "react";
 import StudentsMainContent from "../students/StudentsMainContent/StudentsMainContent";
-import { SEARCH } from "@/redux/api/search/types"; // Исправляем путь на корректный
+import { SEARCH } from "@/redux/api/search/types";
 
 const Search = () => {
   const searchParams = useSearchParams();
