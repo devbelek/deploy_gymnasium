@@ -6,7 +6,7 @@ const ENDPOINTS = process.env.NEXT_PUBLIC_ENDPOINT;
 interface AddCommentRequest {
   newsId: number;
   text: string;
-  parentCommentId?: number;
+  parentId?: number;
 }
 
 const api = index.injectEndpoints({
@@ -33,10 +33,10 @@ const api = index.injectEndpoints({
       providesTags: ["comments"],
     }),
     addComment: build.mutation<NEWS.AddCommentResponse, AddCommentRequest>({
-      query: ({ newsId, text, parentCommentId }) => ({
-        url: `${ENDPOINTS}/news/${newsId}/comments/`,
+      query: ({ newsId, text, parentId }) => ({
+        url: parentId ? `${ENDPOINTS}/comments/${parentId}/reply/` : `${ENDPOINTS}/news/${newsId}/comments/`,
         method: "POST",
-        body: JSON.stringify({ text, parent_comment_id: parentCommentId }),
+        body: JSON.stringify({ text }),
         credentials: 'include',
         headers: {
           'X-CSRFToken': getCSRFToken() || '',
@@ -71,50 +71,13 @@ const api = index.injectEndpoints({
     }),
     likeComment: build.mutation<NEWS.LikeCommentResponse, NEWS.LikeCommentRequest>({
       query: ({ commentId }) => ({
-        url: `${ENDPOINTS}/likes/toggle/`,
+        url: `${ENDPOINTS}/comments/like/`,
         method: "POST",
         body: JSON.stringify({ comment_id: commentId }),
         credentials: 'include',
         headers: {
           'X-CSRFToken': getCSRFToken() || '',
           'Content-Type': 'application/json',
-        },
-      }),
-      invalidatesTags: ["comments"],
-    }),
-    addReply: build.mutation<NEWS.AddReplyResponse, NEWS.AddReplyRequest>({
-      query: ({ commentId, text }) => ({
-        url: `${ENDPOINTS}/comments/${commentId}/reply/`,
-        method: "POST",
-        body: JSON.stringify({ text }),
-        credentials: 'include',
-        headers: {
-          'X-CSRFToken': getCSRFToken() || '',
-          'Content-Type': 'application/json',
-        },
-      }),
-      invalidatesTags: ["comments"],
-    }),
-    updateReply: build.mutation<NEWS.UpdateReplyResponse, NEWS.UpdateReplyRequest>({
-      query: ({ replyId, text }) => ({
-        url: `${ENDPOINTS}/comment_replies/${replyId}/`,
-        method: "PATCH",
-        body: JSON.stringify({ text }),
-        credentials: 'include',
-        headers: {
-          'X-CSRFToken': getCSRFToken() || '',
-          'Content-Type': 'application/json',
-        },
-      }),
-      invalidatesTags: ["comments"],
-    }),
-    deleteReply: build.mutation<NEWS.DeleteReplyResponse, NEWS.DeleteReplyRequest>({
-      query: (replyId) => ({
-        url: `${ENDPOINTS}/comment_replies/${replyId}/`,
-        method: "DELETE",
-        credentials: 'include',
-        headers: {
-          'X-CSRFToken': getCSRFToken() || '',
         },
       }),
       invalidatesTags: ["comments"],
@@ -130,7 +93,4 @@ export const {
   useUpdateCommentMutation,
   useDeleteCommentMutation,
   useLikeCommentMutation,
-  useAddReplyMutation,
-  useUpdateReplyMutation,
-  useDeleteReplyMutation,
 } = api;

@@ -13,16 +13,13 @@ import {
   useUpdateCommentMutation,
   useDeleteCommentMutation,
   useLikeCommentMutation,
-  useAddReplyMutation,
-  useUpdateReplyMutation,
-  useDeleteReplyMutation
 } from "@/redux/api/news";
 
 const NewsDetailContent: React.FC = () => {
   const params = useParams();
   const newsId = typeof params.newsDetail === 'string' ? parseInt(params.newsDetail, 10) : NaN;
   const [commentText, setCommentText] = useState("");
-  const [editingItem, setEditingItem] = useState<{ id: number, type: 'comment' | 'reply', text: string } | null>(null);
+  const [editingComment, setEditingComment] = useState<{ id: number, text: string } | null>(null);
   const [replyingTo, setReplyingTo] = useState<{ id: number, author: string } | null>(null);
   const [currentUser, setCurrentUser] = useState<string | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -33,9 +30,6 @@ const NewsDetailContent: React.FC = () => {
   const [updateComment] = useUpdateCommentMutation();
   const [deleteComment] = useDeleteCommentMutation();
   const [likeComment] = useLikeCommentMutation();
-  const [addReply] = useAddReplyMutation();
-  const [updateReply] = useUpdateReplyMutation();
-  const [deleteReply] = useDeleteReplyMutation();
 
   useEffect(() => {
     const checkAuthStatus = async () => {
@@ -64,41 +58,33 @@ const NewsDetailContent: React.FC = () => {
   const handleAddComment = useCallback(async () => {
     if (commentText.trim() && isLoggedIn) {
       try {
-        await addComment({ newsId, text: commentText }).unwrap();
+        await addComment({ newsId, text: commentText, parentId: replyingTo?.id }).unwrap();
         setCommentText("");
         setReplyingTo(null);
       } catch (error) {
         console.error("Ошибка при добавлении комментария:", error);
       }
     }
-  }, [addComment, commentText, isLoggedIn, newsId]);
+  }, [addComment, commentText, isLoggedIn, newsId, replyingTo]);
 
-  const handleUpdateItem = useCallback(async () => {
-    if (editingItem && editingItem.text.trim()) {
+  const handleUpdateComment = useCallback(async () => {
+    if (editingComment && editingComment.text.trim()) {
       try {
-        if (editingItem.type === 'reply') {
-          await updateReply({ replyId: editingItem.id, text: editingItem.text }).unwrap();
-        } else {
-          await updateComment({ commentId: editingItem.id, text: editingItem.text }).unwrap();
-        }
-        setEditingItem(null);
+        await updateComment({ commentId: editingComment.id, text: editingComment.text }).unwrap();
+        setEditingComment(null);
       } catch (error) {
-        console.error("Ошибка при обновлении:", error);
+        console.error("Ошибка при обновлении комментария:", error);
       }
     }
-  }, [editingItem, updateComment, updateReply]);
+  }, [editingComment, updateComment]);
 
-  const handleDeleteItem = useCallback(async (itemId: number, isReply: boolean) => {
+  const handleDeleteComment = useCallback(async (commentId: number) => {
     try {
-      if (isReply) {
-        await deleteReply(itemId).unwrap();
-      } else {
-        await deleteComment(itemId).unwrap();
-      }
+      await deleteComment(commentId).unwrap();
     } catch (error) {
-      console.error("Ошибка при удалении:", error);
+      console.error("Ошибка при удалении комментария:", error);
     }
-  }, [deleteComment, deleteReply]);
+  }, [deleteComment]);
 
   const handleLikeComment = useCallback(async (commentId: number) => {
     if (isLoggedIn) {
@@ -110,74 +96,66 @@ const NewsDetailContent: React.FC = () => {
     }
   }, [isLoggedIn, likeComment]);
 
-  const handleReplyToComment = useCallback(async () => {
-    if (commentText.trim() && isLoggedIn && replyingTo) {
-      try {
-        await addReply({ commentId: replyingTo.id, text: commentText }).unwrap();
-        setCommentText("");
-        setReplyingTo(null);
-      } catch (error) {
-        console.error("Ошибка при добавлении ответа:", error);
-      }
-    }
-  }, [addReply, commentText, isLoggedIn, replyingTo]);
-
   const renderCommentForm = useCallback((onSubmit: () => void, cancelAction: () => void) => (
     <div className={scss.commentForm}>
       <textarea
-        value={editingItem ? editingItem.text : commentText}
-        onChange={(e) => editingItem ? setEditingItem({...editingItem, text: e.target.value}) : setCommentText(e.target.value)}
+        value={editingComment ? editingComment.text : commentText}
+        onChange={(e) => editingComment ? setEditingComment({...editingComment, text: e.target.value}) : setCommentText(e.target.value)}
         placeholder="Напишите ваш комментарий"
       />
       <button onClick={onSubmit}>Отправить</button>
       <button onClick={cancelAction}>Отмена</button>
     </div>
-  ), [editingItem, commentText]);
+  ), [editingComment, commentText]);
 
-  const renderCommentActions = useCallback((item: any, isReply: boolean) => (
+  const renderCommentActions = useCallback((comment: any) => (
     <div className={scss.commentActions}>
-      <button onClick={() => handleLikeComment(item.id)} className={scss.likeButton}>
+      <button onClick={() => handleLikeComment(comment.id)} className={scss.likeButton}>
         <ThumbsUp size={16} />
-        <span>{item.likes_count}</span>
+        <span>{comment.likes_count}</span>
       </button>
-      {currentUser === item.author && (
+      {currentUser === comment.author && (
         <Menu>
           <MenuButton as="button" className={scss.moreButton}>
             <MoreVertical size={16} />
           </MenuButton>
           <MenuList>
-            <MenuItem onClick={() => setEditingItem({ id: item.id, type: isReply ? 'reply' : 'comment', text: item.text })}>
+            <MenuItem onClick={() => setEditingComment({ id: comment.id, text: comment.text })}>
               <Edit size={16} />
               <span>Редактировать</span>
             </MenuItem>
-            <MenuItem onClick={() => handleDeleteItem(item.id, isReply)}>
+            <MenuItem onClick={() => handleDeleteComment(comment.id)}>
               <Trash2 size={16} />
               <span>Удалить</span>
             </MenuItem>
           </MenuList>
         </Menu>
       )}
-      {!isReply && isLoggedIn && (
-        <button onClick={() => setReplyingTo({ id: item.id, author: item.author })} className={scss.replyButton}>
+      {isLoggedIn && (
+        <button onClick={() => setReplyingTo({ id: comment.id, author: comment.author })} className={scss.replyButton}>
           <MessageCircle size={16} />
           <span>Ответить</span>
         </button>
       )}
     </div>
-  ), [currentUser, handleDeleteItem, handleLikeComment, isLoggedIn]);
+  ), [currentUser, handleDeleteComment, handleLikeComment, isLoggedIn]);
 
-  const renderComment = useCallback((comment: any, isReply = false) => (
-    <div key={comment.id} className={`${scss.comment} ${isReply ? scss.reply : ''}`}>
+  const renderComment = useCallback((comment: any) => (
+    <div key={comment.id} className={scss.comment}>
       <p>{comment.text}</p>
       <small>Автор: {comment.author} | Дата: {new Date(comment.created_at).toLocaleString()}</small>
-      {renderCommentActions(comment, isReply)}
-      {editingItem && editingItem.id === comment.id && renderCommentForm(
-        handleUpdateItem,
-        () => setEditingItem(null)
+      {renderCommentActions(comment)}
+      {editingComment && editingComment.id === comment.id && renderCommentForm(
+        handleUpdateComment,
+        () => setEditingComment(null)
       )}
-      {!isReply && comment.replies && comment.replies.map((reply: any) => renderComment(reply, true))}
+      {comment.replies && comment.replies.map((reply: any) => (
+        <div key={reply.id} className={scss.reply}>
+          {renderComment(reply)}
+        </div>
+      ))}
     </div>
-  ), [editingItem, handleUpdateItem, renderCommentActions, renderCommentForm]);
+  ), [editingComment, handleUpdateComment, renderCommentActions, renderCommentForm]);
 
   if (isNaN(newsId)) {
     return <div className={scss.error}>Неверный идентификатор новости</div>;
@@ -224,7 +202,7 @@ const NewsDetailContent: React.FC = () => {
                   <p>Добавить новый комментарий:</p>
                 )}
                 {renderCommentForm(
-                  replyingTo ? handleReplyToComment : handleAddComment,
+                  handleAddComment,
                   () => {
                     setReplyingTo(null);
                     setCommentText("");

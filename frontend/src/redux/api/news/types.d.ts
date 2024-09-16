@@ -21,16 +21,7 @@ namespace NEWS {
     updated_at: string;
     likes_count: number;
     is_liked: boolean;
-    replies: IReply[];
-  }
-
-  interface IReply {
-    id: number;
-    parent_comment: number;
-    author: string;
-    text: string;
-    created_at: string;
-    updated_at: string;
+    replies: IComment[];
   }
 
   type GetNewsResponse = INews[];
@@ -42,7 +33,7 @@ namespace NEWS {
   type GetCommentsRequest = number;
 
   type AddCommentResponse = IComment;
-  type AddCommentRequest = { newsId: number; text: string };
+  type AddCommentRequest = { newsId: number; text: string; parentId?: number };
 
   type UpdateCommentResponse = IComment;
   type UpdateCommentRequest = { commentId: number; text: string };
@@ -52,13 +43,4 @@ namespace NEWS {
 
   type LikeCommentResponse = { detail: string };
   type LikeCommentRequest = { commentId: number };
-
-  type AddReplyResponse = IReply;
-  type AddReplyRequest = { commentId: number; text: string };
-
-  type UpdateReplyResponse = IReply;
-  type UpdateReplyRequest = { replyId: number; text: string };
-
-  type DeleteReplyResponse = void;
-  type DeleteReplyRequest = number;
 }
