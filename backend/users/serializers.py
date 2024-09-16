@@ -74,10 +74,22 @@ class CommentSerializers(serializers.ModelSerializer):
     likes_count = serializers.SerializerMethodField()
     is_liked = serializers.SerializerMethodField()
     replies = serializers.SerializerMethodField()
+    mentioned_user = serializers.SerializerMethodField()
 
     class Meta:
         model = Comment
-        fields = ['id', 'author', 'text', 'created_at', 'updated_at', 'likes_count', 'is_liked', 'replies']
+        fields = ['id', 'author', 'text', 'created_at', 'updated_at', 'likes_count', 'is_liked', 'replies', 'mentioned_user']
+
+    def get_author(self, obj):
+        return {
+            'username': obj.author.username,
+            'avatar': obj.author.profile.avatar.url if obj.author.profile.avatar else None
+        }
+
+    def get_mentioned_user(self, obj):
+        if obj.mentioned_user:
+            return obj.mentioned_user.username
+        return None
 
     def get_likes_count(self, obj):
         return obj.likes.count()
