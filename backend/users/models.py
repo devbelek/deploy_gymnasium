@@ -43,14 +43,13 @@ class UserProfile(models.Model):
 
 
 class Comment(models.Model):
-    news = models.ForeignKey('main.News', on_delete=models.CASCADE, related_name='comments',
-                             verbose_name=_('Связка с "Новости"'))
+    news = models.ForeignKey('main.News', on_delete=models.CASCADE, related_name='comments', verbose_name=_('Связка с "Новости"'))
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Автор'))
     text = models.TextField(verbose_name=_('Комментарий'))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Дата создания'))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_('Дата обновления'))
     parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='replies')
-    mentioned_user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name='mentions')
+    depth = models.PositiveIntegerField(default=0)
 
     class Meta:
         verbose_name = _("Комментарий к посту")
@@ -61,12 +60,10 @@ class Comment(models.Model):
         return f'Комментарий от {self.author.username}'
 
     def save(self, *args, **kwargs):
-        if self.parent and self.text.startswith('@'):
-            username = self.text.split()[0][1:]
-            try:
-                self.mentioned_user = User.objects.get(username=username)
-            except User.DoesNotExist:
-                self.mentioned_user = None
+        if self.parent:
+            self.depth = self.parent.depth + 1
+            if self.depth > 2:
+                raise ValidationError("Превышена максимальная глубина комментариев")
         is_new = self.pk is None
         super().save(*args, **kwargs)
         if is_new:
