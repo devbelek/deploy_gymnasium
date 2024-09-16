@@ -88,7 +88,7 @@ class CommentSerializers(serializers.ModelSerializer):
 
     def get_replies(self, obj):
         replies = obj.replies.all()
-        return CommentSerializer(replies, many=True, context=self.context).data
+        return CommentSerializers(replies, many=True, context=self.context).data
 
 
 class LikeSerializers(serializers.ModelSerializer):
