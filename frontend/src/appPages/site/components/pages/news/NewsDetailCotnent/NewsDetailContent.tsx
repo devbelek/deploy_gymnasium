@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import Image from "next/image";
-import Link from "next/link";
 import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
 import { MoreVertical, Edit, Trash2, MessageCircle, ThumbsUp } from 'lucide-react';
 import scss from "./NewsDetailContent.module.scss";
@@ -56,17 +55,10 @@ const NewsDetailContent: React.FC = () => {
     checkAuthStatus();
   }, []);
 
-    const router = useRouter();
-
-
   const handleAddComment = useCallback(async () => {
     if (commentText.trim() && isLoggedIn) {
-      let text = commentText;
-      if (replyingTo) {
-        text = `@${replyingTo.author} ${text}`;
-      }
       try {
-        await addComment({ newsId, text, parentId: replyingTo?.id }).unwrap();
+        await addComment({ newsId, text: commentText, parentId: replyingTo?.id }).unwrap();
         setCommentText("");
         setReplyingTo(null);
       } catch (error) {
@@ -143,8 +135,8 @@ const NewsDetailContent: React.FC = () => {
           </MenuList>
         </Menu>
       )}
-      {isLoggedIn && comment.parent && (
-        <button onClick={() => setReplyingTo({ id: comment.parent, author: comment.author.username })} className={scss.replyButton}>
+      {isLoggedIn && (
+        <button onClick={() => setReplyingTo({ id: comment.id, author: comment.author })} className={scss.replyButton}>
           <MessageCircle size={16} />
           <span>Ответить</span>
         </button>
@@ -154,25 +146,8 @@ const NewsDetailContent: React.FC = () => {
 
   const renderComment = useCallback((comment: any) => (
     <div key={comment.id} className={scss.comment}>
-      <div className={scss.commentHeader}>
-        <Link href={`/profile/${comment.author.username}`}>
-          <Image
-            src={comment.author.avatar || '/default-avatar.png'}
-            alt={comment.author.username}
-            width={40}
-            height={40}
-            className={scss.avatar}
-          />
-        </Link>
-        <Link href={`/profile/${comment.author.username}`}>
-          <span className={scss.authorName}>{comment.author.username}</span>
-        </Link>
-      </div>
-      <p>
-        {comment.mentioned_user && <span className={scss.mentionedUser}>@{comment.mentioned_user} </span>}
-        {comment.text}
-      </p>
-      <small>Дата: {new Date(comment.created_at).toLocaleString()}</small>
+      <p>{comment.text}</p>
+      <small>Автор: {comment.author} | Дата: {new Date(comment.created_at).toLocaleString()}</small>
       {renderCommentActions(comment)}
       {editingComment && editingComment.id === comment.id && renderCommentForm(
         handleUpdateComment,
