@@ -24,7 +24,7 @@ const NewsDetailContent: React.FC = () => {
   const [commentText, setCommentText] = useState("");
   const [editingItemId, setEditingItemId] = useState<number | null>(null);
   const [editedText, setEditedText] = useState("");
-  const [replyingToCommentId, setReplyingToCommentId] = useState<number | null>(null);
+  const [replyingTo, setReplyingTo] = useState<{ id: number, author: string } | null>(null);
   const [currentUser, setCurrentUser] = useState<string | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -75,6 +75,7 @@ const NewsDetailContent: React.FC = () => {
       try {
         await addComment({ newsId, text: commentText }).unwrap();
         setCommentText("");
+        setReplyingTo(null);
       } catch (error) {
         console.error("Ошибка при добавлении комментария:", error);
       }
@@ -119,12 +120,12 @@ const NewsDetailContent: React.FC = () => {
     }
   };
 
-  const handleReplyToComment = async (parentCommentId: number) => {
-    if (editedText.trim() && isLoggedIn) {
+  const handleReplyToComment = async () => {
+    if (commentText.trim() && isLoggedIn && replyingTo) {
       try {
-        await addReply({ commentId: parentCommentId, text: editedText }).unwrap();
-        setReplyingToCommentId(null);
-        setEditedText("");
+        await addReply({ commentId: replyingTo.id, text: commentText }).unwrap();
+        setCommentText("");
+        setReplyingTo(null);
       } catch (error) {
         console.error("Ошибка при добавлении ответа:", error);
       }
@@ -170,10 +171,7 @@ const NewsDetailContent: React.FC = () => {
         </Menu>
       )}
       {!isReply && isLoggedIn && (
-        <button onClick={() => {
-          setReplyingToCommentId(item.id);
-          setEditedText("");
-        }} className={scss.replyButton}>
+        <button onClick={() => setReplyingTo({ id: item.id, author: item.author })} className={scss.replyButton}>
           <MessageCircle size={16} />
           <span>Ответить</span>
         </button>
@@ -189,10 +187,6 @@ const NewsDetailContent: React.FC = () => {
       {editingItemId === comment.id && renderCommentForm(
         () => handleUpdateItem(comment.id, isReply),
         () => setEditingItemId(null)
-      )}
-      {replyingToCommentId === comment.id && renderCommentForm(
-        () => handleReplyToComment(comment.id),
-        () => setReplyingToCommentId(null)
       )}
       {comment.replies && comment.replies.map((reply: any) => renderComment(reply, true))}
     </div>
@@ -229,14 +223,22 @@ const NewsDetailContent: React.FC = () => {
             {commentsData && commentsData.map((comment) => renderComment(comment))}
             {isLoggedIn ? (
               <div className={scss.addComment}>
+                {replyingTo ? (
+                  <p>Ответ на комментарий пользователя {replyingTo.author}:</p>
+                ) : (
+                  <p>Добавить новый комментарий:</p>
+                )}
                 <textarea
                   value={commentText}
                   onChange={(e) => setCommentText(e.target.value)}
-                  placeholder="Напишите ваш комментарий"
+                  placeholder={replyingTo ? "Напишите ваш ответ" : "Напишите ваш комментарий"}
                 />
-                <button onClick={handleAddComment} disabled={isAddingComment}>
-                  {isAddingComment ? "Добавление..." : "Добавить комментарий"}
+                <button onClick={replyingTo ? handleReplyToComment : handleAddComment} disabled={isAddingComment}>
+                  {isAddingComment ? "Отправка..." : (replyingTo ? "Отправить ответ" : "Добавить комментарий")}
                 </button>
+                {replyingTo && (
+                  <button onClick={() => setReplyingTo(null)}>Отменить ответ</button>
+                )}
               </div>
             ) : (
               <p className={scss.loginPrompt}>Пожалуйста, войдите в систему, чтобы оставить комментарий.</p>
