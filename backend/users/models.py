@@ -1,8 +1,16 @@
 from django.contrib.auth.models import User
-from django.db import models
-from rest_framework.exceptions import ValidationError
 from loguru import logger
+from django.db import models
 from django.core.exceptions import ValidationError
+from rest_framework import serializers, viewsets, status
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from django.shortcuts import get_object_or_404
+from django.utils.translation import gettext_lazy as _
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def validate_file_extension(value):
@@ -35,34 +43,28 @@ class UserProfile(models.Model):
 
 
 class Comment(models.Model):
-    news = models.ForeignKey(
-        'main.News', on_delete=models.CASCADE,
-        null=True, blank=True, verbose_name='Связка с "Новости"'
-    )
-    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Автор')
-    text = models.TextField(verbose_name='Комментарий')
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
-    updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
+    news = models.ForeignKey('main.News', on_delete=models.CASCADE, related_name='comments', verbose_name=_('Связка с "Новости"'))
+    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Автор'))
+    text = models.TextField(verbose_name=_('Комментарий'))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Дата создания'))
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_('Дата обновления'))
+    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='replies')
 
     class Meta:
-        verbose_name = "Комментарии к постам"
-        verbose_name_plural = "Комментарии к постам"
+        verbose_name = _("Комментарий к посту")
+        verbose_name_plural = _("Комментарии к постам")
+        ordering = ['-created_at']
 
     def __str__(self):
         return f'Комментарий от {self.author.username}'
 
-    def clean(self):
-        super().clean()
-        # Пример проверки, если вы хотите убедиться, что комментарий связан с чем-то:
-        if self.news is None:
-            raise ValidationError('Комментарий должен быть связан с новостью.')
-
     def save(self, *args, **kwargs):
-        if not self.pk:
+        is_new = self.pk is None
+        super().save(*args, **kwargs)
+        if is_new:
             logger.info(f"Создание комментария от пользователя: {self.author.username}")
         else:
             logger.info(f"Обновление комментария (ID: {self.pk}) от пользователя: {self.author.username}")
-        super().save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
         logger.info(f"Удаление комментария (ID: {self.pk}) от пользователя: {self.author.username}")
@@ -96,21 +98,22 @@ class CommentReply(models.Model):
 
 
 class Like(models.Model):
-    comment = models.ForeignKey(Comment, related_name='likes', on_delete=models.CASCADE, verbose_name='Комментарий')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
+    comment = models.ForeignKey(Comment, related_name='likes', on_delete=models.CASCADE, verbose_name=_('Комментарий'))
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Пользователь'))
 
     class Meta:
         unique_together = ('comment', 'user')
-        verbose_name = "Лайк"
-        verbose_name_plural = "Лайки"
+        verbose_name = _("Лайк")
+        verbose_name_plural = _("Лайки")
 
     def __str__(self):
         return f'Лайк от {self.user.username} на комментарий {self.comment.id}'
 
     def save(self, *args, **kwargs):
-        if not self.pk:
-            logger.info(f"Пользователь {self.user.username} поставил лайк на комментарий ID: {self.comment.id}")
+        is_new = self.pk is None
         super().save(*args, **kwargs)
+        if is_new:
+            logger.info(f"Пользователь {self.user.username} поставил лайк на комментарий ID: {self.comment.id}")
 
     def delete(self, *args, **kwargs):
         logger.info(f"Пользователь {self.user.username} удалил лайк с комментария ID: {self.comment.id}")

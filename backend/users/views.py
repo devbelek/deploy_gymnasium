@@ -121,17 +121,15 @@ class UserProfileDetail(generics.RetrieveUpdateAPIView):
 
 
 class CommentViewSet(viewsets.ModelViewSet):
-    queryset = Comment.objects.all()
+    queryset = Comment.objects.filter(parent=None)
     serializer_class = CommentSerializers
-    permission_classes = [IsAuthenticatedOrReadOnly,
-                          # IsAuthorOrReadOnly]
-    ]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
         news_id = self.kwargs.get('news_id')
         if news_id:
-            return Comment.objects.filter(news_id=news_id)
-        return Comment.objects.all()
+            return Comment.objects.filter(news_id=news_id, parent=None)
+        return Comment.objects.filter(parent=None)
 
     def perform_create(self, serializer):
         news_id = self.kwargs.get('news_id')
@@ -140,35 +138,34 @@ class CommentViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['post'])
     def reply(self, request, pk=None):
-        comment = self.get_object()
-        serializer = CommentReplySerializers(data=request.data, context={'request': request, 'parent_comment': comment})
-        if serializer.is_valid():
-            serializer.save(author=request.user, parent_comment=comment)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    @action(detail=True, methods=['get'])
-    def replies(self, request, pk=None):
-        comment = self.get_object()
-        replies = CommentReply.objects.filter(parent_comment=comment)
-        serializer = CommentReplySerializers(replies, many=True)
-        return Response(serializer.data)
-
-    @action(detail=False, methods=['get'])
-    def get_comments_by_news(self, request, pk=None):
-        news = get_object_or_404(News, pk=pk)
-        comments = Comment.objects.filter(news=news)
-        serializer = self.get_serializer(comments, many=True)
-        return Response(serializer.data)
-
-    @action(detail=False, methods=['post'])
-    def create_comment_for_news(self, request, pk=None):
-        news = get_object_or_404(News, pk=pk)
+        parent_comment = self.get_object()
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(author=request.user, news=news)
+            serializer.save(author=request.user, news=parent_comment.news, parent=parent_comment)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=False, methods=['post'])
+    def like(self, request):
+        comment_id = request.data.get('comment_id')
+        comment = get_object_or_404(Comment, pk=comment_id)
+        like, created = Like.objects.get_or_create(user=request.user, comment=comment)
+        if not created:
+            like.delete()
+            return Response({"detail": "Like removed"}, status=status.HTTP_200_OK)
+        return Response({"detail": "Like added"}, status=status.HTTP_201_CREATED)
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if instance.author != request.user:
+            return Response({"detail": "You don't have permission to edit this comment."}, status=status.HTTP_403_FORBIDDEN)
+        return super().update(request, *args, **kwargs)
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if instance.author != request.user:
+            return Response({"detail": "You don't have permission to delete this comment."}, status=status.HTTP_403_FORBIDDEN)
+        return super().destroy(request, *args, **kwargs)
 
 
 class CommentReplyViewSet(viewsets.ModelViewSet):
