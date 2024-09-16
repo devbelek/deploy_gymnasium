@@ -20,14 +20,14 @@ const Search = () => {
     skip: !searchRequest,
   });
 
-  // Приведение ошибки к строке, если это объект Error, иначе используем значение как строку
-  const errorMessage = error instanceof Error ? error.message : String(error || "Неизвестная ошибка");
+  // Приведение ошибки к строке
+  const errorMessage = error ? (error as Error)?.message || String(error) : null;
 
   return (
     <div style={{ paddingTop: "100px" }}>
       <h1>Результаты поиска для: {query}</h1>
       {isLoading && <p>Загрузка...</p>}
-      {error && <p>Произошла ошибка при поиске: {errorMessage}</p>}
+      {errorMessage && <p>Произошла ошибка при поиске: {errorMessage}</p>}
       {!isLoading && !error && data && data.length > 0 ? (
         <ul>
           {data.map((result) => (
