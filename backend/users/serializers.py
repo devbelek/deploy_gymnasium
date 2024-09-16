@@ -69,7 +69,7 @@ class CommentReplySerializers(serializers.ModelSerializer):
         return instance
 
 
-class CommentSerializer(serializers.ModelSerializer):
+class CommentSerializers(serializers.ModelSerializer):
     author = serializers.ReadOnlyField(source='author.username')
     likes_count = serializers.SerializerMethodField()
     is_liked = serializers.SerializerMethodField()
