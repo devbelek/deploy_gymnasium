@@ -46,8 +46,10 @@ const api = index.injectEndpoints({
       invalidatesTags: ["comments"],
     }),
     updateComment: build.mutation<NEWS.UpdateCommentResponse, NEWS.UpdateCommentRequest>({
-      query: ({ commentId, text }) => ({
-        url: `${ENDPOINTS}/comments/${commentId}/`,
+      query: ({ commentId, text, parentId }) => ({
+        url: parentId
+          ? `${ENDPOINTS}/comments/${parentId}/replies/${commentId}/`
+          : `${ENDPOINTS}/comments/${commentId}/`,
         method: "PATCH",
         body: JSON.stringify({ text }),
         credentials: 'include',
@@ -59,8 +61,10 @@ const api = index.injectEndpoints({
       invalidatesTags: ["comments"],
     }),
     deleteComment: build.mutation<NEWS.DeleteCommentResponse, NEWS.DeleteCommentRequest>({
-      query: (commentId) => ({
-        url: `${ENDPOINTS}/comments/${commentId}/`,
+      query: ({ commentId, parentId }) => ({
+        url: parentId
+          ? `${ENDPOINTS}/comments/${parentId}/replies/${commentId}/`
+          : `${ENDPOINTS}/comments/${commentId}/`,
         method: "DELETE",
         credentials: 'include',
         headers: {

@@ -19,7 +19,7 @@ const NewsDetailContent: React.FC = () => {
   const params = useParams();
   const newsId = typeof params.newsDetail === 'string' ? parseInt(params.newsDetail, 10) : NaN;
   const [commentText, setCommentText] = useState("");
-  const [editingComment, setEditingComment] = useState<{ id: number, text: string } | null>(null);
+  const [editingComment, setEditingComment] = useState<{ id: number, text: string, parentId?: number } | null>(null);
   const [replyingTo, setReplyingTo] = useState<{ id: number, author: string } | null>(null);
   const [currentUser, setCurrentUser] = useState<string | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -70,7 +70,11 @@ const NewsDetailContent: React.FC = () => {
   const handleUpdateComment = useCallback(async () => {
     if (editingComment && editingComment.text.trim()) {
       try {
-        await updateComment({ commentId: editingComment.id, text: editingComment.text }).unwrap();
+        await updateComment({
+          commentId: editingComment.id,
+          text: editingComment.text,
+          parentId: editingComment.parentId
+        }).unwrap();
         setEditingComment(null);
       } catch (error) {
         console.error("Ошибка при обновлении комментария:", error);
@@ -78,9 +82,9 @@ const NewsDetailContent: React.FC = () => {
     }
   }, [editingComment, updateComment]);
 
-  const handleDeleteComment = useCallback(async (commentId: number) => {
+  const handleDeleteComment = useCallback(async (commentId: number, parentId?: number) => {
     try {
-      await deleteComment(commentId).unwrap();
+      await deleteComment({ commentId, parentId }).unwrap();
     } catch (error) {
       console.error("Ошибка при удалении комментария:", error);
     }
@@ -120,11 +124,11 @@ const NewsDetailContent: React.FC = () => {
             <MoreVertical size={16} />
           </MenuButton>
           <MenuList>
-            <MenuItem onClick={() => setEditingComment({ id: comment.id, text: comment.text })}>
+            <MenuItem onClick={() => setEditingComment({ id: comment.id, text: comment.text, parentId: comment.parent })}>
               <Edit size={16} />
               <span>Редактировать</span>
             </MenuItem>
-            <MenuItem onClick={() => handleDeleteComment(comment.id)}>
+            <MenuItem onClick={() => handleDeleteComment(comment.id, comment.parent)}>
               <Trash2 size={16} />
               <span>Удалить</span>
             </MenuItem>

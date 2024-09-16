@@ -17,6 +17,7 @@ urlpatterns = [
     path('', include(router.urls)),
     path('profile/', UserProfileDetail.as_view(), name='user-profile'),
 
+    path('comments/<int:comment_pk>/replies/<int:pk>/', views.CommentViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'}), name='comment-reply-detail'),
     path('news/<int:news_id>/comments/', views.CommentViewSet.as_view({'get': 'list', 'post': 'create'}), name='news-comments'),
     path('comments/<int:pk>/reply/', views.CommentViewSet.as_view({'post': 'reply'}), name='comment-reply'),
     path('comments/like/', views.CommentViewSet.as_view({'post': 'like'}), name='comment-like'),

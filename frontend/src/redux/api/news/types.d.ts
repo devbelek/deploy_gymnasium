@@ -36,10 +36,10 @@ namespace NEWS {
   type AddCommentRequest = { newsId: number; text: string; parentId?: number };
 
   type UpdateCommentResponse = IComment;
-  type UpdateCommentRequest = { commentId: number; text: string };
+  type UpdateCommentRequest = { commentId: number; text: string; parentId?: number };
 
   type DeleteCommentResponse = void;
-  type DeleteCommentRequest = number;
+  type DeleteCommentRequest = { commentId: number; parentId?: number };
 
   type LikeCommentResponse = { detail: string };
   type LikeCommentRequest = { commentId: number };
