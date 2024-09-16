@@ -3,14 +3,14 @@ import { useGetSearchQuery } from "@/redux/api/search";
 import { useSearchParams } from "next/navigation";
 import React, { useMemo } from "react";
 import StudentsMainContent from "../students/StudentsMainContent/StudentsMainContent";
-import { SEARCH } from "@/redux/api/search/types";
+import { SEARCH } from "@/redux/api/search/types"; // Убедитесь, что путь к типам правильный
 
 const Search = () => {
   const searchParams = useSearchParams();
   const query = searchParams?.get("query") || "";
 
   const searchRequest: SEARCH.GetSearchRequest = useMemo(() => {
-    if (!query) return null;
+    if (!query) return {}; // Возвращаем пустой объект, если запроса нет
     if (/^\d+$/.test(query)) {
       return { school_class__grade: query };
     }
@@ -18,7 +18,7 @@ const Search = () => {
   }, [query]);
 
   const { data, error, isLoading } = useGetSearchQuery(searchRequest, {
-    skip: !searchRequest,
+    skip: !query, // Пропускаем запрос, если query пустой
   });
 
   const errorMessage = error ? (error as Error)?.message || String(error) : null;
