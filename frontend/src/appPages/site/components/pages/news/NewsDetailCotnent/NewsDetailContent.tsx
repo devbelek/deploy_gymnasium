@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
@@ -22,15 +22,14 @@ const NewsDetailContent: React.FC = () => {
   const params = useParams();
   const newsId = typeof params.newsDetail === 'string' ? parseInt(params.newsDetail, 10) : NaN;
   const [commentText, setCommentText] = useState("");
-  const [editingItemId, setEditingItemId] = useState<number | null>(null);
-  const [editedText, setEditedText] = useState("");
+  const [editingItem, setEditingItem] = useState<{ id: number, type: 'comment' | 'reply', text: string } | null>(null);
   const [replyingTo, setReplyingTo] = useState<{ id: number, author: string } | null>(null);
   const [currentUser, setCurrentUser] = useState<string | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const { data: newsData, isLoading: newsLoading, error: newsError } = useGetDetNewsQuery(newsId);
   const { data: commentsData, isLoading: commentsLoading, error: commentsError } = useGetCommentsQuery(newsId);
-  const [addComment, { isLoading: isAddingComment }] = useAddCommentMutation();
+  const [addComment] = useAddCommentMutation();
   const [updateComment] = useUpdateCommentMutation();
   const [deleteComment] = useDeleteCommentMutation();
   const [likeComment] = useLikeCommentMutation();
@@ -62,15 +61,7 @@ const NewsDetailContent: React.FC = () => {
     checkAuthStatus();
   }, []);
 
-  if (isNaN(newsId)) {
-    return <div className={scss.error}>Неверный идентификатор новости</div>;
-  }
-
-  if (newsLoading || commentsLoading) return <div className={scss.loading}>Загрузка...</div>;
-  if (newsError || commentsError) return <div className={scss.error}>Произошла ошибка при загрузке данных</div>;
-  if (!newsData) return <div className={scss.error}>Новость не найдена</div>;
-
-  const handleAddComment = async () => {
+  const handleAddComment = useCallback(async () => {
     if (commentText.trim() && isLoggedIn) {
       try {
         await addComment({ newsId, text: commentText }).unwrap();
@@ -80,25 +71,24 @@ const NewsDetailContent: React.FC = () => {
         console.error("Ошибка при добавлении комментария:", error);
       }
     }
-  };
+  }, [addComment, commentText, isLoggedIn, newsId]);
 
-  const handleUpdateItem = async (itemId: number, isReply: boolean) => {
-    if (editedText.trim()) {
+  const handleUpdateItem = useCallback(async () => {
+    if (editingItem && editingItem.text.trim()) {
       try {
-        if (isReply) {
-          await updateReply({ replyId: itemId, text: editedText }).unwrap();
+        if (editingItem.type === 'reply') {
+          await updateReply({ replyId: editingItem.id, text: editingItem.text }).unwrap();
         } else {
-          await updateComment({ commentId: itemId, text: editedText }).unwrap();
+          await updateComment({ commentId: editingItem.id, text: editingItem.text }).unwrap();
         }
-        setEditingItemId(null);
-        setEditedText("");
+        setEditingItem(null);
       } catch (error) {
         console.error("Ошибка при обновлении:", error);
       }
     }
-  };
+  }, [editingItem, updateComment, updateReply]);
 
-  const handleDeleteItem = async (itemId: number, isReply: boolean) => {
+  const handleDeleteItem = useCallback(async (itemId: number, isReply: boolean) => {
     try {
       if (isReply) {
         await deleteReply(itemId).unwrap();
@@ -108,9 +98,9 @@ const NewsDetailContent: React.FC = () => {
     } catch (error) {
       console.error("Ошибка при удалении:", error);
     }
-  };
+  }, [deleteComment, deleteReply]);
 
-  const handleLikeComment = async (commentId: number) => {
+  const handleLikeComment = useCallback(async (commentId: number) => {
     if (isLoggedIn) {
       try {
         await likeComment({ commentId }).unwrap();
@@ -118,9 +108,9 @@ const NewsDetailContent: React.FC = () => {
         console.error("Ошибка при лайке комментария:", error);
       }
     }
-  };
+  }, [isLoggedIn, likeComment]);
 
-  const handleReplyToComment = async () => {
+  const handleReplyToComment = useCallback(async () => {
     if (commentText.trim() && isLoggedIn && replyingTo) {
       try {
         await addReply({ commentId: replyingTo.id, text: commentText }).unwrap();
@@ -130,21 +120,21 @@ const NewsDetailContent: React.FC = () => {
         console.error("Ошибка при добавлении ответа:", error);
       }
     }
-  };
+  }, [addReply, commentText, isLoggedIn, replyingTo]);
 
-  const renderCommentForm = (onSubmit: () => void, cancelAction: () => void) => (
+  const renderCommentForm = useCallback((onSubmit: () => void, cancelAction: () => void) => (
     <div className={scss.commentForm}>
       <textarea
-        value={editedText}
-        onChange={(e) => setEditedText(e.target.value)}
+        value={editingItem ? editingItem.text : commentText}
+        onChange={(e) => editingItem ? setEditingItem({...editingItem, text: e.target.value}) : setCommentText(e.target.value)}
         placeholder="Напишите ваш комментарий"
       />
       <button onClick={onSubmit}>Отправить</button>
       <button onClick={cancelAction}>Отмена</button>
     </div>
-  );
+  ), [editingItem, commentText]);
 
-  const renderCommentActions = (item: any, isReply: boolean) => (
+  const renderCommentActions = useCallback((item: any, isReply: boolean) => (
     <div className={scss.commentActions}>
       <button onClick={() => handleLikeComment(item.id)} className={scss.likeButton}>
         <ThumbsUp size={16} />
@@ -156,10 +146,7 @@ const NewsDetailContent: React.FC = () => {
             <MoreVertical size={16} />
           </MenuButton>
           <MenuList>
-            <MenuItem onClick={() => {
-              setEditingItemId(item.id);
-              setEditedText(item.text);
-            }}>
+            <MenuItem onClick={() => setEditingItem({ id: item.id, type: isReply ? 'reply' : 'comment', text: item.text })}>
               <Edit size={16} />
               <span>Редактировать</span>
             </MenuItem>
@@ -177,20 +164,28 @@ const NewsDetailContent: React.FC = () => {
         </button>
       )}
     </div>
-  );
+  ), [currentUser, handleDeleteItem, handleLikeComment, isLoggedIn]);
 
-  const renderComment = (comment: any, isReply = false) => (
+  const renderComment = useCallback((comment: any, isReply = false) => (
     <div key={comment.id} className={`${scss.comment} ${isReply ? scss.reply : ''}`}>
       <p>{comment.text}</p>
       <small>Автор: {comment.author} | Дата: {new Date(comment.created_at).toLocaleString()}</small>
       {renderCommentActions(comment, isReply)}
-      {editingItemId === comment.id && renderCommentForm(
-        () => handleUpdateItem(comment.id, isReply),
-        () => setEditingItemId(null)
+      {editingItem && editingItem.id === comment.id && renderCommentForm(
+        handleUpdateItem,
+        () => setEditingItem(null)
       )}
-      {comment.replies && comment.replies.map((reply: any) => renderComment(reply, true))}
+      {!isReply && comment.replies && comment.replies.map((reply: any) => renderComment(reply, true))}
     </div>
-  );
+  ), [editingItem, handleUpdateItem, renderCommentActions, renderCommentForm]);
+
+  if (isNaN(newsId)) {
+    return <div className={scss.error}>Неверный идентификатор новости</div>;
+  }
+
+  if (newsLoading || commentsLoading) return <div className={scss.loading}>Загрузка...</div>;
+  if (newsError || commentsError) return <div className={scss.error}>Произошла ошибка при загрузке данных</div>;
+  if (!newsData) return <div className={scss.error}>Новость не найдена</div>;
 
   return (
     <div className={scss.NewsDetailContent}>
@@ -228,16 +223,12 @@ const NewsDetailContent: React.FC = () => {
                 ) : (
                   <p>Добавить новый комментарий:</p>
                 )}
-                <textarea
-                  value={commentText}
-                  onChange={(e) => setCommentText(e.target.value)}
-                  placeholder={replyingTo ? "Напишите ваш ответ" : "Напишите ваш комментарий"}
-                />
-                <button onClick={replyingTo ? handleReplyToComment : handleAddComment} disabled={isAddingComment}>
-                  {isAddingComment ? "Отправка..." : (replyingTo ? "Отправить ответ" : "Добавить комментарий")}
-                </button>
-                {replyingTo && (
-                  <button onClick={() => setReplyingTo(null)}>Отменить ответ</button>
+                {renderCommentForm(
+                  replyingTo ? handleReplyToComment : handleAddComment,
+                  () => {
+                    setReplyingTo(null);
+                    setCommentText("");
+                  }
                 )}
               </div>
             ) : (
@@ -250,4 +241,4 @@ const NewsDetailContent: React.FC = () => {
   );
 };
 
-export default NewsDetailContent;
+export default React.memo(NewsDetailContent);
