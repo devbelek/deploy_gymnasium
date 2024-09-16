@@ -23,7 +23,6 @@ const NewsDetailContent: React.FC = () => {
   const [replyingTo, setReplyingTo] = useState<{ id: number, author: string } | null>(null);
   const [currentUser, setCurrentUser] = useState<string | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userAvatars, setUserAvatars] = useState<{ [key: string]: string }>({});
 
   const { data: newsData, isLoading: newsLoading, error: newsError } = useGetDetNewsQuery(newsId);
   const { data: commentsData, isLoading: commentsLoading, error: commentsError } = useGetCommentsQuery(newsId);
@@ -35,7 +34,7 @@ const NewsDetailContent: React.FC = () => {
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API}/accounts/user/`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API}/${process.env.NEXT_PUBLIC_ENDPOINT}/accounts/user/`, {
           credentials: 'include',
         });
         if (response.ok) {
@@ -55,38 +54,6 @@ const NewsDetailContent: React.FC = () => {
 
     checkAuthStatus();
   }, []);
-
-  useEffect(() => {
-    const fetchUserAvatars = async () => {
-      if (commentsData) {
-        const uniqueUsers = Array.from(new Set(commentsData.map(comment => comment.author)));
-        const avatarPromises = uniqueUsers.map(async username => {
-          try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API}/profile/${username}/`, {
-              credentials: 'include',
-            });
-            if (response.ok) {
-              const userData = await response.json();
-              return { username, avatar: userData.avatar };
-            }
-          } catch (error) {
-            console.error(`Ошибка при получении аватара для ${username}:`, error);
-          }
-          return { username, avatar: null };
-        });
-
-        const avatarResults = await Promise.all(avatarPromises);
-        const avatarMap = avatarResults.reduce((acc, { username, avatar }) => {
-          acc[username] = avatar || `https://api.dicebear.com/6.x/initials/svg?seed=${username}`;
-          return acc;
-        }, {});
-
-        setUserAvatars(avatarMap);
-      }
-    };
-
-    fetchUserAvatars();
-  }, [commentsData]);
 
   const handleAddComment = useCallback(async () => {
     if (commentText.trim() && isLoggedIn) {
@@ -133,12 +100,12 @@ const NewsDetailContent: React.FC = () => {
     }
   }, [isLoggedIn, likeComment]);
 
-  const renderCommentForm = useCallback((onSubmit: () => void, cancelAction: () => void, placeholder: string) => (
+  const renderCommentForm = useCallback((onSubmit: () => void, cancelAction: () => void) => (
     <div className={scss.commentForm}>
       <textarea
         value={editingComment ? editingComment.text : commentText}
         onChange={(e) => editingComment ? setEditingComment({...editingComment, text: e.target.value}) : setCommentText(e.target.value)}
-        placeholder={placeholder}
+        placeholder="Напишите ваш комментарий"
       />
       <div className={scss.formActions}>
         <button onClick={onSubmit} className={scss.submitButton}>Отправить</button>
@@ -183,7 +150,7 @@ const NewsDetailContent: React.FC = () => {
     <div key={comment.id} className={`${scss.comment} ${depth > 0 ? scss.reply : ''}`}>
       <div className={scss.commentHeader}>
         <Image
-          src={userAvatars[comment.author] || `https://api.dicebear.com/6.x/initials/svg?seed=${comment.author}`}
+          src={`https://api.dicebear.com/6.x/initials/svg?seed=${comment.author}`}
           alt={comment.author}
           width={40}
           height={40}
@@ -198,18 +165,7 @@ const NewsDetailContent: React.FC = () => {
       {renderCommentActions(comment, depth)}
       {editingComment && editingComment.id === comment.id && renderCommentForm(
         handleUpdateComment,
-        () => setEditingComment(null),
-        "Редактировать комментарий"
-      )}
-      {replyingTo && replyingTo.id === comment.id && (
-        <div className={scss.replyForm}>
-          <p className={scss.replyingTo}>Ответ на комментарий пользователя {replyingTo.author}:</p>
-          {renderCommentForm(
-            handleAddComment,
-            () => setReplyingTo(null),
-            "Напишите ваш ответ"
-          )}
-        </div>
+        () => setEditingComment(null)
       )}
       {comment.replies && comment.replies.map((reply: any) => (
         <div key={reply.id} className={scss.replyWrapper}>
@@ -217,7 +173,7 @@ const NewsDetailContent: React.FC = () => {
         </div>
       ))}
     </div>
-  ), [editingComment, handleUpdateComment, renderCommentActions, renderCommentForm, replyingTo, handleAddComment, userAvatars]);
+  ), [editingComment, handleUpdateComment, renderCommentActions, renderCommentForm]);
 
   if (isNaN(newsId)) {
     return <div className={scss.error}>Неверный идентификатор новости</div>;
@@ -256,17 +212,22 @@ const NewsDetailContent: React.FC = () => {
           <div className={scss.commentsSection}>
             <h2>Комментарии</h2>
             {commentsData && commentsData.map((comment) => renderComment(comment))}
-            {isLoggedIn && !replyingTo && (
+            {isLoggedIn ? (
               <div className={scss.addComment}>
-                <p className={scss.addNewComment}>Добавить новый комментарий:</p>
+                {replyingTo ? (
+                  <p className={scss.replyingTo}>Ответ на комментарий пользователя {replyingTo.author}:</p>
+                ) : (
+                  <p className={scss.addNewComment}>Добавить новый комментарий:</p>
+                )}
                 {renderCommentForm(
                   handleAddComment,
-                  () => setCommentText(""),
-                  "Напишите ваш комментарий"
+                  () => {
+                    setReplyingTo(null);
+                    setCommentText("");
+                  }
                 )}
               </div>
-            )}
-            {!isLoggedIn && (
+            ) : (
               <p className={scss.loginPrompt}>Пожалуйста, войдите в систему, чтобы оставить комментарий.</p>
             )}
           </div>
