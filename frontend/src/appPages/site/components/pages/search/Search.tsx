@@ -20,8 +20,8 @@ const Search = () => {
     skip: !searchRequest,
   });
 
-  // Приведение ошибки к строке, если она существует
-  const errorMessage = error instanceof Error ? error.message : String(error);
+  // Приведение ошибки к строке, если это объект Error, иначе используем значение как строку
+  const errorMessage = error instanceof Error ? error.message : String(error || "Неизвестная ошибка");
 
   return (
     <div style={{ paddingTop: "100px" }}>
