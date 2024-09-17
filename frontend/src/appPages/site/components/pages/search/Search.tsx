@@ -9,14 +9,14 @@ const Search = () => {
   const query = searchParams?.get("query") || "";
 
   const searchRequest = useMemo(() => {
-    if (!query) return null;
+    if (!query) return undefined;
     if (/^\d+$/.test(query)) {
       return { school_class__grade: query };
     }
     return { full_name: query };
   }, [query]);
 
-  const { data, error, isLoading } = useGetSearchQuery(searchRequest, {
+  const { data, error, isLoading } = useGetSearchQuery(searchRequest || undefined, {
     skip: !searchRequest,
   });
 
