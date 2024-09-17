@@ -1,15 +1,11 @@
 {% load static %}
-{% load i18n %}
-{% load account %}
-{% load socialaccount %}
-
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block head_title %}Мой сайт{% endblock %}</title>
     <style>
-        /* Общие стили */
+        /* Базовые стили */
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
@@ -45,7 +41,7 @@
             color: green;
             transition: 0.3s ease-in-out;
         }
-        /* Стили форм */
+        /* Стили для форм */
         .form-container {
             max-width: 400px;
             margin: 0 auto;
@@ -80,65 +76,6 @@
         .form-container button[type="submit"]:hover {
             background-color: #0056b3;
         }
-        /* Дополнительные стили */
-        .menu ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .menu ul li {
-            margin-bottom: 10px;
-        }
-        .menu ul li a {
-            text-decoration: none;
-            color: #007bff;
-            font-weight: bold;
-        }
-        .menu ul li a:hover {
-            color: #0056b3;
-        }
-        .socialaccount_providers {
-            list-style: none;
-            padding: 0;
-            margin-bottom: 20px;
-        }
-        .socialaccount_providers li {
-            margin-bottom: 10px;
-        }
-        .socialaccount_providers button {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .socialaccount_providers .google {
-            background-color: #4285F4;
-            color: white;
-        }
-        .socialaccount_providers .google:hover {
-            background-color: #357AE8;
-        }
-        .login-or {
-            text-align: center;
-            margin: 20px 0;
-            position: relative;
-        }
-        .login-or:before {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            border-top: 1px solid #ccc;
-        }
-        .login-or span {
-            background-color: #f8f9fa;
-            padding: 0 10px;
-            position: relative;
-            color: #6c757d;
-        }
     </style>
     {% block extra_head %}{% endblock %}
 </head>
@@ -162,87 +99,3 @@
     {% block extra_body %}{% endblock %}
 </body>
 </html>
-
-{% block content %}
-    {% if request.path == '/accounts/email/' %}
-        <!-- Добавить Email -->
-        <div class="menu">
-            <ul>
-                <li><a href="{% url 'account_email' %}">{% trans "Изменить E-mail" %}</a></li>
-                <li><a href="{% url 'account_change_password' %}">{% trans "Изменить пароль" %}</a></li>
-                <li><a href="{% url 'account_logout' %}">{% trans "Выйти" %}</a></li>
-            </ul>
-        </div>
-        <div class="form-container">
-            <h1>{% trans "Добавить Email" %}</h1>
-            <form method="POST" action="{% url 'account_email' %}">
-                {% csrf_token %}
-                <div>
-                    <label for="email">{% trans "E-mail" %}:</label>
-                    {{ form.email }}
-                </div>
-                <button type="submit">{% trans "Добавить E-mail" %}</button>
-            </form>
-        </div>
-    {% elif request.path == '/accounts/login/' %}
-        <!-- Sign In -->
-        <div class="form-container">
-            <h1>{% trans "Sign In" %}</h1>
-            {% get_providers as socialaccount_providers %}
-            {% if socialaccount_providers %}
-                <ul class="socialaccount_providers">
-                    {% for provider in socialaccount_providers %}
-                        {% if provider.id == "google" %}
-                            <li>
-                                <a href="{% provider_login_url provider.id process='login' %}">
-                                    <button type="button" class="google">
-                                        {% trans "Sign in with Google" %}
-                                    </button>
-                                </a>
-                            </li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
-                <div class="login-or">
-                    <span>{% trans 'or' %}</span>
-                </div>
-            {% endif %}
-            <form class="login" method="POST" action="{% url 'account_login' %}">
-                {% csrf_token %}
-                {{ form.as_p }}
-                {% if redirect_field_value %}
-                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
-                {% endif %}
-                <button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
-            </form>
-            <p>{% blocktrans %}Если вы еще не создали учетную запись, сначала <a href="{{ signup_url }}">зарегистрируйтесь</a>{% endblocktrans %}</p>
-        </div>
-    {% elif request.path == '/accounts/logout/' %}
-        <!-- Выход -->
-        <div class="form-container">
-            <h1>{% trans "Выход" %}</h1>
-            <p>{% trans 'Вы уверены, что хотите выйти?' %}</p>
-            <form method="post" action="{% url 'account_logout' %}">
-                {% csrf_token %}
-                {% if redirect_field_value %}
-                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
-                {% endif %}
-                <button type="submit">{% trans 'Выйти' %}</button>
-            </form>
-        </div>
-    {% elif request.path == '/accounts/signup/' %}
-        <!-- Signup -->
-        <div class="form-container">
-            <h1>{% trans "Sign Up" %}</h1>
-            <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
-                {% csrf_token %}
-                {{ form.as_p }}
-                {% if redirect_field_value %}
-                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-                {% endif %}
-                <button type="submit">{% trans "Sign Up" %}</button>
-            </form>
-            <p>{% blocktrans %}У вас уже есть аккаунт? <a href="{{ login_url }}">Войти</a>.{% endblocktrans %}</p>
-        </div>
-    {% endif %}
-{% endblock %}
