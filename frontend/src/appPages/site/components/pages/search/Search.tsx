@@ -1,7 +1,7 @@
 "use client";
 import { useGetSearchQuery } from "@/redux/api/search";
 import { useSearchParams } from "next/navigation";
-import React, { useMemo } from "react";
+import React, { useMemo, Suspense } from "react";
 import StudentsMainContent from "../students/studentMainContent/StudentsMainContent";
 
 // Определим тип GetSearchRequest, если он еще не определен
@@ -10,7 +10,7 @@ type GetSearchRequest = {
   full_name?: string;
 };
 
-const Search = () => {
+const SearchContent = () => {
   const searchParams = useSearchParams();
   const query = searchParams?.get("query") || "";
 
@@ -61,6 +61,14 @@ const Search = () => {
       <h1>Студенты</h1>
       <StudentsMainContent />
     </div>
+  );
+};
+
+const Search = () => {
+  return (
+    <Suspense fallback={<div>Загрузка...</div>}>
+      <SearchContent />
+    </Suspense>
   );
 };
 
