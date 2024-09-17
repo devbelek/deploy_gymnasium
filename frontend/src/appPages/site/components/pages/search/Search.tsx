@@ -26,11 +26,25 @@ const Search = () => {
     skip: !searchRequest,
   });
 
+  const errorMessage = useMemo(() => {
+    if (error) {
+      if (typeof error === 'string') {
+        return error;
+      } else if (error instanceof Error) {
+        return error.message;
+      } else if (typeof error === 'object' && error !== null && 'message' in error) {
+        return String((error as { message: unknown }).message);
+      }
+      return 'Неизвестная ошибка';
+    }
+    return null;
+  }, [error]);
+
   return (
     <div style={{ paddingTop: "100px" }}>
       <h1>Результаты поиска для: {query}</h1>
       {isLoading && <p>Загрузка...</p>}
-      {error && <p>Произошла ошибка при поиске: {(error as Error).message || 'Неизвестная ошибка'}</p>}
+      {errorMessage && <p>Произошла ошибка при поиске: {errorMessage}</p>}
       {!isLoading && !error && data && data.length > 0 ? (
         <ul>
           {data.map((result) => (
