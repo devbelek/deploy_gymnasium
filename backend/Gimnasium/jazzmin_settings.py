@@ -42,7 +42,7 @@ JAZZMIN_SETTINGS = {
         "main.Gallery": "fas fa-solid fa-images",
         "main.Video": "fas fa-film",
         "main.OurAchievements": "fas fa-solid fa-award",
-        "main.OldTeachers": "fas fa-user-graduate",
+        "main.OldTeachers": "fas fa-chalkboard-teacher",
         "main.Teachers": "fas fa-solid fa-chalkboard-teacher",
         "main.Contacts": "fas fa-solid fa-address-book",
         "secondary.NameOfGrades": "fas fa-solid fa-list-ol",
