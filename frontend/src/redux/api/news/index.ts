@@ -1,7 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { getCSRFToken } from './csrf';
 
-const ENDPOINTS = process.env.NEXT_PUBLIC_ENDPOINT;
+const BASE_URL = process.env.NEXT_PUBLIC_API || '';
+const ENDPOINTS = process.env.NEXT_PUBLIC_ENDPOINT || 'api';
 
 interface AddCommentRequest {
   newsId: number;
@@ -10,39 +11,29 @@ interface AddCommentRequest {
 }
 
 export const api = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
+  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   tagTypes: ['news', 'comments', 'userProfile'],
   endpoints: (build) => ({
     getNews: build.query<NEWS.GetNewsResponse, NEWS.GetNewsRequest>({
-      query: () => ({
-        url: `${ENDPOINTS}/news/`,
-        method: "GET",
-      }),
+      query: () => `/${ENDPOINTS}/news/`,
       providesTags: ["news"],
     }),
     getDetNews: build.query<NEWS.GetDetNewsResponse, number>({
-      query: (id) => ({
-        url: `${ENDPOINTS}/news/${id}/`,
-        method: "GET",
-      }),
+      query: (id) => `/${ENDPOINTS}/news/${id}/`,
       providesTags: ["news"],
     }),
     getComments: build.query<NEWS.GetCommentsResponse, number>({
-      query: (newsId) => ({
-        url: `${ENDPOINTS}/news/${newsId}/comments/`,
-        method: "GET",
-      }),
+      query: (newsId) => `/${ENDPOINTS}/news/${newsId}/comments/`,
       providesTags: ["comments"],
     }),
     addComment: build.mutation<NEWS.AddCommentResponse, AddCommentRequest>({
       query: ({ newsId, text, parentId }) => ({
-        url: parentId ? `${ENDPOINTS}/comments/${parentId}/reply/` : `${ENDPOINTS}/news/${newsId}/comments/`,
+        url: parentId ? `/${ENDPOINTS}/comments/${parentId}/reply/` : `/${ENDPOINTS}/news/${newsId}/comments/`,
         method: "POST",
-        body: JSON.stringify({ text }),
+        body: { text },
         credentials: 'include',
         headers: {
           'X-CSRFToken': getCSRFToken() || '',
-          'Content-Type': 'application/json',
         },
       }),
       invalidatesTags: ["comments"],
@@ -50,14 +41,13 @@ export const api = createApi({
     updateComment: build.mutation<NEWS.UpdateCommentResponse, NEWS.UpdateCommentRequest>({
       query: ({ commentId, text, parentId }) => ({
         url: parentId
-          ? `${ENDPOINTS}/comments/${parentId}/replies/${commentId}/`
-          : `${ENDPOINTS}/comments/${commentId}/`,
+          ? `/${ENDPOINTS}/comments/${parentId}/replies/${commentId}/`
+          : `/${ENDPOINTS}/comments/${commentId}/`,
         method: "PATCH",
-        body: JSON.stringify({ text }),
+        body: { text },
         credentials: 'include',
         headers: {
           'X-CSRFToken': getCSRFToken() || '',
-          'Content-Type': 'application/json',
         },
       }),
       invalidatesTags: ["comments"],
@@ -65,8 +55,8 @@ export const api = createApi({
     deleteComment: build.mutation<NEWS.DeleteCommentResponse, NEWS.DeleteCommentRequest>({
       query: ({ commentId, parentId }) => ({
         url: parentId
-          ? `${ENDPOINTS}/comments/${parentId}/replies/${commentId}/`
-          : `${ENDPOINTS}/comments/${commentId}/`,
+          ? `/${ENDPOINTS}/comments/${parentId}/replies/${commentId}/`
+          : `/${ENDPOINTS}/comments/${commentId}/`,
         method: "DELETE",
         credentials: 'include',
         headers: {
@@ -77,22 +67,18 @@ export const api = createApi({
     }),
     likeComment: build.mutation<NEWS.LikeCommentResponse, NEWS.LikeCommentRequest>({
       query: ({ commentId }) => ({
-        url: `${ENDPOINTS}/comments/like/`,
+        url: `/${ENDPOINTS}/comments/like/`,
         method: "POST",
-        body: JSON.stringify({ comment_id: commentId }),
+        body: { comment_id: commentId },
         credentials: 'include',
         headers: {
           'X-CSRFToken': getCSRFToken() || '',
-          'Content-Type': 'application/json',
         },
       }),
       invalidatesTags: ["comments"],
     }),
     getUserProfile: build.query<NEWS.GetUserProfileResponse, NEWS.GetUserProfileRequest>({
-      query: (username) => ({
-        url: `${ENDPOINTS}/profile/${username}/`,
-        method: "GET",
-      }),
+      query: (username) => `/${ENDPOINTS}/profile/${username}/`,
       providesTags: ["userProfile"],
     }),
   }),
