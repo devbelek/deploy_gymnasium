@@ -7,55 +7,14 @@
 
 {% block content %}
 <style>
-    .login-form {
-        max-width: 400px;
-        margin: 0 auto;
-        padding: 20px;
-        background-color: #f8f9fa;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-    }
-
-    .login-form h1 {
-        font-size: 24px;
-        margin-bottom: 20px;
-        text-align: center;
-    }
-
-    .login-form input[type="text"],
-    .login-form input[type="email"],
-    .login-form input[type="password"] {
-        width: 100%;
-        padding: 12px;
-        margin-bottom: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-
-    .login-form button[type="submit"] {
-        width: 100%;
-        padding: 10px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    .login-form button[type="submit"]:hover {
-        background-color: #0056b3;
-    }
-
     .socialaccount_providers {
         list-style: none;
         padding: 0;
         margin-bottom: 20px;
     }
-
     .socialaccount_providers li {
         margin-bottom: 10px;
     }
-
     .socialaccount_providers button {
         width: 100%;
         padding: 10px;
@@ -64,22 +23,18 @@
         cursor: pointer;
         font-size: 16px;
     }
-
     .socialaccount_providers .google {
         background-color: #4285F4;
         color: white;
     }
-
     .socialaccount_providers .google:hover {
         background-color: #357AE8;
     }
-
     .login-or {
         text-align: center;
         margin: 20px 0;
         position: relative;
     }
-
     .login-or:before {
         content: "";
         position: absolute;
@@ -88,7 +43,6 @@
         right: 0;
         border-top: 1px solid #ccc;
     }
-
     .login-or span {
         background-color: #f8f9fa;
         padding: 0 10px;
@@ -97,7 +51,7 @@
     }
 </style>
 
-<div class="login-form">
+<div class="form-container">
     <h1>{% trans "Sign In" %}</h1>
 
     {% get_providers as socialaccount_providers %}
@@ -120,7 +74,6 @@
     <div class="login-or">
         <span>{% trans 'or' %}</span>
     </div>
-
     {% endif %}
 
     <form class="login" method="POST" action="{% url 'account_login' %}">
@@ -133,6 +86,6 @@
     </form>
 
     <p>{% blocktrans %}Если вы еще не создали учетную запись, сначала
-        <a href="{{ signup_url }}">зарегистрируйтесь <span class=""></span></a>{% endblocktrans %}</p>
+        <a href="{{ signup_url }}">зарегистрируйтесь</a>{% endblocktrans %}</p>
 </div>
 {% endblock %}
