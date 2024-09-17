@@ -47,9 +47,9 @@ const Search = () => {
       {errorMessage && <p>Произошла ошибка при поиске: {errorMessage}</p>}
       {!isLoading && !error && data && data.length > 0 ? (
         <ul>
-          {data.map((result) => (
+          {data.map((result: SEARCH.ISearch) => (
             <li key={result.id}>
-              {result.last_name} {result.name}{" "}
+              {result.full_name}{" "}
               {result.school_class__grade &&
                 `(Класс: ${result.school_class__grade})`}
             </li>
