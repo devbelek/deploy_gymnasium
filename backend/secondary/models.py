@@ -32,7 +32,7 @@ class NameOfGrades(models.Model):
     class Meta:
         verbose_name = 'класс'
         verbose_name_plural = 'Добавить классы'
-        unique_together = ('grade', 'parallel')
+        unique_together = ('grade', )
 
 
 class AdministratorTypes(models.Model):
