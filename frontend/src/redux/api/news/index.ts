@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { getCSRFToken } from './csrf';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API || '';
-const ENDPOINTS = process.env.NEXT_PUBLIC_ENDPOINT || 'api';
+const ENDPOINTS = '';
 
 interface AddCommentRequest {
   newsId: number;
@@ -15,20 +15,20 @@ export const api = createApi({
   tagTypes: ['news', 'comments', 'userProfile'],
   endpoints: (build) => ({
     getNews: build.query<NEWS.GetNewsResponse, NEWS.GetNewsRequest>({
-      query: () => `/${ENDPOINTS}/news/`,
+      query: () => '/news/',
       providesTags: ["news"],
     }),
     getDetNews: build.query<NEWS.GetDetNewsResponse, number>({
-      query: (id) => `/${ENDPOINTS}/news/${id}/`,
+      query: (id) => `/news/${id}/`,
       providesTags: ["news"],
     }),
     getComments: build.query<NEWS.GetCommentsResponse, number>({
-      query: (newsId) => `/${ENDPOINTS}/news/${newsId}/comments/`,
+      query: (newsId) => `/news/${newsId}/comments/`,
       providesTags: ["comments"],
     }),
     addComment: build.mutation<NEWS.AddCommentResponse, AddCommentRequest>({
       query: ({ newsId, text, parentId }) => ({
-        url: parentId ? `/${ENDPOINTS}/comments/${parentId}/reply/` : `/${ENDPOINTS}/news/${newsId}/comments/`,
+        url: parentId ? `/comments/${parentId}/reply/` : `/news/${newsId}/comments/`,
         method: "POST",
         body: { text },
         credentials: 'include',
@@ -41,8 +41,8 @@ export const api = createApi({
     updateComment: build.mutation<NEWS.UpdateCommentResponse, NEWS.UpdateCommentRequest>({
       query: ({ commentId, text, parentId }) => ({
         url: parentId
-          ? `/${ENDPOINTS}/comments/${parentId}/replies/${commentId}/`
-          : `/${ENDPOINTS}/comments/${commentId}/`,
+          ? `/comments/${parentId}/replies/${commentId}/`
+          : `/comments/${commentId}/`,
         method: "PATCH",
         body: { text },
         credentials: 'include',
@@ -55,8 +55,8 @@ export const api = createApi({
     deleteComment: build.mutation<NEWS.DeleteCommentResponse, NEWS.DeleteCommentRequest>({
       query: ({ commentId, parentId }) => ({
         url: parentId
-          ? `/${ENDPOINTS}/comments/${parentId}/replies/${commentId}/`
-          : `/${ENDPOINTS}/comments/${commentId}/`,
+          ? `/comments/${parentId}/replies/${commentId}/`
+          : `/comments/${commentId}/`,
         method: "DELETE",
         credentials: 'include',
         headers: {
@@ -67,7 +67,7 @@ export const api = createApi({
     }),
     likeComment: build.mutation<NEWS.LikeCommentResponse, NEWS.LikeCommentRequest>({
       query: ({ commentId }) => ({
-        url: `/${ENDPOINTS}/comments/like/`,
+        url: `/comments/like/`,
         method: "POST",
         body: { comment_id: commentId },
         credentials: 'include',
@@ -78,7 +78,7 @@ export const api = createApi({
       invalidatesTags: ["comments"],
     }),
     getUserProfile: build.query<NEWS.GetUserProfileResponse, NEWS.GetUserProfileRequest>({
-      query: (username) => `/${ENDPOINTS}/profile/${username}/`,
+      query: (username) => `/profile/${username}/`,
       providesTags: ["userProfile"],
     }),
   }),
