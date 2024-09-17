@@ -1,8 +1,7 @@
 import { api as index } from "..";
 import { getCSRFToken } from './csrf';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API || '';
-const ENDPOINTS = process.env.NEXT_PUBLIC_ENDPOINT || '';
+const ENDPOINTS = process.env.NEXT_PUBLIC_ENDPOINT;
 
 interface AddCommentRequest {
   newsId: number;
@@ -14,35 +13,34 @@ const api = index.injectEndpoints({
   endpoints: (build) => ({
     getNews: build.query<NEWS.GetNewsResponse, NEWS.GetNewsRequest>({
       query: () => ({
-        url: `${BASE_URL}/${ENDPOINTS}/news/`,
+        url: `${ENDPOINTS}/news/`,
         method: "GET",
       }),
       providesTags: ["news"],
     }),
     getDetNews: build.query<NEWS.GetDetNewsResponse, number>({
       query: (id) => ({
-        url: `${BASE_URL}/${ENDPOINTS}/news/${id}/`,
+        url: `${ENDPOINTS}/news/${id}/`,
         method: "GET",
       }),
       providesTags: ["news"],
     }),
     getComments: build.query<NEWS.GetCommentsResponse, number>({
       query: (newsId) => ({
-        url: `${BASE_URL}/${ENDPOINTS}/news/${newsId}/comments/`,
+        url: `${ENDPOINTS}/news/${newsId}/comments/`,
         method: "GET",
       }),
       providesTags: ["comments"],
     }),
     addComment: build.mutation<NEWS.AddCommentResponse, AddCommentRequest>({
       query: ({ newsId, text, parentId }) => ({
-        url: parentId
-          ? `${BASE_URL}/${ENDPOINTS}/comments/${parentId}/reply/`
-          : `${BASE_URL}/${ENDPOINTS}/news/${newsId}/comments/`,
+        url: parentId ? `${ENDPOINTS}/comments/${parentId}/reply/` : `${ENDPOINTS}/news/${newsId}/comments/`,
         method: "POST",
-        body: { text },
+        body: JSON.stringify({ text }),
         credentials: 'include',
         headers: {
           'X-CSRFToken': getCSRFToken() || '',
+          'Content-Type': 'application/json',
         },
       }),
       invalidatesTags: ["comments"],
@@ -50,13 +48,14 @@ const api = index.injectEndpoints({
     updateComment: build.mutation<NEWS.UpdateCommentResponse, NEWS.UpdateCommentRequest>({
       query: ({ commentId, text, parentId }) => ({
         url: parentId
-          ? `${BASE_URL}/${ENDPOINTS}/comments/${parentId}/replies/${commentId}/`
-          : `${BASE_URL}/${ENDPOINTS}/comments/${commentId}/`,
+          ? `${ENDPOINTS}/comments/${parentId}/replies/${commentId}/`
+          : `${ENDPOINTS}/comments/${commentId}/`,
         method: "PATCH",
-        body: { text },
+        body: JSON.stringify({ text }),
         credentials: 'include',
         headers: {
           'X-CSRFToken': getCSRFToken() || '',
+          'Content-Type': 'application/json',
         },
       }),
       invalidatesTags: ["comments"],
@@ -64,8 +63,8 @@ const api = index.injectEndpoints({
     deleteComment: build.mutation<NEWS.DeleteCommentResponse, NEWS.DeleteCommentRequest>({
       query: ({ commentId, parentId }) => ({
         url: parentId
-          ? `${BASE_URL}/${ENDPOINTS}/comments/${parentId}/replies/${commentId}/`
-          : `${BASE_URL}/${ENDPOINTS}/comments/${commentId}/`,
+          ? `${ENDPOINTS}/comments/${parentId}/replies/${commentId}/`
+          : `${ENDPOINTS}/comments/${commentId}/`,
         method: "DELETE",
         credentials: 'include',
         headers: {
@@ -76,22 +75,16 @@ const api = index.injectEndpoints({
     }),
     likeComment: build.mutation<NEWS.LikeCommentResponse, NEWS.LikeCommentRequest>({
       query: ({ commentId }) => ({
-        url: `${BASE_URL}/${ENDPOINTS}/comments/like/`,
+        url: `${ENDPOINTS}/comments/like/`,
         method: "POST",
-        body: { comment_id: commentId },
+        body: JSON.stringify({ comment_id: commentId }),
         credentials: 'include',
         headers: {
           'X-CSRFToken': getCSRFToken() || '',
+          'Content-Type': 'application/json',
         },
       }),
       invalidatesTags: ["comments"],
-    }),
-    getUserProfile: build.query<NEWS.GetUserProfileResponse, NEWS.GetUserProfileRequest>({
-      query: (username) => ({
-        url: `${BASE_URL}/${ENDPOINTS}/profile/${username}/`,
-        method: "GET",
-      }),
-      providesTags: ["userProfile"],
     }),
   }),
 });
@@ -104,5 +97,4 @@ export const {
   useUpdateCommentMutation,
   useDeleteCommentMutation,
   useLikeCommentMutation,
-  useGetUserProfileQuery,
 } = api;
