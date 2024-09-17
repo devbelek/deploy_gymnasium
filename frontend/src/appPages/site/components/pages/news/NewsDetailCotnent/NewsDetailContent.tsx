@@ -19,7 +19,6 @@ import {
   useUpdateCommentMutation,
   useDeleteCommentMutation,
   useLikeCommentMutation,
-  useGetUserProfileQuery,
 } from "@/redux/api/news";
 
 const NewsDetailContent: React.FC = () => {
@@ -216,19 +215,6 @@ const NewsDetailContent: React.FC = () => {
     [currentUser, handleDeleteComment, handleLikeComment, isLoggedIn]
   );
 
-  const CommentAvatar = ({ author }: { author: string }) => {
-    const { data: userProfile } = useGetUserProfileQuery(author);
-    return (
-      <Image
-        src={userProfile?.avatar || `https://api.dicebear.com/6.x/initials/svg?seed=${author}`}
-        alt={author}
-        width={40}
-        height={40}
-        className={scss.avatar}
-      />
-    );
-  };
-
   const renderComment = useCallback(
     (comment: any, depth = 0) => (
       <div
@@ -236,7 +222,13 @@ const NewsDetailContent: React.FC = () => {
         className={`${scss.comment} ${depth > 0 ? scss.reply : ""}`}
       >
         <div className={scss.commentHeader}>
-          <CommentAvatar author={comment.author} />
+          <Image
+            src={`https://api.dicebear.com/6.x/initials/svg?seed=${comment.author}`}
+            alt={comment.author}
+            width={40}
+            height={40}
+            className={scss.avatar}
+          />
           <div className={scss.commentInfo}>
             <span className={scss.commentAuthor}>{comment.author}</span>
             <span className={scss.commentDate}>
