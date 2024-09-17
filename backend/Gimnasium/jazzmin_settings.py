@@ -56,8 +56,6 @@ JAZZMIN_SETTINGS = {
         "users.Like": "fas fa-thumbs-up",
         "users.Donation": "fas fa-hand-holding-usd",
         "users.ConfirmedDonation": "fas fa-check-circle",
-
-
     },
 }
 
