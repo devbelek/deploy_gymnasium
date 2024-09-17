@@ -86,6 +86,13 @@ const api = index.injectEndpoints({
       }),
       invalidatesTags: ["comments"],
     }),
+    getUserProfile: build.query<NEWS.GetUserProfileResponse, string>({
+      query: (username) => ({
+        url: `${ENDPOINTS}/profile/${username}/`,
+        method: "GET",
+      }),
+      providesTags: ["profile"],
+    }),
   }),
 });
 
@@ -97,4 +104,5 @@ export const {
   useUpdateCommentMutation,
   useDeleteCommentMutation,
   useLikeCommentMutation,
+  useGetUserProfileQuery,
 } = api;
