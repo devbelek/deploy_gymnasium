@@ -5,6 +5,7 @@ const nextConfig = {
       "gimnasium.onrender.com",
       "vermojctkdkrdsxvauwc.supabase.co",
       "3-gymnasium.kg",
+      "api.dicebear.com",
     ],
   },
 };

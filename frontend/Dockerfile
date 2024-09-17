@@ -10,7 +10,7 @@ RUN npm install @chakra-ui/react
 RUN npm install lucide-react
 RUN npm install @radix-ui/react-dialog @radix-ui/react-label @radix-ui/react-avatar
 RUN npm install react-debounce-input
-COPY . .
+COPY ../frontend .
 RUN npm run build
 
 EXPOSE 3000

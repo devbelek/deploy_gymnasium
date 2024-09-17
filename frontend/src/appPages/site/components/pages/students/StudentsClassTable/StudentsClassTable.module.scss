@@ -1,10 +1,48 @@
-
 .content {
     padding-top: 100px;
+    padding-bottom: 40px;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.titleBlock {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+}
+
+.noClass {
+    font-size: 18px;
+}
+
+.button {
+    outline: none;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+    color: black;
+}
+
+.button:hover {
+    background: rgb(226, 226, 226);
+}
+
+.filterButtons {
+    background: rgb(243, 243, 243);
+    padding: 8px;
+    border-radius: 10px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
 }
 
 .tableTitle {
@@ -14,7 +52,6 @@
 }
 .studentInfo {
     display: grid;
-    padding: 10px 0;
     grid-template-columns: 0.3fr 2fr 0.5fr 1fr;
     gap: 50px;
 }
@@ -64,6 +101,60 @@
     color: #666666;
     gap: 10px;
 }
+@keyframes slideInFromLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.animateFromLeft {
+    animation: slideInFromLeft 1s ease-out forwards;
+}
+.animateFromLeft:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.animateFromLeft:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.animateFromLeft:nth-child(3) {
+    animation-delay: 0.6s;
+}
+.animateFromLeft:nth-child(4) {
+    animation-delay: 0.9s;
+}
+.animateFromLeft:nth-child(5) {
+    animation-delay: 0.12s;
+}
+.animateFromLeft:nth-child(6) {
+    animation-delay: 0.15s;
+}
+.animateFromLeft:nth-child(7) {
+    animation-delay: 0.18s;
+}
+
+.animateFromLeft:nth-child(8) {
+    animation-delay: 0.21s;
+}
+
+.animateFromLeft:nth-child(9) {
+    animation-delay: 0.24s;
+}
+.animateFromLeft:nth-child(10) {
+    animation-delay: 0.27s;
+}
+.animateFromLeft:nth-child(11) {
+    animation-delay: 0.3s;
+}
+.animateFromLeft:nth-child(12) {
+    animation-delay: 0.33s;
+}
 
 .title {
     font-size: 20px;
@@ -84,6 +175,15 @@
     border-bottom: 2px solid black;
 }
 
+.loading {
+    width: 100%;
+    text-align: center;
+}
+.error {
+    width: 100%;
+    text-align: center;
+}
+
 .table {
     padding: 40px 0 0 0;
 }
@@ -102,10 +202,223 @@
     padding: 10px 0;
 }
 
-.errorBlock {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 0;
+@media (max-width: 1140px) {
+    .noClass {
+        font-size: 16px;
+    }
+
+    .titleBlock {
+        gap: 9px;
+    }
+
+    .button {
+        padding: 4px;
+        font-size: 17px;
+    }
+
+    .filterButtons {
+        padding: 7px;
+        gap: 9px;
+    }
+
+    .tableTitle {
+        display: grid;
+        grid-template-columns: 0.1fr 1.5fr 0.4fr 1fr;
+        gap: 10px;
+    }
+    .title {
+        font-size: 20px;
+    }
+
+    .studentInfo {
+        display: grid;
+        grid-template-columns: 0.1fr 1.5fr 0.4fr 1fr;
+        gap: 10px;
+    }
+
+    .titleText {
+        font-size: 15px;
+        font-weight: 500;
+    }
+    .tableText {
+        font-size: 15px;
+        font-weight: 500;
+    }
+
+    .tableTextNumber {
+        font-size: 15px;
+        font-weight: 500;
+    }
+
+    .tableName {
+        font-size: 15px;
+        font-weight: 500;
+    }
+}
+@media (max-width: 740px) {
+    .noClass {
+        font-size: 14px;
+    }
+    .titleBlock {
+        gap: 7px;
+    }
+
+    .button {
+        padding: 3px;
+        font-size: 14px;
+    }
+
+    .filterButtons {
+        padding: 6px;
+        gap: 8px;
+    }
+
+    .title {
+        font-size: 15px;
+    }
+
+    .titleText {
+        font-size: 12px;
+        font-weight: 500;
+    }
+    .tableText {
+        font-size: 12px;
+        font-weight: 500;
+    }
+
+    .tableTextNumber {
+        font-size: 12px;
+        font-weight: 500;
+    }
+
+    .tableName {
+        font-size: 12px;
+        font-weight: 500;
+    }
+    .studentIcon {
+        width: 25px;
+        height: 25px;
+    }
+}
+
+@media (max-width: 680px) {
+    .noClass {
+        font-size: 12px;
+    }
+    .titleBlock {
+        gap: 6px;
+    }
+
+    .button {
+        padding: 2px;
+        font-size: 11px;
+    }
+
+    .filterButtons {
+        padding: 5px;
+        gap: 7px;
+    }
+
+    .tableContent {
+        gap: 8px;
+    }
+    .titleText {
+        font-size: 10px;
+        font-weight: 500;
+    }
+    .tableText {
+        font-size: 10px;
+        font-weight: 500;
+    }
+
+    .tableTextNumber {
+        font-size: 10px;
+        font-weight: 500;
+    }
+
+    .tableName {
+        font-size: 10px;
+        font-weight: 500;
+    }
+    .studentIcon {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@media (max-width: 530px) {
+    .noClass {
+        font-size: 10px;
+    }
+    .tableContent {
+        gap: 0px;
+    }
+    .titleText {
+        font-size: 10px;
+        font-weight: 500;
+    }
+    .tableText {
+        font-size: 10px;
+        font-weight: 500;
+    }
+
+    .tableTextNumber {
+        font-size: 10px;
+        font-weight: 500;
+    }
+
+    .tableName {
+        font-size: 10px;
+        font-weight: 500;
+    }
+    .studentIcon {
+        width: 15px;
+        height: 15px;
+    }
+}
+
+@media (max-width: 440px) {
+    .noClass {
+        font-size: 9px;
+    }
+    .titleBlock {
+        gap: 5px;
+    }
+
+    .button {
+        padding: 1px;
+        font-size: 10px;
+    }
+
+    .filterButtons {
+        padding: 4px;
+        gap: 6px;
+    }
+
+    .titleText {
+        font-size: 8px;
+        font-weight: 500;
+    }
+    .tableText {
+        font-size: 8px;
+        font-weight: 500;
+    }
+
+    .tableTextNumber {
+        font-size: 8px;
+        font-weight: 500;
+    }
+
+    .tableName {
+        font-size: 8px;
+        font-weight: 500;
+    }
+    .studentIcon {
+        width: 10px;
+        height: 10px;
+    }
+
+    .title {
+        font-size: 13px;
+    }
 }

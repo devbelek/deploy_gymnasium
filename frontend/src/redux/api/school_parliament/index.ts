@@ -9,7 +9,7 @@ const api = index.injectEndpoints({
       SCHOOL_PARLIAMENT.GetSchoolParliamentRequest
     >({
       query: () => ({
-        url: `${ENDPOINTS}/school_parliament/`,
+        url: `${ENDPOINTS}/school-parliament/`,
         method: "GET",
       }),
       providesTags: ["school_parliament"],

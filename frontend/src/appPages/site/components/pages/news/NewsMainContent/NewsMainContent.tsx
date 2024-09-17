@@ -34,7 +34,7 @@ const NewsMainContent = () => {
                   style={{ width: "100%", maxWidth: "320px", height: "90px" }}
                 >
                   {item.description}
-
+                
                 </h2>
                 <div className={scss.news_end}>
                   <p>{item.updated_at.slice(0, 10)}</p>
