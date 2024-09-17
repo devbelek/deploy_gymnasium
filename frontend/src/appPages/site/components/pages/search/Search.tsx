@@ -4,11 +4,17 @@ import { useSearchParams } from "next/navigation";
 import React, { useMemo } from "react";
 import StudentsMainContent from "../students/studentMainContent/StudentsMainContent";
 
+// Определим тип GetSearchRequest, если он еще не определен
+type GetSearchRequest = {
+  school_class__grade?: string;
+  full_name?: string;
+};
+
 const Search = () => {
   const searchParams = useSearchParams();
   const query = searchParams?.get("query") || "";
 
-  const searchRequest = useMemo(() => {
+  const searchRequest: GetSearchRequest | undefined = useMemo(() => {
     if (!query) return undefined;
     if (/^\d+$/.test(query)) {
       return { school_class__grade: query };
@@ -16,7 +22,7 @@ const Search = () => {
     return { full_name: query };
   }, [query]);
 
-  const { data, error, isLoading } = useGetSearchQuery(searchRequest || undefined, {
+  const { data, error, isLoading } = useGetSearchQuery(searchRequest as GetSearchRequest, {
     skip: !searchRequest,
   });
 
@@ -39,8 +45,7 @@ const Search = () => {
         <p>Результатов не найдено</p>
       ) : null}
       <h1>Студенты</h1>
-      <h1>Студенты</h1>
-      <h1>Студенты</h1>
+      <StudentsMainContent />
     </div>
   );
 };
