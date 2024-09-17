@@ -3,7 +3,6 @@ from secondary.models import AdministratorTypes, NameOfGrades, NamesOfOlympia
 from .models import *
 from users.serializers import CommentSerializers
 from secondary.serializers import NameOfGradesSerializer, NamesOfOlympiaSerializer, AdministratorTypesSerializer
-from django.conf import settings
 
 
 class VideoSerializer(serializers.ModelSerializer):
@@ -90,6 +89,12 @@ class TeachersSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class OldTeachersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OldTeachers
+        fields = '__all__'
+
+
 class StudentsSerializer(serializers.ModelSerializer):
     school_class = serializers.SerializerMethodField()
     olympian_status = serializers.SerializerMethodField()
@@ -118,11 +123,6 @@ class StudentsSerializer(serializers.ModelSerializer):
         return TeacherMinimalSerializer(obj.classroom_teacher.all(), many=True).data
 
 
-class ThanksNoteFromStudentsSerializer(BaseSerializer):
-    class Meta(BaseSerializer.Meta):
-        model = ThanksNoteFromStudents
-
-
 class GraduatesSerializer(BaseSerializer):
     class Meta(BaseSerializer.Meta):
         model = Graduates
@@ -138,16 +138,6 @@ class SuccessfulGraduatesSerializer(BaseSerializer):
 
     def get_graduate(self, obj):
         return GraduatesSerializer(Graduates.get_cached(id=obj.graduate_id)).data
-
-
-class AppealToStudentsSerializer(BaseSerializer):
-    class Meta(BaseSerializer.Meta):
-        model = AppealToStudents
-
-
-class ThanksNoteFromGraduatesSerializer(BaseSerializer):
-    class Meta(BaseSerializer.Meta):
-        model = ThanksNoteFromGraduates
 
 
 class NewsSerializer(serializers.ModelSerializer):

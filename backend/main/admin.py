@@ -20,54 +20,9 @@ class GalleryAdmin(admin.ModelAdmin):
     list_display = ('title', 'image', 'content')
 
 
-@admin.register(ThanksNoteFromGraduates)
-class ThanksNoteFromGraduatesAdmin(TranslationAdmin):
-    list_display = ('title', 'content',)
-
-    class Media:
-        js = (
-            'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
-            'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js',
-            'modeltranslation/js/tabbed_translation_fields.js',
-        )
-        css = {
-            'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
-        }
-
-
-@admin.register(ThanksNoteFromStudents)
-class ThanksNoteFromStudentsAdmin(TranslationAdmin):
-    list_display = ('title', 'content',)
-
-    class Media:
-        js = (
-            'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
-            'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js',
-            'modeltranslation/js/tabbed_translation_fields.js',
-        )
-        css = {
-            'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
-        }
-
-
 @admin.register(SuccessfulGraduates)
 class SuccessfulGraduatesAdmin(TranslationAdmin):
     list_display = ("content",)
-
-    class Media:
-        js = (
-            'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
-            'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js',
-            'modeltranslation/js/tabbed_translation_fields.js',
-        )
-        css = {
-            'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
-        }
-
-
-@admin.register(AppealToStudents)
-class AppealToStudentsAdmin(TranslationAdmin):
-    list_display = ("title", "content")
 
     class Media:
         js = (
@@ -114,6 +69,21 @@ class StudentsAdmin(admin.ModelAdmin):
 
 @admin.register(Teachers)
 class TeachersAdmin(TranslationAdmin):
+    list_display = ('subject', 'education', 'successes')
+
+    class Media:
+        js = (
+            'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
+            'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js',
+            'modeltranslation/js/tabbed_translation_fields.js',
+        )
+        css = {
+            'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
+        }
+
+
+@admin.register(OldTeachers)
+class OldTeachersAdmin(TranslationAdmin):
     list_display = ('subject', 'education', 'successes')
 
     class Media:

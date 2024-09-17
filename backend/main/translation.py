@@ -1,11 +1,9 @@
 from modeltranslation.translator import register, TranslationOptions
 from .models import (
     SuccessfulGraduates,
-    AppealToStudents,
     News,
     Teachers,
-    ThanksNoteFromGraduates,
-    ThanksNoteFromStudents,
+    OldTeachers,
 )
 from secondary.models import NamesOfOlympia
 
@@ -15,24 +13,9 @@ class ThanksNoteFromGraduatesTranslationOptions(TranslationOptions):
     fields = ('choosing', )
 
 
-@register(ThanksNoteFromGraduates)
-class ThanksNoteFromGraduatesTranslationOptions(TranslationOptions):
-    fields = ('title', 'content',)
-
-
-@register(ThanksNoteFromStudents)
-class ThanksNoteFromStudentsTranslationOptions(TranslationOptions):
-    fields = ('title', 'content',)
-
-
 @register(SuccessfulGraduates)
 class SuccessfulGraduatesTranslationOptions(TranslationOptions):
     fields = ('content',)
-
-
-@register(AppealToStudents)
-class AppealToStudentsTranslationOptions(TranslationOptions):
-    fields = ('title', 'content')
 
 
 @register(News)
@@ -42,4 +25,9 @@ class NewsTranslationOptions(TranslationOptions):
 
 @register(Teachers)
 class TeachersTranslationOptions(TranslationOptions):
+    fields = ('subject', 'education', 'successes')
+
+
+@register(OldTeachers)
+class OldTeachersTranslationOptions(TranslationOptions):
     fields = ('subject', 'education', 'successes')
