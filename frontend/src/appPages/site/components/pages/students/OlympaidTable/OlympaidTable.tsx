@@ -4,13 +4,14 @@ import React from "react";
 import scss from "./OlympaidTable.module.scss";
 import avatar from "../../../../../../assets/images/defaultProfile.png";
 import Image from "next/image";
-import { useGetStudentsQuery } from "@/redux/api/students";
+import { useGetOlympiansQuery } from "@/redux/api/olympians";
 
-const OlympaidTable = () => {
-    const { data, isLoading, isError } = useGetStudentsQuery();
+const OlympaidTable: React.FC = () => {
+    const { data, isLoading, isError } = useGetOlympiansQuery();
 
-    if (isLoading) return <div>Загрузка...</div>;
-    if (isError || !data) return <div>Ошибка при загрузке данных.</div>;
+    if (isLoading) return <div className={scss.loading}>Загрузка...</div>;
+    if (isError || !data)
+        return <div className={scss.error}>Ошибка при загрузке данных.</div>;
 
     return (
         <section className={scss.OlympaidTable}>
@@ -21,15 +22,17 @@ const OlympaidTable = () => {
                         <div className={scss.tableTitle}>
                             <h1 className={scss.titleText}>No.</h1>
                             <h1 className={scss.titleText}>Имя ученика</h1>
-                            <h1 className={scss.titleText}>Класс</h1>
-                            <h1 className={scss.titleText}>Кл. руководитель</h1>
+                            <h1 className={scss.titleText}>Олимпиада</h1>
                         </div>
                         <div className={scss.tableContent}>
                             <div className={scss.hr}></div>
-                            {data?.map((item, index: number) => (
+                            {data.map((item, index) => (
                                 <div
-                                    key={`${item.surname}-${item.name}-${item.last_name}-${index}`}
-                                    className={scss.studentInfo}
+                                    key={index}
+                                    className={`${scss.studentInfo} ${scss.animateFromLeft}`}
+                                    style={{
+                                        animationDelay: `${index * 0.1}s`,
+                                    }} // Установка задержки анимации
                                 >
                                     <h1 className={scss.tableTextNumber}>
                                         {index + 1}
@@ -38,21 +41,14 @@ const OlympaidTable = () => {
                                         <Image
                                             className={scss.studentIcon}
                                             src={avatar}
-                                            alt="Аватар студента"
+                                            alt={`Аватар студента ${item.student.name} ${item.student.surname}`}
                                         />
-                                        {item.surname} {item.name}{" "}
-                                        {item.last_name}
+                                        {item.student.surname}{" "}
+                                        {item.student.name}
                                     </h1>
                                     <h1 className={scss.tableText}>
-                                        {item.school_class.grade}-
-                                        {item.school_class.parallel}
-                                    </h1>
-                                    <h1 className={scss.tableText}>
-                                        {item.classroom_teacher
-                                            ?.map(
-                                                (teacher: any) => teacher.name
-                                            )
-                                            .join(", ")}
+                                        {item.name_of_olympia?.choosing ||
+                                            "Не указано"}
                                     </h1>
                                 </div>
                             ))}

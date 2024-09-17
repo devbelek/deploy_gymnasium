@@ -3,8 +3,14 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
-import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
-import { MoreVertical, Edit, Trash2, MessageCircle, ThumbsUp } from 'lucide-react';
+import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
+import {
+  MoreVertical,
+  Edit,
+  Trash2,
+  MessageCircle,
+  ThumbsUp,
+} from "lucide-react";
 import scss from "./NewsDetailContent.module.scss";
 import {
   useGetDetNewsQuery,
@@ -17,15 +23,33 @@ import {
 
 const NewsDetailContent: React.FC = () => {
   const params = useParams();
-  const newsId = typeof params.newsDetail === 'string' ? parseInt(params.newsDetail, 10) : NaN;
+  const newsId =
+    typeof params.newsDetail === "string"
+      ? parseInt(params.newsDetail, 10)
+      : NaN;
   const [commentText, setCommentText] = useState("");
-  const [editingComment, setEditingComment] = useState<{ id: number, text: string, parentId?: number } | null>(null);
-  const [replyingTo, setReplyingTo] = useState<{ id: number, author: string } | null>(null);
+  const [editingComment, setEditingComment] = useState<{
+    id: number;
+    text: string;
+    parentId?: number;
+  } | null>(null);
+  const [replyingTo, setReplyingTo] = useState<{
+    id: number;
+    author: string;
+  } | null>(null);
   const [currentUser, setCurrentUser] = useState<string | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const { data: newsData, isLoading: newsLoading, error: newsError } = useGetDetNewsQuery(newsId);
-  const { data: commentsData, isLoading: commentsLoading, error: commentsError } = useGetCommentsQuery(newsId);
+  const {
+    data: newsData,
+    isLoading: newsLoading,
+    error: newsError,
+  } = useGetDetNewsQuery(newsId);
+  const {
+    data: commentsData,
+    isLoading: commentsLoading,
+    error: commentsError,
+  } = useGetCommentsQuery(newsId);
   const [addComment] = useAddCommentMutation();
   const [updateComment] = useUpdateCommentMutation();
   const [deleteComment] = useDeleteCommentMutation();
@@ -34,9 +58,12 @@ const NewsDetailContent: React.FC = () => {
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API}/${process.env.NEXT_PUBLIC_ENDPOINT}/accounts/user/`, {
-          credentials: 'include',
-        });
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API}/${process.env.NEXT_PUBLIC_ENDPOINT}/accounts/user/`,
+          {
+            credentials: "include",
+          }
+        );
         if (response.ok) {
           const userData = await response.json();
           setIsLoggedIn(userData.isAuthenticated);
@@ -46,7 +73,7 @@ const NewsDetailContent: React.FC = () => {
           setCurrentUser(null);
         }
       } catch (error) {
-        console.error('Ошибка при проверке статуса аутентификации:', error);
+        console.error("Ошибка при проверке статуса аутентификации:", error);
         setIsLoggedIn(false);
         setCurrentUser(null);
       }
@@ -58,7 +85,11 @@ const NewsDetailContent: React.FC = () => {
   const handleAddComment = useCallback(async () => {
     if (commentText.trim() && isLoggedIn) {
       try {
-        await addComment({ newsId, text: commentText, parentId: replyingTo?.id }).unwrap();
+        await addComment({
+          newsId,
+          text: commentText,
+          parentId: replyingTo?.id,
+        }).unwrap();
         setCommentText("");
         setReplyingTo(null);
       } catch (error) {
@@ -73,7 +104,7 @@ const NewsDetailContent: React.FC = () => {
         await updateComment({
           commentId: editingComment.id,
           text: editingComment.text,
-          parentId: editingComment.parentId
+          parentId: editingComment.parentId,
         }).unwrap();
         setEditingComment(null);
       } catch (error) {
@@ -82,105 +113,160 @@ const NewsDetailContent: React.FC = () => {
     }
   }, [editingComment, updateComment]);
 
-  const handleDeleteComment = useCallback(async (commentId: number, parentId?: number) => {
-    try {
-      await deleteComment({ commentId, parentId }).unwrap();
-    } catch (error) {
-      console.error("Ошибка при удалении комментария:", error);
-    }
-  }, [deleteComment]);
-
-  const handleLikeComment = useCallback(async (commentId: number) => {
-    if (isLoggedIn) {
+  const handleDeleteComment = useCallback(
+    async (commentId: number, parentId?: number) => {
       try {
-        await likeComment({ commentId }).unwrap();
+        await deleteComment({ commentId, parentId }).unwrap();
       } catch (error) {
-        console.error("Ошибка при лайке комментария:", error);
+        console.error("Ошибка при удалении комментария:", error);
       }
-    }
-  }, [isLoggedIn, likeComment]);
+    },
+    [deleteComment]
+  );
 
-  const renderCommentForm = useCallback((onSubmit: () => void, cancelAction: () => void) => (
-    <div className={scss.commentForm}>
-      <textarea
-        value={editingComment ? editingComment.text : commentText}
-        onChange={(e) => editingComment ? setEditingComment({...editingComment, text: e.target.value}) : setCommentText(e.target.value)}
-        placeholder="Напишите ваш комментарий"
-      />
-      <div className={scss.formActions}>
-        <button onClick={onSubmit} className={scss.submitButton}>Отправить</button>
-        <button onClick={cancelAction} className={scss.cancelButton}>Отмена</button>
-      </div>
-    </div>
-  ), [editingComment, commentText]);
+  const handleLikeComment = useCallback(
+    async (commentId: number) => {
+      if (isLoggedIn) {
+        try {
+          await likeComment({ commentId }).unwrap();
+        } catch (error) {
+          console.error("Ошибка при лайке комментария:", error);
+        }
+      }
+    },
+    [isLoggedIn, likeComment]
+  );
 
-  const renderCommentActions = useCallback((comment: any, depth: number) => (
-    <div className={scss.commentActions}>
-      <button onClick={() => handleLikeComment(comment.id)} className={scss.actionButton}>
-        <ThumbsUp size={16} />
-        <span>{comment.likes_count}</span>
-      </button>
-      {isLoggedIn && depth === 0 && (
-        <button onClick={() => setReplyingTo({ id: comment.id, author: comment.author })} className={scss.actionButton}>
-          <MessageCircle size={16} />
-          <span>Ответить</span>
-        </button>
-      )}
-      {currentUser === comment.author && (
-        <Menu>
-          <MenuButton as="button" className={scss.moreButton}>
-            <MoreVertical size={16} />
-          </MenuButton>
-          <MenuList>
-            <MenuItem onClick={() => setEditingComment({ id: comment.id, text: comment.text, parentId: comment.parent })}>
-              <Edit size={16} />
-              <span>Редактировать</span>
-            </MenuItem>
-            <MenuItem onClick={() => handleDeleteComment(comment.id, comment.parent)}>
-              <Trash2 size={16} />
-              <span>Удалить</span>
-            </MenuItem>
-          </MenuList>
-        </Menu>
-      )}
-    </div>
-  ), [currentUser, handleDeleteComment, handleLikeComment, isLoggedIn]);
-
-  const renderComment = useCallback((comment: any, depth = 0) => (
-    <div key={comment.id} className={`${scss.comment} ${depth > 0 ? scss.reply : ''}`}>
-      <div className={scss.commentHeader}>
-        <Image
-          src={`https://api.dicebear.com/6.x/initials/svg?seed=${comment.author}`}
-          alt={comment.author}
-          width={40}
-          height={40}
-          className={scss.avatar}
+  const renderCommentForm = useCallback(
+    (onSubmit: () => void, cancelAction: () => void) => (
+      <div className={scss.commentForm}>
+        <textarea
+          value={editingComment ? editingComment.text : commentText}
+          onChange={(e) =>
+            editingComment
+              ? setEditingComment({ ...editingComment, text: e.target.value })
+              : setCommentText(e.target.value)
+          }
+          placeholder="Напишите ваш комментарий"
         />
-        <div className={scss.commentInfo}>
-          <span className={scss.commentAuthor}>{comment.author}</span>
-          <span className={scss.commentDate}>{new Date(comment.created_at).toLocaleString()}</span>
+        <div className={scss.formActions}>
+          <button onClick={onSubmit} className={scss.submitButton}>
+            Отправить
+          </button>
+          <button onClick={cancelAction} className={scss.cancelButton}>
+            Отмена
+          </button>
         </div>
       </div>
-      <p className={scss.commentContent}>{comment.text}</p>
-      {renderCommentActions(comment, depth)}
-      {editingComment && editingComment.id === comment.id && renderCommentForm(
-        handleUpdateComment,
-        () => setEditingComment(null)
-      )}
-      {comment.replies && comment.replies.map((reply: any) => (
-        <div key={reply.id} className={scss.replyWrapper}>
-          {renderComment(reply, depth + 1)}
+    ),
+    [editingComment, commentText]
+  );
+
+  const renderCommentActions = useCallback(
+    (comment: any, depth: number) => (
+      <div className={scss.commentActions}>
+        <button
+          onClick={() => handleLikeComment(comment.id)}
+          className={scss.actionButton}
+        >
+          <ThumbsUp size={16} />
+          <span>{comment.likes_count}</span>
+        </button>
+        {isLoggedIn && depth === 0 && (
+          <button
+            onClick={() =>
+              setReplyingTo({ id: comment.id, author: comment.author })
+            }
+            className={scss.actionButton}
+          >
+            <MessageCircle size={16} />
+            <span>Ответить</span>
+          </button>
+        )}
+        {currentUser === comment.author && (
+          <Menu>
+            <MenuButton as="button" className={scss.moreButton}>
+              <MoreVertical size={16} />
+            </MenuButton>
+            <MenuList>
+              <MenuItem
+                onClick={() =>
+                  setEditingComment({
+                    id: comment.id,
+                    text: comment.text,
+                    parentId: comment.parent,
+                  })
+                }
+              >
+                <Edit size={16} />
+                <span>Редактировать</span>
+              </MenuItem>
+              <MenuItem
+                onClick={() => handleDeleteComment(comment.id, comment.parent)}
+              >
+                <Trash2 size={16} />
+                <span>Удалить</span>
+              </MenuItem>
+            </MenuList>
+          </Menu>
+        )}
+      </div>
+    ),
+    [currentUser, handleDeleteComment, handleLikeComment, isLoggedIn]
+  );
+
+  const renderComment = useCallback(
+    (comment: any, depth = 0) => (
+      <div
+        key={comment.id}
+        className={`${scss.comment} ${depth > 0 ? scss.reply : ""}`}
+      >
+        <div className={scss.commentHeader}>
+          <Image
+            src={`https://api.dicebear.com/6.x/initials/svg?seed=${comment.author}`}
+            alt={comment.author}
+            width={40}
+            height={40}
+            className={scss.avatar}
+          />
+          <div className={scss.commentInfo}>
+            <span className={scss.commentAuthor}>{comment.author}</span>
+            <span className={scss.commentDate}>
+              {new Date(comment.created_at).toLocaleString()}
+            </span>
+          </div>
         </div>
-      ))}
-    </div>
-  ), [editingComment, handleUpdateComment, renderCommentActions, renderCommentForm]);
+        <p className={scss.commentContent}>{comment.text}</p>
+        {renderCommentActions(comment, depth)}
+        {editingComment &&
+          editingComment.id === comment.id &&
+          renderCommentForm(handleUpdateComment, () => setEditingComment(null))}
+        {comment.replies &&
+          comment.replies.map((reply: any) => (
+            <div key={reply.id} className={scss.replyWrapper}>
+              {renderComment(reply, depth + 1)}
+            </div>
+          ))}
+      </div>
+    ),
+    [
+      editingComment,
+      handleUpdateComment,
+      renderCommentActions,
+      renderCommentForm,
+    ]
+  );
 
   if (isNaN(newsId)) {
     return <div className={scss.error}>Неверный идентификатор новости</div>;
   }
 
-  if (newsLoading || commentsLoading) return <div className={scss.loading}>Загрузка...</div>;
-  if (newsError || commentsError) return <div className={scss.error}>Произошла ошибка при загрузке данных</div>;
+  if (newsLoading || commentsLoading)
+    return <div className={scss.loading}>Загрузка...</div>;
+  if (newsError || commentsError)
+    return (
+      <div className={scss.error}>Произошла ошибка при загрузке данных</div>
+    );
   if (!newsData) return <div className={scss.error}>Новость не найдена</div>;
 
   return (
@@ -204,31 +290,41 @@ const NewsDetailContent: React.FC = () => {
             <p>{newsData.content}</p>
             <div className={scss.newsInfo}>
               <p>Автор: {newsData.author}</p>
-              <p>Дата публикации: {new Date(newsData.created_at).toLocaleString()}</p>
-              <p>Последнее обновление: {new Date(newsData.updated_at).toLocaleString()}</p>
+              <p>
+                Дата публикации:{" "}
+                {new Date(newsData.created_at).toLocaleString()}
+              </p>
+              <p>
+                Последнее обновление:{" "}
+                {new Date(newsData.updated_at).toLocaleString()}
+              </p>
             </div>
             <hr />
           </div>
           <div className={scss.commentsSection}>
             <h2>Комментарии</h2>
-            {commentsData && commentsData.map((comment) => renderComment(comment))}
+            {commentsData &&
+              commentsData.map((comment) => renderComment(comment))}
             {isLoggedIn ? (
               <div className={scss.addComment}>
                 {replyingTo ? (
-                  <p className={scss.replyingTo}>Ответ на комментарий пользователя {replyingTo.author}:</p>
+                  <p className={scss.replyingTo}>
+                    Ответ на комментарий пользователя {replyingTo.author}:
+                  </p>
                 ) : (
-                  <p className={scss.addNewComment}>Добавить новый комментарий:</p>
+                  <p className={scss.addNewComment}>
+                    Добавить новый комментарий:
+                  </p>
                 )}
-                {renderCommentForm(
-                  handleAddComment,
-                  () => {
-                    setReplyingTo(null);
-                    setCommentText("");
-                  }
-                )}
+                {renderCommentForm(handleAddComment, () => {
+                  setReplyingTo(null);
+                  setCommentText("");
+                })}
               </div>
             ) : (
-              <p className={scss.loginPrompt}>Пожалуйста, войдите в систему, чтобы оставить комментарий.</p>
+              <p className={scss.loginPrompt}>
+                Пожалуйста, войдите в систему, чтобы оставить комментарий.
+              </p>
             )}
           </div>
         </div>

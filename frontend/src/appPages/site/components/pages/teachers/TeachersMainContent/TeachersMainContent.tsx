@@ -3,6 +3,9 @@ import { useGetTeachersQuery } from "@/redux/api/teachers";
 import scss from "./TeachersMainContent.module.scss";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import React from "react";
+import { Snowfall } from "react-snowfall";
+
 const TeachersMainContent = () => {
   const { data, isLoading, error } = useGetTeachersQuery();
   console.log("🚀 ~ TeachersMainContent ~ data:", data);
@@ -19,6 +22,7 @@ const TeachersMainContent = () => {
   return (
     <section className={scss.TeachersMainContent}>
       <div className="container">
+        ,
         <div className={scss.content}>
           <div className={scss.head}>
             <h1>Все учителя</h1>

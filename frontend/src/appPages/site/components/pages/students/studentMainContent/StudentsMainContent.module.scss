@@ -1,0 +1,137 @@
+.classes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 277px;
+    height: 69px;
+    border-radius: 7px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 3px solid #ffe5e5;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.block:nth-child(even):hover {
+    transform: translateX(10px);
+    box-shadow: 10px 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.block:nth-child(odd):hover {
+    transform: translateX(-10px);
+    box-shadow: -10px 0 15px rgba(0, 0, 0, 0.3);
+}
+.block:hover {
+    transform: translateX(10px);
+    background: rgb(255, 246, 246);
+    border: 3px solid #ffd3d3;
+}
+
+.block_text {
+    color: black;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 28.8px;
+    text-align: left;
+}
+
+@media (max-width: 1190px) {
+    .block {
+        width: 257px;
+        height: 59px;
+    }
+    .block_text {
+        font-size: 22px;
+        font-weight: 600;
+        line-height: 28.8px;
+    }
+}
+
+@media (max-width: 1140px) {
+    .block {
+        width: 247px;
+        height: 50px;
+    }
+    .block_text {
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 27.8px;
+    }
+}
+
+@media (max-width: 1100px) {
+    .block {
+        width: 140px;
+        height: 49px;
+    }
+    .block_text {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 28.8px;
+    }
+    .classes {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 30px;
+    }
+}
+
+@media (max-width: 615px) {
+    .block:nth-child(even):hover {
+        transform: translateX(5px);
+    }
+
+    .block:nth-child(odd):hover {
+        transform: translateX(-5px);
+    }
+    .block {
+        width: 130px;
+        height: 35px;
+        border-radius: 4px;
+    }
+    .block_text {
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 28.8px;
+    }
+
+    .classes {
+        gap: 20px;
+    }
+}
+
+@media (max-width: 474px) {
+    .block {
+        width: 110px;
+        height: 28px;
+    }
+    .block_text {
+        font-size: 11px;
+        font-weight: 400;
+        line-height: 28.8px;
+    }
+    .classes {
+        gap: 20px;
+    }
+}
+
+@media (max-width: 430px) {
+    .block {
+        width: 84px;
+        height: 20px;
+    }
+    .block_text {
+        font-size: 9px;
+        font-weight: 400;
+        line-height: 28.8px;
+    }
+    .classes {
+        gap: 15px;
+    }
+}

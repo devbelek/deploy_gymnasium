@@ -1,8 +1,15 @@
 namespace SCHOOL_PARLIAMENT {
-  interface ISchoolParliament {
-    student: any[];
-    type_of_administrator: null;
-  }
-  type GetSchoolParliamentResponse = ISchoolParliament[];
-  type GetSchoolParliamentRequest = null;
+    interface ISchoolParliament {
+        student: [
+            {
+                name: string;
+                surname: string;
+            }
+        ];
+        type_of_administrator: {
+            choosing: string;
+        };
+    }
+    type GetSchoolParliamentResponse = ISchoolParliament[];
+    type GetSchoolParliamentRequest = void;
 }

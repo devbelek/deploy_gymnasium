@@ -17,6 +17,13 @@
         url(../../../../../../assets/images/studnets_olimpic.svg);
     background-size: cover;
     background-position: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.OlimpBlock:hover {
+    box-shadow: 10px 0 15px rgba(0, 0, 0, 0.3);
+
+    transform: translateY(-10px);
 }
 
 .OlimpBlock_text {
@@ -48,11 +55,35 @@
     }
 }
 
-@media (max-width: 740px) {
+@media (max-width: 615px) {
+    .OlimpBlock:hover {
+        transform: translateY(-5px);
+    }
+    .OlimpBlock {
+        width: 206px;
+        height: 114px;
+    }
+    .OlimpBlock_text {
+        font-size: 14px;
+    }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 474px) {
+    .OlimpBlock {
+        width: 186px;
+        height: 104px;
+    }
+    .OlimpBlock_text {
+        font-size: 12px;
+    }
 }
 
-@media (max-width: 380px) {
+@media (max-width: 430px) {
+    .OlimpBlock {
+        width: 150px;
+        height: 94px;
+    }
+    .OlimpBlock_text {
+        font-size: 10px;
+    }
 }

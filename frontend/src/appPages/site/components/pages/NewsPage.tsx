@@ -1,4 +1,4 @@
-// import NewsCommentsContent from "./news/NewsCommentsContent/NewsCommentsContent";
+import NewsCommentsContent from "./news/NewsCommentsContent/NewsCommentsContent";
 import NewsMainContent from "./news/NewsMainContent/NewsMainContent";
 import scss from "./NewsPage.module.scss";
 const NewsPage = () => {
@@ -6,6 +6,7 @@ const NewsPage = () => {
     <>
       <div className={scss.content}>
         <NewsMainContent />
+        <NewsCommentsContent />
       </div>
     </>
   );
