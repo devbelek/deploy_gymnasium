@@ -1,0 +1,66 @@
+{% extends "account/base.html" %}
+{% load i18n %}
+{% load allauth %}
+
+{% block head_title %}
+    Подтверждение адреса электронной почты
+{% endblock head_title %}
+
+{% block extra_head %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+    .email-verify-container {
+        font-family: 'Roboto', sans-serif;
+        background-color: #f0f4f8;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        max-width: 600px;
+        margin: 60px auto;
+        text-align: center;
+    }
+    .email-verify-title {
+        color: #2c3e50;
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 30px;
+    }
+    .email-verify-text {
+        color: #34495e;
+        font-size: 16px;
+        line-height: 1.8;
+        margin-bottom: 30px;
+    }
+    .email-icon {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 30px;
+    }
+    .contact-link {
+        color: #3498db;
+        text-decoration: none;
+        font-weight: 700;
+        transition: color 0.3s ease;
+    }
+    .contact-link:hover {
+        color: #2980b9;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="email-verify-container">
+    <svg class="email-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#3498db">
+        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+    </svg>
+
+    {% element h1 class="email-verify-title" %}
+        Подтвердите ваш адрес электронной почты
+    {% endelement %}
+
+    {% element p class="email-verify-text" %}
+        Мы отправили вам электронное письмо для подтверждения. Пожалуйста, перейдите по ссылке в письме, чтобы завершить процесс регистрации. Если вы не видите письмо в основном ящике, проверьте папку "Спам". Если вы не получили письмо в течение нескольких минут, пожалуйста, <a href="#" class="contact-link">свяжитесь с нами</a>.
+    {% endelement %}
+</div>
+{% endblock content %}
