@@ -2,6 +2,7 @@ namespace NEWS {
   interface INews {
     id: number;
     author: string;
+    avatar: string;
     image: string;
     content: string;
     content_ky: string;
@@ -16,18 +17,13 @@ namespace NEWS {
   interface IComment {
     id: number;
     author: string;
+    avatar: string;
     text: string;
     created_at: string;
     updated_at: string;
     likes_count: number;
     is_liked: boolean;
     replies: IComment[];
-  }
-
-  interface IUserProfile {
-    user: string;
-    avatar: string;
-    about: string | null;
   }
 
   type GetNewsResponse = INews[];
@@ -49,6 +45,4 @@ namespace NEWS {
 
   type LikeCommentResponse = { detail: string };
   type LikeCommentRequest = { commentId: number };
-
-  type GetUserProfileResponse = IUserProfile;
 }
