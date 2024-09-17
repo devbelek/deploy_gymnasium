@@ -16,6 +16,7 @@ namespace NEWS {
   interface IComment {
     id: number;
     author: string;
+    avatar: string;
     text: string;
     created_at: string;
     updated_at: string;
