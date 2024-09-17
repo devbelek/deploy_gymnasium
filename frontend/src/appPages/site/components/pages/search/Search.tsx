@@ -2,7 +2,7 @@
 import { useGetSearchQuery } from "@/redux/api/search";
 import { useSearchParams } from "next/navigation";
 import React, { useMemo } from "react";
-import StudentsMainContent from "../students/StudentsMainContent/StudentsMainContent";
+import StudentsMainContent from "../students/studentMainContent/StudentsMainContent";
 
 const Search = () => {
   const searchParams = useSearchParams();
