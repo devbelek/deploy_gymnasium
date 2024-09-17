@@ -1,4 +1,4 @@
-import { api as index } from "..";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { getCSRFToken } from './csrf';
 
 const ENDPOINTS = process.env.NEXT_PUBLIC_ENDPOINT;
@@ -9,7 +9,9 @@ interface AddCommentRequest {
   parentId?: number;
 }
 
-const api = index.injectEndpoints({
+export const api = createApi({
+  baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
+  tagTypes: ['news', 'comments', 'userProfile'],
   endpoints: (build) => ({
     getNews: build.query<NEWS.GetNewsResponse, NEWS.GetNewsRequest>({
       query: () => ({
