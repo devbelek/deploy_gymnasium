@@ -69,7 +69,11 @@ class StudentsAdmin(admin.ModelAdmin):
 
 @admin.register(Teachers)
 class TeachersAdmin(TranslationAdmin):
-    list_display = ('subject', 'education', 'successes')
+    list_display = ('get_full_name', 'subject', 'education', 'successes')
+
+    def get_full_name(self, obj):
+        return f"{obj.name} {obj.surname} {obj.last_name}"
+    get_full_name.short_description = 'ФИО'
 
     class Media:
         js = (
@@ -84,7 +88,11 @@ class TeachersAdmin(TranslationAdmin):
 
 @admin.register(OldTeachers)
 class OldTeachersAdmin(TranslationAdmin):
-    list_display = ('subject', 'education', 'successes')
+    list_display = ('get_full_name', 'subject', 'education', 'successes')
+
+    def get_full_name(self, obj):
+        return f"{obj.name} {obj.surname} {obj.last_name}"
+    get_full_name.short_description = 'ФИО'
 
     class Media:
         js = (
