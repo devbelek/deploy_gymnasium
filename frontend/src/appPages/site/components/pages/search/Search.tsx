@@ -30,7 +30,7 @@ const Search = () => {
     <div style={{ paddingTop: "100px" }}>
       <h1>Результаты поиска для: {query}</h1>
       {isLoading && <p>Загрузка...</p>}
-      {error && <p>Произошла ошибка при поиске</p>}
+      {error && <p>Произошла ошибка при поиске: {(error as Error).message || 'Неизвестная ошибка'}</p>}
       {!isLoading && !error && data && data.length > 0 ? (
         <ul>
           {data.map((result) => (
