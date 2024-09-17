@@ -16,7 +16,6 @@ class NameOfGrades(models.Model):
         ('11', '11'),
     )
     grade = models.CharField(max_length=10, choices=GRADE_CHOICES, verbose_name='Класс')
-    parallel = models.CharField(max_length=1, verbose_name='Параллель', help_text='Например, А, Б, В и т.д.')
 
     def __str__(self):
         return f"{self.grade}{self.parallel}"
@@ -27,7 +26,7 @@ class NameOfGrades(models.Model):
         result = cache.get(cache_key)
         if not result:
             result = NameOfGrades.objects.get(id=id)
-            cache.set(cache_key, result, timeout=60*15)  # Кэшируем на 15 минут
+            cache.set(cache_key, result, timeout=60*15)
         return result
 
     class Meta:

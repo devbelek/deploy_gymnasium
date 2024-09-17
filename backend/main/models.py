@@ -202,15 +202,6 @@ class GimnasiumClass(models.Model):
         super().delete(*args, **kwargs)
 
 
-class ThanksNoteFromStudents(ImageModel, TitleModel, ContentModel, TimestampedModel):
-    class Meta:
-        verbose_name = _('Благодарственное письмо (от учеников)')
-        verbose_name_plural = _('Благодарственное письмо (от учеников)')
-
-    def __str__(self):
-        return f'{self.title}'
-
-
 class Olympians(models.Model):
     student = models.ForeignKey(Students, on_delete=models.CASCADE, verbose_name=_('Ученик'))
     name_of_olympia = models.ForeignKey('secondary.NamesOfOlympia', on_delete=models.SET_NULL, null=True,
@@ -258,12 +249,6 @@ class SuccessfulGraduates(ImageModel, ContentModel):
         super().delete(*args, **kwargs)
 
 
-class AppealToStudents(TitleModel, ContentModel, TimestampedModel):
-    class Meta:
-        verbose_name = _('Обращение к ученикам (от выпускников)')
-        verbose_name_plural = _('Обращение к ученикам (от выпускников)')
-
-
 class Graduates(PersonModel):
     @staticmethod
     def get_current_year():
@@ -302,15 +287,6 @@ class Graduates(PersonModel):
 
     def __str__(self):
         return f"Выпускники {self.year} года: {self.name} {self.surname}"
-
-
-class ThanksNoteFromGraduates(ImageModel, TitleModel, ContentModel, TimestampedModel):
-    class Meta:
-        verbose_name = _('Благодарственное письмо (от выпускников)')
-        verbose_name_plural = _('Благодарственное письмо (от выпускников)')
-
-    def __str__(self):
-        return f'{self.title}'
 
 
 class News(ImageModel, ContentModel, TimestampedModel):
@@ -361,7 +337,7 @@ class Teachers(PersonModel, ImageModel):
     successes = models.TextField(blank=True, verbose_name=_('Успехи'))
 
     class Meta:
-        verbose_name = _('Учителя')
+        verbose_name = _('Учитель')
         verbose_name_plural = _('Учителя')
 
     def __str__(self):
@@ -380,8 +356,8 @@ class OldTeachers(PersonModel, ImageModel):
     successes = models.TextField(blank=True, verbose_name=_('Успехи'))
 
     class Meta:
-        verbose_name = _('Учителя')
-        verbose_name_plural = _('Учителя')
+        verbose_name = _('Бывший учитель')
+        verbose_name_plural = _('Бывшие учителя')
 
     def __str__(self):
         return f"Учитель: {self.name} {self.surname} - Предмет: {self.subject}"

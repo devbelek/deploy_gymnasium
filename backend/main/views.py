@@ -69,15 +69,6 @@ class StudentsViewSet(StudentRelatedViewSet):
     filterset_fields = ['school_class__grade', 'school_class__parallel']
 
 
-class ThanksNoteViewSet(BaseViewSet):
-    pass
-
-
-class ThanksNoteFromStudentsViewSet(ThanksNoteViewSet):
-    queryset = ThanksNoteFromStudents.objects.all()
-    serializer_class = ThanksNoteFromStudentsSerializer
-
-
 class OlympiansViewSet(BaseViewSet):
     queryset = Olympians.objects.select_related('student', 'name_of_olympia')
     serializer_class = OlympiansSerializer
@@ -88,20 +79,10 @@ class SuccessfulGraduatesViewSet(BaseViewSet):
     serializer_class = SuccessfulGraduatesSerializer
 
 
-class AppealToStudentsViewSet(BaseViewSet):
-    queryset = AppealToStudents.objects.all()
-    serializer_class = AppealToStudentsSerializer
-
-
 class GraduatesViewSet(BaseViewSet):
     queryset = Graduates.objects.select_related('kl_rukovoditel')
     serializer_class = GraduatesSerializer
     filterset_class = GraduatesFilter
-
-
-class ThanksNoteFromGraduatesViewSet(ThanksNoteViewSet):
-    queryset = ThanksNoteFromGraduates.objects.all()
-    serializer_class = ThanksNoteFromGraduatesSerializer
 
 
 class NewsViewSet(BaseViewSet):
