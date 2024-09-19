@@ -369,6 +369,7 @@ class Teachers(PersonModel, ImageModel):
         ('Сейчас работает', _('Сейчас работает')),
         ('Раньше работал(а)', _('Раньше работал(а)')),
     ]
+    teachers_status = models.CharField(max_length=100, choices=TEACHER_STATUS, blank=True, verbose_name=_('Статус'))
     experience = models.CharField(max_length=200, choices=EXPERIENCE_CHOICES, verbose_name=_('Опыт'))
     subject = models.CharField(max_length=200, verbose_name=_('Предмет'))
     education = models.TextField(blank=True, verbose_name=_('Образование'))
