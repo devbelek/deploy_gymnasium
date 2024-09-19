@@ -14,6 +14,8 @@ from django.utils.translation import gettext_lazy as _
 from PIL import Image
 import io
 from django.core.files.base import ContentFile
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 logger = logging.getLogger(__name__)
 
@@ -55,6 +57,15 @@ class UserProfile(models.Model):
     class Meta:
         verbose_name = "Личные кабинеты пользователей"
         verbose_name_plural = "Личные кабинеты пользователей"
+
+    @receiver(post_save, sender=User)
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            UserProfile.objects.create(user=instance)
+
+    @receiver(post_save, sender=User)
+    def save_user_profile(sender, instance, **kwargs):
+        instance.profile.save()
 
     def save(self, *args, **kwargs):
         if not self.pk:

@@ -3,6 +3,7 @@ from rest_framework.routers import DefaultRouter
 from .views import UserProfileDetail, CommentViewSet, CommentReplyViewSet, LikeViewSet, DonationsViewSet, \
     ConfirmedDonationViewSet
 from . import views
+from .views import UserProfileDetailView
 
 router = DefaultRouter()
 router.register(r'comments', CommentViewSet)
@@ -14,6 +15,7 @@ router.register(r'confirmed_donations', ConfirmedDonationViewSet)
 
 urlpatterns = [
     path('user-info/', views.user_info, name='user_info'),
+    path('profile/<str:user__username>/', UserProfileDetailView.as_view(), name='user-profile-detail'),
 
     path('accounts/user/', views.user_auth_status, name='user_auth_status'),
     path('', include(router.urls)),
