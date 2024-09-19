@@ -1,14 +1,3 @@
-export const {
-  useGetNewsQuery,
-  useGetDetNewsQuery,
-  useGetCommentsQuery,
-  useAddCommentMutation,
-  useUpdateCommentMutation,
-  useDeleteCommentMutation,
-  useLikeCommentMutation,
-  useGetUserProfileQuery,
-} = api;
-
 namespace NEWS {
   interface INews {
     id: number;
@@ -35,12 +24,6 @@ namespace NEWS {
     replies: IComment[];
   }
 
-  interface UserProfile {
-    username: string;
-    avatar: string;
-    about: string | null;
-  }
-
   type GetNewsResponse = INews[];
   type GetNewsRequest = void;
   type GetDetNewsResponse = INews;
@@ -60,6 +43,4 @@ namespace NEWS {
 
   type LikeCommentResponse = { detail: string };
   type LikeCommentRequest = { commentId: number };
-
-  type UserProfileResponse = UserProfile;
 }
