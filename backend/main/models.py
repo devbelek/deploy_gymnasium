@@ -86,12 +86,18 @@ class TitleModel(models.Model):
 
 
 class Students(PersonModel, ImageModel):
+    STATUS_CHOICES = [
+        (president, 'Президент'),
+        (muzh_soviet, 'Муж.совет'),
+        (zhen_soviet, 'Жен.совет'),
+    ]
     school_class = models.ForeignKey('secondary.NameOfGrades', on_delete=models.CASCADE, verbose_name=_('Класс'))
     olympian_status = models.ForeignKey('secondary.NamesOfOlympia', on_delete=models.SET_NULL, null=True, blank=True,
                                         verbose_name=_('Олимпиец'))
     administrator_status = models.ForeignKey('secondary.AdministratorTypes', on_delete=models.SET_NULL, null=True,
                                              blank=True, verbose_name=_('Позиция'))
     classroom_teacher = models.ManyToManyField('Teachers', verbose_name=_('Классный руководитель'))
+    status_in_class = models.CharField(max_length=200, choices=STATUS_CHOICES, verbose_name='Статус в классе')
 
     class Meta:
         verbose_name = _('Ученики')
