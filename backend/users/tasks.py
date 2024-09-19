@@ -115,7 +115,7 @@ def delete_old_media_files():
     media_root = settings.MEDIA_ROOT
     target_folder = os.path.join(media_root, 'checks/')
     now = datetime.datetime.now()
-    cutoff = now - datetime.timedelta(hours=1)
+    cutoff = now - datetime.timedelta(days=3)
 
     for root, dirs, files in os.walk(target_folder):
         for file in files:

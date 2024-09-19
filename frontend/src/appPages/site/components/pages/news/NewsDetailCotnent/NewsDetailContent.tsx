@@ -20,6 +20,7 @@ import {
   useDeleteCommentMutation,
   useLikeCommentMutation,
 } from "@/redux/api/news";
+import { useGetAccountQuery } from "@/redux/api/profile";
 
 const NewsDetailContent: React.FC = () => {
   const params = useParams();
@@ -39,6 +40,9 @@ const NewsDetailContent: React.FC = () => {
   } | null>(null);
   const [currentUser, setCurrentUser] = useState<string | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const { data } = useGetAccountQuery(null);
+  console.log(data, "data");
 
   const {
     data: newsData,
