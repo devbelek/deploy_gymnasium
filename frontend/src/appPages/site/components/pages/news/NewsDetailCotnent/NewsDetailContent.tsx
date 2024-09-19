@@ -95,7 +95,14 @@ const NewsDetailContent: React.FC = () => {
 
         for (const username of uniqueUsers) {
           try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/profile/${username}/`);
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API}/${process.env.NEXT_PUBLIC_ENDPOINT}/accounts/user/`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ username }),
+              credentials: 'include',
+            });
             if (response.ok) {
               const userData = await response.json();
               newUserAvatars[username] = userData.avatar || `https://api.dicebear.com/6.x/initials/svg?seed=${username}`;
