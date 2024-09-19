@@ -98,8 +98,3 @@ class GalleryViewSet(BaseViewSet):
 class TeachersViewSet(BaseViewSet):
     queryset = Teachers.objects.all()
     serializer_class = TeachersSerializer
-
-
-class OldTeachersViewSet(BaseViewSet):
-    queryset = OldTeachers.objects.all()
-    serializer_class = OldTeachersSerializer
