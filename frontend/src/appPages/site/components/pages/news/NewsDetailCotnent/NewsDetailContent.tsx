@@ -10,6 +10,7 @@ import {
   Trash2,
   MessageCircle,
   ThumbsUp,
+  User,
 } from "lucide-react";
 import scss from "./NewsDetailContent.module.scss";
 import {
@@ -40,9 +41,9 @@ const NewsDetailContent: React.FC = () => {
   } | null>(null);
   const [currentUser, setCurrentUser] = useState<string | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userAvatars, setUserAvatars] = useState<Record<string, string>>({});
 
-  const { data } = useGetAccountQuery(null);
-  console.log(data, "data");
+  const { data: accountData } = useGetAccountQuery(null);
 
   const {
     data: newsData,
@@ -85,6 +86,36 @@ const NewsDetailContent: React.FC = () => {
 
     checkAuthStatus();
   }, []);
+
+  useEffect(() => {
+    const fetchUserAvatars = async () => {
+      if (commentsData) {
+        const uniqueUsers = [...new Set(commentsData.map(comment => comment.author))];
+        const avatarPromises = uniqueUsers.map(async (username) => {
+          try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/profile/${username}/`);
+            if (response.ok) {
+              const userData = await response.json();
+              return { username, avatar: userData.avatar };
+            }
+          } catch (error) {
+            console.error(`Ошибка при получении аватара для ${username}:`, error);
+          }
+          return { username, avatar: null };
+        });
+
+        const avatarResults = await Promise.all(avatarPromises);
+        const newUserAvatars = avatarResults.reduce((acc, { username, avatar }) => {
+          acc[username] = avatar || `https://api.dicebear.com/6.x/initials/svg?seed=${username}`;
+          return acc;
+        }, {} as Record<string, string>);
+
+        setUserAvatars(newUserAvatars);
+      }
+    };
+
+    fetchUserAvatars();
+  }, [commentsData]);
 
   const handleAddComment = useCallback(async () => {
     if (commentText.trim() && isLoggedIn) {
@@ -226,13 +257,17 @@ const NewsDetailContent: React.FC = () => {
         className={`${scss.comment} ${depth > 0 ? scss.reply : ""}`}
       >
         <div className={scss.commentHeader}>
-          <Image
-            src={`https://api.dicebear.com/6.x/initials/svg?seed=${comment.author}`}
-            alt={comment.author}
-            width={40}
-            height={40}
-            className={scss.avatar}
-          />
+          {userAvatars[comment.author] ? (
+            <Image
+              src={userAvatars[comment.author]}
+              alt={comment.author}
+              width={40}
+              height={40}
+              className={scss.avatar}
+            />
+          ) : (
+            <User size={40} className={scss.avatar} />
+          )}
           <div className={scss.commentInfo}>
             <span className={scss.commentAuthor}>{comment.author}</span>
             <span className={scss.commentDate}>
@@ -258,6 +293,7 @@ const NewsDetailContent: React.FC = () => {
       handleUpdateComment,
       renderCommentActions,
       renderCommentForm,
+      userAvatars,
     ]
   );
 
