@@ -1,0 +1,75 @@
+/* [project]/src/appPages/site/components/pages/home/NewsContent/NewsContent.module.scss.module.css [app-ssr] (css) */
+#NewsContent-module-scss-module__FMi8tW__content {
+  padding: 50px 0;
+  background-color: #f8f8f8;
+}
+
+#NewsContent-module-scss-module__FMi8tW__content h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  position: relative;
+  font-weight: bold;
+}
+
+#NewsContent-module-scss-module__FMi8tW__content h1:after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 3px;
+  background-color: #56397b;
+  margin: 10px auto 0;
+}
+
+#NewsContent-module-scss-module__FMi8tW__content .NewsContent-module-scss-module__FMi8tW__newsCard {
+  padding-top: 50px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+#NewsContent-module-scss-module__FMi8tW__content .NewsContent-module-scss-module__FMi8tW__card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#NewsContent-module-scss-module__FMi8tW__content .NewsContent-module-scss-module__FMi8tW__newsCard div {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px #0000001a;
+  width: 300px;
+  overflow: hidden;
+  position: relative;
+  transition: transform .3s;
+}
+
+#NewsContent-module-scss-module__FMi8tW__content .NewsContent-module-scss-module__FMi8tW__newsCard div:hover {
+  transform: translateY(-10px);
+}
+
+#NewsContent-module-scss-module__FMi8tW__content .NewsContent-module-scss-module__FMi8tW__newsCard div img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 5px solid #56397b;
+}
+
+#NewsContent-module-scss-module__FMi8tW__content .NewsContent-module-scss-module__FMi8tW__newsCard div p {
+  padding: 15px;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #333;
+}
+
+#NewsContent-module-scss-module__FMi8tW__content .NewsContent-module-scss-module__FMi8tW__newsCard div .NewsContent-module-scss-module__FMi8tW__meta {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 15px;
+  font-size: .85rem;
+  color: #999;
+}
+
+
+/*# sourceMappingURL=53c79_site_components_pages_home_NewsContent_NewsContent_module_scss_module_8ec2a5.css.map*/
