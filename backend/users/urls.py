@@ -13,6 +13,8 @@ router.register(r'confirmed_donations', ConfirmedDonationViewSet)
 
 
 urlpatterns = [
+    path('user-info/', views.user_info, name='user_info'),
+
     path('accounts/user/', views.user_auth_status, name='user_auth_status'),
     path('', include(router.urls)),
     path('profile/', UserProfileDetail.as_view(), name='user-profile'),
