@@ -71,16 +71,14 @@ class StudentsAdmin(admin.ModelAdmin):
 class TeachersAdmin(TranslationAdmin):
     list_display = ('get_full_name', 'subject', 'education', 'successes')
     fieldsets = [
-        ('Русский перевод', {
-            'fields': ['subject', 'education', 'successes']
-        }),
-        ('Кыргызский перевод', {
-            'fields': ['subject_ky', 'education_ky', 'successes_ky']
-        })
+        # ('Русский перевод', {
+        #     'fields': ['subject', 'education', 'successes']
+        # }),
+        # ('Кыргызский перевод', {
+        #     'fields': ['subject_ky', 'education_ky', 'successes_ky']
+        # })
     ]
 
     def get_full_name(self, obj):
         return f"{obj.name} {obj.surname} {obj.last_name}"
     get_full_name.short_description = 'ФИО'
-
-
