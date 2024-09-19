@@ -41,7 +41,7 @@ const NewsDetailContent: React.FC = () => {
   } | null>(null);
   const [currentUser, setCurrentUser] = useState<string | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userAvatars, setUserAvatars] = useState<Record<string, string>>({});
+  const [currentUserAvatar, setCurrentUserAvatar] = useState<string | null>(null);
 
   const { data: accountData } = useGetAccountQuery(null);
 
@@ -88,39 +88,31 @@ const NewsDetailContent: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const fetchUserAvatars = async () => {
-      if (commentsData) {
-        const uniqueUsers = Array.from(new Set(commentsData.map(comment => comment.author)));
-        const newUserAvatars: Record<string, string> = {};
-
-        for (const username of uniqueUsers) {
-          try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API}/${process.env.NEXT_PUBLIC_ENDPOINT}/accounts/user/`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ username }),
-              credentials: 'include',
-            });
-            if (response.ok) {
-              const userData = await response.json();
-              newUserAvatars[username] = userData.avatar || `https://api.dicebear.com/6.x/initials/svg?seed=${username}`;
-            } else {
-              newUserAvatars[username] = `https://api.dicebear.com/6.x/initials/svg?seed=${username}`;
-            }
-          } catch (error) {
-            console.error(`Ошибка при получении аватара для ${username}:`, error);
-            newUserAvatars[username] = `https://api.dicebear.com/6.x/initials/svg?seed=${username}`;
+    const fetchCurrentUserAvatar = async () => {
+      if (isLoggedIn) {
+        try {
+          const response = await fetch(`${process.env.NEXT_PUBLIC_API}/${process.env.NEXT_PUBLIC_ENDPOINT}/profile/`, {
+            credentials: 'include',
+          });
+          if (response.ok) {
+            const userData = await response.json();
+            setCurrentUserAvatar(userData.avatar || `https://api.dicebear.com/6.x/initials/svg?seed=${userData.user}`);
           }
+        } catch (error) {
+          console.error("Ошибка при получении аватара текущего пользователя:", error);
         }
-
-        setUserAvatars(newUserAvatars);
       }
     };
 
-    fetchUserAvatars();
-  }, [commentsData]);
+    fetchCurrentUserAvatar();
+  }, [isLoggedIn]);
+
+  const getAvatarUrl = useCallback((username: string) => {
+    if (username === currentUser && currentUserAvatar) {
+      return currentUserAvatar;
+    }
+    return `https://api.dicebear.com/6.x/initials/svg?seed=${username}`;
+  }, [currentUser, currentUserAvatar]);
 
   const handleAddComment = useCallback(async () => {
     if (commentText.trim() && isLoggedIn) {
@@ -262,17 +254,13 @@ const NewsDetailContent: React.FC = () => {
         className={`${scss.comment} ${depth > 0 ? scss.reply : ""}`}
       >
         <div className={scss.commentHeader}>
-          {userAvatars[comment.author] ? (
-            <Image
-              src={userAvatars[comment.author]}
-              alt={comment.author}
-              width={40}
-              height={40}
-              className={scss.avatar}
-            />
-          ) : (
-            <User size={40} className={scss.avatar} />
-          )}
+          <Image
+            src={getAvatarUrl(comment.author)}
+            alt={comment.author}
+            width={40}
+            height={40}
+            className={scss.avatar}
+          />
           <div className={scss.commentInfo}>
             <span className={scss.commentAuthor}>{comment.author}</span>
             <span className={scss.commentDate}>
@@ -298,7 +286,7 @@ const NewsDetailContent: React.FC = () => {
       handleUpdateComment,
       renderCommentActions,
       renderCommentForm,
-      userAvatars,
+      getAvatarUrl,
     ]
   );
 
