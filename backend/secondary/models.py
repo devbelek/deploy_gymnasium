@@ -18,7 +18,7 @@ class NameOfGrades(models.Model):
     grade = models.CharField(max_length=10, choices=GRADE_CHOICES, verbose_name='Класс')
 
     def __str__(self):
-        return f"{self.grade}{self.parallel}"
+        return f"{self.grade}"
 
     @staticmethod
     def get_cached(id):
