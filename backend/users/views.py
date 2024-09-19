@@ -12,12 +12,34 @@ from loguru import logger
 from django.core.exceptions import PermissionDenied
 from rest_framework.decorators import action
 from django.shortcuts import get_object_or_404
-# from .permissions import IsAuthorOrReadOnly
 from main.models import News
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET
 from django.contrib.auth.decorators import login_required
 from django.middleware.csrf import get_token
+from django.contrib.auth import get_user_model
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+
+User = get_user_model()
+
+
+@api_view(['POST'])
+def user_info(request):
+    username = request.data.get('username')
+    if not username:
+        return Response({'error': 'Username is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        user = User.objects.get(username=username)
+        avatar_url = user.profile.avatar.url if user.profile.avatar else None
+        return Response({
+            'username': user.username,
+            'avatar': avatar_url,
+        })
+    except User.DoesNotExist:
+        return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
 
 
 @require_GET
