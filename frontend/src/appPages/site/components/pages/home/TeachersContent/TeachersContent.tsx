@@ -1,9 +1,13 @@
+"use client";
 import Image from "next/image";
 import scss from "./TeachersContent.module.scss";
 import circle from "../../../../../../assets/images/Ellipse 19.png";
 import teacher from "../../../../../../assets/images/image 9.png";
+import { useRouter } from "next/navigation";
 
 const TeachersContent = () => {
+  const router = useRouter();
+
   return (
     <section id={scss.content}>
       <div className="container">
@@ -17,7 +21,12 @@ const TeachersContent = () => {
             />
             <Image src={teacher} alt="teacher" className={scss.teacher} />
           </div>
-          <button className={scss.button}>Все учителя</button>
+          <button
+            className={scss.button}
+            onClick={() => router.push("/teachers")}
+          >
+            Все учителя
+          </button>
         </div>
       </div>
     </section>

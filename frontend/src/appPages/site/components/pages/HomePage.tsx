@@ -1,3 +1,4 @@
+import AboutUsContent from "./home/About_us/AboutUsContent";
 import DirectorContent from "./home/DirectorContent/DirectorContent";
 import GalleryContent from "./home/GalleryContent/GalleryContent";
 import GraduatesContent from "./home/GraduatesContent/GraduatesContent";
@@ -11,6 +12,7 @@ const HomePage = () => {
     <>
       <div className={scss.content}>
         <HeroContent />
+        <AboutUsContent />
         <NewsContent />
         <div className={scss.personas}>
           <StudentsContent />
