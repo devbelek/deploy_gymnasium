@@ -95,12 +95,8 @@ const NewsDetailContent: React.FC = () => {
 
         for (const username of uniqueUsers) {
           try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API}/${process.env.NEXT_PUBLIC_ENDPOINT}/user-info/`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ username }),
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API}/${process.env.NEXT_PUBLIC_ENDPOINT}/user-info/?username=${username}`, {
+              method: 'GET',
               credentials: 'include',
             });
             if (response.ok) {
