@@ -93,7 +93,7 @@ const NewsDetailContent: React.FC = () => {
         const uniqueUsers = Array.from(new Set(commentsData.map(comment => comment.author)));
         const avatarPromises = uniqueUsers.map(async (username) => {
           try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/profile/${username}/`);
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/profile/`);
             if (response.ok) {
               const userData = await response.json();
               return { username, avatar: userData.avatar };
