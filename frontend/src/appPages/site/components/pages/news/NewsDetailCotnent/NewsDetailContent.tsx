@@ -11,7 +11,6 @@ import {
   MessageCircle,
   ThumbsUp,
   User,
-  X,
 } from "lucide-react";
 import scss from "./NewsDetailContent.module.scss";
 import {
@@ -43,7 +42,6 @@ const NewsDetailContent: React.FC = () => {
   const [currentUser, setCurrentUser] = useState<string | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userAvatars, setUserAvatars] = useState<Record<string, string>>({});
-  const [isCommentFormOpen, setIsCommentFormOpen] = useState(false);
 
   const { data: accountData } = useGetAccountQuery(null);
 
@@ -130,7 +128,6 @@ const NewsDetailContent: React.FC = () => {
         }).unwrap();
         setCommentText("");
         setReplyingTo(null);
-        setIsCommentFormOpen(false);
       } catch (error) {
         console.error("Ошибка при добавлении комментария:", error);
       }
@@ -213,10 +210,9 @@ const NewsDetailContent: React.FC = () => {
         </button>
         {isLoggedIn && depth === 0 && (
           <button
-            onClick={() => {
-              setReplyingTo({ id: comment.id, author: comment.author });
-              setIsCommentFormOpen(true);
-            }}
+            onClick={() =>
+              setReplyingTo({ id: comment.id, author: comment.author })
+            }
             className={scss.actionButton}
           >
             <MessageCircle size={16} />
@@ -230,14 +226,13 @@ const NewsDetailContent: React.FC = () => {
             </MenuButton>
             <MenuList>
               <MenuItem
-                onClick={() => {
+                onClick={() =>
                   setEditingComment({
                     id: comment.id,
                     text: comment.text,
                     parentId: comment.parent,
-                  });
-                  setIsCommentFormOpen(true);
-                }}
+                  })
+                }
               >
                 <Edit size={16} />
                 <span>Редактировать</span>
@@ -279,6 +274,9 @@ const NewsDetailContent: React.FC = () => {
         </div>
         <p className={scss.commentContent}>{comment.text}</p>
         {renderCommentActions(comment, depth)}
+        {editingComment &&
+          editingComment.id === comment.id &&
+          renderCommentForm(handleUpdateComment, () => setEditingComment(null))}
         {comment.replies &&
           comment.replies.map((reply: any) => (
             <div key={reply.id} className={scss.replyWrapper}>
@@ -287,7 +285,13 @@ const NewsDetailContent: React.FC = () => {
           ))}
       </div>
     ),
-    [renderCommentActions, userAvatars]
+    [
+      editingComment,
+      handleUpdateComment,
+      renderCommentActions,
+      renderCommentForm,
+      userAvatars,
+    ]
   );
 
   if (isNaN(newsId)) {
@@ -338,42 +342,30 @@ const NewsDetailContent: React.FC = () => {
             <h2>Комментарии</h2>
             {commentsData &&
               commentsData.map((comment) => renderComment(comment))}
+            {isLoggedIn ? (
+              <div className={scss.addComment}>
+                {replyingTo ? (
+                  <p className={scss.replyingTo}>
+                    Ответ на комментарий пользователя {replyingTo.author}:
+                  </p>
+                ) : (
+                  <p className={scss.addNewComment}>
+                    Добавить новый комментарий:
+                  </p>
+                )}
+                {renderCommentForm(handleAddComment, () => {
+                  setReplyingTo(null);
+                  setCommentText("");
+                })}
+              </div>
+            ) : (
+              <p className={scss.loginPrompt}>
+                Пожалуйста, войдите в систему, чтобы оставить комментарий.
+              </p>
+            )}
           </div>
         </div>
       </div>
-      {isLoggedIn && (
-        <div className={`${scss.fixedCommentForm} ${isCommentFormOpen ? scss.open : ''}`}>
-          <button
-            className={scss.toggleCommentForm}
-            onClick={() => setIsCommentFormOpen(!isCommentFormOpen)}
-          >
-            {isCommentFormOpen ? <X size={24} /> : <MessageCircle size={24} />}
-          </button>
-          {isCommentFormOpen && (
-            <div className={scss.commentFormWrapper}>
-              {replyingTo && (
-                <p className={scss.replyingTo}>
-                  Ответ на комментарий пользователя {replyingTo.author}:
-                </p>
-              )}
-              {renderCommentForm(
-                editingComment ? handleUpdateComment : handleAddComment,
-                () => {
-                  setReplyingTo(null);
-                  setEditingComment(null);
-                  setCommentText("");
-                  setIsCommentFormOpen(false);
-                }
-              )}
-            </div>
-          )}
-        </div>
-      )}
-      {!isLoggedIn && (
-        <div className={scss.loginPrompt}>
-          Пожалуйста, войдите в систему, чтобы оставить комментарий.
-        </div>
-      )}
     </div>
   );
 };
