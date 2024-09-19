@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import {
@@ -24,6 +24,7 @@ import {
 import { useGetAccountQuery } from "@/redux/api/profile";
 
 const NewsDetailContent: React.FC = () => {
+  const router = useRouter();
   const params = useParams();
   const newsId =
     typeof params.newsDetail === "string"
@@ -251,6 +252,10 @@ const NewsDetailContent: React.FC = () => {
     [currentUser, handleDeleteComment, handleLikeComment, isLoggedIn]
   );
 
+  const handleUserProfileClick = useCallback((username: string) => {
+    router.push(`/profile/${username}`);
+  }, [router]);
+
   const renderComment = useCallback(
     (comment: any, depth = 0) => (
       <div
@@ -264,9 +269,15 @@ const NewsDetailContent: React.FC = () => {
             width={40}
             height={40}
             className={scss.avatar}
+            onClick={() => handleUserProfileClick(comment.author)}
           />
           <div className={scss.commentInfo}>
-            <span className={scss.commentAuthor}>{comment.author}</span>
+            <span
+              className={scss.commentAuthor}
+              onClick={() => handleUserProfileClick(comment.author)}
+            >
+              {comment.author}
+            </span>
             <span className={scss.commentDate}>
               {new Date(comment.created_at).toLocaleString()}
             </span>
@@ -291,6 +302,7 @@ const NewsDetailContent: React.FC = () => {
       renderCommentActions,
       renderCommentForm,
       userAvatars,
+      handleUserProfileClick,
     ]
   );
 
@@ -342,29 +354,31 @@ const NewsDetailContent: React.FC = () => {
             <h2>Комментарии</h2>
             {commentsData &&
               commentsData.map((comment) => renderComment(comment))}
-            {isLoggedIn ? (
-              <div className={scss.addComment}>
-                {replyingTo ? (
-                  <p className={scss.replyingTo}>
-                    Ответ на комментарий пользователя {replyingTo.author}:
-                  </p>
-                ) : (
-                  <p className={scss.addNewComment}>
-                    Добавить новый комментарий:
-                  </p>
-                )}
-                {renderCommentForm(handleAddComment, () => {
-                  setReplyingTo(null);
-                  setCommentText("");
-                })}
-              </div>
-            ) : (
-              <p className={scss.loginPrompt}>
-                Пожалуйста, войдите в систему, чтобы оставить комментарий.
-              </p>
-            )}
           </div>
         </div>
+      </div>
+      <div className={scss.fixedCommentForm}>
+        {isLoggedIn ? (
+          <div className={scss.addComment}>
+            {replyingTo ? (
+              <p className={scss.replyingTo}>
+                Ответ на комментарий пользователя {replyingTo.author}:
+              </p>
+            ) : (
+              <p className={scss.addNewComment}>
+                Добавить новый комментарий:
+              </p>
+            )}
+            {renderCommentForm(handleAddComment, () => {
+              setReplyingTo(null);
+              setCommentText("");
+            })}
+          </div>
+        ) : (
+          <p className={scss.loginPrompt}>
+            Пожалуйста, войдите в систему, чтобы оставить комментарий.
+          </p>
+        )}
       </div>
     </div>
   );
