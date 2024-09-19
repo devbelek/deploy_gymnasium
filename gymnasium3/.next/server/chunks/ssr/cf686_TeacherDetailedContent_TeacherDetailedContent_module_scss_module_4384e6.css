@@ -1,0 +1,178 @@
+/* [project]/src/appPages/site/components/pages/teachers/TeacherDetailedContent/TeacherDetailedContent.module.scss.module.css [app-ssr] (css) */
+.TeacherDetailedContent-module-scss-module__lM3k8a__content {
+  min-height: 100vh;
+  padding-top: 100px;
+  padding-bottom: 30px;
+}
+
+.TeacherDetailedContent-module-scss-module__lM3k8a__content .TeacherDetailedContent-module-scss-module__lM3k8a__contentDetail {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.TeacherDetailedContent-module-scss-module__lM3k8a__content .TeacherDetailedContent-module-scss-module__lM3k8a__contentDetail .TeacherDetailedContent-module-scss-module__lM3k8a__detail {
+  display: flex;
+  gap: 20px;
+}
+
+.TeacherDetailedContent-module-scss-module__lM3k8a__content .TeacherDetailedContent-module-scss-module__lM3k8a__contentDetail .TeacherDetailedContent-module-scss-module__lM3k8a__detail img {
+  -webkit-box-shadow: -19px -6px 101px 2px #0000004d;
+  -moz-box-shadow: -19px -6px 101px 2px #0000004d;
+  box-shadow: -19px -6px 101px 2px #0000004d;
+  width: 100%;
+  max-width: 50%;
+  height: 450px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.TeacherDetailedContent-module-scss-module__lM3k8a__content .TeacherDetailedContent-module-scss-module__lM3k8a__contentDetail .TeacherDetailedContent-module-scss-module__lM3k8a__detail .TeacherDetailedContent-module-scss-module__lM3k8a__detailText {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.TeacherDetailedContent-module-scss-module__lM3k8a__content .TeacherDetailedContent-module-scss-module__lM3k8a__contentDetail .TeacherDetailedContent-module-scss-module__lM3k8a__detail .TeacherDetailedContent-module-scss-module__lM3k8a__detailText h1 {
+  font-size: 2rem;
+}
+
+.TeacherDetailedContent-module-scss-module__lM3k8a__content .TeacherDetailedContent-module-scss-module__lM3k8a__contentDetail .TeacherDetailedContent-module-scss-module__lM3k8a__detail .TeacherDetailedContent-module-scss-module__lM3k8a__detailText .TeacherDetailedContent-module-scss-module__lM3k8a__oput {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.TeacherDetailedContent-module-scss-module__lM3k8a__content .TeacherDetailedContent-module-scss-module__lM3k8a__contentDetail .TeacherDetailedContent-module-scss-module__lM3k8a__detail .TeacherDetailedContent-module-scss-module__lM3k8a__detailText .TeacherDetailedContent-module-scss-module__lM3k8a__oput h3 {
+  font-weight: 500;
+  color: #5a5757;
+}
+
+.TeacherDetailedContent-module-scss-module__lM3k8a__content .TeacherDetailedContent-module-scss-module__lM3k8a__contentDetail .TeacherDetailedContent-module-scss-module__lM3k8a__detail .TeacherDetailedContent-module-scss-module__lM3k8a__detailText .TeacherDetailedContent-module-scss-module__lM3k8a__education {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.TeacherDetailedContent-module-scss-module__lM3k8a__content .TeacherDetailedContent-module-scss-module__lM3k8a__contentDetail .TeacherDetailedContent-module-scss-module__lM3k8a__detail .TeacherDetailedContent-module-scss-module__lM3k8a__detailText .TeacherDetailedContent-module-scss-module__lM3k8a__education p {
+  color: #616060f0;
+  width: 100%;
+  max-width: 600px;
+}
+
+.TeacherDetailedContent-module-scss-module__lM3k8a__content .TeacherDetailedContent-module-scss-module__lM3k8a__contentDetail .TeacherDetailedContent-module-scss-module__lM3k8a__detail .TeacherDetailedContent-module-scss-module__lM3k8a__detailText .TeacherDetailedContent-module-scss-module__lM3k8a__share {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.TeacherDetailedContent-module-scss-module__lM3k8a__content .TeacherDetailedContent-module-scss-module__lM3k8a__contentDetail .TeacherDetailedContent-module-scss-module__lM3k8a__detail .TeacherDetailedContent-module-scss-module__lM3k8a__detailText .TeacherDetailedContent-module-scss-module__lM3k8a__share .TeacherDetailedContent-module-scss-module__lM3k8a__shareIcon {
+  display: flex;
+  gap: 20px;
+}
+
+.TeacherDetailedContent-module-scss-module__lM3k8a__content .TeacherDetailedContent-module-scss-module__lM3k8a__contentDetail .TeacherDetailedContent-module-scss-module__lM3k8a__detail .TeacherDetailedContent-module-scss-module__lM3k8a__detailText .TeacherDetailedContent-module-scss-module__lM3k8a__share .TeacherDetailedContent-module-scss-module__lM3k8a__shareIcon a {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #8080807a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.TeacherDetailedContent-module-scss-module__lM3k8a__content .TeacherDetailedContent-module-scss-module__lM3k8a__contentDetail .TeacherDetailedContent-module-scss-module__lM3k8a__detail .TeacherDetailedContent-module-scss-module__lM3k8a__detailText .TeacherDetailedContent-module-scss-module__lM3k8a__share .TeacherDetailedContent-module-scss-module__lM3k8a__shareIcon .TeacherDetailedContent-module-scss-module__lM3k8a__facebook {
+  color: #0a0acbc2;
+}
+
+.TeacherDetailedContent-module-scss-module__lM3k8a__content .TeacherDetailedContent-module-scss-module__lM3k8a__contentDetail .TeacherDetailedContent-module-scss-module__lM3k8a__detail .TeacherDetailedContent-module-scss-module__lM3k8a__detailText .TeacherDetailedContent-module-scss-module__lM3k8a__share .TeacherDetailedContent-module-scss-module__lM3k8a__shareIcon .TeacherDetailedContent-module-scss-module__lM3k8a__telegram {
+  color: #0754fa;
+}
+
+.TeacherDetailedContent-module-scss-module__lM3k8a__content .TeacherDetailedContent-module-scss-module__lM3k8a__contentDetail .TeacherDetailedContent-module-scss-module__lM3k8a__detail .TeacherDetailedContent-module-scss-module__lM3k8a__detailText .TeacherDetailedContent-module-scss-module__lM3k8a__share .TeacherDetailedContent-module-scss-module__lM3k8a__shareIcon .TeacherDetailedContent-module-scss-module__lM3k8a__vk {
+  color: #0754fa;
+}
+
+.TeacherDetailedContent-module-scss-module__lM3k8a__content .TeacherDetailedContent-module-scss-module__lM3k8a__contentDetail .TeacherDetailedContent-module-scss-module__lM3k8a__detail .TeacherDetailedContent-module-scss-module__lM3k8a__detailText .TeacherDetailedContent-module-scss-module__lM3k8a__share .TeacherDetailedContent-module-scss-module__lM3k8a__shareIcon .TeacherDetailedContent-module-scss-module__lM3k8a__instagram {
+  color: #f03;
+}
+
+.TeacherDetailedContent-module-scss-module__lM3k8a__content .TeacherDetailedContent-module-scss-module__lM3k8a__contentDetail .TeacherDetailedContent-module-scss-module__lM3k8a__success {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.TeacherDetailedContent-module-scss-module__lM3k8a__content .TeacherDetailedContent-module-scss-module__lM3k8a__contentDetail .TeacherDetailedContent-module-scss-module__lM3k8a__success p {
+  width: 100%;
+  max-width: 1000px;
+  color: #616060f0;
+}
+
+@media (width <= 1200px) {
+  .TeacherDetailedContent-module-scss-module__lM3k8a__content {
+    padding-top: 80px;
+  }
+
+  .TeacherDetailedContent-module-scss-module__lM3k8a__content .TeacherDetailedContent-module-scss-module__lM3k8a__contentDetail .TeacherDetailedContent-module-scss-module__lM3k8a__detail {
+    flex-direction: column;
+  }
+
+  .TeacherDetailedContent-module-scss-module__lM3k8a__content .TeacherDetailedContent-module-scss-module__lM3k8a__contentDetail .TeacherDetailedContent-module-scss-module__lM3k8a__detail img {
+    width: 100%;
+    max-width: 650px;
+    height: 420px;
+  }
+
+  .TeacherDetailedContent-module-scss-module__lM3k8a__content .TeacherDetailedContent-module-scss-module__lM3k8a__contentDetail .TeacherDetailedContent-module-scss-module__lM3k8a__detail .TeacherDetailedContent-module-scss-module__lM3k8a__detailText h1 {
+    font-size: 1.8rem;
+  }
+
+  .TeacherDetailedContent-module-scss-module__lM3k8a__content .TeacherDetailedContent-module-scss-module__lM3k8a__contentDetail .TeacherDetailedContent-module-scss-module__lM3k8a__detail .TeacherDetailedContent-module-scss-module__lM3k8a__education p {
+    max-width: 100%;
+  }
+
+  .TeacherDetailedContent-module-scss-module__lM3k8a__content .TeacherDetailedContent-module-scss-module__lM3k8a__contentDetail .TeacherDetailedContent-module-scss-module__lM3k8a__detail .TeacherDetailedContent-module-scss-module__lM3k8a__share .TeacherDetailedContent-module-scss-module__lM3k8a__shareIcon {
+    gap: 15px;
+  }
+
+  .TeacherDetailedContent-module-scss-module__lM3k8a__content .TeacherDetailedContent-module-scss-module__lM3k8a__contentDetail .TeacherDetailedContent-module-scss-module__lM3k8a__success p {
+    max-width: 100%;
+  }
+}
+
+@media (width <= 767px) {
+  .TeacherDetailedContent-module-scss-module__lM3k8a__content {
+    padding-top: 90px;
+  }
+
+  .TeacherDetailedContent-module-scss-module__lM3k8a__content .TeacherDetailedContent-module-scss-module__lM3k8a__contentDetail .TeacherDetailedContent-module-scss-module__lM3k8a__detail {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .TeacherDetailedContent-module-scss-module__lM3k8a__content .TeacherDetailedContent-module-scss-module__lM3k8a__contentDetail .TeacherDetailedContent-module-scss-module__lM3k8a__detail img {
+    width: 100%;
+    height: clamp(300px, 4vw, 420px);
+  }
+
+  .TeacherDetailedContent-module-scss-module__lM3k8a__content .TeacherDetailedContent-module-scss-module__lM3k8a__contentDetail .TeacherDetailedContent-module-scss-module__lM3k8a__detail .TeacherDetailedContent-module-scss-module__lM3k8a__detailText h1 {
+    font-size: 1.5rem;
+  }
+
+  .TeacherDetailedContent-module-scss-module__lM3k8a__content .TeacherDetailedContent-module-scss-module__lM3k8a__contentDetail .TeacherDetailedContent-module-scss-module__lM3k8a__detail .TeacherDetailedContent-module-scss-module__lM3k8a__education p {
+    max-width: 100%;
+  }
+
+  .TeacherDetailedContent-module-scss-module__lM3k8a__content .TeacherDetailedContent-module-scss-module__lM3k8a__contentDetail .TeacherDetailedContent-module-scss-module__lM3k8a__detail .TeacherDetailedContent-module-scss-module__lM3k8a__share .TeacherDetailedContent-module-scss-module__lM3k8a__shareIcon {
+    gap: 10px;
+  }
+
+  .TeacherDetailedContent-module-scss-module__lM3k8a__content .TeacherDetailedContent-module-scss-module__lM3k8a__contentDetail .TeacherDetailedContent-module-scss-module__lM3k8a__success p {
+    max-width: 100%;
+  }
+}
+
+
+/*# sourceMappingURL=cf686_TeacherDetailedContent_TeacherDetailedContent_module_scss_module_4384e6.css.map*/

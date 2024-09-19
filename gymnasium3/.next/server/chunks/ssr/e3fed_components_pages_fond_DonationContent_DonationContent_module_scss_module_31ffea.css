@@ -1,0 +1,132 @@
+/* [project]/src/appPages/site/components/pages/fond/DonationContent/DonationContent.module.scss.module.css [app-ssr] (css) */
+.DonationContent-module-scss-module__QxzTRW__donationContent {
+  margin-top: 100px;
+}
+
+.DonationContent-module-scss-module__QxzTRW__content {
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto 60px;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px #0000001a;
+  transition: transform .3s ease-in-out;
+}
+
+.DonationContent-module-scss-module__QxzTRW__content:hover {
+  transform: translateY(-5px);
+}
+
+.DonationContent-module-scss-module__QxzTRW__heading {
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.DonationContent-module-scss-module__QxzTRW__formGroup {
+  margin-bottom: 25px;
+}
+
+.DonationContent-module-scss-module__QxzTRW__label {
+  display: block;
+  margin-bottom: 8px;
+  color: #34495e;
+  font-weight: 500;
+  transition: color .3s;
+}
+
+.DonationContent-module-scss-module__QxzTRW__input, .DonationContent-module-scss-module__QxzTRW__textarea, .DonationContent-module-scss-module__QxzTRW__fileButton {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all .3s;
+}
+
+.DonationContent-module-scss-module__QxzTRW__input:focus, .DonationContent-module-scss-module__QxzTRW__textarea:focus, .DonationContent-module-scss-module__QxzTRW__fileButton:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px #3498db33;
+  outline: none;
+}
+
+.DonationContent-module-scss-module__QxzTRW__textarea {
+  height: 120px;
+  resize: vertical;
+}
+
+.DonationContent-module-scss-module__QxzTRW__fileButton {
+  display: inline-block;
+  background-color: #f7f9fa;
+  color: #2c3e50;
+  cursor: pointer;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.DonationContent-module-scss-module__QxzTRW__fileButton:hover {
+  background-color: #e8f4f8;
+}
+
+.DonationContent-module-scss-module__QxzTRW__submitButton {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .3s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.DonationContent-module-scss-module__QxzTRW__submitButton:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px #0000001a;
+}
+
+.DonationContent-module-scss-module__QxzTRW__submitButton:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.DonationContent-module-scss-module__QxzTRW__error {
+  color: #e74c3c;
+  font-size: 14px;
+  margin-top: 5px;
+  display: block;
+  font-weight: 500;
+  transition: all .3s;
+}
+
+.DonationContent-module-scss-module__QxzTRW__error:not(:empty) {
+  animation: .82s cubic-bezier(.36, .07, .19, .97) both DonationContent-module-scss-module__QxzTRW__shake;
+}
+
+@keyframes DonationContent-module-scss-module__QxzTRW__shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-5px);
+  }
+
+  20%, 40%, 60%, 80% {
+    transform: translateX(5px);
+  }
+}
+
+/*# sourceMappingURL=e3fed_components_pages_fond_DonationContent_DonationContent_module_scss_module_31ffea.css.map*/
