@@ -25,15 +25,19 @@ from rest_framework import status
 User = get_user_model()
 
 
-@api_view(['POST'])
+@api_view(['GET', 'POST'])
 def user_info(request):
-    username = request.data.get('username')
+    if request.method == 'GET':
+        username = request.GET.get('username')
+    else:
+        username = request.data.get('username')
+
     if not username:
         return Response({'error': 'Username is required'}, status=status.HTTP_400_BAD_REQUEST)
 
     try:
         user = User.objects.get(username=username)
-        avatar_url = user.profile.avatar.url if user.profile.avatar else None
+        avatar_url = request.build_absolute_uri(user.profile.avatar.url) if user.profile.avatar else None
         return Response({
             'username': user.username,
             'avatar': avatar_url,
