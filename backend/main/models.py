@@ -3,9 +3,33 @@ from django.contrib.auth.models import User
 from django.core.cache import cache
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.validators import MinValueValidator, MaxValueValidator
+from loguru import logger
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from loguru import logger
+from PIL import Image
+import io
+from django.core.files.base import ContentFile
+
+
+class CompressedImageField(models.ImageField):
+    def __init__(self, *args, **kwargs):
+        self.max_width = kwargs.pop('max_width', 1920)
+        self.max_height = kwargs.pop('max_height', 1080)
+        self.quality = kwargs.pop('quality', 85)
+        super().__init__(*args, **kwargs)
+
+    def pre_save(self, model_instance, add):
+        file = super().pre_save(model_instance, add)
+        if file and hasattr(file, 'image'):
+            image = Image.open(file)
+            image.thumbnail((self.max_width, self.max_height), Image.LANCZOS)
+            output = io.BytesIO()
+            image.save(output, format='JPEG', quality=self.quality, optimize=True)
+            output.seek(0)
+            new_content = ContentFile(output.read())
+            new_content.name = file.name
+            setattr(model_instance, self.attname, new_content)
+        return file
 
 
 class TimestampedModel(models.Model):
@@ -54,7 +78,7 @@ class PersonModel(models.Model):
 
 
 class ImageModel(models.Model):
-    image = models.ImageField(upload_to='images/%Y/%m/%d/', verbose_name=_('Изображение'))
+    image = CompressedImageField(upload_to='images/%Y/%m/%d/', verbose_name=_('Изображение'))
 
     class Meta:
         abstract = True

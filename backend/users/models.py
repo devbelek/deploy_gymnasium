@@ -9,6 +9,11 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext_lazy as _
 import logging
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+from PIL import Image
+import io
+from django.core.files.base import ContentFile
 
 logger = logging.getLogger(__name__)
 
@@ -18,9 +23,30 @@ def validate_file_extension(value):
         raise ValidationError("Можно загружать только файлы в формате PDF.")
 
 
+class CompressedImageField(models.ImageField):
+    def __init__(self, *args, **kwargs):
+        self.max_width = kwargs.pop('max_width', 1920)
+        self.max_height = kwargs.pop('max_height', 1080)
+        self.quality = kwargs.pop('quality', 85)
+        super().__init__(*args, **kwargs)
+
+    def pre_save(self, model_instance, add):
+        file = super().pre_save(model_instance, add)
+        if file and hasattr(file, 'image'):
+            image = Image.open(file)
+            image.thumbnail((self.max_width, self.max_height), Image.LANCZOS)
+            output = io.BytesIO()
+            image.save(output, format='JPEG', quality=self.quality, optimize=True)
+            output.seek(0)
+            new_content = ContentFile(output.read())
+            new_content.name = file.name
+            setattr(model_instance, self.attname, new_content)
+        return file
+
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True, related_name='profile')
-    avatar = models.ImageField(upload_to='avatars/', blank=True, verbose_name='Аватар')
+    avatar = CompressedImageField(upload_to='avatars/', blank=True, verbose_name='Аватар')
     about = models.CharField(max_length=300, blank=True, null=True, verbose_name='О себе')
 
     def __str__(self):
