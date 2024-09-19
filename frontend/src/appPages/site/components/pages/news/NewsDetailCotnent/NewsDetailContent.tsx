@@ -91,24 +91,22 @@ const NewsDetailContent: React.FC = () => {
     const fetchUserAvatars = async () => {
       if (commentsData) {
         const uniqueUsers = Array.from(new Set(commentsData.map(comment => comment.author)));
-        const avatarPromises = uniqueUsers.map(async (username) => {
+        const newUserAvatars: Record<string, string> = {};
+
+        for (const username of uniqueUsers) {
           try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/profile/`);
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/profile/${username}/`);
             if (response.ok) {
               const userData = await response.json();
-              return { username, avatar: userData.avatar };
+              newUserAvatars[username] = userData.avatar || `https://api.dicebear.com/6.x/initials/svg?seed=${username}`;
+            } else {
+              newUserAvatars[username] = `https://api.dicebear.com/6.x/initials/svg?seed=${username}`;
             }
           } catch (error) {
             console.error(`Ошибка при получении аватара для ${username}:`, error);
+            newUserAvatars[username] = `https://api.dicebear.com/6.x/initials/svg?seed=${username}`;
           }
-          return { username, avatar: null };
-        });
-
-        const avatarResults = await Promise.all(avatarPromises);
-        const newUserAvatars = avatarResults.reduce((acc, { username, avatar }) => {
-          acc[username] = avatar || `https://api.dicebear.com/6.x/initials/svg?seed=${username}`;
-          return acc;
-        }, {} as Record<string, string>);
+        }
 
         setUserAvatars(newUserAvatars);
       }
