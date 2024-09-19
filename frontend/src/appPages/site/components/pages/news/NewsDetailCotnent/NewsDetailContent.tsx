@@ -232,7 +232,6 @@ const NewsDetailContent: React.FC = () => {
             width={40}
             height={40}
             className={scss.avatar}
-            dangerouslyAllowSVG={true}
           />
           <div className={scss.commentInfo}>
             <span className={scss.commentAuthor}>{comment.author}</span>
@@ -291,7 +290,6 @@ const NewsDetailContent: React.FC = () => {
               height={500}
               quality={70}
               property="img"
-              dangerouslyAllowSVG={true}
             />
             <p>{newsData.content}</p>
             <div className={scss.newsInfo}>
