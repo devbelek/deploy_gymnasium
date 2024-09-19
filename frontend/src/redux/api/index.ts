@@ -36,6 +36,7 @@ export const api = createApi({
     "accounts",
     "donations",
     "search",
+    "comments",
     "about",
   ],
   endpoints: () => ({}),
