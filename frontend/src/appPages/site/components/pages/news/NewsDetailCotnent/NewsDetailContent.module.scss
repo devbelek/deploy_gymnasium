@@ -1,5 +1,6 @@
 .NewsDetailContent {
   margin-top: 100px;
+  padding-bottom: 120px; // Добавлено для отступа снизу
 
   .content {
     max-width: 1200px;
@@ -125,6 +126,7 @@
             border-radius: 50%;
             margin-right: 15px;
             object-fit: cover;
+            cursor: pointer;
           }
 
           .commentInfo {
@@ -135,6 +137,11 @@
               font-size: 16px;
               color: #333;
               display: block;
+              cursor: pointer;
+
+              &:hover {
+                text-decoration: underline;
+              }
             }
 
             .commentDate {
@@ -200,96 +207,107 @@
       .replyWrapper {
         margin-top: 20px;
       }
+    }
+  }
 
-      .addComment, .replyForm {
-        margin-top: 30px;
+  .fixedCommentForm {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 1000;
 
-        .replyingTo, .addNewComment {
-          font-size: 18px;
-          font-weight: 600;
-          margin-bottom: 15px;
-          color: #444;
-        }
+    .addComment, .replyForm {
+      max-width: 1200px;
+      margin: 0 auto;
 
-        .commentForm {
-          background-color: #f9f9f9;
-          padding: 20px;
-          border-radius: 10px;
-          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-
-          textarea {
-            width: 100%;
-            padding: 15px;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            resize: vertical;
-            font-size: 16px;
-            margin-bottom: 15px;
-            transition: border-color 0.3s, box-shadow 0.3s;
-            min-height: 100px;
-            background-color: #fff;
-
-            &:focus {
-              border-color: #ff9b9b;
-              box-shadow: 0 0 0 2px rgba(255, 155, 155, 0.2);
-              outline: none;
-            }
-
-            &::placeholder {
-              color: #aaa;
-            }
-          }
-
-          .formActions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-
-            button {
-              padding: 12px 20px;
-              border: none;
-              border-radius: 5px;
-              font-size: 16px;
-              font-weight: 600;
-              cursor: pointer;
-              transition: background-color 0.3s, transform 0.1s;
-
-              &:active {
-                transform: scale(0.98);
-              }
-
-              &.submitButton {
-                background-color: #ff9b9b;
-                color: white;
-
-                &:hover {
-                  background-color: #ff7f7f;
-                }
-              }
-
-              &.cancelButton {
-                background-color: #f0f0f0;
-                color: #666;
-
-                &:hover {
-                  background-color: #e0e0e0;
-                }
-              }
-            }
-          }
-        }
-      }
-
-      .loginPrompt {
-        text-align: center;
+      .replyingTo, .addNewComment {
         font-size: 18px;
-        color: #666;
-        margin-top: 30px;
-        padding: 20px;
-        background-color: #f9f9f9;
-        border-radius: 10px;
-        border: 1px dashed #ccc;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: #444;
       }
+
+      .commentForm {
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+
+        textarea {
+          width: 100%;
+          padding: 15px;
+          border: 1px solid #e0e0e0;
+          border-radius: 10px;
+          resize: vertical;
+          font-size: 16px;
+          margin-bottom: 15px;
+          transition: border-color 0.3s, box-shadow 0.3s;
+          min-height: 100px;
+          background-color: #fff;
+
+          &:focus {
+            border-color: #ff9b9b;
+            box-shadow: 0 0 0 2px rgba(255, 155, 155, 0.2);
+            outline: none;
+          }
+
+          &::placeholder {
+            color: #aaa;
+          }
+        }
+
+        .formActions {
+          display: flex;
+          gap: 10px;
+          flex-wrap: wrap;
+
+          button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+
+            &:active {
+              transform: scale(0.98);
+            }
+
+            &.submitButton {
+              background-color: #ff9b9b;
+              color: white;
+
+              &:hover {
+                background-color: #ff7f7f;
+              }
+            }
+
+            &.cancelButton {
+              background-color: #f0f0f0;
+              color: #666;
+
+              &:hover {
+                background-color: #e0e0e0;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .loginPrompt {
+      text-align: center;
+      font-size: 18px;
+      color: #666;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 10px;
+      border: 1px dashed #ccc;
     }
   }
 }
@@ -359,32 +377,34 @@
             }
           }
         }
+      }
+    }
 
-        .addComment, .replyForm {
-          .replyingTo, .addNewComment {
-            font-size: 16px;
+    .fixedCommentForm {
+      .addComment, .replyForm {
+        .replyingTo, .addNewComment {
+          font-size: 16px;
+        }
+
+        .commentForm {
+          padding: 15px;
+
+          textarea {
+            font-size: 14px;
           }
 
-          .commentForm {
-            padding: 15px;
-
-            textarea {
+          .formActions {
+            button {
+              padding: 10px 15px;
               font-size: 14px;
             }
-
-            .formActions {
-              button {
-                padding: 10px 15px;
-                font-size: 14px;
-              }
-            }
           }
         }
+      }
 
-        .loginPrompt {
-          font-size: 16px;
-          padding: 15px;
-        }
+      .loginPrompt {
+        font-size: 16px;
+        padding: 15px;
       }
     }
   }
@@ -460,32 +480,34 @@
             }
           }
         }
+      }
+    }
 
-        .addComment, .replyForm {
-          .replyingTo, .addNewComment {
-            font-size: 14px;
+    .fixedCommentForm {
+      .addComment, .replyForm {
+        .replyingTo, .addNewComment {
+          font-size: 14px;
+        }
+
+        .commentForm {
+          padding: 12px;
+
+          textarea {
+            font-size: 13px;
           }
 
-          .commentForm {
-            padding: 12px;
-
-            textarea {
+          .formActions {
+            button {
+              padding: 8px 12px;
               font-size: 13px;
             }
-
-            .formActions {
-              button {
-                padding: 8px 12px;
-                font-size: 13px;
-              }
-            }
           }
         }
+      }
 
-        .loginPrompt {
-          font-size: 14px;
-          padding: 12px;
-        }
+      .loginPrompt {
+        font-size: 14px;
+        padding: 12px;
       }
     }
   }
