@@ -6,7 +6,10 @@ const nextConfig = {
       "vermojctkdkrdsxvauwc.supabase.co",
       "3-gymnasium.kg",
       "api.dicebear.com",
+
     ],
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
 };
 
