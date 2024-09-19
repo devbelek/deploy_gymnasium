@@ -365,6 +365,10 @@ class Teachers(PersonModel, ImageModel):
         ('От пяти лет', _('Более 5 лет')),
         ('От десяти лет', _('Более 15 лет')),
     ]
+    TEACHER_STATUS = [
+        ('Сейчас работает', _('Сейчас работает')),
+        ('Раньше работал(а)', _('Раньше работал(а)')),
+    ]
     experience = models.CharField(max_length=200, choices=EXPERIENCE_CHOICES, verbose_name=_('Опыт'))
     subject = models.CharField(max_length=200, verbose_name=_('Предмет'))
     education = models.TextField(blank=True, verbose_name=_('Образование'))
@@ -376,24 +380,3 @@ class Teachers(PersonModel, ImageModel):
 
     def __str__(self):
         return f"Учитель: {self.name} {self.surname} - Предмет: {self.subject}"
-
-
-class OldTeachers(PersonModel, ImageModel):
-    EXPERIENCE_CHOICES = [
-        ('Год', _('Более 1 года')),
-        ('От пяти лет', _('Более 5 лет')),
-        ('От десяти лет', _('Более 15 лет')),
-    ]
-    experience = models.CharField(max_length=200, choices=EXPERIENCE_CHOICES, verbose_name=_('Опыт'))
-    subject = models.CharField(max_length=200, verbose_name=_('Предмет'))
-    education = models.TextField(blank=True, verbose_name=_('Образование'))
-    successes = models.TextField(blank=True, verbose_name=_('Успехи'))
-
-    class Meta:
-        verbose_name = _('Бывший учитель')
-        verbose_name_plural = _('Бывшие учителя')
-
-    def __str__(self):
-        return f"Учитель: {self.name} {self.surname} - Предмет: {self.subject}"
-
-

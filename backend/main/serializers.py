@@ -89,12 +89,6 @@ class TeachersSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class OldTeachersSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = OldTeachers
-        fields = '__all__'
-
-
 class StudentsSerializer(serializers.ModelSerializer):
     school_class = serializers.SerializerMethodField()
     olympian_status = serializers.SerializerMethodField()

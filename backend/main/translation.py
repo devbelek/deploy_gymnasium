@@ -3,7 +3,6 @@ from .models import (
     SuccessfulGraduates,
     News,
     Teachers,
-    OldTeachers,
 )
 from secondary.models import NamesOfOlympia
 
@@ -27,7 +26,3 @@ class NewsTranslationOptions(TranslationOptions):
 class TeachersTranslationOptions(TranslationOptions):
     fields = ('subject', 'education', 'successes')
 
-
-@register(OldTeachers)
-class OldTeachersTranslationOptions(TranslationOptions):
-    fields = ('subject', 'education', 'successes')
