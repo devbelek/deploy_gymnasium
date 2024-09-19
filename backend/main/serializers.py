@@ -104,7 +104,7 @@ class StudentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Students
         fields = ['id', 'name', 'surname', 'last_name', 'school_class', 'olympian_status', 'administrator_status',
-                  'classroom_teacher']
+                  'classroom_teacher', 'status_in_class']
 
     def get_school_class(self, obj):
         return NameOfGradesSerializer(NameOfGrades.get_cached(id=obj.school_class_id)).data
