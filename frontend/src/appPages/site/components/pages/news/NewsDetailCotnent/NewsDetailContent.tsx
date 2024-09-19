@@ -90,7 +90,7 @@ const NewsDetailContent: React.FC = () => {
   useEffect(() => {
     const fetchUserAvatars = async () => {
       if (commentsData) {
-        const uniqueUsers = [...new Set(commentsData.map(comment => comment.author))];
+        const uniqueUsers = Array.from(new Set(commentsData.map(comment => comment.author)));
         const avatarPromises = uniqueUsers.map(async (username) => {
           try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/profile/${username}/`);
