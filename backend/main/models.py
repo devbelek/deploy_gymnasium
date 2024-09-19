@@ -86,6 +86,10 @@ class TitleModel(models.Model):
 
 
 class Students(PersonModel, ImageModel):
+    president = 'Президент'
+    muzh_soviet = 'Муж.совет'
+    zhen_soviet = 'Жен.совет'
+
     STATUS_CHOICES = [
         (president, 'Президент'),
         (muzh_soviet, 'Муж.совет'),
