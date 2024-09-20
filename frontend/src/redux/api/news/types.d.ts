@@ -24,12 +24,6 @@ namespace NEWS {
     replies: IComment[];
   }
 
-  interface IUserProfile {
-    username: string;
-    avatar: string;
-    about: string;
-  }
-
   type GetNewsResponse = INews[];
   type GetNewsRequest = void;
   type GetDetNewsResponse = INews;
@@ -49,7 +43,4 @@ namespace NEWS {
 
   type LikeCommentResponse = { detail: string };
   type LikeCommentRequest = { commentId: number };
-
-  type GetUserProfileResponse = IUserProfile;
-  type GetUserProfileRequest = string;
 }
