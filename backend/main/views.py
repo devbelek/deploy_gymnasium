@@ -8,6 +8,10 @@ from loguru import logger
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.conf import settings
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
+from secondary.models import NamesOfOlympia
 
 
 class CachedViewSetMixin:
@@ -72,6 +76,13 @@ class StudentsViewSet(StudentRelatedViewSet):
 class OlympiansViewSet(BaseViewSet):
     queryset = Olympians.objects.select_related('student', 'name_of_olympia')
     serializer_class = OlympiansSerializer
+
+    @action(detail=False, methods=['get'], url_path='olymp_categories/(?P<category_id>\d+)')
+    def by_category(self, request, category_id=None):
+        category = get_object_or_404(NamesOfOlympia, id=category_id)
+        olympians = self.queryset.filter(name_of_olympia=category)
+        serializer = self.get_serializer(olympians, many=True)
+        return Response(serializer.data)
 
 
 class SuccessfulGraduatesViewSet(BaseViewSet):
