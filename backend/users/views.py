@@ -75,20 +75,6 @@ class UserProfileDetailView(generics.RetrieveAPIView):
         return Response(serializer.data)
 
 
-class RegisterView(APIView):
-    permission_classes = [AllowAny]
-
-    def post(self, request, *args, **kwargs):
-        logger.info(f"Попытка регистрации нового пользователя с данными: {request.data}")
-        serializer = RegisterSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            logger.info(f"Пользователь {serializer.data.get('username')} успешно зарегистрирован.")
-            return Response({"message": "Пользователь успешно создан!"}, status=status.HTTP_201_CREATED)
-        logger.warning(f"Ошибка регистрации пользователя: {serializer.errors}")
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 class DonationsViewSet(viewsets.ModelViewSet):
     queryset = Donation.objects.all().order_by('-date')
     serializer_class = DonationSerializer
