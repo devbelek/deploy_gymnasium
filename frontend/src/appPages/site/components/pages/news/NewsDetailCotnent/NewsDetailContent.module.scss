@@ -1,6 +1,6 @@
 .NewsDetailContent {
   margin-top: 100px;
-  padding-bottom: 120px; // Добавлено для отступа снизу
+  padding-bottom: 120px;
 
   .content {
     max-width: 1200px;
@@ -89,7 +89,7 @@
       margin-top: 60px;
 
       h2 {
-        font-size: 24px;
+        font-size: 28px;
         font-weight: 700;
         margin-bottom: 30px;
         color: #333;
@@ -99,34 +99,40 @@
 
       .comment {
         background-color: #fff;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        margin-bottom: 25px;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        margin-bottom: 30px;
         border: 1px solid #e0e0e0;
-        transition: box-shadow 0.3s ease;
+        transition: all 0.3s ease;
 
         &:hover {
-          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+          transform: translateY(-2px);
         }
 
         &.reply {
-          margin-left: 40px;
-          border-left: 3px solid #ff9b9b;
+          margin-left: 50px;
+          border-left: 4px solid #ff9b9b;
         }
 
         .commentHeader {
           display: flex;
           align-items: center;
-          margin-bottom: 15px;
+          margin-bottom: 20px;
 
           .avatar {
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            margin-right: 15px;
+            margin-right: 20px;
             object-fit: cover;
             cursor: pointer;
+            transition: transform 0.3s ease;
+
+            &:hover {
+              transform: scale(1.1);
+            }
           }
 
           .commentInfo {
@@ -134,18 +140,19 @@
 
             .commentAuthor {
               font-weight: 600;
-              font-size: 16px;
+              font-size: 18px;
               color: #333;
               display: block;
               cursor: pointer;
+              transition: color 0.3s ease;
 
               &:hover {
-                text-decoration: underline;
+                color: #ff9b9b;
               }
             }
 
             .commentDate {
-              font-size: 12px;
+              font-size: 14px;
               color: #888;
             }
           }
@@ -153,16 +160,16 @@
 
         .commentContent {
           font-size: 16px;
-          line-height: 1.6;
+          line-height: 1.8;
           color: #444;
-          margin-bottom: 15px;
+          margin-bottom: 20px;
         }
 
         .commentActions {
           display: flex;
           justify-content: flex-start;
           align-items: center;
-          gap: 15px;
+          gap: 20px;
           flex-wrap: wrap;
 
           .actionButton {
@@ -172,22 +179,30 @@
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 5px;
-            font-size: 14px;
-            transition: color 0.3s;
+            gap: 8px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 20px;
 
             &:hover {
               color: #ff9b9b;
+              background-color: rgba(255, 155, 155, 0.1);
+            }
+
+            &.liked {
+              color: #ff9b9b;
+              font-weight: 600;
             }
 
             svg {
-              width: 18px;
-              height: 18px;
+              width: 20px;
+              height: 20px;
             }
           }
 
           .moreButton {
-            padding: 5px;
+            padding: 8px;
             border-radius: 50%;
             transition: background-color 0.3s;
 
@@ -198,14 +213,14 @@
         }
 
         .replyForm {
-          margin-top: 20px;
-          padding-top: 20px;
+          margin-top: 25px;
+          padding-top: 25px;
           border-top: 1px solid #e0e0e0;
         }
       }
 
       .replyWrapper {
-        margin-top: 20px;
+        margin-top: 25px;
       }
     }
   }
@@ -216,42 +231,47 @@
     left: 0;
     right: 0;
     background-color: #fff;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+    padding: 25px;
     z-index: 1000;
+    transition: transform 0.3s ease-in-out;
+
+    &.hidden {
+      transform: translateY(100%);
+    }
 
     .addComment, .replyForm {
       max-width: 1200px;
       margin: 0 auto;
 
       .replyingTo, .addNewComment {
-        font-size: 18px;
+        font-size: 20px;
         font-weight: 600;
-        margin-bottom: 15px;
+        margin-bottom: 20px;
         color: #444;
       }
 
       .commentForm {
         background-color: #f9f9f9;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 
         textarea {
           width: 100%;
-          padding: 15px;
-          border: 1px solid #e0e0e0;
-          border-radius: 10px;
+          padding: 18px;
+          border: 2px solid #e0e0e0;
+          border-radius: 12px;
           resize: vertical;
           font-size: 16px;
-          margin-bottom: 15px;
-          transition: border-color 0.3s, box-shadow 0.3s;
-          min-height: 100px;
+          margin-bottom: 20px;
+          transition: all 0.3s ease;
+          min-height: 120px;
           background-color: #fff;
 
           &:focus {
             border-color: #ff9b9b;
-            box-shadow: 0 0 0 2px rgba(255, 155, 155, 0.2);
+            box-shadow: 0 0 0 4px rgba(255, 155, 155, 0.2);
             outline: none;
           }
 
@@ -262,17 +282,17 @@
 
         .formActions {
           display: flex;
-          gap: 10px;
+          gap: 15px;
           flex-wrap: wrap;
 
           button {
-            padding: 12px 20px;
+            padding: 14px 25px;
             border: none;
-            border-radius: 5px;
+            border-radius: 25px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.1s;
+            transition: all 0.3s ease;
 
             &:active {
               transform: scale(0.98);
@@ -284,6 +304,7 @@
 
               &:hover {
                 background-color: #ff7f7f;
+                box-shadow: 0 4px 15px rgba(255, 155, 155, 0.4);
               }
             }
 
@@ -293,6 +314,7 @@
 
               &:hover {
                 background-color: #e0e0e0;
+                color: #333;
               }
             }
           }
@@ -304,10 +326,65 @@
       text-align: center;
       font-size: 18px;
       color: #666;
-      padding: 20px;
+      padding: 25px;
       background-color: #f9f9f9;
-      border-radius: 10px;
-      border: 1px dashed #ccc;
+      border-radius: 12px;
+      border: 2px dashed #ccc;
+    }
+  }
+
+  .enlargedAvatarOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+
+    &.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .enlargedAvatarContainer {
+      position: relative;
+      max-width: 90%;
+      max-height: 90%;
+
+      .enlargedAvatar {
+        max-width: 100%;
+        max-height: 90vh;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      .closeButton {
+        position: absolute;
+        top: -20px;
+        right: -20px;
+        background-color: white;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background-color: #ff9b9b;
+          color: white;
+        }
+      }
     }
   }
 }
@@ -317,22 +394,88 @@
     margin-top: 60px;
 
     .content {
-      .news_head {
-        h1 {
+      .commentsSection {
+        h2 {
           font-size: 24px;
         }
-      }
 
-      .newsContent {
-        h1 {
-          font-size: 28px;
+        .comment {
+          padding: 20px;
+
+          &.reply {
+            margin-left: 30px;
+          }
+
+          .commentHeader {
+            .avatar {
+              width: 40px;
+              height: 40px;
+            }
+
+            .commentInfo {
+              .commentAuthor {
+                font-size: 16px;
+              }
+
+              .commentDate {
+                font-size: 12px;
+              }
+            }
+          }
+
+          .commentContent {
+            font-size: 15px;
+          }
+
+          .commentActions {
+            .actionButton {
+              font-size: 14px;
+
+              svg {
+                width: 18px;
+                height: 18px;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .fixedCommentForm {
+      .addComment, .replyForm {
+        .replyingTo, .addNewComment {
+          font-size: 18px;
         }
 
-        p {
-          font-size: 16px;
+        .commentForm {
+          padding: 20px;
+
+          textarea {
+            font-size: 15px;
+          }
+
+          .formActions {
+            button {
+              padding: 12px 20px;
+              font-size: 15px;
+            }
+          }
         }
       }
 
+      .loginPrompt {
+        font-size: 16px;
+        padding: 20px;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .NewsDetailContent {
+    margin-top: 40px;
+
+    .content {
       .commentsSection {
         h2 {
           font-size: 22px;
@@ -347,13 +490,13 @@
 
           .commentHeader {
             .avatar {
-              width: 30px;
-              height: 30px;
+              width: 35px;
+              height: 35px;
             }
 
             .commentInfo {
               .commentAuthor {
-                font-size: 14px;
+                font-size: 15px;
               }
 
               .commentDate {
@@ -368,7 +511,7 @@
 
           .commentActions {
             .actionButton {
-              font-size: 12px;
+              font-size: 13px;
 
               svg {
                 width: 16px;
@@ -403,111 +546,8 @@
       }
 
       .loginPrompt {
-        font-size: 16px;
-        padding: 15px;
-      }
-    }
-  }
-}
-
-@media (max-width: 480px) {
-  .NewsDetailContent {
-    margin-top: 40px;
-
-    .content {
-      .news_head {
-        h1 {
-          font-size: 20px;
-        }
-      }
-
-      .newsContent {
-        h1 {
-          font-size: 24px;
-        }
-
-        p {
-          font-size: 14px;
-        }
-
-        .newsInfo {
-          flex-direction: column;
-          align-items: flex-start;
-        }
-      }
-
-      .commentsSection {
-        h2 {
-          font-size: 20px;
-        }
-
-        .comment {
-          padding: 12px;
-
-          &.reply {
-            margin-left: 10px;
-          }
-
-          .commentHeader {
-            .avatar {
-              width: 25px;
-              height: 25px;
-            }
-
-            .commentInfo {
-              .commentAuthor {
-                font-size: 13px;
-              }
-
-              .commentDate {
-                font-size: 10px;
-              }
-            }
-          }
-
-          .commentContent {
-            font-size: 13px;
-          }
-
-          .commentActions {
-            .actionButton {
-              font-size: 11px;
-
-              svg {
-                width: 14px;
-                height: 14px;
-              }
-            }
-          }
-        }
-      }
-    }
-
-    .fixedCommentForm {
-      .addComment, .replyForm {
-        .replyingTo, .addNewComment {
-          font-size: 14px;
-        }
-
-        .commentForm {
-          padding: 12px;
-
-          textarea {
-            font-size: 13px;
-          }
-
-          .formActions {
-            button {
-              padding: 8px 12px;
-              font-size: 13px;
-            }
-          }
-        }
-      }
-
-      .loginPrompt {
         font-size: 14px;
-        padding: 12px;
+        padding: 15px;
       }
     }
   }

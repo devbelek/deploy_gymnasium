@@ -364,33 +364,31 @@ const NewsDetailContent: React.FC = () => {
           </div>
         </div>
       </div>
-      {showCommentForm && (
-        <div className={scss.fixedCommentForm}>
-          {isLoggedIn ? (
-            <div className={scss.addComment}>
-              {replyingTo ? (
-                <p className={scss.replyingTo}>
-                  Ответ на комментарий пользователя {replyingTo.author}:
-                </p>
-              ) : (
-                <p className={scss.addNewComment}>
-                  Добавить новый комментарий:
-                </p>
-              )}
-              {renderCommentForm(handleAddComment, () => {
-                setReplyingTo(null);
-                setCommentText("");
-              })}
-            </div>
-          ) : (
-            <p className={scss.loginPrompt}>
-              Пожалуйста, войдите в систему, чтобы оставить комментарий.
-            </p>
-          )}
-        </div>
-      )}
+      <div className={`${scss.fixedCommentForm} ${showCommentForm ? '' : scss.hidden}`}>
+        {isLoggedIn ? (
+          <div className={scss.addComment}>
+            {replyingTo ? (
+              <p className={scss.replyingTo}>
+                Ответ на комментарий пользователя {replyingTo.author}:
+              </p>
+            ) : (
+              <p className={scss.addNewComment}>
+                Добавить новый комментарий:
+              </p>
+            )}
+            {renderCommentForm(handleAddComment, () => {
+              setReplyingTo(null);
+              setCommentText("");
+            })}
+          </div>
+        ) : (
+          <p className={scss.loginPrompt}>
+            Пожалуйста, войдите в систему, чтобы оставить комментарий.
+          </p>
+        )}
+      </div>
       {enlargedAvatar && (
-        <div className={scss.enlargedAvatarOverlay} onClick={() => setEnlargedAvatar(null)}>
+        <div className={`${scss.enlargedAvatarOverlay} ${scss.visible}`} onClick={() => setEnlargedAvatar(null)}>
           <div className={scss.enlargedAvatarContainer}>
             <Image
               src={enlargedAvatar}
