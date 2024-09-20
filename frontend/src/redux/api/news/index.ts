@@ -83,7 +83,7 @@ export const api = createApi({
       }),
       invalidatesTags: ['comments'],
     }),
-    getAccount: build.query<NEWS.GetAccountResponse, null>({
+    getAccount: build.query<any, null>({
       query: () => ({
         url: 'accounts/user/',
         method: 'GET',
