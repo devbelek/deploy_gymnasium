@@ -22,6 +22,7 @@ declare namespace NEWS {
     likes_count: number;
     is_liked: boolean;
     replies: IComment[];
+    parent?: number;
   }
 
   type GetNewsResponse = INews[];

@@ -43,7 +43,10 @@ export const api = createApi({
       query: ({ newsId, text, parentId }) => ({
         url: parentId ? `comments/${parentId}/reply/` : `news/${newsId}/comments/`,
         method: 'POST',
-        body: { text },
+        body: JSON.stringify({ text }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
       }),
       invalidatesTags: ['comments'],
     }),
@@ -53,7 +56,10 @@ export const api = createApi({
           ? `comments/${parentId}/replies/${commentId}/`
           : `comments/${commentId}/`,
         method: 'PATCH',
-        body: { text },
+        body: JSON.stringify({ text }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
       }),
       invalidatesTags: ['comments'],
     }),
@@ -70,7 +76,10 @@ export const api = createApi({
       query: ({ commentId }) => ({
         url: 'comments/like/',
         method: 'POST',
-        body: { comment_id: commentId },
+        body: JSON.stringify({ comment_id: commentId }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
       }),
       invalidatesTags: ['comments'],
     }),
