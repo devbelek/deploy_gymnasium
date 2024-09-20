@@ -49,7 +49,6 @@ class CompressedImageField(models.ImageField):
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True, related_name='profile')
     avatar = CompressedImageField(upload_to='avatars/', blank=True, verbose_name='Аватар')
-    about = models.CharField(max_length=300, blank=True, null=True, verbose_name='О себе')
 
     def __str__(self):
         return self.user.username

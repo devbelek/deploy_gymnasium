@@ -8,7 +8,6 @@ import styles from './Profile.module.scss';
 
 interface ProfileFormData {
   user: string;
-  about: string;
   avatar: FileList | null;
 }
 
@@ -21,13 +20,11 @@ const Profile: React.FC = () => {
   const { register, handleSubmit, reset, watch } = useForm<ProfileFormData>();
 
   const watchAvatar = watch("avatar");
-  const watchAbout = watch("about", "");
 
   useEffect(() => {
     if (data) {
       reset({
         user: data.user,
-        about: data.about || '',
       });
       setPreviewUrl(data.avatar || null);
     }
@@ -51,7 +48,6 @@ const Profile: React.FC = () => {
     try {
       const formDataToSend = new FormData();
       formDataToSend.append('user', formData.user);
-      formDataToSend.append('about', formData.about);
       if (formData.avatar && formData.avatar.length > 0) {
         formDataToSend.append('avatar', formData.avatar[0]);
       }
@@ -86,7 +82,6 @@ const Profile: React.FC = () => {
         </div>
         <div className={styles.profileInfo}>
           <h2 className={styles.userName}>{data?.user}</h2>
-          <p className={styles.userAbout}>{data?.about || 'Нет информации'}</p>
           {!isEditing && (
             <button onClick={handleEdit} className={styles.editButton}>
               <FaEdit /> Редактировать профиль
@@ -103,16 +98,6 @@ const Profile: React.FC = () => {
               <div className={styles.formField}>
                 <label htmlFor="user">Имя</label>
                 <input id="user" {...register("user", { required: true })} />
-              </div>
-              <div className={styles.formField}>
-                <label htmlFor="about">О себе</label>
-                <textarea id="about" {...register("about", {
-                    maxLength: {
-                      value: 300,
-                      message: "Максимум 300 символов" // Сообщение об ошибке
-                    }
-                  })}
-                />
               </div>
               <div className={styles.formField}>
                 <label htmlFor="avatar">Изменить аватар</label>
