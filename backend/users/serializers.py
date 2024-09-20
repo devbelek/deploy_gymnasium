@@ -11,7 +11,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserProfile
-        fields = ['username', 'avatar', 'about']
+        fields = ['username', 'avatar']
 
 
 class RegisterSerializer(serializers.ModelSerializer):

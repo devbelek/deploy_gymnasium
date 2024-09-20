@@ -2,7 +2,6 @@ namespace ACCOUNT {
   interface IAccount {
     user: string;
     avatar: string | null;
-    about: string | null;
   }
 
   type GetAccountResponse = IAccount;
