@@ -1,4 +1,4 @@
-namespace NEWS {
+declare namespace NEWS {
   interface INews {
     id: number;
     author: string;
@@ -26,21 +26,46 @@ namespace NEWS {
 
   type GetNewsResponse = INews[];
   type GetNewsRequest = void;
+
   type GetDetNewsResponse = INews;
-  type GetDetNewsRequest = string | number;
+  type GetDetNewsRequest = number;
 
   type GetCommentsResponse = IComment[];
   type GetCommentsRequest = number;
 
+  interface AddCommentRequest {
+    newsId: number;
+    text: string;
+    parentId?: number;
+  }
   type AddCommentResponse = IComment;
-  type AddCommentRequest = { newsId: number; text: string; parentId?: number };
 
+  interface UpdateCommentRequest {
+    commentId: number;
+    text: string;
+    parentId?: number;
+  }
   type UpdateCommentResponse = IComment;
-  type UpdateCommentRequest = { commentId: number; text: string; parentId?: number };
 
+  interface DeleteCommentRequest {
+    commentId: number;
+    parentId?: number;
+  }
   type DeleteCommentResponse = void;
-  type DeleteCommentRequest = { commentId: number; parentId?: number };
 
+  interface LikeCommentRequest {
+    commentId: number;
+  }
   type LikeCommentResponse = { detail: string };
-  type LikeCommentRequest = { commentId: number };
+
+  interface GetAccountResponse {
+    id: number;
+    username: string;
+    email: string;
+    is_staff: boolean;
+    is_superuser: boolean;
+    first_name: string;
+    last_name: string;
+    isAuthenticated: boolean;
+  }
 }
