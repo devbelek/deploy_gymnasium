@@ -1,94 +1,90 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { api as index } from "..";
 import { getCSRFToken } from './csrf';
 
 const ENDPOINTS = process.env.NEXT_PUBLIC_ENDPOINT;
 
-export const api = createApi({
-  reducerPath: 'api',
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.NEXT_PUBLIC_API}/${ENDPOINTS}/`,
-    credentials: 'include',
-    prepareHeaders: (headers) => {
-      const token = getCSRFToken();
-      if (token) {
-        headers.set('X-CSRFToken', token);
-      }
-      return headers;
-    },
-  }),
-  tagTypes: ['news', 'comments', 'account'],
+interface AddCommentRequest {
+  newsId: number;
+  text: string;
+  parentId?: number;
+}
+
+const api = index.injectEndpoints({
   endpoints: (build) => ({
     getNews: build.query<NEWS.GetNewsResponse, NEWS.GetNewsRequest>({
       query: () => ({
-        url: 'news/',
-        method: 'GET',
+        url: `${ENDPOINTS}/news/`,
+        method: "GET",
       }),
-      providesTags: ['news'],
+      providesTags: ["news"],
     }),
     getDetNews: build.query<NEWS.GetDetNewsResponse, number>({
       query: (id) => ({
-        url: `news/${id}/`,
-        method: 'GET',
+        url: `${ENDPOINTS}/news/${id}/`,
+        method: "GET",
       }),
-      providesTags: ['news'],
+      providesTags: ["news"],
     }),
     getComments: build.query<NEWS.GetCommentsResponse, number>({
       query: (newsId) => ({
-        url: `news/${newsId}/comments/`,
-        method: 'GET',
+        url: `${ENDPOINTS}/news/${newsId}/comments/`,
+        method: "GET",
       }),
-      providesTags: ['comments'],
+      providesTags: ["comments"],
     }),
-    addComment: build.mutation<NEWS.AddCommentResponse, NEWS.AddCommentRequest>({
+    addComment: build.mutation<NEWS.AddCommentResponse, AddCommentRequest>({
       query: ({ newsId, text, parentId }) => ({
-        url: parentId ? `comments/${parentId}/reply/` : `news/${newsId}/comments/`,
-        method: 'POST',
+        url: parentId ? `${ENDPOINTS}/comments/${parentId}/reply/` : `${ENDPOINTS}/news/${newsId}/comments/`,
+        method: "POST",
         body: JSON.stringify({ text }),
+        credentials: 'include',
         headers: {
+          'X-CSRFToken': getCSRFToken() || '',
           'Content-Type': 'application/json',
         },
       }),
-      invalidatesTags: ['comments'],
+      invalidatesTags: ["comments"],
     }),
     updateComment: build.mutation<NEWS.UpdateCommentResponse, NEWS.UpdateCommentRequest>({
       query: ({ commentId, text, parentId }) => ({
         url: parentId
-          ? `comments/${parentId}/replies/${commentId}/`
-          : `comments/${commentId}/`,
-        method: 'PATCH',
+          ? `${ENDPOINTS}/comments/${parentId}/replies/${commentId}/`
+          : `${ENDPOINTS}/comments/${commentId}/`,
+        method: "PATCH",
         body: JSON.stringify({ text }),
+        credentials: 'include',
         headers: {
+          'X-CSRFToken': getCSRFToken() || '',
           'Content-Type': 'application/json',
         },
       }),
-      invalidatesTags: ['comments'],
+      invalidatesTags: ["comments"],
     }),
     deleteComment: build.mutation<NEWS.DeleteCommentResponse, NEWS.DeleteCommentRequest>({
       query: ({ commentId, parentId }) => ({
         url: parentId
-          ? `comments/${parentId}/replies/${commentId}/`
-          : `comments/${commentId}/`,
-        method: 'DELETE',
+          ? `${ENDPOINTS}/comments/${parentId}/replies/${commentId}/`
+          : `${ENDPOINTS}/comments/${commentId}/`,
+        method: "DELETE",
+        credentials: 'include',
+        headers: {
+          'X-CSRFToken': getCSRFToken() || '',
+        },
       }),
-      invalidatesTags: ['comments'],
+      invalidatesTags: ["comments"],
     }),
     likeComment: build.mutation<NEWS.LikeCommentResponse, NEWS.LikeCommentRequest>({
       query: ({ commentId }) => ({
-        url: 'comments/like/',
-        method: 'POST',
+        url: `${ENDPOINTS}/comments/like/`,
+        method: "POST",
         body: JSON.stringify({ comment_id: commentId }),
+        credentials: 'include',
         headers: {
+          'X-CSRFToken': getCSRFToken() || '',
           'Content-Type': 'application/json',
         },
       }),
-      invalidatesTags: ['comments'],
-    }),
-    getAccount: build.query<any, null>({
-      query: () => ({
-        url: 'accounts/user/',
-        method: 'GET',
-      }),
-      providesTags: ['account'],
+      invalidatesTags: ["comments"],
     }),
   }),
 });
@@ -101,5 +97,4 @@ export const {
   useUpdateCommentMutation,
   useDeleteCommentMutation,
   useLikeCommentMutation,
-  useGetAccountQuery,
 } = api;
