@@ -174,6 +174,10 @@ const NewsDetailContent: React.FC = () => {
     [isLoggedIn, likeComment]
   );
 
+  const handleUserProfileClick = useCallback((username: string) => {
+    router.push(`/profile/${username}`);
+  }, [router]);
+
   const renderCommentForm = useCallback(
     (onSubmit: () => void, cancelAction: () => void) => (
       <div className={scss.commentForm}>
@@ -251,10 +255,6 @@ const NewsDetailContent: React.FC = () => {
     ),
     [currentUser, handleDeleteComment, handleLikeComment, isLoggedIn]
   );
-
-  const handleUserProfileClick = useCallback((username: string) => {
-    router.push(`/profile/${username}`);
-  }, [router]);
 
   const renderComment = useCallback(
     (comment: any, depth = 0) => (
