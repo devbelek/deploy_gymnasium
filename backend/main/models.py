@@ -125,7 +125,8 @@ class Students(PersonModel, ImageModel):
     administrator_status = models.ForeignKey('secondary.AdministratorTypes', on_delete=models.SET_NULL, null=True,
                                              blank=True, verbose_name=_('Позиция'))
     classroom_teacher = models.ManyToManyField('Teachers', verbose_name=_('Классный руководитель'))
-    status_in_class = models.CharField(max_length=200, choices=STATUS_CHOICES, verbose_name='Статус в классе')
+    status_in_class = models.CharField(max_length=200, choices=STATUS_CHOICES, null=True,
+                                       blank=True, verbose_name='Статус в классе')
 
     class Meta:
         verbose_name = _('Ученики')
@@ -326,7 +327,7 @@ class Graduates(PersonModel):
 class News(ImageModel, ContentModel, TimestampedModel):
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Автор'))
     description = models.CharField(max_length=300, verbose_name=_('Описание'))
-    
+
     class Meta:
         verbose_name = _('Новости')
         verbose_name_plural = _('Новости')
