@@ -4,7 +4,7 @@ import scss from "./Header.module.scss";
 import logo from "../../../../../assets/logo.svg";
 import Image from "next/image";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { DebounceInput as Input } from "react-debounce-input";
 import { useGetSearchQuery } from "@/redux/api/search";
@@ -42,10 +42,12 @@ const Header = () => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
+
   const handleBlur = () => {
     setQuery("");
     setHasFocusInput(false);
   };
+
   const handleScrollTo = () => {
     window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
   };

@@ -5,7 +5,7 @@ import React, { useMemo } from "react";
 import Link from "next/link";
 import styles from "./Search.module.scss";
 
-const Search: React.FC = () => {
+const SearchContent: React.FC = () => {
   const searchParams = useSearchParams();
   const query = searchParams?.get("query") || "";
 
@@ -58,4 +58,4 @@ const Search: React.FC = () => {
   );
 };
 
-export default Search;
+export default SearchContent;
