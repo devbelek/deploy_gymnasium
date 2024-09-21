@@ -7,18 +7,24 @@ namespace SEARCH {
     id: number;
     full_name: string | null;
     school_class__grade: string | null;
+    last_name: string;
+    name: string;
+    school_class?: {
+      grade: string;
+    };
   }
   export type GetSearchResponse = ISearch[];
   export type GetSearchRequest = {
     full_name?: string;
     school_class__grade?: string;
-  };
+  } | null;
 }
 
 const api = index.injectEndpoints({
   endpoints: (build) => ({
     getSearch: build.query<SEARCH.GetSearchResponse, SEARCH.GetSearchRequest>({
       query: (searchParams) => {
+        if (!searchParams) return { url: `${ENDPOINTS}/students/` };
         const { full_name, school_class__grade } = searchParams;
         let url = `${ENDPOINTS}/students/`;
         let params = {};

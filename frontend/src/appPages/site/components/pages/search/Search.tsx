@@ -5,11 +5,11 @@ import React, { useMemo } from "react";
 import Link from "next/link";
 import styles from "./Search.module.scss";
 
-const Search = () => {
+const Search: React.FC = () => {
   const searchParams = useSearchParams();
   const query = searchParams?.get("query") || "";
 
-  const searchRequest = useMemo(() => {
+  const searchRequest = useMemo<SEARCH.GetSearchRequest>(() => {
     if (!query) return null;
     if (/^\d+$/.test(query)) {
       return { school_class__grade: query };
