@@ -80,13 +80,7 @@ const Header = () => {
 
           <div className={scss.rightSection}>
             <div className={scss.search}>
-              <Input
-                minLength={1}
-                maxLength={30}
-                debounceTimeout={300}
-                value={query}
-                placeholder={t("Издөө...", "Поиск...")}
-              />
+                <input type="text" placeholder={t("Издөө...", "Поиск...")}/>
             </div>
 
             <div className={scss.language}>
