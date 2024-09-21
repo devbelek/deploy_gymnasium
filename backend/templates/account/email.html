@@ -7,30 +7,76 @@
 
 {% block content %}
 <style>
-    .menu {
+    .email-form-container {
         max-width: 400px;
         margin: 0 auto;
-        padding: 10px;
-        background-color: #f4f4f4;
-        border: 1px solid #ddd;
-        border-radius: 5px;
+        padding: 30px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .email-form-container h1 {
+        font-size: 24px;
         margin-bottom: 20px;
+        text-align: center;
+        color: var(--primary-color);
+    }
+    .email-form-container form {
+        display: flex;
+        flex-direction: column;
+    }
+    .email-form-container label {
+        margin-bottom: 5px;
+        font-weight: 500;
+    }
+    .email-form-container input[type="email"] {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        transition: border-color 0.3s ease;
+    }
+    .email-form-container input[type="email"]:focus {
+        border-color: var(--primary-color);
+        outline: none;
+    }
+    .email-form-container button {
+        width: 100%;
+        padding: 12px;
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    .email-form-container button:hover {
+        background-color: var(--secondary-color);
+    }
+    .menu {
+        max-width: 400px;
+        margin: 0 auto 20px;
+        padding: 15px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
     .menu ul {
         list-style: none;
         padding: 0;
         margin: 0;
-    }
-    .menu ul li {
-        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
     }
     .menu ul li a {
         text-decoration: none;
-        color: #007bff;
-        font-weight: bold;
+        color: var(--primary-color);
+        font-weight: 500;
+        transition: color 0.3s ease;
     }
     .menu ul li a:hover {
-        color: #0056b3;
+        color: var(--secondary-color);
     }
 </style>
 
@@ -42,14 +88,12 @@
     </ul>
 </div>
 
-<div class="form-container">
+<div class="email-form-container">
     <h1>{% trans "Добавить Email" %}</h1>
     <form method="POST" action="{% url 'account_email' %}">
         {% csrf_token %}
-        <div>
-            <label for="email">{% trans "E-mail" %}:</label>
-            {{ form.email }}
-        </div>
+        <label for="email">{% trans "E-mail" %}:</label>
+        {{ form.email }}
         <button type="submit">{% trans "Добавить E-mail" %}</button>
     </form>
 </div>
