@@ -1,0 +1,177 @@
+/* [project]/src/appPages/site/components/pages/search/Search.module.scss.module.css [app-client] (css) */
+.Search-module-scss-module__0Ff77q__searchContainer {
+  max-width: 1200px;
+  margin: 80px auto 0;
+  padding: 20px;
+  margin-bottom: 30px;
+  background-color: #4d2c5ee6;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px #0000001a;
+}
+
+.Search-module-scss-module__0Ff77q__searchContainer .Search-module-scss-module__0Ff77q__resultLink {
+  text-decoration: none;
+  color: #e7e5e5;
+  font-weight: 500;
+}
+
+.Search-module-scss-module__0Ff77q__searchContainer .Search-module-scss-module__0Ff77q__resultLink:hover {
+  text-decoration: underline;
+}
+
+@media (width <= 768px) {
+  .Search-module-scss-module__0Ff77q__searchContainer {
+    padding: 1rem;
+    margin-top: 60px;
+  }
+}
+
+.Search-module-scss-module__0Ff77q__title {
+  font-size: 2rem;
+  color: #fff;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+@media (width <= 768px) {
+  .Search-module-scss-module__0Ff77q__title {
+    font-size: 1.5rem;
+  }
+}
+
+.Search-module-scss-module__0Ff77q__loading, .Search-module-scss-module__0Ff77q__error, .Search-module-scss-module__0Ff77q__noResults {
+  text-align: center;
+  font-size: 1.2rem;
+  margin: 2rem 0;
+  color: #e7e5e5;
+}
+
+.Search-module-scss-module__0Ff77q__error {
+  color: #ff6b6b;
+}
+
+.Search-module-scss-module__0Ff77q__resultList {
+  list-style-type: none;
+  padding: 0;
+}
+
+.Search-module-scss-module__0Ff77q__resultItem {
+  background-color: #4d2c5ebb;
+  border-radius: 4px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform .2s ease-in-out, background-color .3s;
+}
+
+.Search-module-scss-module__0Ff77q__resultItem:hover {
+  transform: translateY(-2px);
+  background-color: #5b346fbb;
+}
+
+@media (width <= 576px) {
+  .Search-module-scss-module__0Ff77q__resultItem {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.Search-module-scss-module__0Ff77q__name {
+  font-weight: bold;
+  color: #fff;
+}
+
+.Search-module-scss-module__0Ff77q__grade {
+  color: #e7e5e5;
+  font-size: .9rem;
+}
+
+@media (width <= 576px) {
+  .Search-module-scss-module__0Ff77q__grade {
+    margin-top: .5rem;
+  }
+}
+
+.Search-module-scss-module__0Ff77q__searchInput {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.Search-module-scss-module__0Ff77q__searchInput input {
+  flex-grow: 1;
+  padding: 10px;
+  border: 2px solid #fff;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+  border-right: none;
+  font-size: 14px;
+  background: #fff3;
+  color: #fff;
+  outline: none;
+}
+
+.Search-module-scss-module__0Ff77q__searchInput input::placeholder {
+  color: #e7e5e5;
+}
+
+.Search-module-scss-module__0Ff77q__searchInput input:focus {
+  background: #ffffff1a;
+}
+
+.Search-module-scss-module__0Ff77q__searchInput button {
+  background-color: #fff3;
+  border: 2px solid #fff;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+  border-left: none;
+  padding: 11px 18px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #fff;
+  transition: background-color .3s;
+}
+
+.Search-module-scss-module__0Ff77q__searchInput button:hover {
+  background-color: #ffffff4d;
+}
+
+@media (width <= 430px) {
+  .Search-module-scss-module__0Ff77q__searchContainer {
+    background: none;
+    padding: 1rem;
+    margin-top: 80px;
+  }
+
+  .Search-module-scss-module__0Ff77q__title {
+    color: #4d2c5ebb;
+  }
+
+  .Search-module-scss-module__0Ff77q__resultItem {
+    background-color: #4d2c5ecc;
+  }
+}
+
+@media (width <= 320px) {
+  .Search-module-scss-module__0Ff77q__searchContainer {
+    margin-top: 70px;
+  }
+
+  .Search-module-scss-module__0Ff77q__title {
+    font-size: 1.3rem;
+  }
+
+  .Search-module-scss-module__0Ff77q__resultItem {
+    padding: .8rem;
+  }
+
+  .Search-module-scss-module__0Ff77q__name, .Search-module-scss-module__0Ff77q__grade {
+    font-size: .9rem;
+  }
+}
+
+/*# sourceMappingURL=src_appPages_site_components_pages_search_Search_module_scss_module_b52d8e.css.map*/

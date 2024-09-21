@@ -1,0 +1,29 @@
+{
+  "pages": {
+    "/(site)/students/parliament/page": [
+      "static/chunks/[root of the server]__1e9e25._.css",
+      "static/chunks/node_modules__pnpm_c0b1d5._.js",
+      "static/chunks/src_7a1d0f._.js",
+      "static/chunks/src_app_layout_tsx_830237._.js",
+      "static/chunks/src_appPages_site_components_layout_4242f8._.css",
+      "static/chunks/64365_next_02ee08._.js",
+      "static/chunks/f8f15_react-icons_fa_index_mjs_76c094._.js",
+      "static/chunks/f8f15_react-icons_lib_68da56._.js",
+      "static/chunks/src_ff74d9._.js",
+      "static/chunks/src_app_(site)_layout_tsx_c421c7._.js",
+      "static/chunks/9cda6_pages_students_StudentsParliament_StudentsParliament_module_scss_module_541bf8.css",
+      "static/chunks/src_app_(site)_students_parliament_page_tsx_1f6bb2._.js",
+      "static/chunks/src_app_(site)_students_parliament_page_tsx_eb83f4._.js",
+      "static/chunks/64365_next_dist_compiled_react_4cf784._.js",
+      "static/chunks/64365_next_dist_compiled_react-dom_cjs_react-dom_development_0b4cd4.js",
+      "static/chunks/64365_next_dist_compiled_react-dom_26edb1._.js",
+      "static/chunks/64365_next_dist_compiled_d1cfc0._.js",
+      "static/chunks/64365_next_dist_client_430531._.js",
+      "static/chunks/64365_next_dist_88d871._.js",
+      "static/chunks/90481_@swc_helpers_cjs_e55b81._.js",
+      "static/chunks/[turbopack]_dev_client_hmr-client_ts_91c708._.js",
+      "static/chunks/64365_next_dist_esm_build_templates_app-page_d46c16.js",
+      "static/chunks/64365_next_dist_esm_build_templates_app-page_cef9c5.js"
+    ]
+  }
+}

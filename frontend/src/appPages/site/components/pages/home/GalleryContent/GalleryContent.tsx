@@ -3,9 +3,12 @@ import { useGetGalleryQuery } from "@/redux/api/gallery";
 import scss from "./GalleryContent.module.scss";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
 const GalleryContent = () => {
   const { data } = useGetGalleryQuery();
+  const { isKyrgyz, t } = useLanguageStore();
+
   const router = useRouter();
   const handleNavigate = () => {
     router.push("/gallery");
@@ -16,7 +19,7 @@ const GalleryContent = () => {
       <div className="container">
         <div className={scss.content}>
           <div className={scss.galleryHead}>
-            <h1>Фотогалерея</h1>
+            <h1>{t("Сүрөт галереясы", "Фотогалерея")}</h1>
             <hr />
           </div>
           <div className={scss.gallery_card}>
@@ -37,7 +40,7 @@ const GalleryContent = () => {
           </div>
           <div className={scss.buttonContainer}>
             <button className={scss.button} onClick={handleNavigate}>
-              Вся галерея
+              {t("Бүтүндөй галерея", "Вся галерея")}
             </button>
           </div>
         </div>

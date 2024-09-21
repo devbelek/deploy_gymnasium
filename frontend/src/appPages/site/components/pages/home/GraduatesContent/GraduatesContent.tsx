@@ -4,23 +4,29 @@ import scss from "./GraduatesContent.module.scss";
 import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
 import { useGetSuccessfulGraduatesQuery } from "@/redux/api/successful_graduates";
 import graduateFallback from "../../../../../../assets/images/Group 1000001472.png"; // Fallback image
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
 const GraduatesContent = () => {
   const { data } = useGetSuccessfulGraduatesQuery();
+  const { isKyrgyz, t } = useLanguageStore();
 
   const graduateData = data && data.length > 0 ? data[0] : null;
 
   return (
     <section className={scss.content}>
       <div className="container">
-        <h1>Выпускники</h1>
+        <h1>{t("Бүтүрүүчүлөр", "Выпускники")}</h1>
         <hr />
         <div className={scss.graduateContent}>
           <div className={scss.title}>
             <p>{graduateData?.content}</p>
             <span>
               {graduateData?.graduate?.name} {graduateData?.graduate?.last_name}
-              <br /> Выпускник {graduateData?.graduate?.year} года
+              <br />{" "}
+              {t(
+                `${graduateData?.graduate?.year} жылдын бүтүрүүчүсү`,
+                `Выпускник ${graduateData?.graduate?.year} года`
+              )}
             </span>
             <div className={scss.wrapper}>
               <GrLinkPrevious />

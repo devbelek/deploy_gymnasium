@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["[project]/src/appPages/site/components/pages/students/StudentsMainContent/StudentsMainContent.module.scss.module.css"],"sourcesContent":[".classes{display:grid;grid-template-columns:1fr 1fr;gap:30px}.block{display:flex;align-items:center;justify-content:center;width:277px;height:69px;border-radius:7px;text-align:center;border:3px solid #ffe5e5;cursor:pointer;transition:.3s;text-decoration:none}.block:hover{background:#fff6f6;border:3px solid #ffd3d3}.block_text{color:#000;font-size:24px;font-weight:600;line-height:28.8px;text-align:left}@media(max-width: 1190px){.block{width:257px;height:59px}.block_text{font-size:22px;font-weight:600;line-height:28.8px}}@media(max-width: 1140px){.block{width:247px;height:50px}.block_text{font-size:20px;font-weight:600;line-height:27.8px}}@media(max-width: 1100px){.block{width:170px;height:49px}.block_text{font-size:18px;font-weight:500;line-height:28.8px}.classes{display:grid;grid-template-columns:1fr 1fr 1fr;gap:30px}}"],"names":[],"mappings":"AAAA;;;;;;AAA6D;;;;;;;;;;;;;;AAAsM;;;;;AAAyD;;;;;;;;AAAyF;EAA0B;;;;;EAA+B;;;;;;;AAA+D;EAA0B;;;;;EAA+B;;;;;;;AAA+D;EAA0B;;;;;EAA+B;;;;;;EAA8D"}},
+    {"offset": {"line": 78, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}

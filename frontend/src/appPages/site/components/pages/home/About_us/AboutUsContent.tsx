@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useGetAboutQuery } from "@/redux/api/about_us";
 import styles from "./AboutUsContent.module.scss";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
 interface StatItemProps {
   icon: React.ReactNode;
@@ -50,26 +51,31 @@ const StatItem: React.FC<StatItemProps> = ({ icon, value, label }) => (
 
 const AboutUsContent: React.FC = () => {
   const { data, error, isLoading } = useGetAboutQuery();
+  const { isKyrgyz, t } = useLanguageStore();
 
   if (isLoading) return <div className={styles.loading}>Loading...</div>;
   if (error) return <div className={styles.error}>Error loading data</div>;
 
   const stats = [
-    { icon: "👦🏻", value: data?.[0]?.students ?? 6395, label: "Учеников" },
+    {
+      icon: "👦🏻",
+      value: data?.[0]?.students ?? 6395,
+      label: t("Окуучулар", "Учеников"),
+    },
     {
       icon: "🎓",
       value: data?.[0]?.graduates_per_year ?? 13283,
-      label: "Выпускников",
+      label: t("Бүтүрүүчүлөр", "Выпускников"),
     },
     {
-      icon: "👨‍💼",
+      icon: "🏫",
       value: data?.[0]?.years_for_school ?? 330,
-      label: "Сотрудники",
+      label: t("Мектеп иштеген жылдар", "Год работы школы"),
     },
     {
       icon: "📖",
       value: data?.[0]?.count_books ?? 85,
-      label: "Количество книг",
+      label: t("Китептердин саны", "Количество книг"),
     },
   ];
 

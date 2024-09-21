@@ -4,13 +4,16 @@ import scss from "./StudentsContent.module.scss";
 import student from "../../../../../../assets/images/image 6.png";
 import circle from "../../../../../../assets/images/Ellipse 19.png";
 import { useRouter } from "next/navigation";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
 const StudentsContent = () => {
   const router = useRouter();
+  const { isKyrgyz, t } = useLanguageStore();
+
   return (
     <section id={scss.content}>
       <div className="container">
-        <h1>Наши ученики</h1>
+        <h1>{t("Биздин студенттер", "Наши ученики")}</h1>
         <div className={scss.content}>
           <div className={scss.imageWrapper}>
             <Image
@@ -24,7 +27,7 @@ const StudentsContent = () => {
             className={scss.button}
             onClick={() => router.push("/students")}
           >
-            Все ученики
+            {t("Бардык студенттер", "Все ученики")}
           </button>
         </div>
       </div>

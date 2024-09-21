@@ -18,3 +18,10 @@
     gap: 0px;
   }
 }
+
+@media (max-width: 884px) {
+  .personas {
+    flex-direction: column;
+    gap: 0px;
+  }
+}

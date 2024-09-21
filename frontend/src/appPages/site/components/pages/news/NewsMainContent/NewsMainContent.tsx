@@ -1,13 +1,12 @@
 "use client";
 import { useGetNewsQuery } from "@/redux/api/news";
-import scss from "./NewsMainContent.module.scss";
 import Image from "next/image";
 import { LuMessagesSquare } from "react-icons/lu";
 import { useRouter } from "next/navigation";
+import scss from "./NewsMainContent.module.scss";
 const NewsMainContent = () => {
   const { data } = useGetNewsQuery();
   console.log(data, "data");
-
   const router = useRouter();
 
   return (
@@ -34,7 +33,6 @@ const NewsMainContent = () => {
                   style={{ width: "100%", maxWidth: "320px", height: "90px" }}
                 >
                   {item.description}
-                
                 </h2>
                 <div className={scss.news_end}>
                   <p>{item.updated_at.slice(0, 10)}</p>

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["[project]/src/appPages/site/components/pages/students/StudentsParliament/StudentsParliament.module.scss.module.css"],"sourcesContent":[".content{display:flex;align-items:center}.ParliamBlock{width:249px;height:324px;padding:20px;border-radius:10px;text-decoration:none;background-image:url(../../../../../../assets/images/students_parlament.svg)}.ParliamBlock_text{font-size:26px;color:#fff;text-decoration:none;text-align:left}"],"names":[],"mappings":"AAAA;;;;;AAAyC;;;;;;;;;AAAyK"}},
+    {"offset": {"line": 21, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}

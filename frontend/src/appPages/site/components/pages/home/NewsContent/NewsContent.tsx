@@ -4,9 +4,12 @@ import scss from "./NewsContent.module.scss";
 import Image from "next/image";
 import { LuMessagesSquare } from "react-icons/lu";
 import { useRouter } from "next/navigation";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
 const NewsContent = () => {
   const { data: news } = useGetNewsQuery();
+  const { isKyrgyz, t } = useLanguageStore();
+
   const router = useRouter();
   const handleNavigate = () => {
     router.push("/news");
@@ -14,7 +17,7 @@ const NewsContent = () => {
   return (
     <section id={scss.content}>
       <div className="container">
-        <h1>Новости</h1>
+        <h1>{t("Жаңылыктар", "Новости")}</h1>
         <div className={scss.newsCard}>
           {news?.map((item) => (
             <div className={scss.card} key={item.id}>
@@ -26,7 +29,7 @@ const NewsContent = () => {
                 priority
                 quality={70}
               />
-              <p>{item.description}</p>
+              <p>{isKyrgyz ? item.description_ky : item.description_ru}</p>
               <article className={scss.end}>
                 <span>{item?.created_at.slice(0, 10)}</span>
                 <LuMessagesSquare />
@@ -35,7 +38,9 @@ const NewsContent = () => {
           ))}
         </div>
         <div className={scss.buttonContainer}>
-          <button onClick={handleNavigate}>Все новости</button>
+          <button onClick={handleNavigate}>
+            {t("Бардык жаңылыктар", "Все новости")}
+          </button>
         </div>
       </div>
     </section>

@@ -1,0 +1,381 @@
+/* [project]/src/appPages/site/components/pages/graduates/GraduatesFirstTab/GraduatesFirstTab.module.scss.module.css [app-ssr] (css) */
+.GraduatesFirstTab-module-scss-module__hFkc5W__StudentsClass {
+  padding-top: 100px;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__content {
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__title {
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27.24px;
+  text-align: center;
+  color: #000;
+  padding: 5px 0;
+  position: relative;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__showTitle {
+  font-size: 20px;
+  text-align: center;
+  padding: 15px 0;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__button {
+  outline: none;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 5px;
+  color: #000;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__button:hover {
+  background: #e2e2e2;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__selector {
+  background: #f3f3f3;
+  padding: 8px;
+  border-radius: 10px;
+  display: flex;
+  gap: 10px;
+  flex-direction: row;
+  align-items: center;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__show {
+  width: 450px;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__title:after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  border-bottom: 2px solid #000;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__tableTitle {
+  display: grid;
+  grid-template-columns: .1fr 2.5fr .5fr;
+  gap: 80px;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__loading {
+  width: 100%;
+  text-align: center;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__error {
+  width: 100%;
+  text-align: center;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__studentInfo {
+  display: grid;
+  padding: 5px 0;
+  grid-template-columns: .1fr 2.5fr .5fr;
+  gap: 80px;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__titleText {
+  font-size: 20px;
+  font-weight: 600;
+  padding: 0 100px 0 0;
+  line-height: 27.24px;
+  text-align: left;
+  color: #afafaf;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__tableText {
+  font-size: 20px;
+  font-weight: 600;
+  padding: 0 100px 0 0;
+  line-height: 27.24px;
+  text-align: left;
+  color: #666;
+  display: flex;
+  align-items: center;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__tableContent {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__tableTextNumber {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27.24px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  color: #000;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__tableName {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27.24px;
+  text-align: left;
+  color: #666;
+  gap: 10px;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__hr {
+  border-bottom: 1px solid #afafaf;
+  padding: 3px 50%;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__table {
+  padding: 40px 0 0;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__studentIcon {
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__isLoadingBlock {
+  display: flex;
+  width: 100%;
+  padding: 5px 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__errorBlock {
+  padding: 5px 0;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (width <= 1140px) {
+  .GraduatesFirstTab-module-scss-module__hFkc5W__title {
+    font-size: 17px;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__titleText {
+    padding: 0 90px 0 0;
+    font-size: 17px;
+    font-weight: 500;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__tableText {
+    font-size: 17px;
+    padding: 0 90px 0 0;
+    font-weight: 500;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__tableTextNumber {
+    font-size: 17px;
+    font-weight: 500;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__tableName {
+    font-size: 17px;
+    font-weight: 500;
+  }
+}
+
+@media (width <= 740px) {
+  .GraduatesFirstTab-module-scss-module__hFkc5W__tableTitle {
+    display: grid;
+    grid-template-columns: .1fr 2.3fr .4fr;
+    gap: 20px;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__table {
+    padding: 20px 0 0;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__showTitle {
+    font-size: 16px;
+    padding: 14px 0;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__button {
+    font-size: 14px;
+    padding: 4px;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__selector {
+    padding: 7px;
+    gap: 8px;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__show {
+    width: 350px;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__title {
+    font-size: 15px;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__studentInfo {
+    display: grid;
+    padding: 2px 0;
+    grid-template-columns: .1fr 2.3fr .4fr;
+    gap: 20px;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__titleText {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 0 80px 0 0;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__tableText {
+    font-size: 12px;
+    padding: 0 80px 0 0;
+    font-weight: 500;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__tableTextNumber {
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__tableName {
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__studentIcon {
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+  }
+}
+
+@media (width <= 480px) {
+  .GraduatesFirstTab-module-scss-module__hFkc5W__table {
+    padding: 10px 0 0;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__showTitle {
+    font-size: 14px;
+    padding: 13px 0;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__button {
+    font-size: 12px;
+    padding: 3px;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__selector {
+    padding: 5px;
+    gap: 6px;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__show {
+    width: 200px;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__tableTitle {
+    display: grid;
+    grid-template-columns: .1fr 2.3fr .4fr;
+    gap: 10px;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__title {
+    font-size: 12px;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__studentIcon {
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__studentInfo {
+    display: grid;
+    padding: 2px 0;
+    grid-template-columns: .1fr 2.3fr .4fr;
+    gap: 10px;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__titleText {
+    padding: 0;
+    font-size: 10px;
+    font-weight: 400;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__tableText {
+    padding: 0;
+    font-size: 10px;
+    font-weight: 400;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__tableTextNumber {
+    font-size: 10px;
+    font-weight: 400;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__tableName {
+    font-size: 10px;
+    font-weight: 400;
+  }
+}
+
+@media (width <= 380px) {
+  .GraduatesFirstTab-module-scss-module__hFkc5W__tableTitle {
+    display: grid;
+    grid-template-columns: .1fr 2.3fr .4fr;
+    gap: 8px;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__title {
+    font-size: 12px;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__studentInfo {
+    display: grid;
+    padding: 2px 0;
+    grid-template-columns: .1fr 2.3fr .4fr;
+    gap: 8px;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__titleText {
+    padding: 0;
+    font-size: 10px;
+    font-weight: 400;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__tableText {
+    padding: 0;
+    font-size: 10px;
+    font-weight: 400;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__tableTextNumber {
+    font-size: 10px;
+    font-weight: 400;
+  }
+
+  .GraduatesFirstTab-module-scss-module__hFkc5W__tableName {
+    font-size: 10px;
+    font-weight: 400;
+  }
+}
+
+/*# sourceMappingURL=9cda6_pages_graduates_GraduatesFirstTab_GraduatesFirstTab_module_scss_module_31ffea.css.map*/

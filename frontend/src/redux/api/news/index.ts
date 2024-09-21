@@ -1,5 +1,5 @@
 import { api as index } from "..";
-import { getCSRFToken } from './csrf';
+import { getCSRFToken } from "./csrf";
 
 const ENDPOINTS = process.env.NEXT_PUBLIC_ENDPOINT;
 
@@ -34,54 +34,65 @@ const api = index.injectEndpoints({
     }),
     addComment: build.mutation<NEWS.AddCommentResponse, AddCommentRequest>({
       query: ({ newsId, text, parentId }) => ({
-        url: parentId ? `${ENDPOINTS}/comments/${parentId}/reply/` : `${ENDPOINTS}/news/${newsId}/comments/`,
+        url: parentId
+          ? `${ENDPOINTS}/comments/${parentId}/reply/`
+          : `${ENDPOINTS}/news/${newsId}/comments/`,
         method: "POST",
         body: JSON.stringify({ text }),
-        credentials: 'include',
+        credentials: "include",
         headers: {
-          'X-CSRFToken': getCSRFToken() || '',
-          'Content-Type': 'application/json',
+          "X-CSRFToken": getCSRFToken() || "",
+          "Content-Type": "application/json",
         },
       }),
       invalidatesTags: ["comments"],
     }),
-    updateComment: build.mutation<NEWS.UpdateCommentResponse, NEWS.UpdateCommentRequest>({
+    updateComment: build.mutation<
+      NEWS.UpdateCommentResponse,
+      NEWS.UpdateCommentRequest
+    >({
       query: ({ commentId, text, parentId }) => ({
         url: parentId
           ? `${ENDPOINTS}/comments/${parentId}/replies/${commentId}/`
           : `${ENDPOINTS}/comments/${commentId}/`,
         method: "PATCH",
         body: JSON.stringify({ text }),
-        credentials: 'include',
+        credentials: "include",
         headers: {
-          'X-CSRFToken': getCSRFToken() || '',
-          'Content-Type': 'application/json',
+          "X-CSRFToken": getCSRFToken() || "",
+          "Content-Type": "application/json",
         },
       }),
       invalidatesTags: ["comments"],
     }),
-    deleteComment: build.mutation<NEWS.DeleteCommentResponse, NEWS.DeleteCommentRequest>({
+    deleteComment: build.mutation<
+      NEWS.DeleteCommentResponse,
+      NEWS.DeleteCommentRequest
+    >({
       query: ({ commentId, parentId }) => ({
         url: parentId
           ? `${ENDPOINTS}/comments/${parentId}/replies/${commentId}/`
           : `${ENDPOINTS}/comments/${commentId}/`,
         method: "DELETE",
-        credentials: 'include',
+        credentials: "include",
         headers: {
-          'X-CSRFToken': getCSRFToken() || '',
+          "X-CSRFToken": getCSRFToken() || "",
         },
       }),
       invalidatesTags: ["comments"],
     }),
-    likeComment: build.mutation<NEWS.LikeCommentResponse, NEWS.LikeCommentRequest>({
+    likeComment: build.mutation<
+      NEWS.LikeCommentResponse,
+      NEWS.LikeCommentRequest
+    >({
       query: ({ commentId }) => ({
         url: `${ENDPOINTS}/comments/like/`,
         method: "POST",
         body: JSON.stringify({ comment_id: commentId }),
-        credentials: 'include',
+        credentials: "include",
         headers: {
-          'X-CSRFToken': getCSRFToken() || '',
-          'Content-Type': 'application/json',
+          "X-CSRFToken": getCSRFToken() || "",
+          "Content-Type": "application/json",
         },
       }),
       invalidatesTags: ["comments"],
