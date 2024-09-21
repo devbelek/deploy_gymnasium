@@ -7,7 +7,6 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { DebounceInput as Input } from "react-debounce-input";
-import { useGetSearchQuery } from "@/redux/api/search";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 
 const Header = () => {
