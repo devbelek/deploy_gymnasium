@@ -4,7 +4,7 @@ import scss from "./Header.module.scss";
 import logo from "../../../../../assets/logo.svg";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { DebounceInput as Input } from "react-debounce-input";
 import { useGetSearchQuery } from "@/redux/api/search";
@@ -37,15 +37,6 @@ const Header = () => {
 
   const handleNavigate = () => {
     router.push("https://3-gymnasium.kg/accounts/");
-  };
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value);
-  };
-
-  const handleBlur = () => {
-    setQuery("");
-    setHasFocusInput(false);
   };
 
   const handleScrollTo = () => {
@@ -112,13 +103,6 @@ const Header = () => {
                 minLength={1}
                 maxLength={30}
                 debounceTimeout={300}
-                onChange={handleChange}
-                onFocus={() => {
-                  setHasFocusInput(true);
-                }}
-                onBlur={() => {
-                  handleBlur();
-                }}
                 value={query}
                 placeholder={t("Издөө...", "Поиск...")}
               />
