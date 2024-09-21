@@ -27,10 +27,10 @@ const TeachersMainContent: React.FC = () => {
   const filteredTeachers = data?.filter((teacher) => {
     if (filter === null) return true;
     if (filter === "current")
-      return teacher.teachers_status === t("Азыр иштейт", "Сейчас работает");
+      return teacher.teachers_status === "Сейчас работает";
     if (filter === "former")
       return (
-        teacher.teachers_status === t("Мурда иштеген", "Раньше работал(а)")
+        teacher.teachers_status === "Раньше работал(а)"
       );
     return true;
   });
