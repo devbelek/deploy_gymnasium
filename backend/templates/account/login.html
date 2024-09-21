@@ -3,10 +3,24 @@
 {% load i18n %}
 {% load account socialaccount %}
 
-{% block head_title %}{% trans "Sign In" %}{% endblock %}
+{% block head_title %}{% trans "Вход" %}{% endblock %}
 
 {% block content %}
 <style>
+    .login-form-container {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 30px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .login-form-container h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        text-align: center;
+        color: var(--primary-color);
+    }
     .socialaccount_providers {
         list-style: none;
         padding: 0;
@@ -17,11 +31,12 @@
     }
     .socialaccount_providers button {
         width: 100%;
-        padding: 10px;
+        padding: 12px;
         border: none;
         border-radius: 4px;
         cursor: pointer;
         font-size: 16px;
+        transition: background-color 0.3s ease;
     }
     .socialaccount_providers .google {
         background-color: #4285F4;
@@ -44,15 +59,58 @@
         border-top: 1px solid #ccc;
     }
     .login-or span {
-        background-color: #f8f9fa;
+        background-color: #ffffff;
         padding: 0 10px;
         position: relative;
         color: #6c757d;
     }
+    .login-form-container form {
+        display: flex;
+        flex-direction: column;
+    }
+    .login-form-container input[type="text"],
+    .login-form-container input[type="password"] {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        transition: border-color 0.3s ease;
+    }
+    .login-form-container input[type="text"]:focus,
+    .login-form-container input[type="password"]:focus {
+        border-color: var(--primary-color);
+        outline: none;
+    }
+    .login-form-container button[type="submit"] {
+        width: 100%;
+        padding: 12px;
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    .login-form-container button[type="submit"]:hover {
+        background-color: var(--secondary-color);
+    }
+    .login-form-container p {
+        margin-top: 20px;
+        text-align: center;
+    }
+    .login-form-container a {
+        color: var(--primary-color);
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+    .login-form-container a:hover {
+        color: var(--secondary-color);
+    }
 </style>
 
-<div class="form-container">
-    <h1>{% trans "Sign In" %}</h1>
+<div class="login-form-container">
+    <h1>{% trans "Вход" %}</h1>
 
     {% get_providers as socialaccount_providers %}
 
@@ -63,7 +121,7 @@
         <li>
             <a href="{% provider_login_url provider.id process='login' %}">
                 <button type="button" class="google">
-                    {% trans "Sign in with Google" %}
+                    {% trans "Войти через Google" %}
                 </button>
             </a>
         </li>
@@ -72,7 +130,7 @@
     </ul>
 
     <div class="login-or">
-        <span>{% trans 'or' %}</span>
+        <span>{% trans 'или' %}</span>
     </div>
     {% endif %}
 
@@ -82,10 +140,10 @@
         {% if redirect_field_value %}
         <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
         {% endif %}
-        <button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
+        <button class="primaryAction" type="submit">{% trans "Войти" %}</button>
     </form>
 
-    <p>{% blocktrans %}Если вы еще не создали учетную запись, сначала
+    <p>{% blocktrans %}Если у вас еще нет учетной записи, пожалуйста,
         <a href="{{ signup_url }}">зарегистрируйтесь</a>{% endblocktrans %}</p>
 </div>
 {% endblock %}
