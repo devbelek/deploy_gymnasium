@@ -24,7 +24,7 @@ const TeachersMainContent: React.FC = () => {
     );
   }
 
-const filteredTeachers = data?.filter((teacher) => {
+  const filteredTeachers = data?.filter((teacher) => {
     if (filter === null) return true;
     if (filter === "current")
       return teacher.teachers_status === "Сейчас работает";
