@@ -1,9 +1,12 @@
 namespace SEARCH {
-  interface ISearch {
+  export interface ISearch {
     id: number;
     full_name: string | null;
     school_class__grade: string | null;
   }
-  type GetSearchResponse = ISearch[];
-  type GetSearchRequest = null;
+  export type GetSearchResponse = ISearch[];
+  export type GetSearchRequest = {
+    full_name?: string;
+    school_class__grade?: string;
+  } | null;
 }
