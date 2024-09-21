@@ -16,17 +16,7 @@ const Header = () => {
   const [hasFocusInput, setHasFocusInput] = useState(false);
   const { isKyrgyz, setIsKyrgyz, t } = useLanguageStore();
 
-  const searchRequest = useMemo(() => {
-    if (query.length < 2) return null;
-    if (/^\d+$/.test(query)) {
-      return { school_class__grade: query };
-    }
-    return { full_name: query };
-  }, [query]);
 
-  const { data, error, isLoading } = useGetSearchQuery(searchRequest!, {
-    skip: !searchRequest,
-  });
 
   useEffect(() => {
     if (hasFocusInput && query.length >= 1) {
