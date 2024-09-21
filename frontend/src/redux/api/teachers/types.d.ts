@@ -1,6 +1,7 @@
 namespace TEACHERS {
   interface ITeacher {
     id?: number;
+    teachers_status: string;
     surname: string;
     name: string;
     last_name: string;

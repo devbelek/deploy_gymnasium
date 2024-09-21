@@ -82,3 +82,11 @@
     }
   }
 }
+
+@media (max-width: 884px) {
+  .GalleryMainContent {
+    .gallery_card {
+      grid-template-columns: repeat(2, 2fr) !important;
+    }
+  }
+}

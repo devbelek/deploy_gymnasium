@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 5, "column": 0}, "map": {"version":3,"sources":["/turbopack/[project]/src/appPages/site/components/pages/api/profile/Profile/Profile.tsx"],"sourcesContent":["\"use client\";\r\n\r\nimport { useGetAccountQuery } from \"@/redux/api/profile\";\r\n\r\ninterface IAccount {\r\n  user: string;\r\n  avatar: string | null;\r\n  about: string | null;\r\n}\r\n\r\nconst Profile = () => {\r\n  const { data, isLoading, error } = useGetAccountQuery<IAccount>();\r\n\r\n  if (isLoading) {\r\n    return <div>Loading...</div>;\r\n  }\r\n\r\n  if (error) {\r\n    return <div>Error loading data</div>;\r\n  }\r\n\r\n  return (\r\n    <div>\r\n      <h1>{user?.user}</h1>\r\n      {user?.avatar && <img src={user.avatar} alt=\"User Avatar\" />}\r\n      <p>{user?.about}</p>\r\n    </div>\r\n  );\r\n};\r\n\r\nexport default Profile;\r\n"],"names":[],"mappings":";;;;;;;;AAAA;;AAUA,MAAM,UAAU;;IACd,MAAM,EAAE,IAAI,EAAE,SAAS,EAAE,KAAK,EAAE,GAAG,CAAA,GAAA,0IAAA,CAAA,qBAAkB,AAAD;IAEpD,IAAI,WAAW;QACb,qBAAO,6LAAC;sBAAI;;;;;;IACd;IAEA,IAAI,OAAO;QACT,qBAAO,6LAAC;sBAAI;;;;;;IACd;IAEA,qBACE,6LAAC;;0BACC,6LAAC;0BAAI,MAAM;;;;;;YACV,MAAM,wBAAU,6LAAC;gBAAI,KAAK,KAAK,MAAM;gBAAE,KAAI;;;;;;0BAC5C,6LAAC;0BAAG,MAAM;;;;;;;;;;;;AAGhB;GAlBM;;QAC+B,0IAAA,CAAA,qBAAkB;;;KADjD;uCAoBS"}},
+    {"offset": {"line": 76, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}

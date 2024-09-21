@@ -240,11 +240,13 @@
       transform: translateY(100%);
     }
 
-    .addComment, .replyForm {
+    .addComment,
+    .replyForm {
       max-width: 1200px;
       margin: 0 auto;
 
-      .replyingTo, .addNewComment {
+      .replyingTo,
+      .addNewComment {
         font-size: 20px;
         font-weight: 600;
         margin-bottom: 20px;
@@ -442,8 +444,10 @@
     }
 
     .fixedCommentForm {
-      .addComment, .replyForm {
-        .replyingTo, .addNewComment {
+      .addComment,
+      .replyForm {
+        .replyingTo,
+        .addNewComment {
           font-size: 18px;
         }
 
@@ -524,8 +528,10 @@
     }
 
     .fixedCommentForm {
-      .addComment, .replyForm {
-        .replyingTo, .addNewComment {
+      .addComment,
+      .replyForm {
+        .replyingTo,
+        .addNewComment {
           font-size: 16px;
         }
 

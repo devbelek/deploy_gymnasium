@@ -1,75 +1,62 @@
 "use client";
-
 import { useGetSearchQuery } from "@/redux/api/search";
 import { useSearchParams } from "next/navigation";
-import React, { useMemo, Suspense } from "react";
-import StudentsMainContent from "../students/studentMainContent/StudentsMainContent";
+import React, { useMemo } from "react";
+import Link from "next/link"; // Используем Link для навигации
+import styles from "./Search.module.scss"; // Импортируем SCSS модуль
 
-// Определим тип GetSearchRequest, если он еще не определен
-type GetSearchRequest = {
-  school_class__grade?: string;
-  full_name?: string;
-};
-
-const SearchContent = () => {
+const Search = () => {
   const searchParams = useSearchParams();
   const query = searchParams?.get("query") || "";
 
-  const searchRequest: GetSearchRequest | undefined = useMemo(() => {
-    if (!query) return undefined;
+  const searchRequest = useMemo(() => {
+    if (!query) return null;
     if (/^\d+$/.test(query)) {
       return { school_class__grade: query };
     }
     return { full_name: query };
   }, [query]);
 
-  const { data, error, isLoading } = useGetSearchQuery(searchRequest as GetSearchRequest, {
+  const { data, error, isLoading } = useGetSearchQuery(searchRequest, {
     skip: !searchRequest,
   });
 
-  const errorMessage = useMemo(() => {
-    if (error) {
-      if (typeof error === 'string') {
-        return error;
-      } else if (error instanceof Error) {
-        return error.message;
-      } else if (typeof error === 'object' && error !== null && 'message' in error) {
-        return String((error as { message: unknown }).message);
-      }
-      return 'Неизвестная ошибка';
-    }
-    return null;
-  }, [error]);
-
   return (
-    <div style={{ paddingTop: "100px" }}>
-      <h1>Результаты поиска для: {query}</h1>
-      {isLoading && <p>Загрузка...</p>}
-      {errorMessage && <p>Произошла ошибка при поиске: {errorMessage}</p>}
+    <div className={styles.searchContainer}>
+      <h1 className={styles.title}>Результаты поиска для: {query}</h1>
+      {isLoading && <p className={styles.loading}>Загрузка...</p>}
+      {error ? (
+        <p className={styles.error}>
+          Произошла ошибка при поиске. Попробуйте снова позже.
+        </p>
+      ) : null}
       {!isLoading && !error && data && data.length > 0 ? (
-        <ul>
-          {data.map((result: SEARCH.ISearch) => (
-            <li key={result.id}>
-              {result.full_name}{" "}
-              {result.school_class__grade &&
-                `(Класс: ${result.school_class__grade})`}
+        <ul className={styles.resultList}>
+          {data.map((result) => (
+            <li key={result.id} className={styles.resultItem}>
+              {result.school_class && result.school_class.grade ? (
+                <Link
+                  href={{
+                    pathname: "/students/school_class",
+                    query: { grade: result.school_class.grade },
+                  }}
+                  className={styles.resultLink}
+                >
+                  {result.last_name} {result.name} (Класс:{" "}
+                  {result.school_class.grade})
+                </Link>
+              ) : (
+                <span>
+                  {result.last_name} {result.name}
+                </span>
+              )}
             </li>
           ))}
         </ul>
       ) : !isLoading && !error ? (
-        <p>Результатов не найдено</p>
+        <p className={styles.noResults}>Результатов не найдено</p>
       ) : null}
-      <h1>Студенты</h1>
-      <StudentsMainContent />
     </div>
-  );
-};
-
-const Search = () => {
-  return (
-    <Suspense fallback={<div>Загрузка...</div>}>
-      <SearchContent />
-    </Suspense>
   );
 };
 

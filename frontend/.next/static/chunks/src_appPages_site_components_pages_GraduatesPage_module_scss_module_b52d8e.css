@@ -1,0 +1,16 @@
+/* [project]/src/appPages/site/components/pages/GraduatesPage.module.scss.module.css [app-client] (css) */
+.GraduatesPage-module-scss-module__NDlmPW__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  padding-top: 100px;
+  padding-bottom: 30px;
+  gap: 60px;
+}
+
+.GraduatesPage-module-scss-module__NDlmPW__graduatesTable {
+  padding: 0 0 20px;
+}
+
+/*# sourceMappingURL=src_appPages_site_components_pages_GraduatesPage_module_scss_module_b52d8e.css.map*/

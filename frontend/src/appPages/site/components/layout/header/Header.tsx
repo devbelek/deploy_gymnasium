@@ -8,12 +8,14 @@ import { useParams, useRouter } from "next/navigation";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { DebounceInput as Input } from "react-debounce-input";
 import { useGetSearchQuery } from "@/redux/api/search";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
   const [query, setQuery] = useState<string>("");
   const [hasFocusInput, setHasFocusInput] = useState(false);
+  const { isKyrgyz, setIsKyrgyz, t } = useLanguageStore();
 
   const searchRequest = useMemo(() => {
     if (query.length < 2) return null;
@@ -26,8 +28,9 @@ const Header = () => {
   const { data, error, isLoading } = useGetSearchQuery(searchRequest!, {
     skip: !searchRequest,
   });
+
   useEffect(() => {
-    if (hasFocusInput && query.length >= 2) {
+    if (hasFocusInput && query.length >= 1) {
       router.push(`/search?query=${encodeURIComponent(query)}`);
     }
   }, [query, hasFocusInput, router]);
@@ -39,7 +42,10 @@ const Header = () => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
-
+  const handleBlur = () => {
+    setQuery("");
+    setHasFocusInput(false);
+  };
   const handleScrollTo = () => {
     window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
   };
@@ -50,7 +56,7 @@ const Header = () => {
 
   return (
     <header className={scss.header}>
-      <div className="container" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+      <div className="container">
         <div className={scss.content}>
           <div className={scss.hamburger} onClick={handleMenu}>
             <RxHamburgerMenu />
@@ -71,23 +77,29 @@ const Header = () => {
 
           <nav className={`${scss.nav} ${isMenuOpen ? scss.active : ""}`}>
             <ul onClick={() => setIsMenuOpen(!isMenuOpen)}>
-              <li>
-                <Link href="/news">Новости</Link>
+              <li className={scss.disp}>
+                <Link href="/">{t("Башкы бет", "Главная")}</Link>
               </li>
               <li>
-                <Link href="/students">Ученики</Link>
+                <Link href="/news">{t("Жаңылыктар", "Новости")}</Link>
               </li>
               <li>
-                <Link href="/teachers">Учителя</Link>
+                <Link href="/students">{t("Окуучулар", "Ученики")}</Link>
               </li>
               <li>
-                <Link href="/graduates">Выпускники</Link>
+                <Link href="/teachers">{t("Мугалимдер", "Учителя")}</Link>
               </li>
               <li>
-                <Link href="/gallery">Галерея</Link>
+                <Link href="/graduates">{t("Бүтүрүүчүлөр", "Выпускники")}</Link>
               </li>
               <li>
-                <a onClick={handleScrollTo}>Контакты</a>
+                <Link href="/gallery">{t("Галерея", "Галерея")}</Link>
+              </li>
+              <li>
+                <a onClick={handleScrollTo}>{t("Байланыштар", "Контакты")}</a>
+              </li>
+              <li>
+                <Link href="/fond">{t("Фонд", "Фонд")}</Link>
               </li>
             </ul>
           </nav>
@@ -95,47 +107,60 @@ const Header = () => {
           <div className={scss.rightSection}>
             <div className={scss.search}>
               <Input
-                minLength={2}
+                minLength={1}
+                maxLength={30}
                 debounceTimeout={300}
                 onChange={handleChange}
                 onFocus={() => {
                   setHasFocusInput(true);
                 }}
+                onBlur={() => {
+                  handleBlur();
+                }}
                 value={query}
-                placeholder="Поиск..."
+                placeholder={t("Издөө...", "Поиск...")}
               />
             </div>
 
             <div className={scss.language}>
-              <button>Кырг</button>
-              <button>Рус</button>
+              <button
+                onClick={() => setIsKyrgyz(true)}
+                className={isKyrgyz ? ` ${scss.bold}` : `${scss.normal}`}
+              >
+                Кырг
+              </button>
+              <button
+                onClick={() => setIsKyrgyz(false)}
+                className={!isKyrgyz ? ` ${scss.bold}` : ` ${scss.normal}`}
+              >
+                Рус
+              </button>
             </div>
 
             <div className={scss.auth}>
-              <button onClick={handleNavigate}>Войти</button>
+              <button onClick={handleNavigate}>{t("Кирүү", "Войти")}</button>
             </div>
           </div>
         </div>
 
-        {query.length >= 2 && (
+        {/* {query.length >= 2 && (
           <div className={scss.searchResults}>
-            {isLoading && <p>Загрузка...</p>}
-            {/* {error && <p>Произошла ошибка при поиске</p>} */}
+            {isLoading && <p>{t("Жүктөлүүдө...", "Загрузка...")}</p>}
             {!isLoading && !error && data && data.length > 0 ? (
               <ul>
                 {data.map((result) => (
                   <li key={result.id}>
                     {result.full_name}{" "}
                     {result.school_class__grade &&
-                      `(Класс: ${result.school_class__grade})`}
+                      `(${t("Класс", "Класс")}: ${result.school_class__grade})`}
                   </li>
                 ))}
               </ul>
             ) : !isLoading && !error ? (
-              <p>Результатов не найдено</p>
+              <p>{t("Натыйжа табылган жок", "Результатов не найдено")}</p>
             ) : null}
           </div>
-        )}
+        )} */}
       </div>
     </header>
   );

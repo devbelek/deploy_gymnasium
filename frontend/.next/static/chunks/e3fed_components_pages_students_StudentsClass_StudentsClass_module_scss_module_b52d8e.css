@@ -1,0 +1,103 @@
+/* [project]/src/appPages/site/components/pages/students/StudentsClass/StudentsClass.module.scss.module.css [app-client] (css) */
+.StudentsClass-module-scss-module__jwknLW__StudentsClass {
+  padding-top: 100px;
+}
+
+.StudentsClass-module-scss-module__jwknLW__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.StudentsClass-module-scss-module__jwknLW__tableTitle {
+  display: grid;
+  grid-template-columns: .3fr 2fr .5fr 1fr;
+  gap: 50px;
+}
+
+.StudentsClass-module-scss-module__jwknLW__studentInfo {
+  display: grid;
+  padding: 10px 0;
+  grid-template-columns: .3fr 2fr .5fr 1fr;
+  gap: 50px;
+}
+
+.StudentsClass-module-scss-module__jwknLW__titleText {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27.24px;
+  text-align: left;
+  color: #afafaf;
+}
+
+.StudentsClass-module-scss-module__jwknLW__tableText {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27.24px;
+  text-align: left;
+  color: #666;
+  display: flex;
+  align-items: center;
+}
+
+.StudentsClass-module-scss-module__jwknLW__tableContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.StudentsClass-module-scss-module__jwknLW__tableTextNumber {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27.24px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  color: #000;
+}
+
+.StudentsClass-module-scss-module__jwknLW__tableName {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27.24px;
+  text-align: left;
+  color: #666;
+  gap: 10px;
+}
+
+.StudentsClass-module-scss-module__jwknLW__title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27.24px;
+  text-align: center;
+  color: #000;
+  position: relative;
+}
+
+.StudentsClass-module-scss-module__jwknLW__title:after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  border-bottom: 2px solid #000;
+}
+
+.StudentsClass-module-scss-module__jwknLW__table {
+  padding: 40px 0 0;
+}
+
+.StudentsClass-module-scss-module__jwknLW__studentIcon {
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+}
+
+/*# sourceMappingURL=e3fed_components_pages_students_StudentsClass_StudentsClass_module_scss_module_b52d8e.css.map*/

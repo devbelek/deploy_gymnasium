@@ -94,24 +94,38 @@ const NewsDetailContent: React.FC = () => {
   useEffect(() => {
     const fetchUserAvatars = async () => {
       if (commentsData) {
-        const uniqueUsers = Array.from(new Set(commentsData.map(comment => comment.author)));
+        const uniqueUsers = Array.from(
+          new Set(commentsData.map((comment) => comment.author))
+        );
         const newUserAvatars: Record<string, string> = {};
 
         for (const username of uniqueUsers) {
           try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API}/${process.env.NEXT_PUBLIC_ENDPOINT}/user-info/?username=${username}`, {
-              method: 'GET',
-              credentials: 'include',
-            });
+            const response = await fetch(
+              `${process.env.NEXT_PUBLIC_API}/${process.env.NEXT_PUBLIC_ENDPOINT}/user-info/?username=${username}`,
+              {
+                method: "GET",
+                credentials: "include",
+              }
+            );
             if (response.ok) {
               const userData = await response.json();
-              newUserAvatars[username] = userData.avatar || `https://api.dicebear.com/6.x/initials/svg?seed=${username}`;
+              newUserAvatars[username] =
+                userData.avatar ||
+                `https://api.dicebear.com/6.x/initials/svg?seed=${username}`;
             } else {
-              newUserAvatars[username] = `https://api.dicebear.com/6.x/initials/svg?seed=${username}`;
+              newUserAvatars[
+                username
+              ] = `https://api.dicebear.com/6.x/initials/svg?seed=${username}`;
             }
           } catch (error) {
-            console.error(`Ошибка при получении аватара для ${username}:`, error);
-            newUserAvatars[username] = `https://api.dicebear.com/6.x/initials/svg?seed=${username}`;
+            console.error(
+              `Ошибка при получении аватара для ${username}:`,
+              error
+            );
+            newUserAvatars[
+              username
+            ] = `https://api.dicebear.com/6.x/initials/svg?seed=${username}`;
           }
         }
 
@@ -130,8 +144,8 @@ const NewsDetailContent: React.FC = () => {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleAddComment = useCallback(async () => {
@@ -219,7 +233,9 @@ const NewsDetailContent: React.FC = () => {
       <div className={scss.commentActions}>
         <button
           onClick={() => handleLikeComment(comment.id)}
-          className={`${scss.actionButton} ${comment.is_liked ? scss.liked : ''}`}
+          className={`${scss.actionButton} ${
+            comment.is_liked ? scss.liked : ""
+          }`}
         >
           <ThumbsUp size={16} />
           <span>{comment.likes_count}</span>
@@ -275,7 +291,10 @@ const NewsDetailContent: React.FC = () => {
       >
         <div className={scss.commentHeader}>
           <Image
-            src={userAvatars[comment.author] || `https://api.dicebear.com/6.x/initials/svg?seed=${comment.author}`}
+            src={
+              userAvatars[comment.author] ||
+              `https://api.dicebear.com/6.x/initials/svg?seed=${comment.author}`
+            }
             alt={comment.author}
             width={40}
             height={40}
@@ -283,9 +302,7 @@ const NewsDetailContent: React.FC = () => {
             onClick={() => setEnlargedAvatar(userAvatars[comment.author])}
           />
           <div className={scss.commentInfo}>
-            <span className={scss.commentAuthor}>
-              {comment.author}
-            </span>
+            <span className={scss.commentAuthor}>{comment.author}</span>
             <span className={scss.commentDate}>
               {new Date(comment.created_at).toLocaleString()}
             </span>
@@ -364,7 +381,11 @@ const NewsDetailContent: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className={`${scss.fixedCommentForm} ${showCommentForm ? '' : scss.hidden}`}>
+      <div
+        className={`${scss.fixedCommentForm} ${
+          showCommentForm ? "" : scss.hidden
+        }`}
+      >
         {isLoggedIn ? (
           <div className={scss.addComment}>
             {replyingTo ? (
@@ -372,9 +393,7 @@ const NewsDetailContent: React.FC = () => {
                 Ответ на комментарий пользователя {replyingTo.author}:
               </p>
             ) : (
-              <p className={scss.addNewComment}>
-                Добавить новый комментарий:
-              </p>
+              <p className={scss.addNewComment}>Добавить новый комментарий:</p>
             )}
             {renderCommentForm(handleAddComment, () => {
               setReplyingTo(null);
@@ -388,7 +407,10 @@ const NewsDetailContent: React.FC = () => {
         )}
       </div>
       {enlargedAvatar && (
-        <div className={`${scss.enlargedAvatarOverlay} ${scss.visible}`} onClick={() => setEnlargedAvatar(null)}>
+        <div
+          className={`${scss.enlargedAvatarOverlay} ${scss.visible}`}
+          onClick={() => setEnlargedAvatar(null)}
+        >
           <div className={scss.enlargedAvatarContainer}>
             <Image
               src={enlargedAvatar}
@@ -397,7 +419,10 @@ const NewsDetailContent: React.FC = () => {
               height={200}
               className={scss.enlargedAvatar}
             />
-            <button className={scss.closeButton} onClick={() => setEnlargedAvatar(null)}>
+            <button
+              className={scss.closeButton}
+              onClick={() => setEnlargedAvatar(null)}
+            >
               <X size={24} />
             </button>
           </div>

@@ -1,0 +1,438 @@
+/* [project]/src/appPages/site/components/pages/graduates/GraduatesFirstTab/GraduatesFirstTab.module.scss.module.css [app-client] (css) */
+.GraduatesFirstTab-module-scss-module__hFkc5W__StudentsClass {
+  padding-top: 100px;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27.24px;
+  text-align: center;
+  color: #000;
+  position: relative;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__title:after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  border-bottom: 2px solid #000;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__tableTitle {
+  display: grid;
+  grid-template-columns: .3fr 2fr .5fr 1fr;
+  gap: 50px;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__studentInfo {
+  display: grid;
+  padding: 10px 0;
+  grid-template-columns: .3fr 2fr .5fr 1fr;
+  gap: 50px;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__titleText {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27.24px;
+  text-align: left;
+  color: #afafaf;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__tableText {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27.24px;
+  text-align: left;
+  color: #666;
+  display: flex;
+  align-items: center;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__tableContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__tableTextNumber {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27.24px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  color: #000;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__tableName {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27.24px;
+  text-align: left;
+  color: #666;
+  gap: 10px;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__hr {
+  border-bottom: 1px solid #afafaf;
+  padding: 3px 50%;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__table {
+  padding: 40px 0 0;
+}
+
+.GraduatesFirstTab-module-scss-module__hFkc5W__studentIcon {
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+}
+
+
+/* [project]/src/appPages/site/components/pages/graduates/GraduatesMainContent/GraduatesMainContent.module.scss.module.css [app-client] (css) */
+.GraduatesMainContent-module-scss-module__0B39iW__titleText {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27.24px;
+  text-align: center;
+  color: #000;
+  position: relative;
+}
+
+.GraduatesMainContent-module-scss-module__0B39iW__titleText:after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  border-bottom: 2px solid #000;
+}
+
+.GraduatesMainContent-module-scss-module__0B39iW__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+.GraduatesMainContent-module-scss-module__0B39iW__graduateName {
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 36.72px;
+  text-align: center;
+}
+
+.GraduatesMainContent-module-scss-module__0B39iW__graduateDate {
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 18px;
+  text-align: center;
+}
+
+.GraduatesMainContent-module-scss-module__0B39iW__graduateBio {
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 18px;
+  text-align: center;
+}
+
+.GraduatesMainContent-module-scss-module__0B39iW__graduates_Img {
+  border-bottom: 8px solid #fb8f8f;
+  border-right: 5px solid #fb8f8f;
+  border-left: 5px solid #fb8f8f;
+}
+
+.GraduatesMainContent-module-scss-module__0B39iW__mainContent_graduates {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.GraduatesMainContent-module-scss-module__0B39iW__graduates {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+.GraduatesMainContent-module-scss-module__0B39iW__mainContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+.GraduatesMainContent-module-scss-module__0B39iW__nameInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 15px 0;
+}
+
+.GraduatesMainContent-module-scss-module__0B39iW__biography {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 15px 0;
+}
+
+.GraduatesMainContent-module-scss-module__0B39iW__hr {
+  border-bottom: 1px solid #9c9c9c;
+  width: 70%;
+  margin: 0 auto;
+}
+
+
+/* [project]/src/appPages/site/components/pages/graduates/GraduatesSecondTab/GraduatesSecondTab.module.scss.module.css [app-client] (css) */
+.GraduatesSecondTab-module-scss-module__mAPF0q__GraduatesSecondTab {
+  padding-top: 100px;
+}
+
+.GraduatesSecondTab-module-scss-module__mAPF0q__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.GraduatesSecondTab-module-scss-module__mAPF0q__tableTitle {
+  display: grid;
+  grid-template-columns: .3fr 2fr .5fr 1fr;
+  gap: 50px;
+}
+
+.GraduatesSecondTab-module-scss-module__mAPF0q__studentInfo {
+  display: grid;
+  padding: 10px 0;
+  grid-template-columns: .3fr 2fr .5fr 1fr;
+  gap: 50px;
+}
+
+.GraduatesSecondTab-module-scss-module__mAPF0q__titleText {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27.24px;
+  text-align: left;
+  color: #afafaf;
+}
+
+.GraduatesSecondTab-module-scss-module__mAPF0q__tableText {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27.24px;
+  text-align: left;
+  color: #666;
+  display: flex;
+  align-items: center;
+}
+
+.GraduatesSecondTab-module-scss-module__mAPF0q__tableContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.GraduatesSecondTab-module-scss-module__mAPF0q__tableTextNumber {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27.24px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  color: #000;
+}
+
+.GraduatesSecondTab-module-scss-module__mAPF0q__tableName {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27.24px;
+  text-align: left;
+  color: #666;
+  gap: 10px;
+}
+
+.GraduatesSecondTab-module-scss-module__mAPF0q__title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27.24px;
+  text-align: center;
+  color: #000;
+  position: relative;
+}
+
+.GraduatesSecondTab-module-scss-module__mAPF0q__title:after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  border-bottom: 2px solid #000;
+}
+
+.GraduatesSecondTab-module-scss-module__mAPF0q__hr {
+  border-bottom: 1px solid #afafaf;
+  padding: 3px 50%;
+}
+
+.GraduatesSecondTab-module-scss-module__mAPF0q__table {
+  padding: 40px 0 0;
+}
+
+.GraduatesSecondTab-module-scss-module__mAPF0q__studentIcon {
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+}
+
+
+/* [project]/src/appPages/site/components/pages/graduates/GraduatesThirdTab/GraduatesThirdTab.module.scss.module.css [app-client] (css) */
+.GraduatesThirdTab-module-scss-module__IAuCRG__GraduatesThirdTab {
+  padding-top: 100px;
+}
+
+.GraduatesThirdTab-module-scss-module__IAuCRG__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.GraduatesThirdTab-module-scss-module__IAuCRG__tableTitle {
+  display: grid;
+  grid-template-columns: .3fr 2fr .5fr 1fr;
+  gap: 50px;
+}
+
+.GraduatesThirdTab-module-scss-module__IAuCRG__studentInfo {
+  display: grid;
+  padding: 10px 0;
+  grid-template-columns: .3fr 2fr .5fr 1fr;
+  gap: 50px;
+}
+
+.GraduatesThirdTab-module-scss-module__IAuCRG__titleText {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27.24px;
+  text-align: left;
+  color: #afafaf;
+}
+
+.GraduatesThirdTab-module-scss-module__IAuCRG__tableText {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27.24px;
+  text-align: left;
+  color: #666;
+  display: flex;
+  align-items: center;
+}
+
+.GraduatesThirdTab-module-scss-module__IAuCRG__tableContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.GraduatesThirdTab-module-scss-module__IAuCRG__tableTextNumber {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27.24px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  color: #000;
+}
+
+.GraduatesThirdTab-module-scss-module__IAuCRG__tableName {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27.24px;
+  text-align: left;
+  color: #666;
+  gap: 10px;
+}
+
+.GraduatesThirdTab-module-scss-module__IAuCRG__title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27.24px;
+  text-align: center;
+  color: #000;
+  position: relative;
+}
+
+.GraduatesThirdTab-module-scss-module__IAuCRG__title:after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  border-bottom: 2px solid #000;
+}
+
+.GraduatesThirdTab-module-scss-module__IAuCRG__hr {
+  border-bottom: 1px solid #afafaf;
+  padding: 3px 50%;
+}
+
+.GraduatesThirdTab-module-scss-module__IAuCRG__table {
+  padding: 40px 0 0;
+}
+
+.GraduatesThirdTab-module-scss-module__IAuCRG__studentIcon {
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+}
+
+
+/* [project]/src/appPages/site/components/pages/GraduatesPage.module.scss.module.css [app-client] (css) */
+.GraduatesPage-module-scss-module__NDlmPW__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  padding-top: 100px;
+  padding-bottom: 30px;
+  gap: 60px;
+}
+
+.GraduatesPage-module-scss-module__NDlmPW__graduatesTable {
+  padding: 0 0 20px;
+}
+
+
+/*# sourceMappingURL=src_appPages_site_components_pages_f014fe._.css.map*/

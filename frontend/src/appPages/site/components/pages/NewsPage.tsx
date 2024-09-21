@@ -6,7 +6,6 @@ const NewsPage = () => {
     <>
       <div className={scss.content}>
         <NewsMainContent />
-        <NewsCommentsContent />
       </div>
     </>
   );

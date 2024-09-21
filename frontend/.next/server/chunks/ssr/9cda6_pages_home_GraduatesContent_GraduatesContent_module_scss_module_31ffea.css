@@ -1,0 +1,111 @@
+/* [project]/src/appPages/site/components/pages/home/GraduatesContent/GraduatesContent.module.scss.module.css [app-ssr] (css) */
+.GraduatesContent-module-scss-module__P-UWEG__content {
+  background-color: #fff6f6;
+}
+
+.GraduatesContent-module-scss-module__P-UWEG__content h1 {
+  color: #333;
+  text-align: center;
+  padding-top: 50px;
+}
+
+.GraduatesContent-module-scss-module__P-UWEG__content hr {
+  width: 40px;
+  height: 2px;
+  background: #6a00a1;
+  border: none;
+  border-radius: 12px;
+  margin: 4px auto;
+}
+
+.GraduatesContent-module-scss-module__P-UWEG__content .GraduatesContent-module-scss-module__P-UWEG__graduateContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 50px 0;
+}
+
+.GraduatesContent-module-scss-module__P-UWEG__content .GraduatesContent-module-scss-module__P-UWEG__graduateContent .GraduatesContent-module-scss-module__P-UWEG__title {
+  max-width: 50%;
+  font-family: Roboto, sans-serif;
+  color: #333;
+}
+
+.GraduatesContent-module-scss-module__P-UWEG__content .GraduatesContent-module-scss-module__P-UWEG__graduateContent .GraduatesContent-module-scss-module__P-UWEG__title p {
+  font-size: 1.5rem;
+  line-height: 1.5;
+  font-weight: normal;
+}
+
+.GraduatesContent-module-scss-module__P-UWEG__content .GraduatesContent-module-scss-module__P-UWEG__graduateContent .GraduatesContent-module-scss-module__P-UWEG__title span {
+  font-style: italic;
+  display: block;
+  margin-top: 20px;
+  font-size: .9rem;
+  font-weight: 300;
+  color: #6a6a6a;
+}
+
+.GraduatesContent-module-scss-module__P-UWEG__content .GraduatesContent-module-scss-module__P-UWEG__graduateContent .GraduatesContent-module-scss-module__P-UWEG__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 50%;
+  gap: 80px;
+  padding-top: 100px;
+}
+
+.GraduatesContent-module-scss-module__P-UWEG__content .GraduatesContent-module-scss-module__P-UWEG__graduateContent .GraduatesContent-module-scss-module__P-UWEG__wrapper svg {
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #555;
+}
+
+.GraduatesContent-module-scss-module__P-UWEG__content .GraduatesContent-module-scss-module__P-UWEG__graduateContent .GraduatesContent-module-scss-module__P-UWEG__wrapper svg:hover {
+  color: #000;
+}
+
+.GraduatesContent-module-scss-module__P-UWEG__content .GraduatesContent-module-scss-module__P-UWEG__graduateContent .GraduatesContent-module-scss-module__P-UWEG__image {
+  max-width: 30%;
+}
+
+.GraduatesContent-module-scss-module__P-UWEG__content .GraduatesContent-module-scss-module__P-UWEG__graduateContent .GraduatesContent-module-scss-module__P-UWEG__image img {
+  width: 100%;
+  box-shadow: 0 4px 15px #0000001a;
+}
+
+@media (width <= 430px) {
+  .GraduatesContent-module-scss-module__P-UWEG__content .GraduatesContent-module-scss-module__P-UWEG__graduateContent {
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .GraduatesContent-module-scss-module__P-UWEG__content .GraduatesContent-module-scss-module__P-UWEG__graduateContent .GraduatesContent-module-scss-module__P-UWEG__title {
+    padding-top: 10px;
+    max-width: 80%;
+  }
+
+  .GraduatesContent-module-scss-module__P-UWEG__content .GraduatesContent-module-scss-module__P-UWEG__graduateContent .GraduatesContent-module-scss-module__P-UWEG__title p {
+    font-size: 16px;
+  }
+
+  .GraduatesContent-module-scss-module__P-UWEG__content .GraduatesContent-module-scss-module__P-UWEG__graduateContent .GraduatesContent-module-scss-module__P-UWEG__wrapper {
+    width: 100%;
+    padding-top: 20px;
+    gap: 20px;
+  }
+
+  .GraduatesContent-module-scss-module__P-UWEG__content .GraduatesContent-module-scss-module__P-UWEG__image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .GraduatesContent-module-scss-module__P-UWEG__content .GraduatesContent-module-scss-module__P-UWEG__image img {
+    height: 400px !important;
+    width: 300px !important;
+  }
+}
+
+/*# sourceMappingURL=9cda6_pages_home_GraduatesContent_GraduatesContent_module_scss_module_31ffea.css.map*/

@@ -1,8 +1,12 @@
+"use client";
 import Image from "next/image";
 import scss from "./HeroContent.module.scss";
 import heroImage from "../../../../../../assets/images/6W3A8903.jpg";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
 const HeroContent = () => {
+  const { isKyrgyz, t } = useLanguageStore();
+
   return (
     <section id={scss.content}>
       <div className="container">
@@ -11,8 +15,13 @@ const HeroContent = () => {
           <div className={scss.profileImage}>
             <Image src={heroImage} alt="Profile" />
             <div className={scss.text}>
-              <h1>№3 Экспериментальная гимназия </h1>
-              <h2>Лейлекского района</h2>
+              <h1>
+                {t(
+                  "№3 Эксперименталдык гимназия",
+                  "№3 Экспериментальная гимназия"
+                )}
+              </h1>
+              <h2>{t("Лейлек району", "Лейлекского района")}</h2>
             </div>
           </div>
         </div>
