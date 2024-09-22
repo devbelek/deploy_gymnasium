@@ -23,11 +23,11 @@ const FondContent = () => {
           <hr className={scss.divider} />
 
           {isLoading && (
-            <p className={scss.message}>Загрузка пожертвований...</p>
+            <p className={scss.message}>Загрузка...</p>
           )}
           {isError && (
             <p className={scss.message}>
-              Ошибка при загрузке пожертвований. Пожалуйста, попробуйте позже.
+              Ошибка при загрузке. Пожалуйста, попробуйте позже.
             </p>
           )}
 
@@ -62,7 +62,7 @@ const FondContent = () => {
 
           <Link href="/fond/donation" className={scss.donateLink}>
             <button className={scss.donateButton}>
-              {t("Акча салуу", "Внести деньги")}
+              {t("Текшеруу", "Проверить")}
             </button>
           </Link>
         </div>
