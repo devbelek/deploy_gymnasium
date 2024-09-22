@@ -83,7 +83,7 @@ const DonationContent: React.FC = () => {
     try {
       const result = await postDonationsMutation(formData).unwrap();
       console.log("API response:", result);
-      alert("Пожертвование успешно отправлено!");
+      alert("Успешно отправлено!");
     } catch (error) {
       console.error("Full error object:", error);
       if (error && typeof error === 'object' && 'response' in error) {
@@ -95,7 +95,7 @@ const DonationContent: React.FC = () => {
         }
       }
       console.error("Error sending donation:", error);
-      alert("Произошла ошибка при отправке пожертвования. Пожалуйста, попробуйте еще раз.");
+      alert("Произошла ошибка при отправке. Пожалуйста, попробуйте еще раз.");
     } finally {
       setIsLoading(false);
     }
@@ -108,7 +108,7 @@ const DonationContent: React.FC = () => {
   return (
     <div className={styles.donationContent}>
       <div className={styles.content}>
-        <h2 className={styles.heading}>Сделать пожертвование</h2>
+        <h2 className={styles.heading}>Проверка</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.formGroup}>
             <label className={styles.label} htmlFor="amount">Сумма (сом):</label>
