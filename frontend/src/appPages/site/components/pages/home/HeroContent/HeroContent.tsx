@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import scss from "./HeroContent.module.scss";
-import heroImage from "../../../../../../assets/images/6W3A8903.jpg";
+import heroImage from "../../../../../../assets/images/photo_2024-09-21_01-18-10.jpg";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 
 const HeroContent = () => {

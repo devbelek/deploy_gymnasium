@@ -103,8 +103,8 @@ const TeachersMainContent = ()=>{
     }
     const filteredTeachers = data?.filter((teacher)=>{
         if (filter === null) return true;
-        if (filter === "current") return teacher.teachers_status === t("Азыр иштейт", "Сейчас работает");
-        if (filter === "former") return teacher.teachers_status === t("Мурда иштеген", "Раньше работал(а)");
+        if (filter === "current") return teacher.teachers_status === "Сейчас работает";
+        if (filter === "former") return teacher.teachers_status === "Раньше работал(а)";
         return true;
     });
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -125,7 +125,7 @@ const TeachersMainContent = ()=>{
                                         children: t("Азыркы мугалимдер", "Текущие учителя")
                                     }, void 0, false, {
                                         fileName: "[project]/src/appPages/site/components/pages/teachers/TeachersMainContent/TeachersMainContent.tsx",
-                                        lineNumber: 44,
+                                        lineNumber: 42,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -133,7 +133,7 @@ const TeachersMainContent = ()=>{
                                         children: t("Бардык мугалимдер", "Все учителя")
                                     }, void 0, false, {
                                         fileName: "[project]/src/appPages/site/components/pages/teachers/TeachersMainContent/TeachersMainContent.tsx",
-                                        lineNumber: 47,
+                                        lineNumber: 45,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -141,24 +141,24 @@ const TeachersMainContent = ()=>{
                                         children: t("Мурунку мугалимдер", "Бывшие учителя")
                                     }, void 0, false, {
                                         fileName: "[project]/src/appPages/site/components/pages/teachers/TeachersMainContent/TeachersMainContent.tsx",
-                                        lineNumber: 50,
+                                        lineNumber: 48,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/appPages/site/components/pages/teachers/TeachersMainContent/TeachersMainContent.tsx",
-                                lineNumber: 43,
+                                lineNumber: 41,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("hr", {}, void 0, false, {
                                 fileName: "[project]/src/appPages/site/components/pages/teachers/TeachersMainContent/TeachersMainContent.tsx",
-                                lineNumber: 54,
+                                lineNumber: 52,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/appPages/site/components/pages/teachers/TeachersMainContent/TeachersMainContent.tsx",
-                        lineNumber: 42,
+                        lineNumber: 40,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -176,7 +176,7 @@ const TeachersMainContent = ()=>{
                                         quality: 70
                                     }, void 0, false, {
                                         fileName: "[project]/src/appPages/site/components/pages/teachers/TeachersMainContent/TeachersMainContent.tsx",
-                                        lineNumber: 59,
+                                        lineNumber: 57,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
@@ -186,19 +186,19 @@ const TeachersMainContent = ()=>{
                                             teacher.name,
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                                                 fileName: "[project]/src/appPages/site/components/pages/teachers/TeachersMainContent/TeachersMainContent.tsx",
-                                                lineNumber: 70,
+                                                lineNumber: 68,
                                                 columnNumber: 19
                                             }, this),
                                             teacher.last_name
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/appPages/site/components/pages/teachers/TeachersMainContent/TeachersMainContent.tsx",
-                                        lineNumber: 68,
+                                        lineNumber: 66,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("hr", {}, void 0, false, {
                                         fileName: "[project]/src/appPages/site/components/pages/teachers/TeachersMainContent/TeachersMainContent.tsx",
-                                        lineNumber: 73,
+                                        lineNumber: 71,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -209,34 +209,34 @@ const TeachersMainContent = ()=>{
                                         children: isKyrgyz ? teacher.subject_ky : teacher.subject_ru
                                     }, void 0, false, {
                                         fileName: "[project]/src/appPages/site/components/pages/teachers/TeachersMainContent/TeachersMainContent.tsx",
-                                        lineNumber: 74,
+                                        lineNumber: 72,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, teacher.id, true, {
                                 fileName: "[project]/src/appPages/site/components/pages/teachers/TeachersMainContent/TeachersMainContent.tsx",
-                                lineNumber: 58,
+                                lineNumber: 56,
                                 columnNumber: 15
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/src/appPages/site/components/pages/teachers/TeachersMainContent/TeachersMainContent.tsx",
-                        lineNumber: 56,
+                        lineNumber: 54,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/appPages/site/components/pages/teachers/TeachersMainContent/TeachersMainContent.tsx",
-                lineNumber: 41,
+                lineNumber: 39,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/appPages/site/components/pages/teachers/TeachersMainContent/TeachersMainContent.tsx",
-            lineNumber: 40,
+            lineNumber: 38,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/appPages/site/components/pages/teachers/TeachersMainContent/TeachersMainContent.tsx",
-        lineNumber: 39,
+        lineNumber: 37,
         columnNumber: 5
     }, this);
 };

@@ -78,4 +78,11 @@
   }
 }
 
+@media (width <= 884px) {
+  .GalleryContent-module-scss-module__bTG7BW__GalleryMainContent .GalleryContent-module-scss-module__bTG7BW__gallery_card {
+    overflow-x: auto;
+    grid-template-columns: repeat(6, 1fr) !important;
+  }
+}
+
 /*# sourceMappingURL=e3fed_components_pages_home_GalleryContent_GalleryContent_module_scss_module_31ffea.css.map*/

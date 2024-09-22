@@ -9,11 +9,16 @@
 }
 
 .StudentsClassTable-module-scss-module__cH9Lta__titleBlock {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 10px;
+  display: grid;
   align-items: center;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.StudentsClassTable-module-scss-module__cH9Lta__title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-items: flex-end;
 }
 
 .StudentsClassTable-module-scss-module__cH9Lta__noClass {
@@ -45,16 +50,25 @@
   align-items: center;
 }
 
+.StudentsClassTable-module-scss-module__cH9Lta__titleLeftBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .StudentsClassTable-module-scss-module__cH9Lta__tableTitle {
   display: grid;
-  grid-template-columns: .3fr 2fr .5fr 1fr;
-  gap: 50px;
+  grid-template-columns: .3fr 2fr 1fr;
+  align-items: center;
+  gap: 120px;
 }
 
 .StudentsClassTable-module-scss-module__cH9Lta__studentInfo {
   display: grid;
-  grid-template-columns: .3fr 2fr .5fr 1fr;
-  gap: 50px;
+  gap: 120px;
+  align-items: center;
+  grid-template-columns: .3fr 2fr 1fr;
 }
 
 .StudentsClassTable-module-scss-module__cH9Lta__titleText {
@@ -90,6 +104,31 @@
   display: flex;
   align-items: center;
   color: #000;
+}
+
+.StudentsClassTable-module-scss-module__cH9Lta__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  text-align: center;
+}
+
+.StudentsClassTable-module-scss-module__cH9Lta__error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  text-align: center;
+  width: 100%;
+  text-align: center;
+}
+
+.StudentsClassTable-module-scss-module__cH9Lta__statusTable {
+  font-weight: 500;
+  font-size: 20px;
 }
 
 .StudentsClassTable-module-scss-module__cH9Lta__tableName {
@@ -217,7 +256,7 @@
 
 @media (width <= 1140px) {
   .StudentsClassTable-module-scss-module__cH9Lta__noClass {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .StudentsClassTable-module-scss-module__cH9Lta__titleBlock {
@@ -236,8 +275,8 @@
 
   .StudentsClassTable-module-scss-module__cH9Lta__tableTitle {
     display: grid;
-    grid-template-columns: .1fr 1.5fr .4fr 1fr;
-    gap: 10px;
+    gap: 90px;
+    grid-template-columns: .1fr 1.5fr .8fr;
   }
 
   .StudentsClassTable-module-scss-module__cH9Lta__title {
@@ -246,34 +285,42 @@
 
   .StudentsClassTable-module-scss-module__cH9Lta__studentInfo {
     display: grid;
-    grid-template-columns: .1fr 1.5fr .4fr 1fr;
-    gap: 10px;
+    grid-template-columns: .1fr 1.5fr .8fr;
+    gap: 90px;
   }
 
   .StudentsClassTable-module-scss-module__cH9Lta__titleText {
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 500;
   }
 
   .StudentsClassTable-module-scss-module__cH9Lta__tableText {
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 500;
   }
 
   .StudentsClassTable-module-scss-module__cH9Lta__tableTextNumber {
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 500;
   }
 
+  .StudentsClassTable-module-scss-module__cH9Lta__statusTable {
+    font-size: 18px;
+  }
+
   .StudentsClassTable-module-scss-module__cH9Lta__tableName {
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 500;
   }
 }
 
 @media (width <= 740px) {
+  .StudentsClassTable-module-scss-module__cH9Lta__statusTable {
+    font-size: 15px;
+  }
+
   .StudentsClassTable-module-scss-module__cH9Lta__noClass {
-    font-size: 14px;
+    font-size: 15px;
   }
 
   .StudentsClassTable-module-scss-module__cH9Lta__titleBlock {
@@ -291,26 +338,26 @@
   }
 
   .StudentsClassTable-module-scss-module__cH9Lta__title {
-    font-size: 15px;
+    font-size: 16px;
   }
 
   .StudentsClassTable-module-scss-module__cH9Lta__titleText {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 500;
   }
 
   .StudentsClassTable-module-scss-module__cH9Lta__tableText {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 500;
   }
 
   .StudentsClassTable-module-scss-module__cH9Lta__tableTextNumber {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 500;
   }
 
   .StudentsClassTable-module-scss-module__cH9Lta__tableName {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 500;
   }
 
@@ -321,17 +368,12 @@
 }
 
 @media (width <= 680px) {
-  .StudentsClassTable-module-scss-module__cH9Lta__noClass {
-    font-size: 12px;
-  }
-
   .StudentsClassTable-module-scss-module__cH9Lta__titleBlock {
     gap: 6px;
   }
 
   .StudentsClassTable-module-scss-module__cH9Lta__button {
     padding: 2px;
-    font-size: 11px;
   }
 
   .StudentsClassTable-module-scss-module__cH9Lta__filterButtons {
@@ -344,34 +386,37 @@
   }
 
   .StudentsClassTable-module-scss-module__cH9Lta__titleText {
-    font-size: 10px;
     font-weight: 500;
   }
 
   .StudentsClassTable-module-scss-module__cH9Lta__tableText {
-    font-size: 10px;
     font-weight: 500;
   }
 
   .StudentsClassTable-module-scss-module__cH9Lta__tableTextNumber {
-    font-size: 10px;
     font-weight: 500;
   }
 
   .StudentsClassTable-module-scss-module__cH9Lta__tableName {
-    font-size: 10px;
     font-weight: 500;
   }
 
   .StudentsClassTable-module-scss-module__cH9Lta__studentIcon {
-    width: 20px;
     height: 20px;
   }
 }
 
 @media (width <= 530px) {
-  .StudentsClassTable-module-scss-module__cH9Lta__noClass {
-    font-size: 10px;
+  .StudentsClassTable-module-scss-module__cH9Lta__tableTitle {
+    gap: 30px;
+  }
+
+  .StudentsClassTable-module-scss-module__cH9Lta__statusTable {
+    font-size: 12px;
+  }
+
+  .StudentsClassTable-module-scss-module__cH9Lta__studentInfo {
+    gap: 30px;
   }
 
   .StudentsClassTable-module-scss-module__cH9Lta__tableContent {
@@ -379,22 +424,18 @@
   }
 
   .StudentsClassTable-module-scss-module__cH9Lta__titleText {
-    font-size: 10px;
     font-weight: 500;
   }
 
   .StudentsClassTable-module-scss-module__cH9Lta__tableText {
-    font-size: 10px;
     font-weight: 500;
   }
 
   .StudentsClassTable-module-scss-module__cH9Lta__tableTextNumber {
-    font-size: 10px;
     font-weight: 500;
   }
 
   .StudentsClassTable-module-scss-module__cH9Lta__tableName {
-    font-size: 10px;
     font-weight: 500;
   }
 
@@ -405,17 +446,12 @@
 }
 
 @media (width <= 440px) {
-  .StudentsClassTable-module-scss-module__cH9Lta__noClass {
-    font-size: 9px;
+  .StudentsClassTable-module-scss-module__cH9Lta__titleLeftBlock h1 {
+    height: 20px;
   }
 
   .StudentsClassTable-module-scss-module__cH9Lta__titleBlock {
-    gap: 5px;
-  }
-
-  .StudentsClassTable-module-scss-module__cH9Lta__button {
-    padding: 1px;
-    font-size: 10px;
+    gap: 0;
   }
 
   .StudentsClassTable-module-scss-module__cH9Lta__filterButtons {
@@ -424,22 +460,18 @@
   }
 
   .StudentsClassTable-module-scss-module__cH9Lta__titleText {
-    font-size: 8px;
     font-weight: 500;
   }
 
   .StudentsClassTable-module-scss-module__cH9Lta__tableText {
-    font-size: 8px;
     font-weight: 500;
   }
 
   .StudentsClassTable-module-scss-module__cH9Lta__tableTextNumber {
-    font-size: 8px;
     font-weight: 500;
   }
 
   .StudentsClassTable-module-scss-module__cH9Lta__tableName {
-    font-size: 8px;
     font-weight: 500;
   }
 
@@ -447,9 +479,49 @@
     width: 10px;
     height: 10px;
   }
+}
 
-  .StudentsClassTable-module-scss-module__cH9Lta__title {
-    font-size: 13px;
+@media (width <= 370px) {
+  .StudentsClassTable-module-scss-module__cH9Lta__tableText {
+    font-size: 10px;
+    font-weight: 500;
+  }
+
+  .StudentsClassTable-module-scss-module__cH9Lta__studentInfo {
+    gap: 20px;
+  }
+
+  .StudentsClassTable-module-scss-module__cH9Lta__statusTable {
+    font-size: 10px;
+  }
+
+  .StudentsClassTable-module-scss-module__cH9Lta__titleBlock {
+    gap: 10px;
+  }
+
+  .StudentsClassTable-module-scss-module__cH9Lta__titleText {
+    font-size: 10px;
+    font-weight: 400;
+  }
+
+  .StudentsClassTable-module-scss-module__cH9Lta__tableText {
+    font-size: 10px;
+    font-weight: 400;
+  }
+
+  .StudentsClassTable-module-scss-module__cH9Lta__tableTextNumber {
+    font-size: 10px;
+    font-weight: 400;
+  }
+
+  .StudentsClassTable-module-scss-module__cH9Lta__tableName {
+    font-size: 11px;
+    font-weight: 400;
+  }
+
+  .StudentsClassTable-module-scss-module__cH9Lta__studentIcon {
+    width: 10px;
+    height: 10px;
   }
 }
 

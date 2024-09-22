@@ -43,9 +43,12 @@
 
 #TeachersContent-module-scss-module__J-1L6W__content .TeachersContent-module-scss-module__J-1L6W__teacher {
   position: absolute;
-  top: 0;
+  top: -56px;
   left: 50%;
   transform: translateX(-50%);
+  width: 280px;
+  height: 450px;
+  object-fit: contain;
   z-index: 2;
 }
 
@@ -54,11 +57,12 @@
   color: #fff;
   padding: 16px 50px;
   border-radius: 5px;
+  cursor: pointer;
   border: none;
   font-size: 1rem;
   cursor: pointer;
   transition: background-color .3s;
-  margin-top: 350px;
+  margin-top: 349px;
   z-index: 3;
 }
 

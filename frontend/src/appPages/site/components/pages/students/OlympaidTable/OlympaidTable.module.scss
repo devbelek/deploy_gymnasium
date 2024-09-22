@@ -1,7 +1,8 @@
 .content {
     padding-top: 100px;
-    padding-bottom: 40px;
     display: flex;
+    padding-bottom: 40px;
+
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -9,27 +10,34 @@
 
 .tableTitle {
     display: grid;
-    grid-template-columns: 0.3fr 2fr 1fr;
-    gap: 80px;
+    grid-template-columns: 0.3fr 2fr;
+    gap: 120px;
 }
-
 .loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
+    height: 100vh;
     text-align: center;
 }
 .error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    text-align: center;
     width: 100%;
     text-align: center;
 }
 .studentInfo {
     display: grid;
-    padding: 10px 0;
-    grid-template-columns: 0.3fr 2fr 1fr;
-    gap: 80px;
+    grid-template-columns: 0.3fr 2fr;
+    gap: 120px;
 }
 
 .titleText {
-    padding: 0 50px 0 0;
     font-size: 20px;
     font-weight: 600;
     line-height: 27.24px;
@@ -37,7 +45,7 @@
     color: #afafaf;
 }
 .tableText {
-    padding: 0 50px 0 0;
+    padding: 0 10px 0 0;
 
     font-size: 20px;
     font-weight: 600;
@@ -65,6 +73,11 @@
     color: #000000;
 }
 
+.nameContent {
+    display: flex;
+    flex-direction: row;
+}
+
 .tableName {
     display: flex;
     flex-direction: row;
@@ -76,6 +89,22 @@
     color: #666666;
     gap: 10px;
 }
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.title {
+    animation: fadeIn 0.7s ease-out;
+}
+
 @keyframes slideInFromLeft {
     0% {
         opacity: 0;
@@ -90,7 +119,6 @@
 .animateFromLeft {
     animation: slideInFromLeft 1s ease-out forwards;
 }
-
 .animateFromLeft:nth-child(1) {
     animation-delay: 0.1s;
 }
@@ -126,27 +154,10 @@
     animation-delay: 0.27s;
 }
 .animateFromLeft:nth-child(11) {
-    animation-delay: 0.30s;
+    animation-delay: 0.3s;
 }
 .animateFromLeft:nth-child(12) {
     animation-delay: 0.33s;
-}
-
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-        transform: translateY(
-            -20px
-        ); /* или translateX для горизонтального движения */
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.title {
-    animation: fadeIn 0.7s ease-out; /* Длительность анимации и функция временной функции */
 }
 
 .title {
@@ -197,34 +208,27 @@
 @media (max-width: 1140px) {
     .tableTitle {
         display: grid;
-        gap: 20px;
-    }
-    .title {
-        font-size: 20px;
+        gap: 90px;
     }
 
     .studentInfo {
         display: grid;
         padding: 2px 0;
-        gap: 20px;
+        gap: 90px;
     }
 
     .titleText {
-        font-size: 15px;
         font-weight: 500;
     }
     .tableText {
-        font-size: 15px;
         font-weight: 500;
     }
 
     .tableTextNumber {
-        font-size: 15px;
         font-weight: 500;
     }
 
     .tableName {
-        font-size: 15px;
         font-weight: 500;
     }
 }
@@ -237,8 +241,70 @@
         display: grid;
         gap: 20px;
     }
-    .title {
-        font-size: 15px;
+
+    .studentInfo {
+        display: grid;
+        padding: 2px 0;
+        gap: 20px;
+    }
+
+    .titleText {
+        font-size: 14px;
+        font-weight: 500;
+    }
+    .tableText {
+        padding: 0 5px 0 0;
+
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .tableTextNumber {
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .tableName {
+        font-size: 14px;
+        font-weight: 500;
+    }
+    .studentIcon {
+        width: 25px;
+        height: 25px;
+    }
+}
+
+@media (max-width: 530px) {
+    .tableContent {
+        gap: 0px;
+    }
+    .titleText {
+        font-weight: 500;
+    }
+    .tableText {
+        font-weight: 500;
+    }
+
+    .tableTextNumber {
+        font-weight: 500;
+    }
+
+    .tableName {
+        font-weight: 500;
+    }
+    .studentIcon {
+        width: 15px;
+        height: 15px;
+    }
+}
+
+@media (max-width: 400px) {
+    .table {
+        padding: 20px 0 0 0;
+    }
+    .tableTitle {
+        display: grid;
+        gap: 20px;
     }
 
     .studentInfo {
@@ -248,13 +314,11 @@
     }
 
     .titleText {
-        padding: 0 25px 0 0;
-
         font-size: 12px;
         font-weight: 500;
     }
     .tableText {
-        padding: 0 25px 0 0;
+        padding: 0 5px 0 0;
 
         font-size: 12px;
         font-weight: 500;
@@ -270,48 +334,74 @@
         font-weight: 500;
     }
     .studentIcon {
-        width: 25px;
-        height: 25px;
+        width: 15px;
+        height: 15px;
     }
 }
 
-@media (max-width: 680px) {
-    .tableContent {
-        gap: 8px;
+@media (max-width: 376px) {
+    .table {
+        padding: 20px 0 0 0;
     }
+    .tableTitle {
+        display: grid;
+        gap: 20px;
+    }
+
+    .studentInfo {
+        display: grid;
+        padding: 2px 0;
+        gap: 20px;
+    }
+
     .titleText {
-        font-size: 10px;
+        font-size: 11px;
         font-weight: 500;
     }
     .tableText {
-        font-size: 10px;
+        padding: 0 5px 0 0;
+
+        font-size: 11px;
         font-weight: 500;
     }
 
     .tableTextNumber {
-        font-size: 10px;
+        font-size: 11px;
         font-weight: 500;
     }
 
     .tableName {
-        font-size: 10px;
+        font-size: 11px;
         font-weight: 500;
     }
     .studentIcon {
-        width: 20px;
-        height: 20px;
+        width: 15px;
+        height: 15px;
     }
 }
 
-@media (max-width: 530px) {
-    .tableContent {
-        gap: 0px;
+@media (max-width: 330px) {
+    .table {
+        padding: 20px 0 0 0;
     }
+    .tableTitle {
+        display: grid;
+        gap: 20px;
+    }
+
+    .studentInfo {
+        display: grid;
+        padding: 2px 0;
+        gap: 20px;
+    }
+
     .titleText {
         font-size: 10px;
         font-weight: 500;
     }
     .tableText {
+        padding: 0 5px 0 0;
+
         font-size: 10px;
         font-weight: 500;
     }
@@ -319,6 +409,9 @@
     .tableTextNumber {
         font-size: 10px;
         font-weight: 500;
+    }
+    .title {
+        font-size: 14px;
     }
 
     .tableName {
@@ -328,44 +421,5 @@
     .studentIcon {
         width: 15px;
         height: 15px;
-    }
-}
-
-@media (max-width: 440px) {
-    .titleText {
-        font-size: 10px;
-        font-weight: 500;
-    }
-    .tableText {
-        font-size: 10px;
-        font-weight: 500;
-    }
-
-    .tableTextNumber {
-        font-size: 10px;
-        font-weight: 500;
-    }
-
-    .tableName {
-        font-size: 10px;
-        font-weight: 500;
-    }
-    .studentIcon {
-        width: 10px;
-        height: 10px;
-    }
-    .tableTitle {
-        display: grid;
-        padding: p;
-        gap: 10px;
-    }
-    .title {
-        font-size: 13px;
-    }
-
-    .studentInfo {
-        display: grid;
-        padding: 0;
-        gap: 10px;
     }
 }

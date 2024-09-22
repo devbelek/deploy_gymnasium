@@ -2474,7 +2474,7 @@ function getImageProps(imgProps) {
     const { props } = (0, _getimgprops.getImgProps)(imgProps, {
         defaultLoader: _imageloader.default,
         // This is replaced by webpack define plugin
-        imgConf: ("TURBOPACK compile-time value", JSON.parse('{"deviceSizes":[640,750,828,1080,1200,1920,2048,3840],"imageSizes":[16,32,48,64,96,128,256,384],"path":"/_next/image","loader":"default","dangerouslyAllowSVG":false,"unoptimized":false,"domains":["gimnasium.onrender.com","vermojctkdkrdsxvauwc.supabase.co","3-gymnasium.kg","api.dicebear.com"],"remotePatterns":[]}'))
+        imgConf: ("TURBOPACK compile-time value", JSON.parse('{"deviceSizes":[640,750,828,1080,1200,1920,2048,3840],"imageSizes":[16,32,48,64,96,128,256,384],"path":"/_next/image","loader":"default","dangerouslyAllowSVG":false,"unoptimized":false,"domains":[],"remotePatterns":[{"protocol":"http","hostname":"3-gymnasium.kg","port":"","pathname":"/media/**"},{"protocol":"https","hostname":"gimnasium.onrender.com","port":"","pathname":"/**"},{"protocol":"https","hostname":"vermojctkdkrdsxvauwc.supabase.co","port":"","pathname":"/**"},{"protocol":"https","hostname":"api.dicebear.com","port":"","pathname":"/**"}]}'))
     });
     // Normally we don't care about undefined props because we pass to JSX,
     // but this exported function could be used by the end user for anything

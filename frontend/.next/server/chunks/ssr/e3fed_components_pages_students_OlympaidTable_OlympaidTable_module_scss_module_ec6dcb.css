@@ -1,8 +1,8 @@
 /* [project]/src/appPages/site/components/pages/students/OlympaidTable/OlympaidTable.module.scss.module.css [app-ssr] (css) */
 .OlympaidTable-module-scss-module__4MJNkq__content {
   padding-top: 100px;
-  padding-bottom: 40px;
   display: flex;
+  padding-bottom: 40px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -10,29 +10,37 @@
 
 .OlympaidTable-module-scss-module__4MJNkq__tableTitle {
   display: grid;
-  grid-template-columns: .3fr 2fr 1fr;
-  gap: 80px;
+  grid-template-columns: .3fr 2fr;
+  gap: 120px;
 }
 
 .OlympaidTable-module-scss-module__4MJNkq__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
+  height: 100vh;
   text-align: center;
 }
 
 .OlympaidTable-module-scss-module__4MJNkq__error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  text-align: center;
   width: 100%;
   text-align: center;
 }
 
 .OlympaidTable-module-scss-module__4MJNkq__studentInfo {
   display: grid;
-  padding: 10px 0;
-  grid-template-columns: .3fr 2fr 1fr;
-  gap: 80px;
+  grid-template-columns: .3fr 2fr;
+  gap: 120px;
 }
 
 .OlympaidTable-module-scss-module__4MJNkq__titleText {
-  padding: 0 50px 0 0;
   font-size: 20px;
   font-weight: 600;
   line-height: 27.24px;
@@ -41,7 +49,7 @@
 }
 
 .OlympaidTable-module-scss-module__4MJNkq__tableText {
-  padding: 0 50px 0 0;
+  padding: 0 10px 0 0;
   font-size: 20px;
   font-weight: 600;
   line-height: 27.24px;
@@ -68,6 +76,11 @@
   color: #000;
 }
 
+.OlympaidTable-module-scss-module__4MJNkq__nameContent {
+  display: flex;
+  flex-direction: row;
+}
+
 .OlympaidTable-module-scss-module__4MJNkq__tableName {
   display: flex;
   flex-direction: row;
@@ -78,6 +91,22 @@
   text-align: left;
   color: #666;
   gap: 10px;
+}
+
+@keyframes OlympaidTable-module-scss-module__4MJNkq__fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.OlympaidTable-module-scss-module__4MJNkq__title {
+  animation: .7s ease-out OlympaidTable-module-scss-module__4MJNkq__fadeIn;
 }
 
 @keyframes OlympaidTable-module-scss-module__4MJNkq__slideInFromLeft {
@@ -144,22 +173,6 @@
   animation-delay: .33s;
 }
 
-@keyframes OlympaidTable-module-scss-module__4MJNkq__fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.OlympaidTable-module-scss-module__4MJNkq__title {
-  animation: .7s ease-out OlympaidTable-module-scss-module__4MJNkq__fadeIn;
-}
-
 .OlympaidTable-module-scss-module__4MJNkq__title {
   font-size: 20px;
   font-weight: 600;
@@ -208,36 +221,28 @@
 @media (width <= 1140px) {
   .OlympaidTable-module-scss-module__4MJNkq__tableTitle {
     display: grid;
-    gap: 20px;
-  }
-
-  .OlympaidTable-module-scss-module__4MJNkq__title {
-    font-size: 20px;
+    gap: 90px;
   }
 
   .OlympaidTable-module-scss-module__4MJNkq__studentInfo {
     display: grid;
     padding: 2px 0;
-    gap: 20px;
+    gap: 90px;
   }
 
   .OlympaidTable-module-scss-module__4MJNkq__titleText {
-    font-size: 15px;
     font-weight: 500;
   }
 
   .OlympaidTable-module-scss-module__4MJNkq__tableText {
-    font-size: 15px;
     font-weight: 500;
   }
 
   .OlympaidTable-module-scss-module__4MJNkq__tableTextNumber {
-    font-size: 15px;
     font-weight: 500;
   }
 
   .OlympaidTable-module-scss-module__4MJNkq__tableName {
-    font-size: 15px;
     font-weight: 500;
   }
 }
@@ -252,10 +257,6 @@
     gap: 20px;
   }
 
-  .OlympaidTable-module-scss-module__4MJNkq__title {
-    font-size: 15px;
-  }
-
   .OlympaidTable-module-scss-module__4MJNkq__studentInfo {
     display: grid;
     padding: 2px 0;
@@ -263,24 +264,23 @@
   }
 
   .OlympaidTable-module-scss-module__4MJNkq__titleText {
-    padding: 0 25px 0 0;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 500;
   }
 
   .OlympaidTable-module-scss-module__4MJNkq__tableText {
-    padding: 0 25px 0 0;
-    font-size: 12px;
+    padding: 0 5px 0 0;
+    font-size: 14px;
     font-weight: 500;
   }
 
   .OlympaidTable-module-scss-module__4MJNkq__tableTextNumber {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 500;
   }
 
   .OlympaidTable-module-scss-module__4MJNkq__tableName {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 500;
   }
 
@@ -290,48 +290,142 @@
   }
 }
 
-@media (width <= 680px) {
-  .OlympaidTable-module-scss-module__4MJNkq__tableContent {
-    gap: 8px;
-  }
-
-  .OlympaidTable-module-scss-module__4MJNkq__titleText {
-    font-size: 10px;
-    font-weight: 500;
-  }
-
-  .OlympaidTable-module-scss-module__4MJNkq__tableText {
-    font-size: 10px;
-    font-weight: 500;
-  }
-
-  .OlympaidTable-module-scss-module__4MJNkq__tableTextNumber {
-    font-size: 10px;
-    font-weight: 500;
-  }
-
-  .OlympaidTable-module-scss-module__4MJNkq__tableName {
-    font-size: 10px;
-    font-weight: 500;
-  }
-
-  .OlympaidTable-module-scss-module__4MJNkq__studentIcon {
-    width: 20px;
-    height: 20px;
-  }
-}
-
 @media (width <= 530px) {
   .OlympaidTable-module-scss-module__4MJNkq__tableContent {
     gap: 0;
   }
 
   .OlympaidTable-module-scss-module__4MJNkq__titleText {
+    font-weight: 500;
+  }
+
+  .OlympaidTable-module-scss-module__4MJNkq__tableText {
+    font-weight: 500;
+  }
+
+  .OlympaidTable-module-scss-module__4MJNkq__tableTextNumber {
+    font-weight: 500;
+  }
+
+  .OlympaidTable-module-scss-module__4MJNkq__tableName {
+    font-weight: 500;
+  }
+
+  .OlympaidTable-module-scss-module__4MJNkq__studentIcon {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+@media (width <= 400px) {
+  .OlympaidTable-module-scss-module__4MJNkq__table {
+    padding: 20px 0 0;
+  }
+
+  .OlympaidTable-module-scss-module__4MJNkq__tableTitle {
+    display: grid;
+    gap: 20px;
+  }
+
+  .OlympaidTable-module-scss-module__4MJNkq__studentInfo {
+    display: grid;
+    padding: 2px 0;
+    gap: 20px;
+  }
+
+  .OlympaidTable-module-scss-module__4MJNkq__titleText {
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .OlympaidTable-module-scss-module__4MJNkq__tableText {
+    padding: 0 5px 0 0;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .OlympaidTable-module-scss-module__4MJNkq__tableTextNumber {
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .OlympaidTable-module-scss-module__4MJNkq__tableName {
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .OlympaidTable-module-scss-module__4MJNkq__studentIcon {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+@media (width <= 376px) {
+  .OlympaidTable-module-scss-module__4MJNkq__table {
+    padding: 20px 0 0;
+  }
+
+  .OlympaidTable-module-scss-module__4MJNkq__tableTitle {
+    display: grid;
+    gap: 20px;
+  }
+
+  .OlympaidTable-module-scss-module__4MJNkq__studentInfo {
+    display: grid;
+    padding: 2px 0;
+    gap: 20px;
+  }
+
+  .OlympaidTable-module-scss-module__4MJNkq__titleText {
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  .OlympaidTable-module-scss-module__4MJNkq__tableText {
+    padding: 0 5px 0 0;
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  .OlympaidTable-module-scss-module__4MJNkq__tableTextNumber {
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  .OlympaidTable-module-scss-module__4MJNkq__tableName {
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  .OlympaidTable-module-scss-module__4MJNkq__studentIcon {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+@media (width <= 330px) {
+  .OlympaidTable-module-scss-module__4MJNkq__table {
+    padding: 20px 0 0;
+  }
+
+  .OlympaidTable-module-scss-module__4MJNkq__tableTitle {
+    display: grid;
+    gap: 20px;
+  }
+
+  .OlympaidTable-module-scss-module__4MJNkq__studentInfo {
+    display: grid;
+    padding: 2px 0;
+    gap: 20px;
+  }
+
+  .OlympaidTable-module-scss-module__4MJNkq__titleText {
     font-size: 10px;
     font-weight: 500;
   }
 
   .OlympaidTable-module-scss-module__4MJNkq__tableText {
+    padding: 0 5px 0 0;
     font-size: 10px;
     font-weight: 500;
   }
@@ -339,6 +433,10 @@
   .OlympaidTable-module-scss-module__4MJNkq__tableTextNumber {
     font-size: 10px;
     font-weight: 500;
+  }
+
+  .OlympaidTable-module-scss-module__4MJNkq__title {
+    font-size: 14px;
   }
 
   .OlympaidTable-module-scss-module__4MJNkq__tableName {
@@ -349,49 +447,6 @@
   .OlympaidTable-module-scss-module__4MJNkq__studentIcon {
     width: 15px;
     height: 15px;
-  }
-}
-
-@media (width <= 440px) {
-  .OlympaidTable-module-scss-module__4MJNkq__titleText {
-    font-size: 10px;
-    font-weight: 500;
-  }
-
-  .OlympaidTable-module-scss-module__4MJNkq__tableText {
-    font-size: 10px;
-    font-weight: 500;
-  }
-
-  .OlympaidTable-module-scss-module__4MJNkq__tableTextNumber {
-    font-size: 10px;
-    font-weight: 500;
-  }
-
-  .OlympaidTable-module-scss-module__4MJNkq__tableName {
-    font-size: 10px;
-    font-weight: 500;
-  }
-
-  .OlympaidTable-module-scss-module__4MJNkq__studentIcon {
-    width: 10px;
-    height: 10px;
-  }
-
-  .OlympaidTable-module-scss-module__4MJNkq__tableTitle {
-    display: grid;
-    padding: p;
-    gap: 10px;
-  }
-
-  .OlympaidTable-module-scss-module__4MJNkq__title {
-    font-size: 13px;
-  }
-
-  .OlympaidTable-module-scss-module__4MJNkq__studentInfo {
-    display: grid;
-    padding: 0;
-    gap: 10px;
   }
 }
 

@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import scss from "./Footer.module.scss";
 import {
@@ -8,46 +9,58 @@ import {
 } from "react-icons/fa";
 import logo from "../../../../../assets/logo.svg";
 import Image from "next/image";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
 const Footer = () => {
+  const { t } = useLanguageStore();
+
   return (
     <footer className={scss.footer}>
       <div className="container">
         <div className={scss.content}>
           <div className={scss.logo}>
-            <Image src={logo} alt="logo" width={100} height={100} />
+            <Image
+              src={logo}
+              alt={t("логотип", "логотип")}
+              width={100}
+              height={100}
+            />
           </div>
           <div className={scss.section}>
             <ul>
               <li>
-                <a href="/news">Новости</a>
+                <a href="/news">{t("Жаңылыктар", "Новости")}</a>
               </li>
               <li>
-                <a href="/students">Студенты</a>
+                <a href="/students">{t("Окуучулар", "Студенты")}</a>
               </li>
               <li>
-                <a href="/teachers">Учителя</a>
+                <a href="/teachers">{t("Мугалимдер", "Учителя")}</a>
               </li>
               <li>
-                <a href="/graduates">Выпускники</a>
+                <a href="/graduates">{t("Бүтүрүүчүлөр", "Выпускники")}</a>
               </li>
               <li>
-                <a href="/gallery">Галерея</a>
+                <a href="/gallery">{t("Галерея", "Галерея")}</a>
               </li>
             </ul>
           </div>
 
           <div className={scss.section}>
             <p>
-              <strong>Адрес</strong>
+              <strong>{t("Дарек", "Адрес")}</strong>
               <br />
               <br />
-              Баткенская область, Лейлекский район, <br />
-              село Центральное <br />
-              село Жаштык
+              {t(
+                "Баткен облусу, Лейлек району,",
+                "Баткенская область, Лейлекский район,"
+              )}{" "}
+              <br />
+              {t("Борбордук айылы", "село Центральное")} <br />
+              {t("Жаштык айылы", "село Жаштык")}
               <br />
               <br />
-              <strong>Контакты</strong>
+              <strong>{t("Байланыштар", "Контакты")}</strong>
               <br />
               <br />
               +9963123456789
@@ -60,7 +73,7 @@ const Footer = () => {
           </div>
 
           <div className={scss.section}>
-            <strong>Социальные сети</strong>
+            <strong>{t("Социалдык тармактар", "Социальные сети")}</strong>
             <div className={scss.social}>
               <a href="https://facebook.com">
                 <FaFacebookF />
@@ -78,7 +91,11 @@ const Footer = () => {
           </div>
         </div>
         <div className={scss.copyright}>
-          © 2023 Copyright by == Developers. All rights reserved.
+          © 2023{" "}
+          {t(
+            "Автордук укук == Developers. Бардык укуктар корголгон.",
+            "Copyright by == Developers. Все права защищены."
+          )}
         </div>
       </div>
     </footer>

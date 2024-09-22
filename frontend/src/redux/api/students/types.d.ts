@@ -13,6 +13,7 @@ namespace STUDENTS {
                 surname: string;
             }
         ];
+        status_in_class: string;
     }
 
     type GetStudentsResponse = IStudent[];

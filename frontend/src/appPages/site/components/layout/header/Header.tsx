@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { DebounceInput as Input } from "react-debounce-input";
+import { useGetSearchQuery } from "@/redux/api/search";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 
 const Header = () => {
@@ -16,10 +17,35 @@ const Header = () => {
   const [hasFocusInput, setHasFocusInput] = useState(false);
   const { isKyrgyz, setIsKyrgyz, t } = useLanguageStore();
 
+  const searchRequest = useMemo(() => {
+    if (query.length < 2) return null;
+    if (/^\d+$/.test(query)) {
+      return { school_class__grade: query };
+    }
+    return { full_name: query };
+  }, [query]);
+
+  const { data, error, isLoading } = useGetSearchQuery(searchRequest!, {
+    skip: !searchRequest,
+  });
+
+  useEffect(() => {
+    if (hasFocusInput && query.length >= 1) {
+      router.push(`/search?query=${encodeURIComponent(query)}`);
+    }
+  }, [query, hasFocusInput, router]);
+
   const handleNavigate = () => {
     router.push("https://3-gymnasium.kg/accounts/");
   };
 
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
+  };
+  const handleBlur = () => {
+    setQuery("");
+    setHasFocusInput(false);
+  };
   const handleScrollTo = () => {
     window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
   };
@@ -80,7 +106,20 @@ const Header = () => {
 
           <div className={scss.rightSection}>
             <div className={scss.search}>
-                <input type="text" placeholder={t("Издөө...", "Поиск...")}/>
+              <Input
+                minLength={1}
+                maxLength={30}
+                debounceTimeout={300}
+                onChange={handleChange}
+                onFocus={() => {
+                  setHasFocusInput(true);
+                }}
+                onBlur={() => {
+                  handleBlur();
+                }}
+                value={query}
+                placeholder={t("Издөө...", "Поиск...")}
+              />
             </div>
 
             <div className={scss.language}>

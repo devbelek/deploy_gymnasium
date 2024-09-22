@@ -86,7 +86,8 @@
 @media (max-width: 884px) {
   .GalleryMainContent {
     .gallery_card {
-      grid-template-columns: repeat(2, 2fr) !important;
+      overflow-x: auto;
+      grid-template-columns: repeat(6, 1fr) !important;
     }
   }
 }

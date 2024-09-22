@@ -20,4 +20,11 @@
   }
 }
 
+@media (width <= 884px) {
+  .HomePage-module-scss-module__xsQjTG__personas {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
 /*# sourceMappingURL=src_appPages_site_components_pages_HomePage_module_scss_module_b52d8e.css.map*/
