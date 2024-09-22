@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["[project]/src/app/globals.scss.css"],"sourcesContent":["*{padding:0;margin:0;box-sizing:border-box}.container{max-width:1240px;width:100%;padding:0 20px;margin:0 auto}"],"names":[],"mappings":"AAAA;;;;;;AAA2C"}},
-    {"offset": {"line": 13, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
-}
