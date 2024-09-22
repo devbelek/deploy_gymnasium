@@ -1,4 +1,4 @@
-import {Search} from "@/appPages/site/components/pages/search/Search";
+import Search from "@/appPages/site/components/pages/search/Search";
 
 const page = () => <Search />;
 
