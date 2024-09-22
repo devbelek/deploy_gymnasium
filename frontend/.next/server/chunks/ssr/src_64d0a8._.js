@@ -236,8 +236,10 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$lu
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$appPages$2f$site$2f$components$2f$pages$2f$news$2f$NewsDetailCotnent$2f$NewsDetailContent$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__ = __turbopack_import__("[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.module.scss.module.css [app-ssr] (css module)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$redux$2f$api$2f$news$2f$index$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/redux/api/news/index.ts [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$redux$2f$api$2f$profile$2f$index$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/redux/api/profile/index.ts [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$stores$2f$useLanguageStore$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/stores/useLanguageStore.tsx [app-ssr] (ecmascript)");
 "__TURBOPACK__ecmascript__hoisting__location__";
 "use client";
+;
 ;
 ;
 ;
@@ -250,6 +252,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$redux$2f$api$2f$profi
 const NewsDetailContent = ()=>{
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
     const params = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useParams"])();
+    const { isKyrgyz, t } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$stores$2f$useLanguageStore$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useLanguageStore"])();
     const newsId = typeof params.newsDetail === "string" ? parseInt(params.newsDetail, 10) : NaN;
     const [commentText, setCommentText] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("");
     const [editingComment, setEditingComment] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
@@ -282,13 +285,15 @@ const NewsDetailContent = ()=>{
                     setCurrentUser(null);
                 }
             } catch (error) {
-                console.error("Ошибка при проверке статуса аутентификации:", error);
+                console.error(t("Аутентификация статусун текшерүүдө ката:", "Ошибка при проверке статуса аутентификации:"), error);
                 setIsLoggedIn(false);
                 setCurrentUser(null);
             }
         };
         checkAuthStatus();
-    }, []);
+    }, [
+        t
+    ]);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         const fetchUserAvatars = async ()=>{
             if (commentsData) {
@@ -297,8 +302,8 @@ const NewsDetailContent = ()=>{
                 for (const username of uniqueUsers){
                     try {
                         const response = await fetch(`${("TURBOPACK compile-time value", "https://3-gymnasium.kg")}/${("TURBOPACK compile-time value", "api")}/user-info/?username=${username}`, {
-                            method: 'GET',
-                            credentials: 'include'
+                            method: "GET",
+                            credentials: "include"
                         });
                         if (response.ok) {
                             const userData = await response.json();
@@ -307,7 +312,7 @@ const NewsDetailContent = ()=>{
                             newUserAvatars[username] = `https://api.dicebear.com/6.x/initials/svg?seed=${username}`;
                         }
                     } catch (error) {
-                        console.error(`Ошибка при получении аватара для ${username}:`, error);
+                        console.error(t(`${username} үчүн аватарды алууда ката:`, `Ошибка при получении аватара для ${username}:`), error);
                         newUserAvatars[username] = `https://api.dicebear.com/6.x/initials/svg?seed=${username}`;
                     }
                 }
@@ -316,7 +321,8 @@ const NewsDetailContent = ()=>{
         };
         fetchUserAvatars();
     }, [
-        commentsData
+        commentsData,
+        t
     ]);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         const handleScroll = ()=>{
@@ -325,8 +331,8 @@ const NewsDetailContent = ()=>{
                 setShowCommentForm(rect.top <= window.innerHeight);
             }
         };
-        window.addEventListener('scroll', handleScroll);
-        return ()=>window.removeEventListener('scroll', handleScroll);
+        window.addEventListener("scroll", handleScroll);
+        return ()=>window.removeEventListener("scroll", handleScroll);
     }, []);
     const handleAddComment = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async ()=>{
         if (commentText.trim() && isLoggedIn) {
@@ -339,7 +345,7 @@ const NewsDetailContent = ()=>{
                 setCommentText("");
                 setReplyingTo(null);
             } catch (error) {
-                console.error("Ошибка при добавлении комментария:", error);
+                console.error(t("Пикир кошууда ката:", "Ошибка при добавлении комментария:"), error);
             }
         }
     }, [
@@ -347,7 +353,8 @@ const NewsDetailContent = ()=>{
         commentText,
         isLoggedIn,
         newsId,
-        replyingTo
+        replyingTo,
+        t
     ]);
     const handleUpdateComment = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async ()=>{
         if (editingComment && editingComment.text.trim()) {
@@ -359,12 +366,13 @@ const NewsDetailContent = ()=>{
                 }).unwrap();
                 setEditingComment(null);
             } catch (error) {
-                console.error("Ошибка при обновлении комментария:", error);
+                console.error(t("Пикирди жаңыртууда ката:", "Ошибка при обновлении комментария:"), error);
             }
         }
     }, [
         editingComment,
-        updateComment
+        updateComment,
+        t
     ]);
     const handleDeleteComment = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async (commentId, parentId)=>{
         try {
@@ -373,10 +381,11 @@ const NewsDetailContent = ()=>{
                 parentId
             }).unwrap();
         } catch (error) {
-            console.error("Ошибка при удалении комментария:", error);
+            console.error(t("Пикирди өчүрүүдө ката:", "Ошибка при удалении комментария:"), error);
         }
     }, [
-        deleteComment
+        deleteComment,
+        t
     ]);
     const handleLikeComment = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async (commentId)=>{
         if (isLoggedIn) {
@@ -385,12 +394,13 @@ const NewsDetailContent = ()=>{
                     commentId
                 }).unwrap();
             } catch (error) {
-                console.error("Ошибка при лайке комментария:", error);
+                console.error(t("Пикирге лайк коюуда ката:", "Ошибка при лайке комментария:"), error);
             }
         }
     }, [
         isLoggedIn,
-        likeComment
+        likeComment,
+        t
     ]);
     const renderCommentForm = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])((onSubmit, cancelAction)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$appPages$2f$site$2f$components$2f$pages$2f$news$2f$NewsDetailCotnent$2f$NewsDetailContent$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].commentForm,
@@ -401,10 +411,10 @@ const NewsDetailContent = ()=>{
                             ...editingComment,
                             text: e.target.value
                         }) : setCommentText(e.target.value),
-                    placeholder: "Напишите ваш комментарий"
+                    placeholder: t("Пикириңизди жазыңыз", "Напишите ваш комментарий")
                 }, void 0, false, {
                     fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                    lineNumber: 194,
+                    lineNumber: 232,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -413,61 +423,62 @@ const NewsDetailContent = ()=>{
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                             onClick: onSubmit,
                             className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$appPages$2f$site$2f$components$2f$pages$2f$news$2f$NewsDetailCotnent$2f$NewsDetailContent$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].submitButton,
-                            children: "Отправить"
+                            children: t("Жөнөтүү", "Отправить")
                         }, void 0, false, {
                             fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                            lineNumber: 204,
+                            lineNumber: 242,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                             onClick: cancelAction,
                             className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$appPages$2f$site$2f$components$2f$pages$2f$news$2f$NewsDetailCotnent$2f$NewsDetailContent$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].cancelButton,
-                            children: "Отмена"
+                            children: t("Жокко чыгаруу", "Отмена")
                         }, void 0, false, {
                             fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                            lineNumber: 207,
+                            lineNumber: 245,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                    lineNumber: 203,
+                    lineNumber: 241,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-            lineNumber: 193,
+            lineNumber: 231,
             columnNumber: 7
         }, this), [
         editingComment,
-        commentText
+        commentText,
+        t
     ]);
     const renderCommentActions = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])((comment, depth)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$appPages$2f$site$2f$components$2f$pages$2f$news$2f$NewsDetailCotnent$2f$NewsDetailContent$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].commentActions,
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                     onClick: ()=>handleLikeComment(comment.id),
-                    className: `${__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$appPages$2f$site$2f$components$2f$pages$2f$news$2f$NewsDetailCotnent$2f$NewsDetailContent$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].actionButton} ${comment.is_liked ? __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$appPages$2f$site$2f$components$2f$pages$2f$news$2f$NewsDetailCotnent$2f$NewsDetailContent$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].liked : ''}`,
+                    className: `${__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$appPages$2f$site$2f$components$2f$pages$2f$news$2f$NewsDetailCotnent$2f$NewsDetailContent$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].actionButton} ${comment.is_liked ? __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$appPages$2f$site$2f$components$2f$pages$2f$news$2f$NewsDetailCotnent$2f$NewsDetailContent$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].liked : ""}`,
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$lucide$2d$react$40$0$2e$441$2e$0_react$40$18$2e$3$2e$1$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$thumbs$2d$up$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ThumbsUp$3e$__["ThumbsUp"], {
                             size: 16
                         }, void 0, false, {
                             fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                            lineNumber: 223,
+                            lineNumber: 263,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                             children: comment.likes_count
                         }, void 0, false, {
                             fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                            lineNumber: 224,
+                            lineNumber: 264,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                    lineNumber: 219,
+                    lineNumber: 257,
                     columnNumber: 9
                 }, this),
                 isLoggedIn && depth === 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -481,20 +492,20 @@ const NewsDetailContent = ()=>{
                             size: 16
                         }, void 0, false, {
                             fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                            lineNumber: 233,
+                            lineNumber: 273,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                            children: "Ответить"
+                            children: t("Жооп берүү", "Ответить")
                         }, void 0, false, {
                             fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                            lineNumber: 234,
+                            lineNumber: 274,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                    lineNumber: 227,
+                    lineNumber: 267,
                     columnNumber: 11
                 }, this),
                 currentUser === comment.author && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$chakra$2d$ui$2b$menu$40$2$2e$2$2e$1_$40$chakra$2d$ui$2b$system$40$2$2e$6$2e$2_$40$emotion$2b$react$40$11$2e$13$2e$3_$40$types$2b$react$40$18$2e$3$2e$3_reac_sdibvn4lg5es5fxl2rrco3wyfa$2f$node_modules$2f40$chakra$2d$ui$2f$menu$2f$dist$2f$chunk$2d$UZJ3TPNQ$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Menu"], {
@@ -506,12 +517,12 @@ const NewsDetailContent = ()=>{
                                 size: 16
                             }, void 0, false, {
                                 fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                                lineNumber: 240,
+                                lineNumber: 280,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                            lineNumber: 239,
+                            lineNumber: 279,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$chakra$2d$ui$2b$menu$40$2$2e$2$2e$1_$40$chakra$2d$ui$2b$system$40$2$2e$6$2e$2_$40$emotion$2b$react$40$11$2e$13$2e$3_$40$types$2b$react$40$18$2e$3$2e$3_reac_sdibvn4lg5es5fxl2rrco3wyfa$2f$node_modules$2f40$chakra$2d$ui$2f$menu$2f$dist$2f$chunk$2d$6MF6NSK4$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["MenuList"], {
@@ -527,20 +538,20 @@ const NewsDetailContent = ()=>{
                                             size: 16
                                         }, void 0, false, {
                                             fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                                            lineNumber: 252,
+                                            lineNumber: 292,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            children: "Редактировать"
+                                            children: t("Түзөтүү", "Редактировать")
                                         }, void 0, false, {
                                             fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                                            lineNumber: 253,
+                                            lineNumber: 293,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                                    lineNumber: 243,
+                                    lineNumber: 283,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$chakra$2d$ui$2b$menu$40$2$2e$2$2e$1_$40$chakra$2d$ui$2b$system$40$2$2e$6$2e$2_$40$emotion$2b$react$40$11$2e$13$2e$3_$40$types$2b$react$40$18$2e$3$2e$3_reac_sdibvn4lg5es5fxl2rrco3wyfa$2f$node_modules$2f40$chakra$2d$ui$2f$menu$2f$dist$2f$chunk$2d$5TWLKMYI$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["MenuItem"], {
@@ -550,44 +561,45 @@ const NewsDetailContent = ()=>{
                                             size: 16
                                         }, void 0, false, {
                                             fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                                            lineNumber: 258,
+                                            lineNumber: 298,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            children: "Удалить"
+                                            children: t("Өчүрүү", "Удалить")
                                         }, void 0, false, {
                                             fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                                            lineNumber: 259,
+                                            lineNumber: 299,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                                    lineNumber: 255,
+                                    lineNumber: 295,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                            lineNumber: 242,
+                            lineNumber: 282,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                    lineNumber: 238,
+                    lineNumber: 278,
                     columnNumber: 11
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-            lineNumber: 218,
+            lineNumber: 256,
             columnNumber: 7
         }, this), [
         currentUser,
         handleDeleteComment,
         handleLikeComment,
-        isLoggedIn
+        isLoggedIn,
+        t
     ]);
     const renderComment = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])((comment, depth = 0)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: `${__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$appPages$2f$site$2f$components$2f$pages$2f$news$2f$NewsDetailCotnent$2f$NewsDetailContent$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].comment} ${depth > 0 ? __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$appPages$2f$site$2f$components$2f$pages$2f$news$2f$NewsDetailCotnent$2f$NewsDetailContent$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].reply : ""}`,
@@ -604,7 +616,7 @@ const NewsDetailContent = ()=>{
                             onClick: ()=>setEnlargedAvatar(userAvatars[comment.author])
                         }, void 0, false, {
                             fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                            lineNumber: 276,
+                            lineNumber: 316,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -615,7 +627,7 @@ const NewsDetailContent = ()=>{
                                     children: comment.author
                                 }, void 0, false, {
                                     fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                                    lineNumber: 285,
+                                    lineNumber: 328,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -623,19 +635,19 @@ const NewsDetailContent = ()=>{
                                     children: new Date(comment.created_at).toLocaleString()
                                 }, void 0, false, {
                                     fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                                    lineNumber: 288,
+                                    lineNumber: 329,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                            lineNumber: 284,
+                            lineNumber: 327,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                    lineNumber: 275,
+                    lineNumber: 315,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -643,7 +655,7 @@ const NewsDetailContent = ()=>{
                     children: comment.text
                 }, void 0, false, {
                     fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                    lineNumber: 293,
+                    lineNumber: 334,
                     columnNumber: 9
                 }, this),
                 renderCommentActions(comment, depth),
@@ -653,13 +665,13 @@ const NewsDetailContent = ()=>{
                         children: renderComment(reply, depth + 1)
                     }, reply.id, false, {
                         fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                        lineNumber: 300,
+                        lineNumber: 341,
                         columnNumber: 13
                     }, this))
             ]
         }, comment.id, true, {
             fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-            lineNumber: 271,
+            lineNumber: 311,
             columnNumber: 7
         }, this), [
         editingComment,
@@ -671,36 +683,36 @@ const NewsDetailContent = ()=>{
     if (isNaN(newsId)) {
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$appPages$2f$site$2f$components$2f$pages$2f$news$2f$NewsDetailCotnent$2f$NewsDetailContent$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].error,
-            children: "Неверный идентификатор новости"
+            children: t("Туура эмес жаңылык идентификатору", "Неверный идентификатор новости")
         }, void 0, false, {
             fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-            lineNumber: 316,
-            columnNumber: 12
+            lineNumber: 358,
+            columnNumber: 7
         }, this);
     }
     if (newsLoading || commentsLoading) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$appPages$2f$site$2f$components$2f$pages$2f$news$2f$NewsDetailCotnent$2f$NewsDetailContent$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].loading,
-        children: "Загрузка..."
+        children: t("Жүктөлүүдө...", "Загрузка...")
     }, void 0, false, {
         fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-        lineNumber: 320,
-        columnNumber: 12
+        lineNumber: 369,
+        columnNumber: 7
     }, this);
     if (newsError || commentsError) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$appPages$2f$site$2f$components$2f$pages$2f$news$2f$NewsDetailCotnent$2f$NewsDetailContent$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].error,
-        children: "Произошла ошибка при загрузке данных"
+        children: t("Маалыматтарды жүктөөдө ката кетти", "Произошла ошибка при загрузке данных")
     }, void 0, false, {
         fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-        lineNumber: 323,
+        lineNumber: 373,
         columnNumber: 7
     }, this);
     if (!newsData) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$appPages$2f$site$2f$components$2f$pages$2f$news$2f$NewsDetailCotnent$2f$NewsDetailContent$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].error,
-        children: "Новость не найдена"
+        children: t("Жаңылык табылган жок", "Новость не найдена")
     }, void 0, false, {
         fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-        lineNumber: 325,
-        columnNumber: 25
+        lineNumber: 382,
+        columnNumber: 7
     }, this);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$appPages$2f$site$2f$components$2f$pages$2f$news$2f$NewsDetailCotnent$2f$NewsDetailContent$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].NewsDetailContent,
@@ -714,50 +726,50 @@ const NewsDetailContent = ()=>{
                             className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$appPages$2f$site$2f$components$2f$pages$2f$news$2f$NewsDetailCotnent$2f$NewsDetailContent$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].news_head,
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                                    children: "Новости"
+                                    children: t("Жаңылыктар", "Новости")
                                 }, void 0, false, {
                                     fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                                    lineNumber: 332,
+                                    lineNumber: 392,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("hr", {}, void 0, false, {
                                     fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                                    lineNumber: 333,
+                                    lineNumber: 393,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                            lineNumber: 331,
+                            lineNumber: 391,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$appPages$2f$site$2f$components$2f$pages$2f$news$2f$NewsDetailCotnent$2f$NewsDetailContent$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].newsContent,
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                                    children: newsData.description
+                                    children: isKyrgyz ? newsData.description_ky : newsData.description_ru
                                 }, void 0, false, {
                                     fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                                    lineNumber: 336,
+                                    lineNumber: 396,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                                     src: newsData.image,
-                                    alt: newsData.description,
+                                    alt: "img",
                                     width: 700,
                                     height: 500,
                                     quality: 70,
                                     property: "img"
                                 }, void 0, false, {
                                     fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                                    lineNumber: 337,
+                                    lineNumber: 399,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                    children: newsData.content
+                                    children: isKyrgyz ? newsData.content_ky : newsData.content_ru
                                 }, void 0, false, {
                                     fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                                    lineNumber: 345,
+                                    lineNumber: 407,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -765,51 +777,54 @@ const NewsDetailContent = ()=>{
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                             children: [
-                                                "Автор: ",
+                                                t("Автор", "Автор"),
+                                                ": ",
                                                 newsData.author
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                                            lineNumber: 347,
+                                            lineNumber: 409,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                             children: [
-                                                "Дата публикации:",
+                                                t("Жарыяланган күнү", "Дата публикации"),
+                                                ":",
                                                 " ",
                                                 new Date(newsData.created_at).toLocaleString()
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                                            lineNumber: 348,
+                                            lineNumber: 412,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                             children: [
-                                                "Последнее обновление:",
+                                                t("Акыркы жаңыртуу", "Последнее обновление"),
+                                                ":",
                                                 " ",
                                                 new Date(newsData.updated_at).toLocaleString()
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                                            lineNumber: 352,
+                                            lineNumber: 416,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                                    lineNumber: 346,
+                                    lineNumber: 408,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("hr", {}, void 0, false, {
                                     fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                                    lineNumber: 357,
+                                    lineNumber: 421,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                            lineNumber: 335,
+                            lineNumber: 395,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -817,52 +832,48 @@ const NewsDetailContent = ()=>{
                             ref: commentSectionRef,
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                    children: "Комментарии"
+                                    children: t("Пикирлер", "Комментарии")
                                 }, void 0, false, {
                                     fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                                    lineNumber: 360,
+                                    lineNumber: 425,
                                     columnNumber: 13
                                 }, this),
                                 commentsData && commentsData.map((comment)=>renderComment(comment))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                            lineNumber: 359,
+                            lineNumber: 424,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                    lineNumber: 330,
+                    lineNumber: 390,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                lineNumber: 329,
+                lineNumber: 389,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: `${__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$appPages$2f$site$2f$components$2f$pages$2f$news$2f$NewsDetailCotnent$2f$NewsDetailContent$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].fixedCommentForm} ${showCommentForm ? '' : __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$appPages$2f$site$2f$components$2f$pages$2f$news$2f$NewsDetailCotnent$2f$NewsDetailContent$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].hidden}`,
+                className: `${__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$appPages$2f$site$2f$components$2f$pages$2f$news$2f$NewsDetailCotnent$2f$NewsDetailContent$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].fixedCommentForm} ${showCommentForm ? "" : __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$appPages$2f$site$2f$components$2f$pages$2f$news$2f$NewsDetailCotnent$2f$NewsDetailContent$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].hidden}`,
                 children: isLoggedIn ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$appPages$2f$site$2f$components$2f$pages$2f$news$2f$NewsDetailCotnent$2f$NewsDetailContent$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].addComment,
                     children: [
                         replyingTo ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                             className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$appPages$2f$site$2f$components$2f$pages$2f$news$2f$NewsDetailCotnent$2f$NewsDetailContent$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].replyingTo,
-                            children: [
-                                "Ответ на комментарий пользователя ",
-                                replyingTo.author,
-                                ":"
-                            ]
-                        }, void 0, true, {
+                            children: t(`${replyingTo.author} колдонуучунун пикирине жооп:`, `Ответ на комментарий пользователя ${replyingTo.author}:`)
+                        }, void 0, false, {
                             fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                            lineNumber: 370,
+                            lineNumber: 439,
                             columnNumber: 15
                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                             className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$appPages$2f$site$2f$components$2f$pages$2f$news$2f$NewsDetailCotnent$2f$NewsDetailContent$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].addNewComment,
-                            children: "Добавить новый комментарий:"
+                            children: t("Жаңы пикир кошуу:", "Добавить новый комментарий:")
                         }, void 0, false, {
                             fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                            lineNumber: 374,
+                            lineNumber: 446,
                             columnNumber: 15
                         }, this),
                         renderCommentForm(handleAddComment, ()=>{
@@ -872,19 +883,19 @@ const NewsDetailContent = ()=>{
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                    lineNumber: 368,
+                    lineNumber: 437,
                     columnNumber: 11
                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                     className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$appPages$2f$site$2f$components$2f$pages$2f$news$2f$NewsDetailCotnent$2f$NewsDetailContent$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].loginPrompt,
-                    children: "Пожалуйста, войдите в систему, чтобы оставить комментарий."
+                    children: t("Пикир калтыруу үчүн системага кириңиз.", "Пожалуйста, войдите в систему, чтобы оставить комментарий.")
                 }, void 0, false, {
                     fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                    lineNumber: 384,
+                    lineNumber: 456,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                lineNumber: 366,
+                lineNumber: 431,
                 columnNumber: 7
             }, this),
             enlargedAvatar && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -895,13 +906,13 @@ const NewsDetailContent = ()=>{
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                             src: enlargedAvatar,
-                            alt: "Enlarged avatar",
+                            alt: t("Чоңойтулган аватар", "Увеличенный аватар"),
                             width: 200,
                             height: 200,
                             className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$appPages$2f$site$2f$components$2f$pages$2f$news$2f$NewsDetailCotnent$2f$NewsDetailContent$2e$module$2e$scss$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].enlargedAvatar
                         }, void 0, false, {
                             fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                            lineNumber: 392,
+                            lineNumber: 470,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$14$2e$2$2e$11_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1_sass$40$1$2e$77$2e$8$2f$node_modules$2f$next$2f$dist$2f$server$2f$future$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -911,29 +922,29 @@ const NewsDetailContent = ()=>{
                                 size: 24
                             }, void 0, false, {
                                 fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                                lineNumber: 400,
+                                lineNumber: 481,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                            lineNumber: 399,
+                            lineNumber: 477,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                    lineNumber: 391,
+                    lineNumber: 469,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-                lineNumber: 390,
+                lineNumber: 465,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/appPages/site/components/pages/news/NewsDetailCotnent/NewsDetailContent.tsx",
-        lineNumber: 328,
+        lineNumber: 388,
         columnNumber: 5
     }, this);
 };

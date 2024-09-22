@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["[project]/src/appPages/site/components/pages/api/profile/Profile/Profile.module.scss.module.css"],"sourcesContent":[".Profile .content{margin-top:90px}"],"names":[],"mappings":"AAAA"}},
-    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
-}

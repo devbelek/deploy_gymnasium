@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
@@ -22,10 +21,12 @@ import {
   useLikeCommentMutation,
 } from "@/redux/api/news";
 import { useGetAccountQuery } from "@/redux/api/profile";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
 const NewsDetailContent: React.FC = () => {
   const router = useRouter();
   const params = useParams();
+  const { isKyrgyz, t } = useLanguageStore();
   const newsId =
     typeof params.newsDetail === "string"
       ? parseInt(params.newsDetail, 10)
@@ -59,6 +60,7 @@ const NewsDetailContent: React.FC = () => {
     isLoading: commentsLoading,
     error: commentsError,
   } = useGetCommentsQuery(newsId);
+
   const [addComment] = useAddCommentMutation();
   const [updateComment] = useUpdateCommentMutation();
   const [deleteComment] = useDeleteCommentMutation();
@@ -82,14 +84,20 @@ const NewsDetailContent: React.FC = () => {
           setCurrentUser(null);
         }
       } catch (error) {
-        console.error("Ошибка при проверке статуса аутентификации:", error);
+        console.error(
+          t(
+            "Аутентификация статусун текшерүүдө ката:",
+            "Ошибка при проверке статуса аутентификации:"
+          ),
+          error
+        );
         setIsLoggedIn(false);
         setCurrentUser(null);
       }
     };
 
     checkAuthStatus();
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     const fetchUserAvatars = async () => {
@@ -120,7 +128,10 @@ const NewsDetailContent: React.FC = () => {
             }
           } catch (error) {
             console.error(
-              `Ошибка при получении аватара для ${username}:`,
+              t(
+                `${username} үчүн аватарды алууда ката:`,
+                `Ошибка при получении аватара для ${username}:`
+              ),
               error
             );
             newUserAvatars[
@@ -134,7 +145,7 @@ const NewsDetailContent: React.FC = () => {
     };
 
     fetchUserAvatars();
-  }, [commentsData]);
+  }, [commentsData, t]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -159,10 +170,13 @@ const NewsDetailContent: React.FC = () => {
         setCommentText("");
         setReplyingTo(null);
       } catch (error) {
-        console.error("Ошибка при добавлении комментария:", error);
+        console.error(
+          t("Пикир кошууда ката:", "Ошибка при добавлении комментария:"),
+          error
+        );
       }
     }
-  }, [addComment, commentText, isLoggedIn, newsId, replyingTo]);
+  }, [addComment, commentText, isLoggedIn, newsId, replyingTo, t]);
 
   const handleUpdateComment = useCallback(async () => {
     if (editingComment && editingComment.text.trim()) {
@@ -174,20 +188,26 @@ const NewsDetailContent: React.FC = () => {
         }).unwrap();
         setEditingComment(null);
       } catch (error) {
-        console.error("Ошибка при обновлении комментария:", error);
+        console.error(
+          t("Пикирди жаңыртууда ката:", "Ошибка при обновлении комментария:"),
+          error
+        );
       }
     }
-  }, [editingComment, updateComment]);
+  }, [editingComment, updateComment, t]);
 
   const handleDeleteComment = useCallback(
     async (commentId: number, parentId?: number) => {
       try {
         await deleteComment({ commentId, parentId }).unwrap();
       } catch (error) {
-        console.error("Ошибка при удалении комментария:", error);
+        console.error(
+          t("Пикирди өчүрүүдө ката:", "Ошибка при удалении комментария:"),
+          error
+        );
       }
     },
-    [deleteComment]
+    [deleteComment, t]
   );
 
   const handleLikeComment = useCallback(
@@ -196,11 +216,14 @@ const NewsDetailContent: React.FC = () => {
         try {
           await likeComment({ commentId }).unwrap();
         } catch (error) {
-          console.error("Ошибка при лайке комментария:", error);
+          console.error(
+            t("Пикирге лайк коюуда ката:", "Ошибка при лайке комментария:"),
+            error
+          );
         }
       }
     },
-    [isLoggedIn, likeComment]
+    [isLoggedIn, likeComment, t]
   );
 
   const renderCommentForm = useCallback(
@@ -213,19 +236,19 @@ const NewsDetailContent: React.FC = () => {
               ? setEditingComment({ ...editingComment, text: e.target.value })
               : setCommentText(e.target.value)
           }
-          placeholder="Напишите ваш комментарий"
+          placeholder={t("Пикириңизди жазыңыз", "Напишите ваш комментарий")}
         />
         <div className={scss.formActions}>
           <button onClick={onSubmit} className={scss.submitButton}>
-            Отправить
+            {t("Жөнөтүү", "Отправить")}
           </button>
           <button onClick={cancelAction} className={scss.cancelButton}>
-            Отмена
+            {t("Жокко чыгаруу", "Отмена")}
           </button>
         </div>
       </div>
     ),
-    [editingComment, commentText]
+    [editingComment, commentText, t]
   );
 
   const renderCommentActions = useCallback(
@@ -248,7 +271,7 @@ const NewsDetailContent: React.FC = () => {
             className={scss.actionButton}
           >
             <MessageCircle size={16} />
-            <span>Ответить</span>
+            <span>{t("Жооп берүү", "Ответить")}</span>
           </button>
         )}
         {currentUser === comment.author && (
@@ -267,20 +290,20 @@ const NewsDetailContent: React.FC = () => {
                 }
               >
                 <Edit size={16} />
-                <span>Редактировать</span>
+                <span>{t("Түзөтүү", "Редактировать")}</span>
               </MenuItem>
               <MenuItem
                 onClick={() => handleDeleteComment(comment.id, comment.parent)}
               >
                 <Trash2 size={16} />
-                <span>Удалить</span>
+                <span>{t("Өчүрүү", "Удалить")}</span>
               </MenuItem>
             </MenuList>
           </Menu>
         )}
       </div>
     ),
-    [currentUser, handleDeleteComment, handleLikeComment, isLoggedIn]
+    [currentUser, handleDeleteComment, handleLikeComment, isLoggedIn, t]
   );
 
   const renderComment = useCallback(
@@ -331,51 +354,75 @@ const NewsDetailContent: React.FC = () => {
   );
 
   if (isNaN(newsId)) {
-    return <div className={scss.error}>Неверный идентификатор новости</div>;
+    return (
+      <div className={scss.error}>
+        {t(
+          "Туура эмес жаңылык идентификатору",
+          "Неверный идентификатор новости"
+        )}
+      </div>
+    );
   }
 
   if (newsLoading || commentsLoading)
-    return <div className={scss.loading}>Загрузка...</div>;
+    return (
+      <div className={scss.loading}>{t("Жүктөлүүдө...", "Загрузка...")}</div>
+    );
   if (newsError || commentsError)
     return (
-      <div className={scss.error}>Произошла ошибка при загрузке данных</div>
+      <div className={scss.error}>
+        {t(
+          "Маалыматтарды жүктөөдө ката кетти",
+          "Произошла ошибка при загрузке данных"
+        )}
+      </div>
     );
-  if (!newsData) return <div className={scss.error}>Новость не найдена</div>;
+  if (!newsData)
+    return (
+      <div className={scss.error}>
+        {t("Жаңылык табылган жок", "Новость не найдена")}
+      </div>
+    );
 
   return (
     <div className={scss.NewsDetailContent}>
       <div className="container">
         <div className={scss.content}>
           <div className={scss.news_head}>
-            <h1>Новости</h1>
+            <h1>{t("Жаңылыктар", "Новости")}</h1>
             <hr />
           </div>
           <div className={scss.newsContent}>
-            <h1>{newsData.description}</h1>
+            <h1>
+              {isKyrgyz ? newsData.description_ky : newsData.description_ru}
+            </h1>
             <Image
               src={newsData.image}
-              alt={newsData.description}
+              alt="img"
               width={700}
               height={500}
               quality={70}
               property="img"
             />
-            <p>{newsData.content}</p>
+            <p>{isKyrgyz ? newsData.content_ky : newsData.content_ru}</p>
             <div className={scss.newsInfo}>
-              <p>Автор: {newsData.author}</p>
               <p>
-                Дата публикации:{" "}
+                {t("Автор", "Автор")}: {newsData.author}
+              </p>
+              <p>
+                {t("Жарыяланган күнү", "Дата публикации")}:{" "}
                 {new Date(newsData.created_at).toLocaleString()}
               </p>
               <p>
-                Последнее обновление:{" "}
+                {t("Акыркы жаңыртуу", "Последнее обновление")}:{" "}
                 {new Date(newsData.updated_at).toLocaleString()}
               </p>
             </div>
             <hr />
           </div>
+
           <div className={scss.commentsSection} ref={commentSectionRef}>
-            <h2>Комментарии</h2>
+            <h2>{t("Пикирлер", "Комментарии")}</h2>
             {commentsData &&
               commentsData.map((comment) => renderComment(comment))}
           </div>
@@ -390,10 +437,15 @@ const NewsDetailContent: React.FC = () => {
           <div className={scss.addComment}>
             {replyingTo ? (
               <p className={scss.replyingTo}>
-                Ответ на комментарий пользователя {replyingTo.author}:
+                {t(
+                  `${replyingTo.author} колдонуучунун пикирине жооп:`,
+                  `Ответ на комментарий пользователя ${replyingTo.author}:`
+                )}
               </p>
             ) : (
-              <p className={scss.addNewComment}>Добавить новый комментарий:</p>
+              <p className={scss.addNewComment}>
+                {t("Жаңы пикир кошуу:", "Добавить новый комментарий:")}
+              </p>
             )}
             {renderCommentForm(handleAddComment, () => {
               setReplyingTo(null);
@@ -402,7 +454,10 @@ const NewsDetailContent: React.FC = () => {
           </div>
         ) : (
           <p className={scss.loginPrompt}>
-            Пожалуйста, войдите в систему, чтобы оставить комментарий.
+            {t(
+              "Пикир калтыруу үчүн системага кириңиз.",
+              "Пожалуйста, войдите в систему, чтобы оставить комментарий."
+            )}
           </p>
         )}
       </div>
@@ -414,7 +469,7 @@ const NewsDetailContent: React.FC = () => {
           <div className={scss.enlargedAvatarContainer}>
             <Image
               src={enlargedAvatar}
-              alt="Enlarged avatar"
+              alt={t("Чоңойтулган аватар", "Увеличенный аватар")}
               width={200}
               height={200}
               className={scss.enlargedAvatar}

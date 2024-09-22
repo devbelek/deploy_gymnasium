@@ -1,0 +1,86 @@
+/* [project]/src/appPages/site/components/pages/GraduatesPage.module.scss.module.css [app-client] (css) */
+.GraduatesPage-module-scss-module__NDlmPW__content {
+  min-height: 100vh;
+  padding-top: 100px;
+  padding-bottom: 30px;
+  gap: 60px;
+}
+
+.GraduatesPage-module-scss-module__NDlmPW__graduatesTable {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.GraduatesPage-module-scss-module__NDlmPW__Block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 0;
+  width: 100%;
+  color: #000;
+  font-size: 30px;
+  font-weight: 500;
+  border-radius: 17px;
+  transition: transform .3s, box-shadow .3s;
+  border: 4px solid #ffe5e5;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.GraduatesPage-module-scss-module__NDlmPW__Block:nth-child(2n):hover {
+  transform: translateX(10px);
+  box-shadow: 10px 0 15px #0000004d;
+}
+
+.GraduatesPage-module-scss-module__NDlmPW__Block:nth-child(odd):hover {
+  transform: translateX(-10px);
+  box-shadow: -10px 0 15px #0000004d;
+}
+
+.GraduatesPage-module-scss-module__NDlmPW__Block:hover {
+  background: #fff6f6;
+  border: 3px solid #ffd3d3;
+}
+
+@media (width <= 1020px) {
+  .GraduatesPage-module-scss-module__NDlmPW__Block {
+    padding: 45px 0;
+    font-size: 25px;
+  }
+}
+
+@media (width <= 770px) {
+  .GraduatesPage-module-scss-module__NDlmPW__Block {
+    padding: 25px 0;
+    font-size: 15px;
+  }
+}
+
+@media (width <= 430px) {
+  .GraduatesPage-module-scss-module__NDlmPW__Block:nth-child(2n):hover {
+    transform: translateX(3px);
+    box-shadow: 10px 0 15px #0000004d;
+  }
+
+  .GraduatesPage-module-scss-module__NDlmPW__Block:nth-child(odd):hover {
+    transform: translateX(-3px);
+    box-shadow: -10px 0 15px #0000004d;
+  }
+
+  .GraduatesPage-module-scss-module__NDlmPW__Block {
+    padding: 15px 0;
+    font-size: 10px;
+  }
+}
+
+@media (width <= 320px) {
+  .GraduatesPage-module-scss-module__NDlmPW__Block {
+    padding: 10px 0;
+    font-size: 8px;
+  }
+}
+
+
+/*# sourceMappingURL=src_appPages_site_components_pages_GraduatesPage_module_scss_module_10026c.css.map*/

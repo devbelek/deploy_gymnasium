@@ -3,11 +3,11 @@
 import { useGetFondQuery } from "@/redux/api/fond";
 import scss from "./FondContent.module.scss";
 import Link from "next/link";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
 const FondContent = () => {
   const { data, isLoading, isError } = useGetFondQuery();
-
-  console.log(data, "FondContent");
+  const { isKyrgyz, t } = useLanguageStore();
 
   const totalPrice = data
     ? data.reduce((total, item) => {
@@ -31,12 +31,21 @@ const FondContent = () => {
             </p>
           )}
 
+          <div className={scss.totalPrice}>
+            <h3>
+              {t("Жалпы сумма", "Общая сумма")} <span>{totalPrice} Сом</span>
+            </h3>
+          </div>
+
           {data && data.length > 0 ? (
             <div className={scss.donationsList}>
               {data.map((item) =>
                 item.is_verified ? (
                   <div key={item.id} className={scss.donationItem}>
-                    <h2 className={scss.donor}>Отправитель: {item.user}</h2>
+                    <h2 className={scss.donor}>
+                      {" "}
+                      {t("Жөнөтүүчү", "Отправитель")}: {item.user}
+                    </h2>
                     <p className={scss.amount}>
                       {Math.floor(+item.amount)} Сом
                     </p>
@@ -48,17 +57,13 @@ const FondContent = () => {
               )}
             </div>
           ) : (
-            <p className={scss.message}>Пожертвований не найдено.</p>
+            <p className={scss.message}> не найдено.</p>
           )}
 
-          <div className={scss.totalPrice}>
-            <h3>
-              Общая сумма пожертвований: <span>{totalPrice} Сом</span>
-            </h3>
-          </div>
-
           <Link href="/fond/donation" className={scss.donateLink}>
-            <button className={scss.donateButton}>Акча салуу</button>
+            <button className={scss.donateButton}>
+              {t("Акча салуу", "Внести деньги")}
+            </button>
           </Link>
         </div>
       </div>

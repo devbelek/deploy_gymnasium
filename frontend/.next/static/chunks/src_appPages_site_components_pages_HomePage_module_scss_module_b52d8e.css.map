@@ -2,6 +2,6 @@
   "version": 3,
   "sources": [],
   "sections": [
-    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["[project]/src/appPages/site/components/pages/HomePage.module.scss.module.css"],"sourcesContent":[".content{display:flex;flex-direction:column;justify-content:space-between;min-height:100vh}.personas{display:flex;justify-content:center;gap:300px;padding:40px 0}@media(max-width: 430px){.personas{flex-direction:column;gap:0px}}"],"names":[],"mappings":"AAAA;;;;;;;AAA2F;;;;;;;AAAuE;EAAyB"}},
-    {"offset": {"line": 21, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["[project]/src/appPages/site/components/pages/HomePage.module.scss.module.css"],"sourcesContent":[".content{display:flex;flex-direction:column;justify-content:space-between;min-height:100vh}.personas{display:flex;justify-content:center;gap:300px;padding:40px 0}@media(max-width: 430px){.personas{flex-direction:column;gap:0px}}@media(max-width: 884px){.personas{flex-direction:column;gap:0px}}"],"names":[],"mappings":"AAAA;;;;;;;AAA2F;;;;;;;AAAuE;EAAyB;;;;;;AAAyC;EAAyB"}},
+    {"offset": {"line": 28, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
 }

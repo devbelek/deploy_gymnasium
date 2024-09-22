@@ -10,7 +10,7 @@
   padding: 20px;
   border-radius: 10px;
   text-decoration: none;
-  background: linear-gradient(#fff0 0%, #000000b3 80%), url("/_next/static/media/studnets_olimpic.7c38a413.svg");
+  background: linear-gradient(#fff0 0%, #000000b3 80%), url("/_next/static/media/studnets_olimpic.15cf5f64.svg");
   background-size: cover;
   background-position: center;
   transition: transform .3s, box-shadow .3s;
@@ -37,7 +37,7 @@
   }
 
   .StudentsOlympiad-module-scss-module__5sgsaa__OlimpBlock_text {
-    font-size: 16px;
+    font-size: 20px;
     color: #fff;
     text-decoration: none;
     align-items: flex-end;

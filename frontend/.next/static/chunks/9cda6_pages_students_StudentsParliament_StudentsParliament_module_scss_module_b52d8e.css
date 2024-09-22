@@ -12,7 +12,7 @@
   box-shadow: 10px 0 15px #0000004d;
   border-radius: 10px;
   text-decoration: none;
-  background: linear-gradient(#fff0 0%, #000000b3 80%), url("../media/students_parlament.843bf7ec.svg");
+  background: linear-gradient(#fff0 0%, #000000b3 80%), url("../media/students_parlament.28762b3d.svg");
   background-size: cover;
   background-position: center;
 }
@@ -38,7 +38,7 @@
   }
 
   .StudentsParliament-module-scss-module__3Rn5_G__ParliamBlock_text {
-    font-size: 16px;
+    font-size: 20px;
     color: #fff;
     text-decoration: none;
     align-items: flex-end;

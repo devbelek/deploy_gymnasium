@@ -23,6 +23,9 @@
 
   .imageWrapper {
     position: relative;
+    img {
+      object-fit: contain;
+    }
   }
 
   .circle {
@@ -37,7 +40,12 @@
 
   .student {
     position: absolute;
-    top: 0;
+    display: flex;
+    align-items: center;
+    top: -60px;
+    width: 250px;
+    object-fit: contain;
+    height: 450px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 2;
@@ -51,11 +59,12 @@
     color: white;
     padding: 16px 50px;
     border-radius: 5px;
+    cursor: pointer;
     border: none;
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s;
-    margin-top: 350px;
+    margin-top: 349px;
     z-index: 3;
 
     &:hover {

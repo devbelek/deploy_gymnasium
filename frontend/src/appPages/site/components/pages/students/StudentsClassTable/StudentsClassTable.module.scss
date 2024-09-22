@@ -9,11 +9,16 @@
 }
 
 .titleBlock {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 10px;
+    display: grid;
     align-items: center;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-items: flex-end;
 }
 
 .noClass {
@@ -45,15 +50,24 @@
     align-items: center;
 }
 
+.titleLeftBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .tableTitle {
     display: grid;
-    grid-template-columns: 0.3fr 2fr 0.5fr 1fr;
-    gap: 50px;
+    grid-template-columns: 0.3fr 2fr 1fr;
+    align-items: center;
+    gap: 120px;
 }
 .studentInfo {
     display: grid;
-    grid-template-columns: 0.3fr 2fr 0.5fr 1fr;
-    gap: 50px;
+    gap: 120px;
+    align-items: center;
+    grid-template-columns: 0.3fr 2fr 1fr;
 }
 
 .titleText {
@@ -88,6 +102,31 @@
     display: flex;
     align-items: center;
     color: #000000;
+}
+
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    text-align: center;
+}
+.error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    text-align: center;
+    width: 100%;
+    text-align: center;
+}
+
+.statusTable {
+    font-weight: 500;
+
+    font-size: 20px;
 }
 
 .tableName {
@@ -204,7 +243,7 @@
 
 @media (max-width: 1140px) {
     .noClass {
-        font-size: 16px;
+        font-size: 18px;
     }
 
     .titleBlock {
@@ -223,8 +262,9 @@
 
     .tableTitle {
         display: grid;
-        grid-template-columns: 0.1fr 1.5fr 0.4fr 1fr;
-        gap: 10px;
+        gap: 90px;
+
+        grid-template-columns: 0.1fr 1.5fr 0.8fr;
     }
     .title {
         font-size: 20px;
@@ -232,32 +272,40 @@
 
     .studentInfo {
         display: grid;
-        grid-template-columns: 0.1fr 1.5fr 0.4fr 1fr;
-        gap: 10px;
+        grid-template-columns: 0.1fr 1.5fr 0.8fr;
+        gap: 90px;
     }
 
     .titleText {
-        font-size: 15px;
+        font-size: 18px;
         font-weight: 500;
     }
     .tableText {
-        font-size: 15px;
+        font-size: 18px;
         font-weight: 500;
     }
 
     .tableTextNumber {
-        font-size: 15px;
+        font-size: 18px;
+
         font-weight: 500;
     }
 
+    .statusTable {
+        font-size: 18px;
+    }
+
     .tableName {
-        font-size: 15px;
+        font-size: 18px;
         font-weight: 500;
     }
 }
 @media (max-width: 740px) {
+    .statusTable {
+        font-size: 15px;
+    }
     .noClass {
-        font-size: 14px;
+        font-size: 15px;
     }
     .titleBlock {
         gap: 7px;
@@ -274,25 +322,25 @@
     }
 
     .title {
-        font-size: 15px;
+        font-size: 16px;
     }
 
     .titleText {
-        font-size: 12px;
+        font-size: 13px;
         font-weight: 500;
     }
     .tableText {
-        font-size: 12px;
+        font-size: 13px;
         font-weight: 500;
     }
 
     .tableTextNumber {
-        font-size: 12px;
+        font-size: 13px;
         font-weight: 500;
     }
 
     .tableName {
-        font-size: 12px;
+        font-size: 13px;
         font-weight: 500;
     }
     .studentIcon {
@@ -302,16 +350,12 @@
 }
 
 @media (max-width: 680px) {
-    .noClass {
-        font-size: 12px;
-    }
     .titleBlock {
         gap: 6px;
     }
 
     .button {
         padding: 2px;
-        font-size: 11px;
     }
 
     .filterButtons {
@@ -323,52 +367,51 @@
         gap: 8px;
     }
     .titleText {
-        font-size: 10px;
         font-weight: 500;
     }
     .tableText {
-        font-size: 10px;
         font-weight: 500;
     }
 
     .tableTextNumber {
-        font-size: 10px;
         font-weight: 500;
     }
 
     .tableName {
-        font-size: 10px;
         font-weight: 500;
     }
     .studentIcon {
-        width: 20px;
         height: 20px;
     }
 }
 
 @media (max-width: 530px) {
-    .noClass {
-        font-size: 10px;
+    .tableTitle {
+        gap: 30px;
+    }
+
+    .statusTable {
+        font-size: 12px;
+    }
+
+    .studentInfo {
+        gap: 30px;
     }
     .tableContent {
         gap: 0px;
     }
     .titleText {
-        font-size: 10px;
         font-weight: 500;
     }
     .tableText {
-        font-size: 10px;
         font-weight: 500;
     }
 
     .tableTextNumber {
-        font-size: 10px;
         font-weight: 500;
     }
 
     .tableName {
-        font-size: 10px;
         font-weight: 500;
     }
     .studentIcon {
@@ -378,16 +421,11 @@
 }
 
 @media (max-width: 440px) {
-    .noClass {
-        font-size: 9px;
+    .titleLeftBlock h1 {
+        height: 20px;
     }
     .titleBlock {
-        gap: 5px;
-    }
-
-    .button {
-        padding: 1px;
-        font-size: 10px;
+        gap: 0px;
     }
 
     .filterButtons {
@@ -396,29 +434,65 @@
     }
 
     .titleText {
-        font-size: 8px;
         font-weight: 500;
     }
     .tableText {
-        font-size: 8px;
         font-weight: 500;
     }
 
     .tableTextNumber {
-        font-size: 8px;
         font-weight: 500;
     }
 
     .tableName {
-        font-size: 8px;
         font-weight: 500;
     }
     .studentIcon {
         width: 10px;
         height: 10px;
     }
+}
 
-    .title {
-        font-size: 13px;
+@media (max-width: 370px) {
+    .tableText {
+        font-size: 10px;
+        font-weight: 500;
+    }
+    .studentInfo {
+        gap: 20px;
+    }
+    .statusTable {
+        font-size: 10px;
+    }
+    .titleBlock {
+        gap: 10px;
+    }
+
+    .titleText {
+        font-size: 10px;
+
+        font-weight: 400;
+    }
+    .tableText {
+        font-size: 10px;
+
+        font-weight: 400;
+    }
+
+    .tableTextNumber {
+        font-size: 10px;
+
+        font-weight: 400;
+    }
+
+    .tableName {
+        font-size: 11px;
+
+        font-weight: 400;
+    }
+
+    .studentIcon {
+        width: 10px;
+        height: 10px;
     }
 }

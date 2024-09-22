@@ -1,9 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["[project]/src/appPages/site/components/pages/news/NewsCommentsContent/NewsCommentsContent.module.scss.module.css"],"sourcesContent":[""],"names":[],"mappings":""}},
-    {"offset": {"line": 2, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}},
-    {"offset": {"line": 5, "column": 0}, "map": {"version":3,"sources":["[project]/src/appPages/site/components/pages/NewsPage.module.scss.module.css"],"sourcesContent":[".content{display:flex;flex-direction:column;justify-content:space-between;min-height:100vh;padding-top:100px;padding-bottom:30px}"],"names":[],"mappings":"AAAA"}},
-    {"offset": {"line": 13, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
-}

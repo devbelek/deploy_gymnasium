@@ -9,12 +9,21 @@ const api = index.injectEndpoints({
             OLYMPIANS.GetOlympiansRequest
         >({
             query: () => ({
-                url: `${ENDPOINTS}/olympians/`,
+                url: `${ENDPOINTS}/students/olympians/`,
                 method: "GET",
             }),
             providesTags: ["olympians"],
         }),
+        getOlympiansSelection: build.query<
+            OLYMPIANS.GetDetOlympianTypeResponse,
+            OLYMPIANS.GetDetOlympianTypeRequest
+        >({
+            query: (id) => ({
+                url: `${ENDPOINTS}/olymp_categories/${id}`,
+                method: "GET",
+            }),
+        }),
     }),
 });
 
-export const { useGetOlympiansQuery } = api;
+export const { useGetOlympiansQuery, useGetOlympiansSelectionQuery } = api;

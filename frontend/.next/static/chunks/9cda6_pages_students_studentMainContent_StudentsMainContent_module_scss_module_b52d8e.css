@@ -71,12 +71,12 @@
 
 @media (width <= 1100px) {
   .StudentsMainContent-module-scss-module__aBXI1G__block {
-    width: 140px;
-    height: 49px;
+    width: 170px;
+    height: 56px;
   }
 
   .StudentsMainContent-module-scss-module__aBXI1G__block_text {
-    font-size: 18px;
+    font-size: 22px;
     font-weight: 500;
     line-height: 28.8px;
   }
@@ -99,13 +99,13 @@
 
   .StudentsMainContent-module-scss-module__aBXI1G__block {
     width: 130px;
-    height: 35px;
+    height: 46px;
     border-radius: 4px;
   }
 
   .StudentsMainContent-module-scss-module__aBXI1G__block_text {
-    font-size: 13px;
-    font-weight: 400;
+    font-size: 18px;
+    font-weight: 500;
     line-height: 28.8px;
   }
 
@@ -116,12 +116,12 @@
 
 @media (width <= 474px) {
   .StudentsMainContent-module-scss-module__aBXI1G__block {
-    width: 110px;
-    height: 28px;
+    width: 114px;
+    height: 36px;
   }
 
   .StudentsMainContent-module-scss-module__aBXI1G__block_text {
-    font-size: 11px;
+    font-size: 16px;
     font-weight: 400;
     line-height: 28.8px;
   }
@@ -133,14 +133,14 @@
 
 @media (width <= 430px) {
   .StudentsMainContent-module-scss-module__aBXI1G__block {
-    width: 84px;
-    height: 20px;
+    width: 95px;
+    height: 26px;
   }
 
   .StudentsMainContent-module-scss-module__aBXI1G__block_text {
-    font-size: 9px;
+    font-size: 12px;
     font-weight: 400;
-    line-height: 28.8px;
+    line-height: 25.8px;
   }
 
   .StudentsMainContent-module-scss-module__aBXI1G__classes {

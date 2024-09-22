@@ -244,6 +244,7 @@
     .replyForm {
       max-width: 1200px;
       margin: 0 auto;
+      // height: 200px;
 
       .replyingTo,
       .addNewComment {
@@ -393,7 +394,7 @@
 
 @media (max-width: 768px) {
   .NewsDetailContent {
-    margin-top: 60px;
+    margin-top: 80px;
 
     .content {
       .commentsSection {
@@ -477,7 +478,7 @@
 
 @media (max-width: 480px) {
   .NewsDetailContent {
-    margin-top: 40px;
+    margin-top: 80px;
 
     .content {
       .commentsSection {

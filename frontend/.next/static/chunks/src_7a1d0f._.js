@@ -42,7 +42,8 @@ const api = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2
         "donations",
         "search",
         "about",
-        "old_teachers"
+        "old_teachers",
+        "coments"
     ],
     endpoints: ()=>({})
 });

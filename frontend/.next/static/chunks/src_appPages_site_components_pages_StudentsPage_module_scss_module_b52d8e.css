@@ -1,15 +1,11 @@
 /* [project]/src/appPages/site/components/pages/StudentsPage.module.scss.module.css [app-client] (css) */
-.StudentsPage-module-scss-module__-bpeuG__StudentsPage {
-  padding: 0 0 80px;
-}
-
 .StudentsPage-module-scss-module__-bpeuG__content {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 100px 0 0;
   gap: 50px;
+  padding-top: 60px;
 }
 
 @keyframes StudentsPage-module-scss-module__-bpeuG__fadeIn {
@@ -107,13 +103,33 @@
 
   .StudentsPage-module-scss-module__-bpeuG__blocks {
     order: 0;
-    gap: 10px;
+    gap: 15px;
   }
 
   .StudentsPage-module-scss-module__-bpeuG__StudentsMainContent {
     order: 1;
   }
 
+  .StudentsPage-module-scss-module__-bpeuG__Title {
+    font-size: 25px;
+  }
+}
+
+@media (width <= 890px) {
+  .StudentsPage-module-scss-module__-bpeuG__content {
+    gap: 30px;
+  }
+
+  .StudentsPage-module-scss-module__-bpeuG__blocks {
+    order: 0;
+  }
+
+  .StudentsPage-module-scss-module__-bpeuG__StudentsMainContent {
+    order: 1;
+  }
+}
+
+@media (width <= 380px) {
   .StudentsPage-module-scss-module__-bpeuG__Title {
     font-size: 20px;
   }

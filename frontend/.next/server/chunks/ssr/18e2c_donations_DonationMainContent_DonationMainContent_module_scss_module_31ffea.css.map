@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["[project]/src/appPages/site/components/pages/donations/DonationMainContent/DonationMainContent.module.scss.module.css"],"sourcesContent":[".DonationMainContent{margin-top:100px}"],"names":[],"mappings":"AAAA"}},
-    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
-}

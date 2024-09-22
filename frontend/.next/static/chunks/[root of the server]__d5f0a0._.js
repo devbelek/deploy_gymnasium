@@ -8084,9 +8084,9 @@ class Router {
         };
         if ("TURBOPACK compile-time truthy", 1) {
             const { BloomFilter } = __turbopack_require__("[project]/node_modules/.pnpm/next@14.2.11_react-dom@18.3.1_react@18.3.1__react@18.3.1_sass@1.77.8/node_modules/next/dist/shared/lib/bloom-filter.js [client] (ecmascript)");
-            const routerFilterSValue = ("TURBOPACK compile-time value", JSON.parse('{"numItems":17,"errorRate":0.0001,"numBits":326,"numHashes":14,"bitArray":[0,0,0,1,1,0,1,1,1,0,0,0,1,0,1,1,1,1,1,1,1,1,1,1,1,0,1,1,0,0,1,1,1,1,0,1,0,0,1,0,0,0,1,0,1,0,1,1,0,1,1,0,1,0,0,1,0,0,0,1,1,1,1,0,1,1,1,1,0,1,0,1,1,0,1,1,0,1,1,1,1,0,0,1,1,0,1,1,1,0,0,1,0,0,0,1,0,1,1,0,0,1,1,1,1,0,1,1,1,1,0,1,1,0,1,0,0,0,1,0,0,1,1,0,1,0,1,0,0,1,1,1,0,1,0,1,1,0,1,0,1,1,0,0,0,1,1,0,0,1,1,0,0,1,1,1,0,1,1,0,0,0,0,1,0,0,1,0,0,1,0,0,0,1,0,0,0,1,1,0,0,1,1,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,1,1,0,0,1,1,1,1,1,1,0,1,0,0,1,1,1,0,0,1,0,1,0,1,1,1,0,1,1,1,0,1,0,1,0,1,0,1,0,0,1,1,0,0,1,1,1,1,0,1,1,0,1,0,0,0,0,0,1,1,1,1,0,1,1,1,0,0,0,0,0,1,0,0,1,0,1,1,0,1,0,0,0,0,1,0,1,0,0,1,0,0,1,1,0,0,0,1,1,1,0,1,0,1,0,0,1,0,1,0,1,1,1,0,1,1,1,0,0,1]}'));
+            const routerFilterSValue = ("TURBOPACK compile-time value", JSON.parse('{"numItems":19,"errorRate":0.0001,"numBits":365,"numHashes":14,"bitArray":[0,1,1,0,0,1,0,0,1,1,1,0,1,0,0,0,0,1,0,1,1,1,0,1,1,0,0,0,0,1,1,0,1,1,1,1,0,1,0,0,1,0,0,1,0,0,1,1,1,1,1,0,0,1,0,1,1,1,0,0,1,0,0,0,1,1,0,1,0,1,1,1,0,0,0,1,1,0,1,1,1,1,0,1,1,1,1,0,1,1,1,1,1,0,0,0,1,0,1,1,0,0,0,1,0,0,1,0,0,1,0,0,1,0,1,0,1,0,1,0,0,1,0,1,0,1,0,0,1,1,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,1,1,1,0,1,0,1,0,1,1,0,0,1,0,1,0,1,1,0,1,1,1,1,0,0,1,1,0,1,0,0,1,1,1,1,1,0,1,1,0,0,1,1,0,0,0,1,0,0,0,0,0,1,1,0,0,1,1,0,0,0,0,1,1,1,1,1,1,0,0,1,0,1,0,1,0,1,1,1,0,0,1,0,0,1,1,1,1,0,0,0,1,0,1,0,0,1,1,1,0,1,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,1,1,0,1,1,0,1,1,0,1,0,1,1,0,1,1,0,1,1,1,1,1,1,0,0,1,0,1,0,1,1,1,1,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,1,1,1,0,0,1,1,0,0,1,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1,0,1,0,1,1,0,1,0,0,1,0,0,0,1,0,0,1,0,1,0,1]}'));
             const staticFilterData = routerFilterSValue ? routerFilterSValue : undefined;
-            const routerFilterDValue = ("TURBOPACK compile-time value", JSON.parse('{"numItems":3,"errorRate":0.0001,"numBits":58,"numHashes":14,"bitArray":[1,1,1,1,1,0,0,1,1,0,1,1,0,0,1,1,1,0,0,1,0,0,0,0,0,0,1,1,0,0,1,0,1,0,1,1,1,0,0,1,1,1,0,0,1,1,0,1,0,1,0,1,0,1,0,0,0,1]}'));
+            const routerFilterDValue = ("TURBOPACK compile-time value", JSON.parse('{"numItems":4,"errorRate":0.0001,"numBits":77,"numHashes":14,"bitArray":[1,1,1,0,1,1,0,1,1,1,1,1,0,1,0,0,1,0,0,0,1,1,1,1,0,0,1,0,1,1,0,1,1,0,0,0,0,1,1,1,1,1,0,1,1,1,1,0,1,0,0,1,0,1,0,0,1,0,1,0,0,1,0,1,0,1,0,0,1,1,0,1,1,1,0,0,1]}'));
             const dynamicFilterData = routerFilterDValue ? routerFilterDValue : undefined;
             if (staticFilterData == null ? void 0 : staticFilterData.numHashes) {
                 this._bfl_s = new BloomFilter(staticFilterData.numItems, staticFilterData.errorRate);
@@ -9372,7 +9372,7 @@ function parseStack(stack) {
             const res = regexNextStatic.exec(url.pathname);
             if (res) {
                 var _process_env___NEXT_DIST_DIR_replace, _process_env___NEXT_DIST_DIR;
-                const distDir = (_process_env___NEXT_DIST_DIR = ("TURBOPACK compile-time value", "/home/user/Документы/gymnasium3/.next")) == null ? void 0 : (_process_env___NEXT_DIST_DIR_replace = _process_env___NEXT_DIST_DIR.replace(/\\/g, "/")) == null ? void 0 : _process_env___NEXT_DIST_DIR_replace.replace(/\/$/, "");
+                const distDir = (_process_env___NEXT_DIST_DIR = ("TURBOPACK compile-time value", "C:\\Users\\user\\Desktop\\Gymnasium_3\\.next")) == null ? void 0 : (_process_env___NEXT_DIST_DIR_replace = _process_env___NEXT_DIST_DIR.replace(/\\/g, "/")) == null ? void 0 : _process_env___NEXT_DIST_DIR_replace.replace(/\/$/, "");
                 if (distDir) {
                     frame.file = "file://" + distDir.concat(res.pop()) + url.search;
                 }
@@ -17833,7 +17833,7 @@ function AppContainer(param) {
                             children: /*#__PURE__*/ (0, _jsxruntime.jsx)(_headmanagercontextsharedruntime.HeadManagerContext.Provider, {
                                 value: headManager,
                                 children: /*#__PURE__*/ (0, _jsxruntime.jsx)(_imageconfigcontextsharedruntime.ImageConfigContext.Provider, {
-                                    value: ("TURBOPACK compile-time value", JSON.parse('{"deviceSizes":[640,750,828,1080,1200,1920,2048,3840],"imageSizes":[16,32,48,64,96,128,256,384],"path":"/_next/image","loader":"default","dangerouslyAllowSVG":false,"unoptimized":false,"domains":["gimnasium.onrender.com","vermojctkdkrdsxvauwc.supabase.co","3-gymnasium.kg","api.dicebear.com"],"remotePatterns":[]}')),
+                                    value: ("TURBOPACK compile-time value", JSON.parse('{"deviceSizes":[640,750,828,1080,1200,1920,2048,3840],"imageSizes":[16,32,48,64,96,128,256,384],"path":"/_next/image","loader":"default","dangerouslyAllowSVG":false,"unoptimized":false,"domains":[],"remotePatterns":[{"protocol":"http","hostname":"3-gymnasium.kg","port":"","pathname":"/media/**"},{"protocol":"https","hostname":"gimnasium.onrender.com","port":"","pathname":"/**"},{"protocol":"https","hostname":"vermojctkdkrdsxvauwc.supabase.co","port":"","pathname":"/**"},{"protocol":"https","hostname":"api.dicebear.com","port":"","pathname":"/**"}]}')),
                                     children: children
                                 })
                             })
