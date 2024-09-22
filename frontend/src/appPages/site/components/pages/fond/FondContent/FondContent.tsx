@@ -62,7 +62,7 @@ const FondContent = () => {
 
           <Link href="/fond/donation" className={scss.donateLink}>
             <button className={scss.donateButton}>
-              {t("Текшеруу", "Проверить")}
+              {t("Акча салуу", "Отправить сумму")}
             </button>
           </Link>
         </div>
