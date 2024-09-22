@@ -14,8 +14,8 @@ services:
     environment:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
       - REDIS_URL=redis://redis:6379/0
-    ports:
-      - "9000:9000"
+#    ports:
+#      - "9000:9000"
     networks:
       - dev
 
