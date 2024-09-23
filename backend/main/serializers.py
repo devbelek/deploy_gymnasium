@@ -74,7 +74,7 @@ class OlympiansSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Olympians
-        fields = ('id', 'student', 'name_of_olympia')
+        fields = ('id', 'student', 'name_of_olympia', 'year', 'level')
 
     def get_student(self, obj):
         return StudentMinimalSerializer(Students.get_cached(id=obj.student_id)).data
