@@ -238,9 +238,16 @@ class GimnasiumClass(models.Model):
 
 
 class Olympians(models.Model):
+    LEVEL_CHOICES = (
+        ('level_1', 'Район'),
+        ('level_2', 'Область'),
+        ('level_3', 'Республика')
+    )
     student = models.ForeignKey(Students, on_delete=models.CASCADE, verbose_name=_('Ученик'))
     name_of_olympia = models.ForeignKey('secondary.NamesOfOlympia', on_delete=models.SET_NULL, null=True,
                                         verbose_name=_('Предмет'))
+    year = models.PositiveIntegerField(verbose_name='Год')
+    level = models.CharField(max_length=80, choices=LEVEL_CHOICES, verbose_name='Уровень олимпиады')
 
     class Meta:
         verbose_name = _('Олимпийцы')
