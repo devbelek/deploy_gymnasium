@@ -1,7 +1,12 @@
+"use client";
+
 import Link from "next/link";
 
 import scss from "./GraduatesPage.module.scss";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 const GraduatesPage = () => {
+    const { isKyrgyz, t } = useLanguageStore();
+
     return (
         <>
             <div className={scss.content}>
@@ -11,13 +16,13 @@ const GraduatesPage = () => {
                             className={scss.Block}
                             href={"/graduates/best_graduates"}
                         >
-                            Гордость гимназии
+                            {t("Гимназиянын сыймыгы", "Гордость гимназии")}
                         </Link>
                         <Link
                             className={scss.Block}
                             href={"/graduates/graduates_table"}
                         >
-                            Список выпускников
+                            {t("Бүтүрүүчүлөр тизмеси", "Список выпускников")}{" "}
                         </Link>
                     </div>
                 </div>

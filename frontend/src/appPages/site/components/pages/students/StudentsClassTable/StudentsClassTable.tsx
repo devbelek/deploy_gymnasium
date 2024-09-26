@@ -6,9 +6,12 @@ import avatar from "../../../../../../assets/images/defaultProfile.png";
 import Image from "next/image";
 import { useGetStudentsClassQuery } from "@/redux/api/students";
 import { useSearchParams } from "next/navigation";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
 const StudentClassTable: React.FC = () => {
     const searchParams = useSearchParams();
+    const { isKyrgyz, t } = useLanguageStore();
+
     const classId = searchParams.get("grade");
 
     const {
@@ -18,7 +21,6 @@ const StudentClassTable: React.FC = () => {
     } = useGetStudentsClassQuery(String(classId));
     const [filteredData, setFilteredData] = useState<STUDENTS.IStudent[]>([]);
     console.log(studentsData);
-
     useEffect(() => {
         if (studentsData) {
             const filtered = studentsData.filter(
@@ -30,28 +32,41 @@ const StudentClassTable: React.FC = () => {
                 if (index === 0) {
                     status_in_class = "Президент";
                 } else if (index === 1) {
-                    status_in_class = "Муж.совет";
+                    status_in_class = t("Жиг.кенеши", "Муж.совет");
                 } else if (index === 2) {
-                    status_in_class = "Жен.совет";
+                    status_in_class = t("Кыз.кенеши", "Жен.совет");
                 }
                 return { ...student, status_in_class };
             });
 
             setFilteredData(updatedData);
         }
-    }, [studentsData, classId]);
-
-    if (isLoading) return <div className={scss.loading}>Загрузка...</div>;
-    if (isError || !studentsData || !classId)
-        return <div className={scss.error}>Ошибка при загрузке данных.</div>;
-
+    }, [studentsData, classId, t, isKyrgyz]);
+    if (isLoading)
+        return (
+            <div className={scss.loading}>
+                {t("Жүктөлүүдө...", "Загрузка...")}
+            </div>
+        );
+    if (isError || !studentsData) {
+        return (
+            <div className={scss.error}>
+                {t(
+                    "Маалыматты жүктөөдө ката кетти",
+                    "Ошибка при загрузке данных"
+                )}
+            </div>
+        );
+    }
     return (
         <section className={scss.StudentClassTable}>
             <div className="container">
                 <div className={`${scss.content} ${scss.animateFromLeft}`}>
                     <div className={scss.titleBlock}>
                         <div className={scss.titleLeftBlock}>
-                            <h1 className={scss.titleText}>Кл. руководитель</h1>{" "}
+                            <h1 className={scss.titleText}>
+                                {t("Кл.жетекчи", "Кл.руководитель")}
+                            </h1>{" "}
                             <h1 className={scss.tableText}>
                                 {filteredData[0] &&
                                     filteredData[0].classroom_teacher
@@ -64,7 +79,10 @@ const StudentClassTable: React.FC = () => {
                     <div className={scss.table}>
                         <div className={scss.tableTitle}>
                             <h1 className={scss.titleText}>No.</h1>
-                            <h1 className={scss.titleText}>Имя ученика</h1>
+                            <h1 className={scss.titleText}>
+                                {" "}
+                                {t("Окуучунун аты", "Имя ученика")}
+                            </h1>
                             <h1 className={scss.titleText}>Статус</h1>
                         </div>
                         <div className={scss.tableContent}>
@@ -96,7 +114,8 @@ const StudentClassTable: React.FC = () => {
                                 ))
                             ) : (
                                 <h1 className={scss.noClass}>
-                                    Класс {classId} не найден.
+                                    Класс {classId}{" "}
+                                    {t("табылган жок", "не найден")}.
                                 </h1>
                             )}
                         </div>

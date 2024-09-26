@@ -5,8 +5,10 @@ import scss from "./StudentsPage.module.scss";
 import StudentsMainContent from "./students/studentMainContent/StudentsMainContent";
 import StudentsOlympiad from "./students/StudentsOlympiad/StudentsOlympiad";
 import StudentsParliament from "./students/StudentsParliament/StudentsParliament";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
 const StudentsPage = () => {
+    const { isKyrgyz, t } = useLanguageStore();
     const [showContent, setShowContent] = useState(false);
 
     useEffect(() => {
@@ -17,7 +19,9 @@ const StudentsPage = () => {
         <section className={scss.StudentsPage}>
             <div className="container">
                 <div className={scss.content}>
-                    <h1 className={scss.Title}>Все ученики</h1>
+                    <h1 className={scss.Title}>
+                        {t("Баардык окуучулар", "Все ученики")}
+                    </h1>
                     <div className={scss.heroContent}>
                         <div
                             className={`${scss.StudentsMainContent} ${

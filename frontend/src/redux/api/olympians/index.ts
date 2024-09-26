@@ -1,6 +1,6 @@
 import { api as index } from "..";
 
-const ENDPOINTS = process.env.NEXT_PUBLIC_ENDPOINT;
+const ENDPOINTS = process.env.NEXT_PUBLIC_ENDPOINT || "default_endpoint_here"; // Optional fallback
 
 const api = index.injectEndpoints({
     endpoints: (build) => ({
@@ -9,7 +9,7 @@ const api = index.injectEndpoints({
             OLYMPIANS.GetOlympiansRequest
         >({
             query: () => ({
-                url: `${ENDPOINTS}/students/olympians/`,
+                url: `${ENDPOINTS}/olympians`,
                 method: "GET",
             }),
             providesTags: ["olympians"],
@@ -19,7 +19,7 @@ const api = index.injectEndpoints({
             OLYMPIANS.GetDetOlympianTypeRequest
         >({
             query: (id) => ({
-                url: `${ENDPOINTS}/olymp_categories/${id}`,
+                url: `${ENDPOINTS}/students/olympians/olymp_categories/${id}`, // Added trailing slash
                 method: "GET",
             }),
         }),

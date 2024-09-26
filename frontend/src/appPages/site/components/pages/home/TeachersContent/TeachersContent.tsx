@@ -10,6 +10,9 @@ import { useGetCommentsQuery } from "@/redux/api/news";
 const TeachersContent = () => {
   const router = useRouter();
   const { isKyrgyz, t } = useLanguageStore();
+  const handleNavigate = () => {
+    router.push("/teachers");
+  };
 
   return (
     <section id={scss.content}>
@@ -32,10 +35,7 @@ const TeachersContent = () => {
               className={scss.teacher}
             />
           </div>
-          <button
-            className={scss.button}
-            onClick={() => router.push("/teachers")}
-          >
+          <button className={scss.button} onClick={handleNavigate}>
             {t("Бардык мугалимдер", "Все учителя")}
           </button>
         </div>

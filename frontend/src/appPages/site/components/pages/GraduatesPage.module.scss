@@ -6,8 +6,9 @@
 }
 
 .graduatesTable {
-    display: flex;
+    display: grid;
     flex-direction: row;
+    grid-template-columns: 1fr 1fr;
     align-items: center;
     gap: 10px;
 }
@@ -66,15 +67,19 @@
         box-shadow: -10px 0 15px rgba(0, 0, 0, 0.3);
     }
 
+    .graduatesTable {
+        grid-template-columns: 1fr;
+    }
+
     .Block {
         padding: 15px 0;
-        font-size: 10px;
+        font-size: 18px;
     }
 }
 
 @media (max-width: 320px) {
     .Block {
         padding: 10px 0;
-        font-size: 8px;
+        font-size: 12px;
     }
 }

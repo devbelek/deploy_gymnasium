@@ -5,24 +5,47 @@ import scss from "./StudentsParliamentTable.module.scss";
 import avatar from "../../../../../../assets/images/defaultProfile.png";
 import Image from "next/image";
 import { useGetSchoolParliamentQuery } from "@/redux/api/school_parliament";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
 const StudentsParliamentTable = () => {
     const { data, isLoading, isError } = useGetSchoolParliamentQuery();
+    const { isKyrgyz, t } = useLanguageStore();
 
-    if (isLoading) return <div className={scss.loading}>Загрузка...</div>;
-    if (isError || !data)
-        return <div className={scss.error}>Ошибка при загрузке данных.</div>;
-
+    if (isLoading)
+        return (
+            <div className={scss.loading}>
+                {t("Жүктөлүүдө...", "Загрузка...")}
+            </div>
+        );
+    if (isError || !data) {
+        return (
+            <div className={scss.error}>
+                {t(
+                    "Маалыматты жүктөөдө ката кетти",
+                    "Ошибка при загрузке данных"
+                )}
+            </div>
+        );
+    }
     return (
         <section className={scss.StudentsParliamentTable}>
             <div className="container">
                 <div className={scss.content}>
-                    <h2 className={scss.title}>Школьный парламент</h2>
+                    <h2 className={scss.title}>
+                        {" "}
+                        {t("Мектеп парламенти", "Школьный парламент")}:{" "}
+                    </h2>
                     <div className={scss.table}>
                         <div className={scss.tableTitle}>
                             <h1 className={scss.titleText}>No.</h1>
-                            <h1 className={scss.titleText}>Имя ученика</h1>
-                            <h1 className={scss.titleText}>Должность</h1>
+                            <h1 className={scss.titleText}>
+                                {" "}
+                                {t("Окуучунун аты", "Имя ученика")}:{" "}
+                            </h1>
+                            <h1 className={scss.titleText}>
+                                {" "}
+                                {t("Кызмат", "Должность")}:{" "}
+                            </h1>
                         </div>
                         <div className={scss.tableContent}>
                             <div className={scss.hr}></div>

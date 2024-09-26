@@ -1,0 +1,13 @@
+{
+  "/(site)/(home)/page": "app/(site)/(home)/page.js",
+<<<<<<< HEAD
+  "/(site)/gallery/page": "app/(site)/gallery/page.js",
+  "/(site)/students/page": "app/(site)/students/page.js",
+  "/(site)/news/page": "app/(site)/news/page.js"
+=======
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/(site)/teachers/page": "app/(site)/teachers/page.js",
+  "/(site)/news/page": "app/(site)/news/page.js",
+  "/(site)/students/page": "app/(site)/students/page.js"
+>>>>>>> 511f892fb7175f788b48a098894ab616580f26a5
+}
