@@ -19,8 +19,8 @@ const Header = () => {
 
   const { isKyrgyz, setIsKyrgyz, t } = useLanguageStore();
 
-  const { data: account } = useGetAccountQuery(null);
-  console.log(account, "account");
+//   const { data: account } = useGetAccountQuery(null);
+//   console.log(account, "account");
 
   const searchRequest = useMemo(() => {
     if (query.length < 2) return null;
