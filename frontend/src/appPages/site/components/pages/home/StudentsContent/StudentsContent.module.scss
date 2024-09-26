@@ -38,20 +38,20 @@
     padding-top: 20px;
   }
 
+  .content {
+    padding-top: 50px;
+  }
   .student {
     position: absolute;
     display: flex;
     align-items: center;
-    top: -60px;
+    top: -18px;
     width: 250px;
     object-fit: contain;
-    height: 450px;
+    height: 370px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 2;
-  }
-  .content {
-    padding-top: 50px;
   }
 
   .button {

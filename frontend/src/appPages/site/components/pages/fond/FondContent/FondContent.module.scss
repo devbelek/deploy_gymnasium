@@ -1,15 +1,5 @@
 .fondContent {
-  margin: 100px 0 40px 0;
-
-  .totalPrice {
-    margin-top: 20px;
-
-    span {
-      font-size: 22px;
-      color: #27ae60;
-      font-weight: bold;
-    }
-  }
+  margin-top: 100px;
 
   .container {
     width: 100%;
@@ -45,9 +35,7 @@
   }
 
   .donationsList {
-    margin-top: 30px;
     display: grid;
-
     gap: 30px;
   }
 
@@ -73,6 +61,16 @@
     color: #27ae60;
     font-weight: bold;
     margin-bottom: 10px;
+  }
+
+  .totalPrice {
+    margin-top: 20px;
+
+    span {
+      font-size: 22px;
+      color: #27ae60;
+      font-weight: bold;
+    }
   }
 
   .comment {

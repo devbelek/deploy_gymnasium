@@ -12,7 +12,6 @@ const HomePage = () => {
     <>
       <div className={scss.content}>
         <HeroContent />
-
         <AboutUsContent />
         <NewsContent />
         <div className={scss.personas}>

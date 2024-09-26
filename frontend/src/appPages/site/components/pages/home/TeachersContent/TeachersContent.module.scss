@@ -39,13 +39,13 @@
 
   .teacher {
     position: absolute;
-    top: -56px;
+    top: -6px;
     left: 50%;
     transform: translateX(-50%);
     width: 280px;
-    height: 450px;
+    height: 360px;
     object-fit: contain;
-    z-index: 2;
+    z-index: 3;
   }
 
   .button {
@@ -58,11 +58,11 @@
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s;
-    margin-top: 349px;
+    margin-top: 348px;
     z-index: 3;
-
     &:hover {
       background-color: #4a2f6d;
+      color: white;
     }
   }
 }

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["[project]/src/appPages/site/components/pages/GalleryPage.module.scss.module.css"],"sourcesContent":[".content{display:flex;flex-direction:column;justify-content:space-between;min-height:100vh;padding-top:100px;padding-bottom:30px}"],"names":[],"mappings":"AAAA"}},
+    {"offset": {"line": 9, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}

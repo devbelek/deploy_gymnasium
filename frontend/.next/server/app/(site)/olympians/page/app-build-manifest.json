@@ -1,0 +1,27 @@
+{
+  "pages": {
+    "/(site)/olympians/page": [
+      "static/chunks/[root of the server]__1e9e25._.css",
+      "static/chunks/node_modules__pnpm_4afc62._.js",
+      "static/chunks/src_7a1d0f._.js",
+      "static/chunks/src_app_layout_tsx_2df70b._.js",
+      "static/chunks/src_appPages_site_components_layout_4242f8._.css",
+      "static/chunks/node_modules__pnpm_7643b0._.js",
+      "static/chunks/src_b19f5c._.js",
+      "static/chunks/src_app_(site)_layout_tsx_42c7ba._.js",
+      "static/chunks/src_19192b._.js",
+      "static/chunks/9cda6_pages_students_olympaidsSelection_OlympaidsSelection_module_scss_module_fdb92b.css",
+      "static/chunks/src_app_(site)_olympians_page_tsx_9c12ff._.js",
+      "static/chunks/d1431_next_dist_compiled_react_546380._.js",
+      "static/chunks/d1431_next_dist_compiled_react-dom_cjs_react-dom_development_d38563.js",
+      "static/chunks/d1431_next_dist_compiled_react-dom_74e4d9._.js",
+      "static/chunks/d1431_next_dist_compiled_ec95ed._.js",
+      "static/chunks/d1431_next_dist_client_570d49._.js",
+      "static/chunks/d1431_next_dist_e2970b._.js",
+      "static/chunks/90481_@swc_helpers_cjs_e55b81._.js",
+      "static/chunks/[turbopack]_dev_client_hmr-client_ts_552c3b._.js",
+      "static/chunks/d1431_next_dist_esm_build_templates_app-page_b5c6ab.js",
+      "static/chunks/d1431_next_dist_esm_build_templates_app-page_14d32b.js"
+    ]
+  }
+}

@@ -2,8 +2,8 @@
 import { useGetSearchQuery } from "@/redux/api/search";
 import { useSearchParams } from "next/navigation";
 import React, { useMemo } from "react";
-import Link from "next/link"; // Используем Link для навигации
-import styles from "./Search.module.scss"; // Импортируем SCSS модуль
+import Link from "next/link";
+import styles from "./Search.module.scss";
 
 const Search = () => {
   const searchParams = useSearchParams();
