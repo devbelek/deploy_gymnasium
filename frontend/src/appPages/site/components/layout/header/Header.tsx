@@ -39,6 +39,12 @@ const Header = () => {
     }
   }, [query, hasFocusInput, router]);
 
+  useEffect(() => {
+    if (account) {
+      console.log(account, "account");
+    }
+  }, [account]);
+
   const handleNavigate = () => {
     router.push("https://3-gymnasium.kg/accounts/");
   };
@@ -146,8 +152,6 @@ const Header = () => {
             </div>
           </div>
         </div>
-
-        {account && console.log(account, "account")}
       </div>
     </header>
   );
