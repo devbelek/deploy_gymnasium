@@ -19,8 +19,8 @@ const Header = () => {
 
   const { isKyrgyz, setIsKyrgyz, t } = useLanguageStore();
 
-//   const { data: account } = useGetAccountQuery(null);
-//   console.log(account, "account");
+  const { data: account } = useGetAccountQuery(null);
+  console.log(account, "account");
 
   const searchRequest = useMemo(() => {
     if (query.length < 2) return null;
@@ -34,12 +34,11 @@ const Header = () => {
     skip: !searchRequest,
   });
 
-    useEffect(() => {
-      if (hasFocusInput && query.length >= 1) {
-        router.push(`/search?query=${encodeURIComponent(query)}`);
-      }
-    }, [query, hasFocusInput, router]); // Зависимости корректно указаны
-
+  useEffect(() => {
+    if (hasFocusInput && query.length >= 1) {
+      router.push(`/search?query=${encodeURIComponent(query)}`);
+    }
+  }, [query, hasFocusInput, router]);
 
   const handleNavigate = () => {
     router.push("https://3-gymnasium.kg/accounts/");
