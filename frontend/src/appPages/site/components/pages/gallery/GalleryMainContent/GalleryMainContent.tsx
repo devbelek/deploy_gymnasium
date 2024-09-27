@@ -108,17 +108,17 @@ const GalleryMainContent: React.FC = () => {
     setTouchStart(null);
   };
 
-    useEffect(() => {
-      const handleKeyDown = (e: KeyboardEvent) => {
-        if (currentImageIndex === null) return;
-        if (e.key === "ArrowLeft") handlePrevImage();
-        if (e.key === "ArrowRight") handleNextImage();
-        if (e.key === "Escape") handleCloseZoom();
-      };
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (currentImageIndex === null) return;
+      if (e.key === "ArrowLeft") handlePrevImage();
+      if (e.key === "ArrowRight") handleNextImage();
+      if (e.key === "Escape") handleCloseZoom();
+    };
 
-      window.addEventListener("keydown", handleKeyDown);
-      return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [currentImageIndex, handlePrevImage, handleNextImage, handleCloseZoom]);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [currentImageIndex]);
 
   return (
     <section className={scss.GalleryMainContent}>
