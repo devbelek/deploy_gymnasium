@@ -34,11 +34,12 @@ const Header = () => {
     skip: !searchRequest,
   });
 
-  useEffect(() => {
-    if (hasFocusInput && query.length >= 1) {
-      router.push(`/search?query=${encodeURIComponent(query)}`);
-    }
-  }, [query, hasFocusInput, router]);
+    useEffect(() => {
+      if (hasFocusInput && query.length >= 1) {
+        router.push(`/search?query=${encodeURIComponent(query)}`);
+      }
+    }, [query, hasFocusInput, router]); // Зависимости корректно указаны
+
 
   const handleNavigate = () => {
     router.push("https://3-gymnasium.kg/accounts/");
