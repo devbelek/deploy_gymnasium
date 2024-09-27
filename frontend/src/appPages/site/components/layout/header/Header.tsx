@@ -4,7 +4,7 @@ import scss from "./Header.module.scss";
 import logo from "../../../../../assets/logo.svg";
 import Image from "next/image";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { DebounceInput as Input } from "react-debounce-input";
 import { useGetSearchQuery } from "@/redux/api/search";
@@ -20,7 +20,6 @@ const Header = () => {
   const { isKyrgyz, setIsKyrgyz, t } = useLanguageStore();
 
   const { data: account } = useGetAccountQuery(null);
-  console.log(account, "account");
 
   const searchRequest = useMemo(() => {
     if (query.length < 2) return null;
@@ -148,24 +147,7 @@ const Header = () => {
           </div>
         </div>
 
-        {/* {query.length >= 2 && (
-          <div className={scss.searchResults}>
-            {isLoading && <p>{t("Жүктөлүүдө...", "Загрузка...")}</p>}
-            {!isLoading && !error && data && data.length > 0 ? (
-              <ul>
-                {data.map((result) => (
-                  <li key={result.id}>
-                    {result.full_name}{" "}
-                    {result.school_class__grade &&
-                      `(${t("Класс", "Класс")}: ${result.school_class__grade})`}
-                  </li>
-                ))}
-              </ul>
-            ) : !isLoading && !error ? (
-              <p>{t("Натыйжа табылган жок", "Результатов не найдено")}</p>
-            ) : null}
-          </div>
-        )} */}
+        {account && console.log(account, "account")}
       </div>
     </header>
   );
