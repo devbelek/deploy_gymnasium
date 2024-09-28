@@ -1,4 +1,4 @@
-# frontend/Dockerfile
+#frontend
 FROM node:alpine
 
 WORKDIR /app

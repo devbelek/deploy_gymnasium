@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useGetGalleryQuery } from "@/redux/api/gallery";
 import scss from "./GalleryMainContent.module.scss";
 import Image from "next/image";
@@ -64,11 +64,11 @@ const GalleryMainContent: React.FC = () => {
     setCurrentImageIndex(index);
   };
 
-  const handleCloseZoom = useCallback(() => {
+  const handleCloseZoom = () => {
     setCurrentImageIndex(null);
-  }, []);
+  };
 
-  const handlePrevImage = useCallback(() => {
+  const handlePrevImage = () => {
     if (data && currentImageIndex !== null) {
       setCurrentImageIndex((prevIndex) => {
         if (prevIndex === null) {
@@ -77,9 +77,9 @@ const GalleryMainContent: React.FC = () => {
         return prevIndex > 0 ? prevIndex - 1 : data.length - 1;
       });
     }
-  }, [data, currentImageIndex]);
+  };
 
-  const handleNextImage = useCallback(() => {
+  const handleNextImage = () => {
     if (data && currentImageIndex !== null) {
       setCurrentImageIndex((prevIndex) => {
         if (prevIndex === null) {
@@ -88,7 +88,7 @@ const GalleryMainContent: React.FC = () => {
         return prevIndex < data.length - 1 ? prevIndex + 1 : 0;
       });
     }
-  }, [data, currentImageIndex]);
+  };
 
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.touches[0].clientX);
@@ -118,7 +118,7 @@ const GalleryMainContent: React.FC = () => {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [currentImageIndex, handlePrevImage, handleNextImage, handleCloseZoom]);
+  }, [currentImageIndex]);
 
   return (
     <section className={scss.GalleryMainContent}>

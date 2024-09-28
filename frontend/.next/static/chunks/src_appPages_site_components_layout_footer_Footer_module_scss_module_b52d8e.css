@@ -1,0 +1,85 @@
+/* [project]/src/appPages/site/components/layout/footer/Footer.module.scss.module.css [app-client] (css) */
+.Footer-module-scss-module__ptjFbW__footer {
+  background-color: #fff;
+  border-top: 1px solid #eaeaea;
+  padding: 2rem 0;
+  font-family: Arial, sans-serif;
+  font-size: .9rem;
+  color: #4a4a4a;
+}
+
+.Footer-module-scss-module__ptjFbW__footer .Footer-module-scss-module__ptjFbW__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.Footer-module-scss-module__ptjFbW__footer .Footer-module-scss-module__ptjFbW__content {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  gap: 2rem;
+}
+
+.Footer-module-scss-module__ptjFbW__footer .Footer-module-scss-module__ptjFbW__content .Footer-module-scss-module__ptjFbW__section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 1;
+  margin-right: 2rem;
+}
+
+.Footer-module-scss-module__ptjFbW__footer .Footer-module-scss-module__ptjFbW__content .Footer-module-scss-module__ptjFbW__section:last-child {
+  margin-right: 0;
+}
+
+.Footer-module-scss-module__ptjFbW__footer .Footer-module-scss-module__ptjFbW__content .Footer-module-scss-module__ptjFbW__section ul {
+  list-style: none;
+}
+
+.Footer-module-scss-module__ptjFbW__footer .Footer-module-scss-module__ptjFbW__content .Footer-module-scss-module__ptjFbW__section ul li {
+  margin-bottom: .5rem;
+}
+
+.Footer-module-scss-module__ptjFbW__footer .Footer-module-scss-module__ptjFbW__content .Footer-module-scss-module__ptjFbW__section ul li a {
+  text-decoration: none;
+  color: #4a4a4a;
+}
+
+.Footer-module-scss-module__ptjFbW__footer .Footer-module-scss-module__ptjFbW__content .Footer-module-scss-module__ptjFbW__section ul li a:hover {
+  color: #0070f3;
+}
+
+.Footer-module-scss-module__ptjFbW__footer .Footer-module-scss-module__ptjFbW__content .Footer-module-scss-module__ptjFbW__section .Footer-module-scss-module__ptjFbW__social {
+  display: flex;
+  gap: 1rem;
+}
+
+.Footer-module-scss-module__ptjFbW__footer .Footer-module-scss-module__ptjFbW__content .Footer-module-scss-module__ptjFbW__section .Footer-module-scss-module__ptjFbW__social a {
+  color: #4a4a4a;
+  font-size: 1.2rem;
+}
+
+.Footer-module-scss-module__ptjFbW__footer .Footer-module-scss-module__ptjFbW__content .Footer-module-scss-module__ptjFbW__section .Footer-module-scss-module__ptjFbW__social a:hover {
+  color: #0070f3;
+}
+
+.Footer-module-scss-module__ptjFbW__footer .Footer-module-scss-module__ptjFbW__copyright {
+  text-align: center;
+  border-top: 1px solid #eaeaea;
+  padding-top: 1rem;
+  color: #a0a0a0;
+}
+
+@media (width <= 430px) {
+  .Footer-module-scss-module__ptjFbW__footer .Footer-module-scss-module__ptjFbW__logo {
+    display: none;
+  }
+
+  .Footer-module-scss-module__ptjFbW__footer .Footer-module-scss-module__ptjFbW__content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/*# sourceMappingURL=src_appPages_site_components_layout_footer_Footer_module_scss_module_b52d8e.css.map*/
