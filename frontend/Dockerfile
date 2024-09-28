@@ -3,14 +3,12 @@ FROM node:18-alpine AS builder
 
 WORKDIR /app
 
-# Копируйте только файлы package.json и package-lock.json для установки зависимостей
+# Копируйте файлы package.json и package-lock.json для установки зависимостей
 COPY package*.json ./
 
-# Очистите кеш и установите зависимости
-RUN npm cache clean --force && npm install
-
-# Обновите React, React-DOM и другие зависимости до последних стабильных версий
-RUN npm install react@18.2.0 react-dom@18.2.0 zustand@4.4.0 use-sync-external-store@latest
+# Очистите кеш и обновите все зависимости до последних версий
+RUN npm cache clean --force && npm install -g npm@latest
+RUN npm update
 
 # Копируйте остальные файлы проекта
 COPY . .
