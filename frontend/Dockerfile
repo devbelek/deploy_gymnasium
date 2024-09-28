@@ -9,6 +9,9 @@ COPY package*.json ./
 # Установите зависимости. Используем npm install вместо npm ci для обновления lock файла в случае необходимости
 RUN npm install
 
+# Обновите React и React-DOM до последней версии для устранения проблем с несовместимостью
+RUN npm install react@latest react-dom@latest
+
 # Копируйте остальные файлы проекта
 COPY . .
 
