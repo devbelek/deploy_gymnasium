@@ -38,4 +38,4 @@ RUN apk del .build-deps && \
     rm -rf /tmp/* /var/cache/apk/*
 
 # Копирование конфигурации Nginx
-COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY ../nginx.conf /etc/nginx/nginx.conf
