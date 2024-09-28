@@ -10,7 +10,7 @@ COPY package*.json ./
 RUN npm cache clean --force && npm install
 
 # Обновите React, React-DOM и другие зависимости до последних стабильных версий
-RUN npm install react@latest react-dom@latest zustand@latest
+RUN npm install react@18.2.0 react-dom@18.2.0 zustand@4.4.0 use-sync-external-store@latest
 
 # Копируйте остальные файлы проекта
 COPY . .
