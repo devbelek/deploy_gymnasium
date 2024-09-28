@@ -1,3 +1,4 @@
+#frontend
 FROM node:alpine
 
 WORKDIR /app
