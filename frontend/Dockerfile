@@ -1,18 +1,23 @@
-#frontend
-FROM node:alpine
+# Используйте конкретную версию Node.js (например, 18)
+FROM node:18-alpine
 
+# Установите рабочую директорию
 WORKDIR /app
 
+# Копируйте только файлы package.json и package-lock.json для установки зависимостей
 COPY package*.json ./
+
+# Установите зависимости
 RUN npm install
-RUN npm i sharp
-RUN npm install @chakra-ui/react
-RUN npm install lucide-react
-RUN npm install @radix-ui/react-dialog @radix-ui/react-label @radix-ui/react-avatar
-RUN npm install react-debounce-input
+
+# Копируйте остальные файлы проекта
 COPY . .
+
+# Соберите проект
 RUN npm run build
 
+# Укажите порт, который будет использовать приложение
 EXPOSE 3000
 
+# Команда для запуска приложения
 CMD ["npm", "start"]
