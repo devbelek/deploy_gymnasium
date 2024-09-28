@@ -1,6 +1,7 @@
+# nginx/Dockerfile
 FROM nginx:alpine
 
-# Установка зависимостей
+# Установка зависимостей для сборки
 RUN apk add --no-cache --virtual .build-deps \
     gcc \
     libc-dev \
@@ -31,11 +32,11 @@ RUN NGINX_VERSION=$(nginx -v 2>&1 | sed 's/^nginx version: nginx\///') && \
 RUN NGINX_VERSION=$(nginx -v 2>&1 | sed 's/^nginx version: nginx\///') && \
     cd /tmp/nginx-$NGINX_VERSION && \
     ./configure --with-compat --add-dynamic-module=/tmp/ngx_brotli && \
-    make modules
+    make modules && \
+    make install  # Используем make install для установки модулей
 
 # Копирование скомпилированного модуля в правильную директорию
-RUN NGINX_VERSION=$(nginx -v 2>&1 | sed 's/^nginx version: nginx\///') && \
-    cp /tmp/nginx-$NGINX_VERSION/objs/ngx_http_brotli_filter_module.so /usr/lib/nginx/modules/ && \
+RUN cp /tmp/nginx-$NGINX_VERSION/objs/ngx_http_brotli_filter_module.so /usr/lib/nginx/modules/ && \
     cp /tmp/nginx-$NGINX_VERSION/objs/ngx_http_brotli_static_module.so /usr/lib/nginx/modules/
 
 # Очистка
