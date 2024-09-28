@@ -1,32 +1,41 @@
-FROM python:3.11-slim-bullseye
+FROM nginx:alpine
 
-WORKDIR /app
+# Установка зависимостей
+RUN apk add --no-cache --virtual .build-deps \
+    gcc \
+    libc-dev \
+    make \
+    openssl-dev \
+    pcre-dev \
+    zlib-dev \
+    linux-headers \
+    curl \
+    gnupg \
+    libxslt-dev \
+    gd-dev \
+    geoip-dev \
+    git
 
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-ENV DEBIAN_FRONTEND=noninteractive
+# Получение исходного кода Nginx
+RUN cd /tmp && \
+    curl -fSL https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz -o nginx.tar.gz && \
+    tar -zxC /tmp -f nginx.tar.gz
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    libgl1-mesa-glx \
-    libglib2.0-0 \
-    tesseract-ocr \
-    tesseract-ocr-rus \
-    poppler-utils \
-    wget \
-    && rm -rf /var/lib/apt/lists/*
+# Клонирование модуля ngx_brotli
+RUN cd /tmp && \
+    git clone --recursive https://github.com/google/ngx_brotli.git
 
-ENV PATH="/usr/bin:/usr/local/bin:${PATH}"
-ENV TESSDATA_PREFIX=/usr/share/tesseract-ocr/tessdata
+# Сборка Nginx с модулем Brotli
+RUN cd /tmp/nginx-${NGINX_VERSION} && \
+    ./configure --with-compat --add-dynamic-module=/tmp/ngx_brotli && \
+    make modules
 
-RUN mkdir -p $TESSDATA_PREFIX && \
-    wget -q https://github.com/tesseract-ocr/tessdata_best/raw/main/rus.traineddata -O $TESSDATA_PREFIX/rus.traineddata && \
-    wget -q https://github.com/tesseract-ocr/tessdata_best/raw/main/eng.traineddata -O $TESSDATA_PREFIX/eng.traineddata
+# Копирование собранных модулей
+RUN cp /tmp/nginx-${NGINX_VERSION}/objs/*.so /usr/lib/nginx/modules/
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Очистка
+RUN apk del .build-deps && \
+    rm -rf /tmp/* /var/cache/apk/*
 
-COPY . .
-
-EXPOSE 8000
-
-CMD ["gunicorn", "--bind", "0.0.0.0:9000", "--workers", "4", "--threads", "2", "--worker-class", "gthread", "--timeout", "120", "Gimnasium.wsgi:application"]
+# Копирование конфигурации Nginx
+COPY nginx.conf /etc/nginx/nginx.conf
