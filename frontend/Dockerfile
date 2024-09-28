@@ -3,11 +3,11 @@ FROM node:18-alpine AS builder
 
 WORKDIR /app
 
-# Копируем файлы package.json и package-lock.json
+# Копируем файлы package.json и package-lock.json (если есть)
 COPY package*.json ./
 
-# Устанавливаем зависимости
-RUN npm ci
+# Если package-lock.json отсутствует, используем npm install вместо npm ci
+RUN if [ -f package-lock.json ]; then npm ci; else npm install; fi
 
 # Копируем остальные файлы проекта
 COPY . .
@@ -27,7 +27,7 @@ COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/next.config.mjs ./
 
 # Устанавливаем только production-зависимости
-RUN npm ci --only=production
+RUN npm ci --only=production || npm install --only=production
 
 # Указываем порт, который будет использовать приложение
 EXPOSE 3000
