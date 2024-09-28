@@ -3,17 +3,16 @@ FROM node:18-alpine AS builder
 
 WORKDIR /app
 
-# Копируйте файлы package.json и package-lock.json для установки зависимостей
+# Копируем файлы package.json и package-lock.json
 COPY package*.json ./
 
-# Очистите кеш и обновите все зависимости до последних версий
-RUN npm cache clean --force && npm install -g npm@latest
-RUN npm update
+# Устанавливаем зависимости
+RUN npm ci
 
-# Копируйте остальные файлы проекта
+# Копируем остальные файлы проекта
 COPY . .
 
-# Соберите проект
+# Собираем проект
 RUN npm run build
 
 # Этап запуска
@@ -21,15 +20,16 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-# Копируйте только необходимые файлы из этапа сборки
+# Копируем только необходимые файлы из этапа сборки
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/next.config.mjs ./
 
-# Установите только production-зависимости
-RUN npm install --only=production
+# Устанавливаем только production-зависимости
+RUN npm ci --only=production
 
-# Укажите порт, который будет использовать приложение
+# Указываем порт, который будет использовать приложение
 EXPOSE 3000
 
 # Команда для запуска приложения

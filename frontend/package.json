@@ -31,7 +31,7 @@
     "sharp": "^0.30.7",
     "three": "^0.168.0",
     "use-debounce": "^10.0.3",
-    "zustand": "5.0.0-rc.2"
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@types/node": "^20.16.10",
