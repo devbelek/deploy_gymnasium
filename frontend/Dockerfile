@@ -6,8 +6,8 @@ WORKDIR /app
 # Копируйте только файлы package.json и package-lock.json для установки зависимостей
 COPY package*.json ./
 
-# Установите зависимости с использованием npm ci для более чистой установки
-RUN npm ci
+# Установите зависимости. Используем npm install вместо npm ci для обновления lock файла в случае необходимости
+RUN npm install
 
 # Копируйте остальные файлы проекта
 COPY . .
@@ -26,7 +26,7 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/package*.json ./
 
 # Установите только production-зависимости
-RUN npm ci --only=production
+RUN npm install --only=production
 
 # Укажите порт, который будет использовать приложение
 EXPOSE 3000
