@@ -28,6 +28,7 @@
     "react-redux": "^9.1.2",
     "react-snowfall": "^2.1.1",
     "sass": "^1.79.3",
+    "sharp": "^0.30.7",
     "three": "^0.168.0",
     "use-debounce": "^10.0.3",
     "zustand": "5.0.0-rc.2"

@@ -1,20 +1,32 @@
-# Используйте конкретную версию Node.js (например, 18)
-FROM node:18-alpine
+# Этап сборки
+FROM node:18-alpine AS builder
 
-# Установите рабочую директорию
 WORKDIR /app
 
 # Копируйте только файлы package.json и package-lock.json для установки зависимостей
 COPY package*.json ./
 
-# Установите зависимости
-RUN npm install
+# Установите зависимости с использованием npm ci для более чистой установки
+RUN npm ci
 
 # Копируйте остальные файлы проекта
 COPY . .
 
 # Соберите проект
 RUN npm run build
+
+# Этап запуска
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Копируйте только необходимые файлы из этапа сборки
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/package*.json ./
+
+# Установите только production-зависимости
+RUN npm ci --only=production
 
 # Укажите порт, который будет использовать приложение
 EXPOSE 3000
