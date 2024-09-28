@@ -1,11 +1,19 @@
 "use client";
 import { useGetSearchQuery } from "@/redux/api/search";
 import { useSearchParams } from "next/navigation";
-import React, { useMemo } from "react";
+import React, { useMemo, Suspense } from "react";
 import Link from "next/link";
 import styles from "./Search.module.scss";
 
 const Search = () => {
+  return (
+    <Suspense fallback={<p className={styles.loading}>Загрузка...</p>}>
+      <SearchContent />
+    </Suspense>
+  );
+};
+
+const SearchContent = () => {
   const searchParams = useSearchParams();
   const query = searchParams?.get("query") || "";
 
@@ -18,7 +26,6 @@ const Search = () => {
   }, [query]);
 
   const { data, error, isLoading } = useGetSearchQuery(searchRequest, {
-    //+
     skip: !searchRequest.school_class && !searchRequest.full_name,
   });
 
