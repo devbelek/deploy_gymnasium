@@ -6,11 +6,11 @@ WORKDIR /app
 # Копируйте только файлы package.json и package-lock.json для установки зависимостей
 COPY package*.json ./
 
-# Установите зависимости. Используем npm install вместо npm ci для обновления lock файла в случае необходимости
-RUN npm install
+# Очистите кеш и установите зависимости
+RUN npm cache clean --force && npm install
 
-# Обновите React и React-DOM до последней версии для устранения проблем с несовместимостью
-RUN npm install react@latest react-dom@latest
+# Обновите React, React-DOM и другие зависимости до последних стабильных версий
+RUN npm install react@latest react-dom@latest zustand@latest
 
 # Копируйте остальные файлы проекта
 COPY . .
