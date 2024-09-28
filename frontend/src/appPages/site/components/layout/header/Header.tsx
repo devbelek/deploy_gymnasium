@@ -4,7 +4,7 @@ import scss from "./Header.module.scss";
 import logo from "../../../../../assets/logo.svg";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { DebounceInput as Input } from "react-debounce-input";
 import { useGetSearchQuery } from "@/redux/api/search";
@@ -20,6 +20,7 @@ const Header = () => {
   const { isKyrgyz, setIsKyrgyz, t } = useLanguageStore();
 
   const { data: account } = useGetAccountQuery(null);
+  console.log(account, "account");
 
   const searchRequest = useMemo(() => {
     if (query.length < 2) return null;
@@ -38,12 +39,6 @@ const Header = () => {
       router.push(`/search?query=${encodeURIComponent(query)}`);
     }
   }, [query, hasFocusInput, router]);
-
-  useEffect(() => {
-    if (account) {
-      console.log(account, "account");
-    }
-  }, [account]);
 
   const handleNavigate = () => {
     router.push("https://3-gymnasium.kg/accounts/");
@@ -152,6 +147,25 @@ const Header = () => {
             </div>
           </div>
         </div>
+
+        {/* {query.length >= 2 && (
+          <div className={scss.searchResults}>
+            {isLoading && <p>{t("Жүктөлүүдө...", "Загрузка...")}</p>}
+            {!isLoading && !error && data && data.length > 0 ? (
+              <ul>
+                {data.map((result) => (
+                  <li key={result.id}>
+                    {result.full_name}{" "}
+                    {result.school_class__grade &&
+                      `(${t("Класс", "Класс")}: ${result.school_class__grade})`}
+                  </li>
+                ))}
+              </ul>
+            ) : !isLoading && !error ? (
+              <p>{t("Натыйжа табылган жок", "Результатов не найдено")}</p>
+            ) : null}
+          </div>
+        )} */}
       </div>
     </header>
   );

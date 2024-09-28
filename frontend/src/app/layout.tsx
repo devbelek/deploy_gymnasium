@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Noto_Sans } from "next/font/google";
 import "./globals.scss";
 import LayoutClient from "./layout.client";
 
+// Импортируем шрифты
 const inter = Inter({ subsets: ["latin"] });
+const notoSans = Noto_Sans({ subsets: ["latin", "cyrillic"] }); // Добавляем латинский и кириллический
 
 export const metadata: Metadata = {
   title: "Экспериментальная гимназия №3",
@@ -17,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className} ${notoSans.className}`}>
         <LayoutClient>{children}</LayoutClient>
       </body>
     </html>
