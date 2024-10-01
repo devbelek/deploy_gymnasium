@@ -14,7 +14,8 @@ urlpatterns = ([
     path('api/', include('secondary.urls')),
     path('api/', include('users.urls')),
     path('i18n/', include('django.conf.urls.i18n')),
-]) + debug_toolbar_urls()
+    path('__debug__/', include('debug_toolbar.urls')),
+])
 
 urlpatterns += doc_urls
 
