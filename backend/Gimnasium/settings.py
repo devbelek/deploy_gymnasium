@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django_filters',
     'secondary',
     'corsheaders',
+    'debug_toolbar'
 ]
 
 SITE_ID = 1

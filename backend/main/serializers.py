@@ -40,6 +40,7 @@ class SchoolParliamentSerializer(serializers.ModelSerializer):
         model = SchoolParliament
         fields = ('student', 'type_of_administrator')
 
+    # TODO delete this shit
     def get_student(self, obj):
         return StudentMinimalSerializer(obj.student.all(), many=True).data
 
