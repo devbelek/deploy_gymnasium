@@ -8,8 +8,8 @@ import { useLanguageStore } from "@/stores/useLanguageStore";
 const GalleryContent = () => {
   const { data } = useGetGalleryQuery();
   const { isKyrgyz, t } = useLanguageStore();
-
   const router = useRouter();
+
   const handleNavigate = () => {
     router.push("/gallery");
   };
@@ -23,22 +23,18 @@ const GalleryContent = () => {
             <hr />
           </div>
           <div className={scss.gallery_card}>
-            {data
-              ?.map((item, index) => (
-                <div key={index} className={scss.galleryItem}>
-                    <Image
-                      src={item.image}
-                      alt="img"
-                      layout="responsive"
-                      width={380}
-                      height={258}
-                      objectFit="cover"
-                      priority
-                      quality={70}
-                    />
-                </div>
-              ))
-              .slice(0, 6)}
+            {data?.slice(0, 6).map((item, index) => (
+              <div key={index} className={scss.galleryItem}>
+                <Image
+                  src={item.image}
+                  alt="Gallery image"
+                  layout="fill"
+                  objectFit="cover"
+                  quality={100}
+                  priority={index < 2}
+                />
+              </div>
+            ))}
           </div>
           <div className={scss.buttonContainer}>
             <button className={scss.button} onClick={handleNavigate}>
