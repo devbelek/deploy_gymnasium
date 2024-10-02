@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import scss from "./HeroContent.module.scss";
-import heroImage from "../../../../../../assets/images/logo.jpg";
+import heroImage from "@/assets/images/photo_2024-09-21_01-18-10.jpg";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 
 const HeroContent = () => {
@@ -11,10 +11,10 @@ const HeroContent = () => {
     <section className={scss.content}>
       <div className={scss.backgroundImage}></div>
       <div className={scss.contentWrapper}>
+        <div className={scss.profileImage}>
+          <Image src={heroImage} alt="Profile" width={200} height={200} />
+        </div>
         <div className={scss.text}>
-          <div className={scss.logo}>
-            <Image src={heroImage} alt="Logo" width={100} height={100} />
-          </div>
           <h1>
             {t(
               "№3 Эксперименталдык гимназия",
