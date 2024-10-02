@@ -31,6 +31,7 @@ const GalleryContent = () => {
                     alt="img"
                     width={700}
                     height={500}
+                    layout="responsive"
                     priority
                     quality={70}
                   />
