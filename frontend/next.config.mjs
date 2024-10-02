@@ -3,7 +3,6 @@ const nextConfig = {
     images: {
         dangerouslyAllowSVG: true,
         domains: ['api.dicebear.com', '3-gymnasium.kg', 'vermojctkdkrdsxvauwc.supabase.co'],
-        },
     },
 };
 
