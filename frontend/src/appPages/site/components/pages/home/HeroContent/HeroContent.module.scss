@@ -1,6 +1,6 @@
 .content {
   position: relative;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -13,148 +13,76 @@
   right: 0;
   bottom: 0;
   background: url("../../../../../../assets/images/6W3A8933.JPG") no-repeat center/cover;
-  z-index: -2;
-}
-
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.4);
   z-index: -1;
 }
 
-.contentWrapper {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.textContainer {
+  background-color: rgba(86, 57, 123, 0.8);
   padding: 20px;
-  margin-bottom: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.profileImage {
-  margin-bottom: 20px;
+.logo {
+  margin-right: 20px;
 
   img {
-    border: 4px solid #fff;
     border-radius: 50%;
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
+    border: 2px solid #fff;
   }
 }
 
 .text {
-  text-align: center;
   color: #fff;
+  text-align: left;
 
   h1 {
-    font-size: 36px;
+    font-size: 24px;
     font-weight: 700;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
   }
 
   h2 {
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 300;
   }
 }
 
-.subtext {
-  background-color: rgba(86, 57, 123, 0.8);
-  height: 100px;
-  width: 100%;
-}
-
 @media (min-width: 768px) {
-  .contentWrapper {
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 40px;
+  .textContainer {
+    padding: 30px;
   }
 
-  .text {
-    text-align: left;
-
-    h1 {
-      font-size: 48px;
-    }
-
-    h2 {
-      font-size: 30px;
-    }
-  }
-}
-
-@media (min-width: 1024px) {
-  .contentWrapper {
-    margin-bottom: 150px;
-  }
-
-  .profileImage img {
-    width: 250px;
-    height: 250px;
-  }
-
-  .text h1 {
-    font-size: 56px;
-  }
-
-  .text h2 {
-    font-size: 36px;
-  }
-
-  .subtext {
-    height: 120px;
-  }
-}
-
-@media (max-width: 767px) {
-  .contentWrapper {
-    margin-bottom: 80px;
-  }
-
-  .profileImage img {
-    width: 150px;
-    height: 150px;
-  }
-
-  .text h1 {
-    font-size: 28px;
-  }
-
-  .text h2 {
-    font-size: 20px;
-  }
-
-  .subtext {
-    height: 80px;
-  }
-}
-
-@media (max-width: 480px) {
-  .contentWrapper {
-    margin-bottom: 60px;
-  }
-
-  .profileImage img {
+  .logo img {
     width: 120px;
     height: 120px;
   }
 
   .text h1 {
-    font-size: 24px;
+    font-size: 32px;
   }
 
   .text h2 {
-    font-size: 18px;
+    font-size: 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .textContainer {
+    padding: 40px;
   }
 
-  .subtext {
-    height: 60px;
+  .logo img {
+    width: 150px;
+    height: 150px;
+  }
+
+  .text h1 {
+    font-size: 40px;
+  }
+
+  .text h2 {
+    font-size: 28px;
   }
 }
