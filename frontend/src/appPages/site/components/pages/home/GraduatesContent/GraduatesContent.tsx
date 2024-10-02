@@ -3,7 +3,7 @@ import Image from "next/image";
 import scss from "./GraduatesContent.module.scss";
 import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
 import { useGetSuccessfulGraduatesQuery } from "@/redux/api/successful_graduates";
-import graduateFallback from "../../../../../../assets/images/Group 1000001472.png"; // Fallback image
+import graduateFallback from "../../../../../../assets/images/Group 1000001472.png";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 
 const GraduatesContent = () => {
@@ -22,7 +22,7 @@ const GraduatesContent = () => {
             <p>{graduateData?.content}</p>
             <span>
               {graduateData?.graduate?.name} {graduateData?.graduate?.last_name}
-              <br />{" "}
+              <br />
               {t(
                 `${graduateData?.graduate?.year} жылдын бүтүрүүчүсү`,
                 `Выпускник ${graduateData?.graduate?.year} года`
@@ -35,13 +35,13 @@ const GraduatesContent = () => {
           </div>
           <div className={scss.image}>
             <Image
-              src={graduateData?.image || graduateFallback} // Fallback image
+              src={graduateData?.image || graduateFallback}
               alt="graduates"
-              className={scss.graduates}
-              width={700}
-              height={500}
-              quality={70}
+              width={340}
+              height={340}
+              quality={100}
               priority
+              objectFit="cover"
             />
           </div>
         </div>

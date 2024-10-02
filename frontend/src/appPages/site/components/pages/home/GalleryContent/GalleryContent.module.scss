@@ -28,28 +28,20 @@
     .gallery_card {
       margin-top: 42px;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 1fr 1fr 1fr;
       gap: 24px;
 
       .galleryItem {
-        position: relative;
-        width: 100%;
-        padding-top: 67.89%; // Соотношение сторон 380:258
-
         img {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          border-radius: 10px;
           cursor: pointer;
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          width: 380px;
+          height: 258px;
+          border-radius: 10px;
 
           &:hover {
             transform: scale(1.01);
             box-shadow: 0 10px 16px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
           }
         }
       }
@@ -73,19 +65,11 @@
       cursor: pointer;
       border: none;
       text-align: center;
-      transition: transform 0.3s ease;
 
       &:hover {
         transform: scale(1.01);
+        transition: transform 0.3s ease;
       }
-    }
-  }
-}
-
-@media (max-width: 884px) {
-  .GalleryMainContent {
-    .gallery_card {
-      grid-template-columns: repeat(2, 1fr);
     }
   }
 }
@@ -93,7 +77,17 @@
 @media (max-width: 430px) {
   .GalleryMainContent {
     .gallery_card {
-      grid-template-columns: 1fr;
+      overflow-x: auto;
+      grid-template-columns: repeat(6, 1fr) !important;
+    }
+  }
+}
+
+@media (max-width: 884px) {
+  .GalleryMainContent {
+    .gallery_card {
+      overflow-x: auto;
+      grid-template-columns: repeat(6, 1fr) !important;
     }
   }
 }
