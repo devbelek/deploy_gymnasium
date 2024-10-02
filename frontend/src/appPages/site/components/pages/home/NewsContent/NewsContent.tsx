@@ -35,7 +35,7 @@ const NewsContent = () => {
                 <LuMessagesSquare />
               </article>
             </div>
-          ))}
+          )).slice(0, 6)}
         </div>
         <div className={scss.buttonContainer}>
           <button onClick={handleNavigate}>
