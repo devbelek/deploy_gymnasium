@@ -26,15 +26,16 @@ const GalleryContent = () => {
             {data
               ?.map((item, index) => (
                 <div key={index} className={scss.galleryItem}>
-                  <Image
-                    src={item.image}
-                    alt="img"
-                    width={700}
-                    height={500}
-                    layout="responsive"
-                    priority
-                    quality={70}
-                  />
+                    <Image
+                      src={item.image}
+                      alt="img"
+                      layout="responsive"
+                      width={380}
+                      height={258}
+                      objectFit="cover"
+                      priority
+                      quality={70}
+                    />
                 </div>
               ))
               .slice(0, 6)}
