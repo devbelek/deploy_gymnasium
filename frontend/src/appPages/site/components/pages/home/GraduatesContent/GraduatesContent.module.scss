@@ -1,27 +1,29 @@
 .content {
-  background-color: #fff6f6;
-  padding: 50px 0;
+  background-color: #faf4ff; // Более мягкий фон
+  padding: 80px 0; // Увеличенный отступ
 
   h1 {
-    color: #333333;
+    color: #4a0072; // Более насыщенный цвет заголовка
+    font-size: 2.5rem; // Увеличенный размер шрифта
     text-align: center;
-    margin-bottom: 4px;
+    margin-bottom: 20px; // Увеличенный отступ
+    font-weight: 700; // Жирный шрифт
   }
 
   hr {
-    width: 40px;
-    height: 2px;
+    width: 60px; // Немного шире
+    height: 3px; // Чуть толще
     background: #6a00a1;
     border: none;
-    border-radius: 12px;
-    margin: 0 auto 50px;
+    border-radius: 3px; // Меньший радиус
+    margin: 0 auto 60px; // Увеличенный нижний отступ
   }
 
   .graduateContent {
     display: flex;
-    align-items: flex-start;
+    align-items: center; // Выравнивание по центру
     justify-content: space-between;
-    gap: 40px;
+    gap: 60px; // Увеличенный отступ между элементами
 
     .title {
       flex: 1;
@@ -29,60 +31,75 @@
       color: #333333;
 
       p {
-        font-size: 1.5rem;
-        line-height: 1.5;
-        margin-bottom: 20px;
+        font-size: 1.25rem; // Немного уменьшенный размер для лучшей читаемости
+        line-height: 1.6; // Увеличенная высота строки
+        margin-bottom: 30px;
+        font-weight: 400; // Нормальный вес для основного текста
       }
 
       span {
         font-style: italic;
         display: block;
-        font-size: 0.9rem;
-        font-weight: 300;
-        color: #6a6a6a;
+        font-size: 1rem; // Увеличенный размер
+        font-weight: 400; // Более жирный шрифт
+        color: #4a4a4a; // Более темный цвет
         margin-bottom: 40px;
+        line-height: 1.4; // Добавлена высота строки
       }
     }
 
     .wrapper {
       display: flex;
       justify-content: flex-start;
-      gap: 40px;
+      gap: 20px; // Уменьшенный отступ между иконками
 
       svg {
         cursor: pointer;
-        font-size: 1.5rem;
-        color: #555;
-        transition: color 0.3s ease;
+        font-size: 1.75rem; // Увеличенный размер иконок
+        color: #6a00a1; // Цвет в тему
+        transition: all 0.3s ease;
 
         &:hover {
-          color: #000;
+          color: #4a0072; // Более темный цвет при наведении
+          transform: scale(1.1); // Небольшое увеличение при наведении
         }
       }
     }
 
     .image {
       flex-shrink: 0;
-      width: 340px;
-      height: 340px;
-      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+      width: 380px; // Немного увеличенный размер
+      height: 380px;
+      box-shadow: 0px 10px 30px rgba(106, 0, 161, 0.15); // Более выраженная тень
       overflow: hidden;
-      border-radius: 8px;
+      border-radius: 12px; // Увеличенный радиус
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: scale(1.03); // Небольшое увеличение при наведении
+      }
     }
   }
 }
 
-@media (max-width: 884px) {
+@media (max-width: 992px) {
   .content {
+    padding: 60px 0;
+
+    h1 {
+      font-size: 2rem;
+    }
+
     .graduateContent {
       flex-direction: column-reverse;
       align-items: center;
+      gap: 40px;
 
       .title {
         text-align: center;
 
         p {
-          font-size: 1.2rem;
+          font-size: 1.1rem;
         }
       }
 
@@ -93,7 +110,7 @@
 
       .image {
         width: 100%;
-        max-width: 340px;
+        max-width: 380px;
         height: auto;
         aspect-ratio: 1 / 1;
       }
@@ -101,9 +118,13 @@
   }
 }
 
-@media (max-width: 430px) {
+@media (max-width: 576px) {
   .content {
-    padding: 30px 0;
+    padding: 40px 0;
+
+    h1 {
+      font-size: 1.75rem;
+    }
 
     .graduateContent {
       .title {
@@ -113,7 +134,7 @@
       }
 
       .image {
-        max-width: 280px;
+        max-width: 300px;
       }
     }
   }
