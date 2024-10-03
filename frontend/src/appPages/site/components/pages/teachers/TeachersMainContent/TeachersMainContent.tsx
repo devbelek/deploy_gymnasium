@@ -72,6 +72,10 @@ const TeachersMainContent: React.FC = () => {
                     height={500}
                     priority
                     quality={70}
+                    onError={(e) => {
+                      // Добавляем обработчик ошибки на случай, если изображение не загрузилось
+                      (e.target as HTMLImageElement).src = "/default-placeholder.png";
+                    }}
                   />
                   <h1>
                     {teacher.surname} {teacher.name}
