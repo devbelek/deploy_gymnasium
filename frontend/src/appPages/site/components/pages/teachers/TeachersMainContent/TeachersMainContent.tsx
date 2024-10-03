@@ -54,7 +54,7 @@ const TeachersMainContent: React.FC = () => {
           <div className={scss.teacher_cards}>
             {filteredTeachers?.map((teacher) => {
               // Формируем корректный URL для изображения
-              const imageUrl = teacher.image.startsWith("http")
+              const imageUrl = teacher.image.startsWith("https")
                 ? teacher.image
                 : `${process.env.NEXT_PUBLIC_API}${teacher.image.startsWith("/") ? "" : "/"}${teacher.image}`;
 
@@ -72,10 +72,6 @@ const TeachersMainContent: React.FC = () => {
                     height={500}
                     priority
                     quality={70}
-                    onError={(e) => {
-                      // Добавляем обработчик ошибки на случай, если изображение не загрузилось
-                      (e.target as HTMLImageElement).src = "/default-placeholder.png";
-                    }}
                   />
                   <h1>
                     {teacher.surname} {teacher.name}
