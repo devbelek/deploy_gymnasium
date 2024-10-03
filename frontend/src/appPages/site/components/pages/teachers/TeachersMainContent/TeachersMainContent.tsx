@@ -56,11 +56,14 @@ const TeachersMainContent: React.FC = () => {
               <div key={teacher.id!} className={scss.teacher}>
                     <Image
                       onClick={() => router.push(`/teachers/${teacher.id}`)}
-                      src={teacher.image.startsWith('https')
+                      src={teacher.image.startsWith('http')
                         ? teacher.image
                         : `${process.env.NEXT_PUBLIC_API}${teacher.image.startsWith('/') ? '' : '/'}${teacher.image}`
                       }
-                      alt={isKyrgyz ? teacher.full_name_ky : teacher.full_name_ru}
+                      alt={isKyrgyz
+                        ? `${teacher.surname} ${teacher.name} ${teacher.last_name}`
+                        : `${teacher.surname} ${teacher.name} ${teacher.last_name}`
+                      }
                       width={700}
                       height={500}
                       priority
