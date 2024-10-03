@@ -54,15 +54,18 @@ const TeachersMainContent: React.FC = () => {
           <div className={scss.teacher_cards}>
             {filteredTeachers?.map((teacher) => (
               <div key={teacher.id!} className={scss.teacher}>
-                <Image
-                  onClick={() => router.push(`/teachers/${teacher.id}`)}
-                  src={teacher?.image}
-                  alt="img"
-                  width={700}
-                  height={500}
-                  priority
-                  quality={70}
-                />
+                    <Image
+                      onClick={() => router.push(`/teachers/${teacher.id}`)}
+                      src={teacher.image.startsWith('https')
+                        ? teacher.image
+                        : `${process.env.NEXT_PUBLIC_API}${teacher.image.startsWith('/') ? '' : '/'}${teacher.image}`
+                      }
+                      alt={isKyrgyz ? teacher.full_name_ky : teacher.full_name_ru}
+                      width={700}
+                      height={500}
+                      priority
+                      quality={70}
+                    />
                 <h1>
                   {teacher.surname} {teacher.name}
                   <br />
