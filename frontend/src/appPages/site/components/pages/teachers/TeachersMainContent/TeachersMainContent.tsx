@@ -52,58 +52,28 @@ const TeachersMainContent: React.FC = () => {
             <hr />
           </div>
           <div className={scss.teacher_cards}>
-            {filteredTeachers?.map((teacher) => {
-              // Проверка и корректное формирование URL для изображения
-              let imageUrl;
-              if (teacher.image) {
-                imageUrl = teacher.image.startsWith("http")
-                  ? teacher.image.replace(/^http:/, "https:")
-                  : `${process.env.NEXT_PUBLIC_API}${teacher.image.startsWith("/") ? "" : "/"}${teacher.image}`;
-              } else {
-                imageUrl = "/default-placeholder.png"; // Путь к изображению-заполнителю по умолчанию
-              }
-
-              return (
-                <div key={teacher.id!} className={scss.teacher}>
-                  {teacher.image ? (
-                    <Image
-                      onClick={() => router.push(`/teachers/${teacher.id}`)}
-                      src={imageUrl}
-                      alt={
-                        isKyrgyz
-                          ? `${teacher.surname} ${teacher.name} ${teacher.last_name}`
-                          : `${teacher.surname} ${teacher.name} ${teacher.last_name}`
-                      }
-                      width={700}
-                      height={500}
-                      priority
-                      quality={70}
-                      onError={(e) => {
-                        // Замена изображения на placeholder при ошибке загрузки
-                        (e.target as HTMLImageElement).src = "/default-placeholder.png";
-                      }}
-                    />
-                  ) : (
-                    <img
-                      src="/default-placeholder.png"
-                      alt="Изображение недоступно"
-                      width={700}
-                      height={500}
-                      onClick={() => router.push(`/teachers/${teacher.id}`)}
-                    />
-                  )}
-                  <h1>
-                    {teacher.surname} {teacher.name}
-                    <br />
-                    {teacher.last_name}
-                  </h1>
-                  <hr />
-                  <p style={{ width: "100%", maxWidth: "230px" }}>
-                    {isKyrgyz ? teacher.subject_ky : teacher.subject_ru}
-                  </p>
-                </div>
-              );
-            })}
+            {filteredTeachers?.map((teacher) => (
+              <div key={teacher.id!} className={scss.teacher}>
+                <Image
+                  onClick={() => router.push(`/teachers/${teacher.id}`)}
+                  src={teacher?.image}
+                  alt="img"
+                  width={700}
+                  height={500}
+                  priority
+                  quality={70}
+                />
+                <h1>
+                  {teacher.surname} {teacher.name}
+                  <br />
+                  {teacher.last_name}
+                </h1>
+                <hr />
+                <p style={{ width: "100%", maxWidth: "230px" }}>
+                  {isKyrgyz ? teacher.subject_ky : teacher.subject_ru}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
