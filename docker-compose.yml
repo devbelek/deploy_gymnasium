@@ -6,8 +6,8 @@ services:
     volumes:
       - ./backend:/app
       - ./.env:/app/.env
-      - /root/deploy_gymnasium/backend/staticfiles:/app/staticfiles
-      - /root/deploy_gymnasium/backend/media:/app/media
+      - /root/deploy_gymnasium/backend/staticfiles/:/app/staticfiles
+      - /root/deploy_gymnasium/backend/media/:/app/media
     env_file:
       - ./.env
     depends_on:
@@ -16,8 +16,8 @@ services:
     environment:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
       - REDIS_URL=redis://redis:6379/0
-    ports:
-      - "9000:9000"
+#    ports:
+#      - "9000:9000"
     networks:
       - dev
 
@@ -58,8 +58,8 @@ services:
     command: celery -A Gimnasium worker --loglevel=info --pool=solo
     volumes:
       - ./backend:/app
-      - /root/deploy_gymnasium/backend/staticfiles:/app/staticfiles
-      - /root/deploy_gymnasium/backend/media:/app/media
+      - /root/deploy_gymnasium/backend/staticfiles/:/app/staticfiles
+      - /root/deploy_gymnasium/backend/media/:/app/media
     env_file:
       - ./.env
     depends_on:
@@ -74,8 +74,8 @@ services:
     command: celery -A Gimnasium beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
     volumes:
       - ./backend:/app
-      - /root/deploy_gymnasium/backend/staticfiles:/app/staticfiles
-      - /root/deploy_gymnasium/backend/media:/app/media
+      - /root/deploy_gymnasium/backend/staticfiles/:/app/staticfiles
+      - /root/deploy_gymnasium/backend/media/:/app/media
     env_file:
       - ./.env
     depends_on:
@@ -92,8 +92,8 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - /root/deploy_gymnasium/backend/staticfiles:/app/staticfiles
-      - /root/deploy_gymnasium/backend/media:/app/media
+      - /root/deploy_gymnasium/backend/staticfiles/:/app/staticfiles
+      - /root/deploy_gymnasium/backend/media/:/app/media
       - /etc/letsencrypt:/etc/letsencrypt:ro
       - ./frontend/build:/usr/share/nginx/html
     ports:
