@@ -56,7 +56,7 @@ const TeachersMainContent: React.FC = () => {
               <div key={teacher.id!} className={scss.teacher}>
                     <Image
                       onClick={() => router.push(`/teachers/${teacher.id}`)}
-                      src={teacher.image.startsWith('http')
+                      src={teacher.image.startsWith('https')
                         ? teacher.image
                         : `${process.env.NEXT_PUBLIC_API}${teacher.image.startsWith('/') ? '' : '/'}${teacher.image}`
                       }
