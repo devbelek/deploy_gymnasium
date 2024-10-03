@@ -53,29 +53,45 @@ const TeachersMainContent: React.FC = () => {
           </div>
           <div className={scss.teacher_cards}>
             {filteredTeachers?.map((teacher) => {
-              // Формируем корректный URL для изображения
-              let imageUrl = teacher.image.startsWith("http")
-                ? teacher.image.replace(/^http:/, "https:")
-                : `${process.env.NEXT_PUBLIC_API}${teacher.image.startsWith("/") ? "" : "/"}${teacher.image}`;
+              // Проверка и корректное формирование URL для изображения
+              let imageUrl;
+              if (teacher.image) {
+                imageUrl = teacher.image.startsWith("http")
+                  ? teacher.image.replace(/^http:/, "https:")
+                  : `${process.env.NEXT_PUBLIC_API}${teacher.image.startsWith("/") ? "" : "/"}${teacher.image}`;
+              } else {
+                imageUrl = "/default-placeholder.png"; // Путь к изображению-заполнителю по умолчанию
+              }
 
               return (
                 <div key={teacher.id!} className={scss.teacher}>
-                  <Image
-                    onClick={() => router.push(`/teachers/${teacher.id}`)}
-                    src={imageUrl}
-                    alt={
-                      isKyrgyz
-                        ? `${teacher.surname} ${teacher.name} ${teacher.last_name}`
-                        : `${teacher.surname} ${teacher.name} ${teacher.last_name}`
-                    }
-                    width={700}
-                    height={500}
-                    priority
-                    quality={70}
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = "/default-placeholder.png";
-                    }}
-                  />
+                  {teacher.image ? (
+                    <Image
+                      onClick={() => router.push(`/teachers/${teacher.id}`)}
+                      src={imageUrl}
+                      alt={
+                        isKyrgyz
+                          ? `${teacher.surname} ${teacher.name} ${teacher.last_name}`
+                          : `${teacher.surname} ${teacher.name} ${teacher.last_name}`
+                      }
+                      width={700}
+                      height={500}
+                      priority
+                      quality={70}
+                      onError={(e) => {
+                        // Замена изображения на placeholder при ошибке загрузки
+                        (e.target as HTMLImageElement).src = "/default-placeholder.png";
+                      }}
+                    />
+                  ) : (
+                    <img
+                      src="/default-placeholder.png"
+                      alt="Изображение недоступно"
+                      width={700}
+                      height={500}
+                      onClick={() => router.push(`/teachers/${teacher.id}`)}
+                    />
+                  )}
                   <h1>
                     {teacher.surname} {teacher.name}
                     <br />
