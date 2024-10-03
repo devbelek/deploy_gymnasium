@@ -1,11 +1,13 @@
 services:
   web:
     build: ./backend
+    command: >
+      bash -c "./manage.py collectstatic --noinput && ./manage.py makemigrations && ./manage.py migrate && gunicorn --bind 0.0.0.0:9000 --workers 4 --threads 2 --worker-class gthread --timeout 120 Gimnasium.wsgi:application"
     volumes:
       - ./backend:/app
       - ./.env:/app/.env
-      - static_volume:/app/staticfiles
-      - media_volume:/app/media
+      - /root/deploy_gymnasium/backend/staticfiles:/app/staticfiles
+      - /root/deploy_gymnasium/backend/media:/app/media
     env_file:
       - ./.env
     depends_on:
@@ -14,8 +16,8 @@ services:
     environment:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
       - REDIS_URL=redis://redis:6379/0
-#    ports:
-#      - "9000:9000"
+    ports:
+      - "9000:9000"
     networks:
       - dev
 
@@ -56,8 +58,8 @@ services:
     command: celery -A Gimnasium worker --loglevel=info --pool=solo
     volumes:
       - ./backend:/app
-      - static_volume:/app/staticfiles
-      - media_volume:/app/media
+      - /root/deploy_gymnasium/backend/staticfiles:/app/staticfiles
+      - /root/deploy_gymnasium/backend/media:/app/media
     env_file:
       - ./.env
     depends_on:
@@ -72,8 +74,8 @@ services:
     command: celery -A Gimnasium beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
     volumes:
       - ./backend:/app
-      - static_volume:/app/staticfiles
-      - media_volume:/app/media
+      - /root/deploy_gymnasium/backend/staticfiles:/app/staticfiles
+      - /root/deploy_gymnasium/backend/media:/app/media
     env_file:
       - ./.env
     depends_on:
@@ -90,8 +92,8 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - static_volume:/app/staticfiles
-      - media_volume:/app/media
+      - /root/deploy_gymnasium/backend/staticfiles:/app/staticfiles
+      - /root/deploy_gymnasium/backend/media:/app/media
       - /etc/letsencrypt:/etc/letsencrypt:ro
       - ./frontend/build:/usr/share/nginx/html
     ports:
@@ -118,8 +120,6 @@ services:
 volumes:
   postgres_data:
   redis_data:
-  static_volume:
-  media_volume:
 
 networks:
   dev:

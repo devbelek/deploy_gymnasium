@@ -28,5 +28,3 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 EXPOSE 8000
-
-CMD ["gunicorn", "--bind", "0.0.0.0:9000", "--workers", "4", "--threads", "2", "--worker-class", "gthread", "--timeout", "120", "Gimnasium.wsgi:application"]
