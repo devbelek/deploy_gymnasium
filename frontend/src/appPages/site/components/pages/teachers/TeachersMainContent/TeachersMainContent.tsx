@@ -87,9 +87,4 @@ const TeachersMainContent: React.FC = () => {
   );
 };
 
-console.log('Teacher data:', teacher);
-console.log('Image URL:', teacher.image);
-console.log('NEXT_PUBLIC_API:', process.env.NEXT_PUBLIC_API);
-console.log('Full image URL:', `${process.env.NEXT_PUBLIC_API}${teacher.image.startsWith('/') ? '' : '/'}${teacher.image}`);
-
 export default TeachersMainContent;
