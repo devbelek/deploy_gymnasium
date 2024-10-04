@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { useGetGalleryQuery } from "@/redux/api/gallery";
 import { useGetVideosQuery } from "@/redux/api/videos";
@@ -8,67 +8,6 @@ import scss from "./GalleryMainContent.module.scss";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import ReactPlayer from "react-player";
 import { AiOutlineClose } from "react-icons/ai";
-
-interface ZoomedImageProps {
-  images: GALLERY.IGallery[];
-  currentIndex: number;
-  onClose: () => void;
-  onPrev: () => void;
-  onNext: () => void;
-}
-
-const ZoomedImage: React.FC<ZoomedImageProps> = ({
-  images,
-  currentIndex,
-  onClose,
-  onPrev,
-  onNext,
-}) => {
-  const currentImage = images[currentIndex];
-
-  return (
-    <div className={scss.zoomedImageOverlay}>
-      <div className={scss.zoomedImageWrapper}>
-        <Image
-          src={getImageUrl(currentImage.image)}
-          alt={currentImage.content}
-          layout="fill"
-          objectFit="contain"
-          quality={100}
-          priority
-        />
-        <button
-          className={`${scss.navButton} ${scss.prevButton}`}
-          onClick={(e) => {
-            e.stopPropagation();
-            onPrev();
-          }}
-        >
-          <BiChevronLeft />
-        </button>
-        <button
-          className={`${scss.navButton} ${scss.nextButton}`}
-          onClick={(e) => {
-            e.stopPropagation();
-            onNext();
-          }}
-        >
-          <BiChevronRight />
-        </button>
-        <button
-          className={scss.closeButton}
-          onClick={(e) => {
-            e.stopPropagation();
-            onClose();
-          }}
-        >
-          <AiOutlineClose />
-        </button>
-      </div>
-      <div className={scss.imageCaption}>{currentImage.content}</div>
-    </div>
-  );
-};
 
 const getImageUrl = (imageUrl: string) => {
   const cleanUrl = imageUrl.replace(/^https?:\/\/[^/]+\/media/, "");
@@ -167,9 +106,6 @@ const GalleryMainContent: React.FC = () => {
                       quality={75}
                     />
                   </div>
-                  <div className={scss.overlay}>
-                    <p>{item.title}</p>
-                  </div>
                 </div>
               ))}
             </div>
@@ -189,9 +125,6 @@ const GalleryMainContent: React.FC = () => {
                       layout="fill"
                       objectFit="cover"
                     />
-                  </div>
-                  <div className={scss.overlay}>
-                    <p>{video.title}</p>
                   </div>
                 </div>
               ))}
@@ -216,8 +149,6 @@ const GalleryMainContent: React.FC = () => {
               layout="fill"
               objectFit="contain"
             />
-            <h2>{galleryData[currentImageIndex].title}</h2>
-            <p>{galleryData[currentImageIndex].content}</p>
             <button
               className={`${scss.navButton} ${scss.prevButton}`}
               onClick={handlePrevImage}
@@ -252,8 +183,6 @@ const GalleryMainContent: React.FC = () => {
                 height="100%"
               />
             </div>
-            <h2>{selectedVideo.title}</h2>
-            <p>{selectedVideo.description}</p>
           </div>
         </div>
       )}
