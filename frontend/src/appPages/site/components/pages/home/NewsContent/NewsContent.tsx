@@ -29,15 +29,15 @@ const NewsContent = () => {
             <div className={scss.card} key={item.id}>
               <Image
                 src={getImageUrl(item.image)}
-                alt={isKyrgyz ? item.description_ky : item.description_ru}
+                alt={isKyrgyz ? (item.description_ky || '') : (item.description_ru || '')}
                 width={300}
                 height={200}
                 priority
                 quality={70}
               />
-              <p>{isKyrgyz ? item.description_ky : item.description_ru}</p>
+              <p>{isKyrgyz ? (item.description_ky || '') : (item.description_ru || '')}</p>
               <article className={scss.end}>
-                <span>{item?.created_at.slice(0, 10)}</span>
+                <span>{item.created_at.slice(0, 10)}</span>
                 <LuMessagesSquare />
               </article>
             </div>
