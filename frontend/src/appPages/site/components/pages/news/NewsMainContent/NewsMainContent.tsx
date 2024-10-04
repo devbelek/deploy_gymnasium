@@ -1,15 +1,26 @@
 "use client";
-import { useGetNewsQuery } from "@/redux/api/news";
+
+import React from "react";
+import scss from "./NewsMainContent.module.scss";
 import Image from "next/image";
+import { useGetNewsQuery } from "@/redux/api/news";
 import { LuMessagesSquare } from "react-icons/lu";
 import { useRouter } from "next/navigation";
-import scss from "./NewsMainContent.module.scss";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 
-const NewsMainContent = () => {
-  const { data } = useGetNewsQuery();
-  const { isKyrgyz, t } = useLanguageStore();
+const getImageUrl = (imageUrl: string) => {
+  const cleanUrl = imageUrl.replace(/^https?:\/\/[^/]+\/media/, "");
+  return `${process.env.NEXT_PUBLIC_API}/media${cleanUrl}`;
+};
+
+const NewsMainContent: React.FC = () => {
+  const { data: news } = useGetNewsQuery();
   const router = useRouter();
+  const { isKyrgyz, t } = useLanguageStore();
+
+  const handleNavigate = (id: number) => {
+    router.push(`/news/${id}`);
+  };
 
   return (
     <section className={scss.NewsMainContent}>
@@ -20,28 +31,25 @@ const NewsMainContent = () => {
             <hr />
           </div>
           <div className={scss.news_cards}>
-            {data?.map((item, index) => (
+            {news?.map((item) => (
               <div
-                key={index}
+                key={item.id}
                 className={scss.news_card}
-                onClick={() => router.push(`/news/${item.id}`)}
+                onClick={() => handleNavigate(item.id)}
               >
                 <Image
-                  alt="news_img"
-                  src={item.image}
-                  width={700}
-                  height={500}
-                  priority
-                  quality={70}
+                  src={getImageUrl(item.image)}
+                  alt={isKyrgyz ? item.description_ky || "" : item.description_ru || ""}
+                  width={266}
+                  height={220}
                 />
-                <h2
-                  style={{ width: "100%", maxWidth: "320px", height: "90px" }}
-                >
-                  {isKyrgyz ? item.description_ky : item.description_ru}
-                </h2>
+                <h2>{isKyrgyz ? item.description_ky || "" : item.description_ru || ""}</h2>
                 <div className={scss.news_end}>
-                  <p>{item.updated_at.slice(0, 10)}</p>
-                  <LuMessagesSquare />
+                  <p>{item.created_at.slice(0, 10)}</p>
+                  <div className={scss.comments}>
+                    <LuMessagesSquare />
+                    <span>{item.comments_count}</span>
+                  </div>
                 </div>
               </div>
             ))}

@@ -86,15 +86,26 @@
             color: #666666;
           }
 
-          svg {
-            color: #afafaf;
-            font-size: 20px;
-            transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+          .comments {
+            display: flex;
+            align-items: center;
+            gap: 5px;
 
-            &:hover {
-              color: #333333;
-              cursor: pointer;
-              transform: scale(1.05);
+            svg {
+              color: #afafaf;
+              font-size: 20px;
+              transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+
+              &:hover {
+                color: #333333;
+                cursor: pointer;
+                transform: scale(1.05);
+              }
+            }
+
+            span {
+              font-size: 14px;
+              color: #555;
             }
           }
         }

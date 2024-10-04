@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useGetGalleryQuery } from "@/redux/api/gallery";
+import { useGetVideosQuery } from "@/redux/api/videos";
 import scss from "./GalleryMainContent.module.scss";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 
@@ -56,16 +57,23 @@ const ZoomedImage: React.FC<ZoomedImageProps> = ({
 };
 
 const getImageUrl = (imageUrl: string) => {
-  const cleanUrl = imageUrl.replace(/^https?:\/\/[^/]+\/media/, '');
+  const cleanUrl = imageUrl.replace(/^https?:\/\/[^/]+\/media/, "");
   return `${process.env.NEXT_PUBLIC_API}/media${cleanUrl}`;
 };
 
 const GalleryMainContent: React.FC = () => {
-  const { data } = useGetGalleryQuery();
+  const { data: galleryData } = useGetGalleryQuery();
+  const { data: videosData } = useGetVideosQuery();
   const [currentImageIndex, setCurrentImageIndex] = useState<number | null>(
     null
   );
+  const [currentTab, setCurrentTab] = useState<"photos" | "videos">("photos");
   const [touchStart, setTouchStart] = useState<number | null>(null);
+
+  const handleTabClick = (tab: "photos" | "videos") => {
+    setCurrentTab(tab);
+    setCurrentImageIndex(null);
+  };
 
   const handleImageClick = (index: number) => {
     setCurrentImageIndex(index);
@@ -76,23 +84,23 @@ const GalleryMainContent: React.FC = () => {
   };
 
   const handlePrevImage = () => {
-    if (data && currentImageIndex !== null) {
+    if (galleryData && currentImageIndex !== null) {
       setCurrentImageIndex((prevIndex) => {
         if (prevIndex === null) {
-          return data.length - 1;
+          return galleryData.length - 1;
         }
-        return prevIndex > 0 ? prevIndex - 1 : data.length - 1;
+        return prevIndex > 0 ? prevIndex - 1 : galleryData.length - 1;
       });
     }
   };
 
   const handleNextImage = () => {
-    if (data && currentImageIndex !== null) {
+    if (galleryData && currentImageIndex !== null) {
       setCurrentImageIndex((prevIndex) => {
         if (prevIndex === null) {
           return 0;
         }
-        return prevIndex < data.length - 1 ? prevIndex + 1 : 0;
+        return prevIndex < galleryData.length - 1 ? prevIndex + 1 : 0;
       });
     }
   };
@@ -132,30 +140,64 @@ const GalleryMainContent: React.FC = () => {
       <div className="container">
         <div className={scss.content}>
           <div className={scss.galleryHead}>
-            <h1>Фотогалерея</h1>
+            <h1>Галерея</h1>
             <hr />
+            <div className={scss.tabs}>
+              <button
+                className={currentTab === "photos" ? scss.activeTab : ""}
+                onClick={() => handleTabClick("photos")}
+              >
+                Фотогалерея
+              </button>
+              <button
+                className={currentTab === "videos" ? scss.activeTab : ""}
+                onClick={() => handleTabClick("videos")}
+              >
+                Видео-галерея
+              </button>
+            </div>
           </div>
-          <div className={scss.gallery_card}>
-            {data?.map((item: GALLERY.IGallery, index: number) => (
-              <div key={index} className={scss.galleryItem}>
-                <div className={scss.imageWrapper} onClick={() => handleImageClick(index)}>
-                  <Image
-                    src={getImageUrl(item.image)}
-                    alt={item.content}
-                    layout="fill"
-                    objectFit="cover"
-                    quality={75}
-                  />
+          {currentTab === "photos" && (
+            <div className={scss.gallery_card}>
+              {galleryData?.map((item: GALLERY.IGallery, index: number) => (
+                <div key={index} className={scss.galleryItem}>
+                  <div
+                    className={scss.imageWrapper}
+                    onClick={() => handleImageClick(index)}
+                  >
+                    <Image
+                      src={getImageUrl(item.image)}
+                      alt={item.content}
+                      layout="fill"
+                      objectFit="cover"
+                      quality={75}
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
+          {currentTab === "videos" && (
+            <div className={scss.videoGallery}>
+              {videosData?.map((video) => (
+                <div key={video.id} className={scss.videoItem}>
+                  <iframe
+                    src={`https://www.youtube.com/embed/${video.youtube_id}`}
+                    title={video.title}
+                    frameBorder="0"
+                    allowFullScreen
+                  ></iframe>
+                  <p>{video.title}</p>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
-      {currentImageIndex !== null && data && (
+      {currentImageIndex !== null && currentTab === "photos" && galleryData && (
         <div onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
           <ZoomedImage
-            images={data}
+            images={galleryData}
             currentIndex={currentImageIndex}
             onClose={handleCloseZoom}
             onPrev={handlePrevImage}
