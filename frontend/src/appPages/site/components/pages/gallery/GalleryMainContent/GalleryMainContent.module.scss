@@ -12,25 +12,25 @@
       flex-direction: column;
       gap: 6px;
       align-items: center;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
 
       h1 {
-        font-size: 24px;
+        font-size: 28px;
         font-weight: 600;
         line-height: 1.2;
         color: #333333;
       }
 
       hr {
-        width: 40px;
-        height: 2px;
+        width: 60px;
+        height: 3px;
         background: #333333;
       }
     }
 
     .gallery_card {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      grid-template-columns: repeat(1, 1fr);
       gap: 20px;
       width: 100%;
       max-width: 1200px;
@@ -46,8 +46,9 @@
           overflow: hidden;
           border-radius: 10px;
           cursor: pointer;
+          transition: transform 0.3s ease;
 
-          &:hover img {
+          &:hover {
             transform: scale(1.05);
           }
 
@@ -88,13 +89,14 @@
     background: rgba(255, 255, 255, 0.3);
     border: none;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     transition: all 0.3s ease;
+    font-size: 24px;
 
     &:hover {
       background: rgba(255, 255, 255, 0.5);
@@ -102,27 +104,28 @@
   }
 
   .prevButton {
-    left: 10px;
+    left: 20px;
   }
 
   .nextButton {
-    right: 10px;
+    right: 20px;
   }
 
   .closeButton {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 20px;
+    right: 20px;
     background: rgba(255, 255, 255, 0.3);
     border: none;
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     transition: 0.3s ease-in-out;
+    font-size: 18px;
 
     &:hover {
       background: rgba(255, 255, 255, 0.5);
@@ -132,19 +135,19 @@
   .imageCaption {
     color: white;
     text-align: center;
-    margin-top: 10px;
-    font-size: 14px;
+    margin-top: 20px;
+    font-size: 16px;
     max-width: 90%;
-    padding: 0 10px;
+    padding: 0 20px;
   }
 }
 
-@media (min-width: 320px) {
+@media (min-width: 576px) {
   .GalleryMainContent {
     .content {
       .gallery_card {
         grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
+        gap: 20px;
       }
     }
   }
@@ -155,13 +158,13 @@
     .content {
       .galleryHead {
         h1 {
-          font-size: 28px;
+          font-size: 32px;
         }
       }
 
       .gallery_card {
         grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
+        gap: 25px;
       }
     }
   }
@@ -171,7 +174,7 @@
   .GalleryMainContent {
     .content {
       .gallery_card {
-        gap: 25px;
+        gap: 30px;
       }
     }
   }
@@ -181,8 +184,7 @@
   .GalleryMainContent {
     .content {
       .gallery_card {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 30px;
+        gap: 35px;
       }
     }
   }
