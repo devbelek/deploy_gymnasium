@@ -12,6 +12,12 @@ interface ProfileFormData {
   avatar: FileList | null;
 }
 
+const getImageUrl = (imageUrl: string) => {
+  if (!imageUrl) return '';
+  const path = imageUrl.replace(/^https?:\/\/[^/]+/, '');
+  return `${process.env.NEXT_PUBLIC_API}${path}`;
+};
+
 const Profile: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
   const { data, error, isLoading, refetch } = useGetAccountQuery(null);
@@ -29,7 +35,7 @@ const Profile: React.FC = () => {
         user: data.user,
         about: data.about || '',
       });
-      setPreviewUrl(data.avatar || null);
+      setPreviewUrl(data.avatar ? getImageUrl(data.avatar) : null);
     }
   }, [data, reset]);
 
@@ -76,7 +82,7 @@ const Profile: React.FC = () => {
         <div className={styles.avatarContainer}>
           {previewUrl || data?.avatar ? (
             <img
-              src={previewUrl || data?.avatar || '/default-avatar.png'}
+              src={previewUrl || getImageUrl(data?.avatar) || '/default-avatar.png'}
               alt="Аватар"
               className={styles.avatar}
             />
@@ -109,7 +115,7 @@ const Profile: React.FC = () => {
                 <textarea id="about" {...register("about", {
                     maxLength: {
                       value: 300,
-                      message: "Максимум 300 символов" // Сообщение об ошибке
+                      message: "Максимум 300 символов"
                     }
                   })}
                 />
