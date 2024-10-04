@@ -6,6 +6,11 @@ import { LuMessagesSquare } from "react-icons/lu";
 import { useRouter } from "next/navigation";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 
+const getImageUrl = (imageUrl: string) => {
+  const cleanUrl = imageUrl.replace(/^https?:\/\/[^/]+\/media/, '');
+  return `${process.env.NEXT_PUBLIC_API}/media${cleanUrl}`;
+};
+
 const NewsContent = () => {
   const { data: news } = useGetNewsQuery();
   const { isKyrgyz, t } = useLanguageStore();
@@ -14,16 +19,17 @@ const NewsContent = () => {
   const handleNavigate = () => {
     router.push("/news");
   };
+
   return (
     <section id={scss.content}>
       <div className="container">
         <h1>{t("Жаңылыктар", "Новости")}</h1>
         <div className={scss.newsCard}>
-          {news?.map((item) => (
+          {news?.slice(0, 6).map((item) => (
             <div className={scss.card} key={item.id}>
               <Image
-                src={item.image}
-                alt={item.image}
+                src={getImageUrl(item.image)}
+                alt={isKyrgyz ? item.description_ky : item.description_ru}
                 width={300}
                 height={200}
                 priority
@@ -35,7 +41,7 @@ const NewsContent = () => {
                 <LuMessagesSquare />
               </article>
             </div>
-          )).slice(0, 6)}
+          ))}
         </div>
         <div className={scss.buttonContainer}>
           <button onClick={handleNavigate}>
