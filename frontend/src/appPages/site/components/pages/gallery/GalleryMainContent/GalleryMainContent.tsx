@@ -133,7 +133,7 @@ const GalleryMainContent: React.FC = () => {
               <div key={index} className={scss.galleryItem}>
                 <span onClick={() => handleImageClick(index)}>
                   <Image
-                    src={item.image}
+                    src={`${process.env.NEXT_PUBLIC_MEDIA_URL}${item.image}`}
                     alt={item.content}
                     layout="fill"
                     objectFit="cover"
