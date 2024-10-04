@@ -9,6 +9,30 @@ import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import ReactPlayer from "react-player";
 import { AiOutlineClose } from "react-icons/ai";
 
+namespace GALLERY {
+  export interface IGallery {
+    id: number;
+    image: string;
+    title: string;
+    content: string;
+  }
+
+  export type GetGalleryResponse = IGallery[];
+  export type GetGalleryRequest = void;
+}
+
+namespace VIDEO {
+  export interface IVideo {
+    id: number;
+    title: string;
+    description: string;
+    youtube_id: string;
+  }
+
+  export type GetVideosResponse = IVideo[];
+  export type GetVideosRequest = void;
+}
+
 const getImageUrl = (imageUrl: string) => {
   const cleanUrl = imageUrl.replace(/^https?:\/\/[^/]+\/media/, "");
   return `${process.env.NEXT_PUBLIC_API}/media${cleanUrl}`;
@@ -37,19 +61,15 @@ const GalleryMainContent: React.FC = () => {
 
   const handlePrevImage = () => {
     if (galleryData && currentImageIndex !== null) {
-      setCurrentImageIndex((prevIndex) =>
-        prevIndex === null ? galleryData.length - 1 :
-        prevIndex > 0 ? prevIndex - 1 : galleryData.length - 1
-      );
+      const newIndex = currentImageIndex === 0 ? galleryData.length - 1 : currentImageIndex - 1;
+      setCurrentImageIndex(newIndex);
     }
   };
 
   const handleNextImage = () => {
     if (galleryData && currentImageIndex !== null) {
-      setCurrentImageIndex((prevIndex) =>
-        prevIndex === null ? 0 :
-        prevIndex < galleryData.length - 1 ? prevIndex + 1 : 0
-      );
+      const newIndex = currentImageIndex < galleryData.length - 1 ? currentImageIndex + 1 : 0;
+      setCurrentImageIndex(newIndex);
     }
   };
 
@@ -94,7 +114,7 @@ const GalleryMainContent: React.FC = () => {
                   <div className={scss.imageWrapper}>
                     <Image
                       src={getImageUrl(item.image)}
-                      alt={item.content}
+                      alt={item.title}
                       layout="fill"
                       objectFit="cover"
                       quality={75}
@@ -106,7 +126,7 @@ const GalleryMainContent: React.FC = () => {
           )}
           {currentTab === "videos" && (
             <div className={scss.galleryGrid}>
-              {videosData?.map((video) => (
+              {videosData?.map((video: VIDEO.IVideo) => (
                 <div
                   key={video.id}
                   className={scss.galleryItem}
@@ -118,6 +138,7 @@ const GalleryMainContent: React.FC = () => {
                       alt={video.title}
                       layout="fill"
                       objectFit="cover"
+                      quality={75}
                     />
                   </div>
                 </div>
@@ -127,6 +148,7 @@ const GalleryMainContent: React.FC = () => {
         </div>
       </div>
 
+      {/* Модальное окно для просмотра изображения */}
       {currentImageIndex !== null && currentTab === "photos" && galleryData && (
         <div className={scss.modalOverlay} onClick={handleCloseZoom}>
           <div className={scss.modalContent} onClick={(e) => e.stopPropagation()}>
@@ -136,21 +158,28 @@ const GalleryMainContent: React.FC = () => {
             <div className={scss.imageContainer}>
               <Image
                 src={getImageUrl(galleryData[currentImageIndex].image)}
-                alt={galleryData[currentImageIndex].content}
+                alt={galleryData[currentImageIndex].title}
                 layout="fill"
                 objectFit="contain"
               />
             </div>
-            <button className={`${scss.navButton} ${scss.prevButton}`} onClick={handlePrevImage}>
+            <button
+              className={`${scss.navButton} ${scss.prevButton}`}
+              onClick={handlePrevImage}
+            >
               <BiChevronLeft />
             </button>
-            <button className={`${scss.navButton} ${scss.nextButton}`} onClick={handleNextImage}>
+            <button
+              className={`${scss.navButton} ${scss.nextButton}`}
+              onClick={handleNextImage}
+            >
               <BiChevronRight />
             </button>
           </div>
         </div>
       )}
 
+      {/* Модальное окно для воспроизведения видео */}
       {selectedVideo && currentTab === "videos" && (
         <div className={scss.modalOverlay} onClick={handleCloseVideo}>
           <div className={scss.modalContent} onClick={(e) => e.stopPropagation()}>
@@ -165,6 +194,8 @@ const GalleryMainContent: React.FC = () => {
                 height="100%"
               />
             </div>
+            <h2>{selectedVideo.title}</h2>
+            <p>{selectedVideo.description}</p>
           </div>
         </div>
       )}
