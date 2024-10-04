@@ -18,6 +18,11 @@ const nextConfig = {
                 hostname: 'vermojctkdkrdsxvauwc.supabase.co',
                 pathname: '/**',
             },
+            {
+                protocol: 'http',
+                hostname: '3-gymnasium.kg',
+                pathname: '/**',
+             },
         ],
     },
 };
