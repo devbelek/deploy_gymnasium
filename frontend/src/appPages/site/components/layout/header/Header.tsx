@@ -10,6 +10,23 @@ import { DebounceInput as Input } from "react-debounce-input";
 import { useGetSearchQuery } from "@/redux/api/search";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { useGetAccountQuery } from "@/redux/api/profile";
+import { FaUserCircle } from "react-icons/fa"; // Иконка пользователя по умолчанию
+
+// Добавляем функцию getImageUrl
+const getImageUrl = (imageUrl: string | null | undefined) => {
+  if (!imageUrl) return '';
+  if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+    // Удаляем протокол и домен из URL
+    const path = imageUrl.replace(/^https?:\/\/[^/]+/, '');
+    return `${process.env.NEXT_PUBLIC_API}${path}`;
+  } else if (imageUrl.startsWith('/')) {
+    // Если путь начинается с '/', добавляем домен
+    return `${process.env.NEXT_PUBLIC_API}${imageUrl}`;
+  } else {
+    // Иначе добавляем '/' и домен
+    return `${process.env.NEXT_PUBLIC_API}/${imageUrl}`;
+  }
+};
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -95,7 +112,9 @@ const Header = () => {
                 <Link href="/teachers">{t("Мугалимдер", "Учителя")}</Link>
               </li>
               <li>
-                <Link href="/graduates">{t("Бүтүрүүчүлөр", "Выпускники")}</Link>
+                <Link href="/graduates">
+                  {t("Бүтүрүүчүлөр", "Выпускники")}
+                </Link>
               </li>
               <li>
                 <Link href="/gallery">{t("Галерея", "Галерея")}</Link>
@@ -143,29 +162,35 @@ const Header = () => {
             </div>
 
             <div className={scss.auth}>
-              <button onClick={handleNavigate}>{t("Кирүү", "Войти")}</button>
+              {account ? (
+                // Если пользователь авторизован, отображаем аватар
+                <Link href="/profile">
+                  <div className={scss.avatarContainer}>
+                    {account.avatar ? (
+                      <Image
+                        src={getImageUrl(account.avatar)}
+                        alt="Аватар"
+                        width={40}
+                        height={40}
+                        className={scss.avatar}
+                      />
+                    ) : (
+                      // Если аватара нет, отображаем иконку пользователя
+                      <FaUserCircle size={40} />
+                    )}
+                  </div>
+                </Link>
+              ) : (
+                // Если пользователь не авторизован, отображаем кнопку "Войти"
+                <button onClick={handleNavigate}>
+                  {t("Кирүү", "Войти")}
+                </button>
+              )}
             </div>
           </div>
         </div>
 
-        {/* {query.length >= 2 && (
-          <div className={scss.searchResults}>
-            {isLoading && <p>{t("Жүктөлүүдө...", "Загрузка...")}</p>}
-            {!isLoading && !error && data && data.length > 0 ? (
-              <ul>
-                {data.map((result) => (
-                  <li key={result.id}>
-                    {result.full_name}{" "}
-                    {result.school_class__grade &&
-                      `(${t("Класс", "Класс")}: ${result.school_class__grade})`}
-                  </li>
-                ))}
-              </ul>
-            ) : !isLoading && !error ? (
-              <p>{t("Натыйжа табылган жок", "Результатов не найдено")}</p>
-            ) : null}
-          </div>
-        )} */}
+        {/* Остальной код... */}
       </div>
     </header>
   );
