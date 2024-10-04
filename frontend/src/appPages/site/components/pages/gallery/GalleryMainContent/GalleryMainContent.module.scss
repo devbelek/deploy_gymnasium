@@ -36,29 +36,23 @@
       max-width: 1200px;
 
       .galleryItem {
-        span {
-          display: block;
-          width: 100%;
-          height: 0;
-          padding-bottom: 75%; // 4:3 aspect ratio
+        aspect-ratio: 4 / 3;
+        width: 100%;
+
+        .imageWrapper {
           position: relative;
+          width: 100%;
+          height: 100%;
           overflow: hidden;
           border-radius: 10px;
           cursor: pointer;
 
-          img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            max-width: 100%;
-            height: 80%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
+          &:hover img {
+            transform: scale(1.05);
+          }
 
-            &:hover {
-              transform: scale(1.05);
-            }
+          img {
+            transition: transform 0.3s ease;
           }
         }
       }
@@ -149,52 +143,8 @@
   .GalleryMainContent {
     .content {
       .gallery_card {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(2, 1fr);
         gap: 15px;
-
-        .galleryItem {
-          img {
-            width: 100%;
-            height: 130px;
-            max-width: 320px;
-          }
-        }
-      }
-    }
-  }
-}
-
-@media (min-width: 360px) {
-  .GalleryMainContent {
-    .content {
-      .gallery_card {
-        grid-template-columns: 1fr 1fr;
-        gap: 15px;
-
-        .galleryItem {
-          img {
-            width: 100%;
-            height: 130px;
-            max-width: 320px;
-          }
-        }
-      }
-    }
-  }
-}
-
-@media (min-width: 375px) {
-  .GalleryMainContent {
-    .content {
-      .gallery_card {
-        gap: 20px;
-
-        .galleryItem {
-          img {
-            width: 198px;
-            height: 126px;
-          }
-        }
       }
     }
   }
@@ -205,40 +155,15 @@
     .content {
       .galleryHead {
         h1 {
-          font-size: 24px;
+          font-size: 28px;
         }
       }
 
       .gallery_card {
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 24px;
-
-        .galleryItem {
-          img {
-            width: 234px;
-            height: 170px;
-          }
-        }
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
       }
     }
-  }
-  .zoomedImageWrapper {
-    width: 95%;
-    height: 70%;
-  }
-
-  .navButton {
-    width: 30px;
-    height: 30px;
-  }
-
-  .closeButton {
-    width: 25px;
-    height: 25px;
-  }
-
-  .imageCaption {
-    font-size: 12px;
   }
 }
 
@@ -246,29 +171,9 @@
   .GalleryMainContent {
     .content {
       .gallery_card {
-        gap: 28px;
-
-        .galleryItem {
-          img {
-            width: 300px;
-            height: 190px;
-          }
-        }
+        gap: 25px;
       }
     }
-  }
-  .navButton {
-    width: 50px;
-    height: 50px;
-  }
-
-  .closeButton {
-    width: 40px;
-    height: 40px;
-  }
-
-  .imageCaption {
-    font-size: 16px;
   }
 }
 
@@ -276,15 +181,8 @@
   .GalleryMainContent {
     .content {
       .gallery_card {
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 26px;
-
-        .galleryItem {
-          img {
-            width: 360px;
-            height: 250px;
-          }
-        }
+        grid-template-columns: repeat(4, 1fr);
+        gap: 30px;
       }
     }
   }

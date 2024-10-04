@@ -30,9 +30,8 @@ const ZoomedImage: React.FC<ZoomedImageProps> = ({
           src={getImageUrl(currentImage.image)}
           alt={currentImage.content}
           layout="fill"
-          quality={70}
-          width={700}
-          height={500}
+          objectFit="contain"
+          quality={100}
           priority
         />
         <button
@@ -139,15 +138,15 @@ const GalleryMainContent: React.FC = () => {
           <div className={scss.gallery_card}>
             {data?.map((item: GALLERY.IGallery, index: number) => (
               <div key={index} className={scss.galleryItem}>
-                <span onClick={() => handleImageClick(index)}>
+                <div className={scss.imageWrapper} onClick={() => handleImageClick(index)}>
                   <Image
                     src={getImageUrl(item.image)}
                     alt={item.content}
-                    width={300}
-                    height={200}
-                    layout="responsive"
+                    layout="fill"
+                    objectFit="cover"
+                    quality={75}
                   />
-                </span>
+                </div>
               </div>
             ))}
           </div>
