@@ -3,7 +3,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     padding: 20px;
 
     .galleryHead {
@@ -15,14 +14,13 @@
       h1 {
         font-size: 28px;
         font-weight: 600;
-        line-height: 1.2;
-        color: #333333;
+        color: #333;
       }
 
       hr {
         width: 60px;
         height: 3px;
-        background: #333333;
+        background: #333;
         margin: 10px 0;
       }
 
@@ -54,134 +52,167 @@
       }
     }
 
-    .gallery_card {
+    .galleryGrid {
       display: grid;
-      grid-template-columns: repeat(1, 1fr);
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
       gap: 20px;
       width: 100%;
       max-width: 1200px;
 
       .galleryItem {
-        aspect-ratio: 4 / 3;
+        position: relative;
         width: 100%;
+        padding-bottom: 56.25%; // Соотношение сторон 16:9
+        overflow: hidden;
+        border-radius: 10px;
+        cursor: pointer;
 
         .imageWrapper {
-          position: relative;
+          position: absolute;
+          top: 0;
+          left: 0;
           width: 100%;
           height: 100%;
-          overflow: hidden;
-          border-radius: 10px;
-          cursor: pointer;
-          transition: transform 0.3s ease;
-
-          &:hover {
-            transform: scale(1.05);
-          }
 
           img {
             transition: transform 0.3s ease;
           }
-        }
-      }
-    }
 
-    .videoGallery {
-      display: grid;
-      grid-template-columns: repeat(1, 1fr);
-      gap: 20px;
-      width: 100%;
-      max-width: 1200px;
-
-      .videoItem {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        iframe {
-          width: 100%;
-          height: 315px;
+          &:hover img {
+            transform: scale(1.05);
+          }
         }
 
-        p {
-          margin-top: 10px;
-          font-size: 16px;
-          color: #333;
+        .overlay {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background: rgba(0, 0, 0, 0.5);
+          padding: 10px;
+          color: #fff;
           text-align: center;
+          opacity: 0;
+          transition: opacity 0.3s;
+
+          p {
+            margin: 0;
+          }
+        }
+
+        &:hover .overlay {
+          opacity: 1;
         }
       }
     }
   }
 
-  .zoomedImageOverlay {
+  .modalOverlay {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.9);
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     z-index: 1000;
-  }
 
-  .zoomedImageWrapper {
-    position: relative;
-    width: 90%;
-    height: 80%;
-    max-width: 1200px;
-    max-height: 800px;
+    .modalContent {
+      position: relative;
+      width: 90%;
+      max-width: 800px;
+      max-height: 90%;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      overflow: auto;
+
+      h2 {
+        margin-top: 20px;
+        font-size: 24px;
+        color: #333;
+      }
+
+      p {
+        margin-top: 10px;
+        font-size: 16px;
+        color: #666;
+      }
+
+      img {
+        border-radius: 10px;
+      }
+
+      .closeButton {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: #333;
+      }
+
+      .videoWrapper {
+        position: relative;
+        padding-top: 56.25%; // Соотношение сторон 16:9
+        width: 100%;
+        height: 0;
+
+        iframe,
+        video {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
   }
 
   .navButton {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(0, 0, 0, 0.5);
     border: none;
     border-radius: 50%;
     width: 50px;
     height: 50px;
+    color: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background 0.3s;
     font-size: 24px;
 
     &:hover {
-      background: rgba(255, 255, 255, 0.5);
+      background: rgba(0, 0, 0, 0.7);
     }
   }
 
   .prevButton {
-    left: 20px;
+    left: 10px;
   }
 
   .nextButton {
-    right: 20px;
+    right: 10px;
   }
 
   .closeButton {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    background: rgba(255, 255, 255, 0.3);
+    top: 10px;
+    right: 10px;
+    background: none;
     border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    color: #fff;
+    font-size: 30px;
     cursor: pointer;
-    transition: 0.3s ease-in-out;
-    font-size: 18px;
-
-    &:hover {
-      background: rgba(255, 255, 255, 0.5);
-    }
   }
 
   .imageCaption {
@@ -194,50 +225,28 @@
   }
 }
 
-@media (min-width: 576px) {
-  .GalleryMainContent {
-    .content {
-      .gallery_card {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-      }
-    }
-  }
-}
-
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   .GalleryMainContent {
     .content {
       .galleryHead {
         h1 {
-          font-size: 32px;
+          font-size: 24px;
         }
       }
-
-      .gallery_card {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 25px;
-      }
     }
-  }
-}
 
-@media (min-width: 992px) {
-  .GalleryMainContent {
-    .content {
-      .gallery_card {
-        gap: 30px;
-      }
+    .modalContent {
+      padding: 10px;
     }
-  }
-}
 
-@media (min-width: 1200px) {
-  .GalleryMainContent {
-    .content {
-      .gallery_card {
-        gap: 35px;
-      }
+    .navButton {
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
+    }
+
+    .closeButton {
+      font-size: 24px;
     }
   }
 }

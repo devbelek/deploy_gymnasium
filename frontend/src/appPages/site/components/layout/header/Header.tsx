@@ -4,7 +4,7 @@ import scss from "./Header.module.scss";
 import logo from "../../../../../assets/logo.svg";
 import Image from "next/image";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { DebounceInput as Input } from "react-debounce-input";
 import { useGetSearchQuery } from "@/redux/api/search";
@@ -62,10 +62,6 @@ const Header = () => {
     <header className={scss.header}>
       <div className="container">
         <div className={scss.content}>
-          <div className={scss.hamburger} onClick={handleMenu}>
-            <RxHamburgerMenu />
-          </div>
-
           <div className={scss.logo}>
             <Link href="/">
               <Image
@@ -79,8 +75,12 @@ const Header = () => {
             </Link>
           </div>
 
+          <div className={scss.hamburger} onClick={handleMenu}>
+            <RxHamburgerMenu />
+          </div>
+
           <nav className={`${scss.nav} ${isMenuOpen ? scss.active : ""}`}>
-            <ul onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            <ul onClick={() => setIsMenuOpen(false)}>
               <li className={scss.disp}>
                 <Link href="/">{t("Башкы бет", "Главная")}</Link>
               </li>
@@ -109,6 +109,40 @@ const Header = () => {
               </li>
             </ul>
           </nav>
+
+          {/* Мобильное меню */}
+          {isMenuOpen && (
+            <div className={`${scss.mobileMenu} ${scss.active}`}>
+              <ul onClick={() => setIsMenuOpen(false)}>
+                <li>
+                  <Link href="/">{t("Башкы бет", "Главная")}</Link>
+                </li>
+                <li>
+                  <Link href="/news">{t("Жаңылыктар", "Новости")}</Link>
+                </li>
+                <li>
+                  <Link href="/students">{t("Окуучулар", "Ученики")}</Link>
+                </li>
+                <li>
+                  <Link href="/teachers">{t("Мугалимдер", "Учителя")}</Link>
+                </li>
+                <li>
+                  <Link href="/graduates">
+                    {t("Бүтүрүүчүлөр", "Выпускники")}
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/gallery">{t("Галерея", "Галерея")}</Link>
+                </li>
+                <li>
+                  <a onClick={handleScrollTo}>{t("Байланыштар", "Контакты")}</a>
+                </li>
+                <li>
+                  <Link href="/fond">{t("Фонд", "Фонд")}</Link>
+                </li>
+              </ul>
+            </div>
+          )}
 
           <div className={scss.rightSection}>
             <div className={scss.search}>

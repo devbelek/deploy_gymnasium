@@ -6,6 +6,8 @@ import { useGetGalleryQuery } from "@/redux/api/gallery";
 import { useGetVideosQuery } from "@/redux/api/videos";
 import scss from "./GalleryMainContent.module.scss";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
+import ReactPlayer from "react-player";
+import { AiOutlineClose } from "react-icons/ai";
 
 interface ZoomedImageProps {
   images: GALLERY.IGallery[];
@@ -37,18 +39,30 @@ const ZoomedImage: React.FC<ZoomedImageProps> = ({
         />
         <button
           className={`${scss.navButton} ${scss.prevButton}`}
-          onClick={onPrev}
+          onClick={(e) => {
+            e.stopPropagation();
+            onPrev();
+          }}
         >
           <BiChevronLeft />
         </button>
         <button
           className={`${scss.navButton} ${scss.nextButton}`}
-          onClick={onNext}
+          onClick={(e) => {
+            e.stopPropagation();
+            onNext();
+          }}
         >
           <BiChevronRight />
         </button>
-        <button className={scss.closeButton} onClick={onClose}>
-          X
+        <button
+          className={scss.closeButton}
+          onClick={(e) => {
+            e.stopPropagation();
+            onClose();
+          }}
+        >
+          <AiOutlineClose />
         </button>
       </div>
       <div className={scss.imageCaption}>{currentImage.content}</div>
@@ -68,11 +82,12 @@ const GalleryMainContent: React.FC = () => {
     null
   );
   const [currentTab, setCurrentTab] = useState<"photos" | "videos">("photos");
-  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [selectedVideo, setSelectedVideo] = useState<VIDEO.IVideo | null>(null);
 
   const handleTabClick = (tab: "photos" | "videos") => {
     setCurrentTab(tab);
     setCurrentImageIndex(null);
+    setSelectedVideo(null);
   };
 
   const handleImageClick = (index: number) => {
@@ -105,35 +120,13 @@ const GalleryMainContent: React.FC = () => {
     }
   };
 
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStart(e.touches[0].clientX);
+  const handleVideoClick = (video: VIDEO.IVideo) => {
+    setSelectedVideo(video);
   };
 
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStart === null) return;
-    const touchEnd = e.changedTouches[0].clientX;
-    const diff = touchStart - touchEnd;
-
-    if (diff > 50) {
-      handleNextImage();
-    } else if (diff < -50) {
-      handlePrevImage();
-    }
-
-    setTouchStart(null);
+  const handleCloseVideo = () => {
+    setSelectedVideo(null);
   };
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (currentImageIndex === null) return;
-      if (e.key === "ArrowLeft") handlePrevImage();
-      if (e.key === "ArrowRight") handleNextImage();
-      if (e.key === "Escape") handleCloseZoom();
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [currentImageIndex]);
 
   return (
     <section className={scss.GalleryMainContent}>
@@ -158,13 +151,14 @@ const GalleryMainContent: React.FC = () => {
             </div>
           </div>
           {currentTab === "photos" && (
-            <div className={scss.gallery_card}>
+            <div className={scss.galleryGrid}>
               {galleryData?.map((item: GALLERY.IGallery, index: number) => (
-                <div key={index} className={scss.galleryItem}>
-                  <div
-                    className={scss.imageWrapper}
-                    onClick={() => handleImageClick(index)}
-                  >
+                <div
+                  key={index}
+                  className={scss.galleryItem}
+                  onClick={() => handleImageClick(index)}
+                >
+                  <div className={scss.imageWrapper}>
                     <Image
                       src={getImageUrl(item.image)}
                       alt={item.content}
@@ -173,36 +167,94 @@ const GalleryMainContent: React.FC = () => {
                       quality={75}
                     />
                   </div>
+                  <div className={scss.overlay}>
+                    <p>{item.title}</p>
+                  </div>
                 </div>
               ))}
             </div>
           )}
           {currentTab === "videos" && (
-            <div className={scss.videoGallery}>
+            <div className={scss.galleryGrid}>
               {videosData?.map((video) => (
-                <div key={video.id} className={scss.videoItem}>
-                  <iframe
-                    src={`https://www.youtube.com/embed/${video.youtube_id}`}
-                    title={video.title}
-                    frameBorder="0"
-                    allowFullScreen
-                  ></iframe>
-                  <p>{video.title}</p>
+                <div
+                  key={video.id}
+                  className={scss.galleryItem}
+                  onClick={() => handleVideoClick(video)}
+                >
+                  <div className={scss.imageWrapper}>
+                    <Image
+                      src={`https://img.youtube.com/vi/${video.youtube_id}/hqdefault.jpg`}
+                      alt={video.title}
+                      layout="fill"
+                      objectFit="cover"
+                    />
+                  </div>
+                  <div className={scss.overlay}>
+                    <p>{video.title}</p>
+                  </div>
                 </div>
               ))}
             </div>
           )}
         </div>
       </div>
+
+      {/* Модальное окно для просмотра изображения */}
       {currentImageIndex !== null && currentTab === "photos" && galleryData && (
-        <div onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
-          <ZoomedImage
-            images={galleryData}
-            currentIndex={currentImageIndex}
-            onClose={handleCloseZoom}
-            onPrev={handlePrevImage}
-            onNext={handleNextImage}
-          />
+        <div className={scss.modalOverlay} onClick={handleCloseZoom}>
+          <div
+            className={scss.modalContent}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button className={scss.closeButton} onClick={handleCloseZoom}>
+              <AiOutlineClose />
+            </button>
+            <Image
+              src={getImageUrl(galleryData[currentImageIndex].image)}
+              alt={galleryData[currentImageIndex].content}
+              layout="fill"
+              objectFit="contain"
+            />
+            <h2>{galleryData[currentImageIndex].title}</h2>
+            <p>{galleryData[currentImageIndex].content}</p>
+            <button
+              className={`${scss.navButton} ${scss.prevButton}`}
+              onClick={handlePrevImage}
+            >
+              <BiChevronLeft />
+            </button>
+            <button
+              className={`${scss.navButton} ${scss.nextButton}`}
+              onClick={handleNextImage}
+            >
+              <BiChevronRight />
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Модальное окно для воспроизведения видео */}
+      {selectedVideo && currentTab === "videos" && (
+        <div className={scss.modalOverlay} onClick={handleCloseVideo}>
+          <div
+            className={scss.modalContent}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button className={scss.closeButton} onClick={handleCloseVideo}>
+              <AiOutlineClose />
+            </button>
+            <div className={scss.videoWrapper}>
+              <ReactPlayer
+                url={`https://www.youtube.com/watch?v=${selectedVideo.youtube_id}`}
+                controls
+                width="100%"
+                height="100%"
+              />
+            </div>
+            <h2>{selectedVideo.title}</h2>
+            <p>{selectedVideo.description}</p>
+          </div>
         </div>
       )}
     </section>
