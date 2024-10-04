@@ -30,7 +30,10 @@ const ZoomedImage: React.FC<ZoomedImageProps> = ({
           src={getImageUrl(currentImage.image)}
           alt={currentImage.content}
           layout="fill"
-          objectFit="contain"
+          quality={70}
+          width={700}
+          height={500}
+          priority
         />
         <button
           className={`${scss.navButton} ${scss.prevButton}`}
