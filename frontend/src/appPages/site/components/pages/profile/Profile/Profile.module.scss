@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: calc(100vh - 80px); // Учитывая высоту хедера
   background-color: #f0f2f5;
   padding: 20px;
 }
@@ -10,13 +10,11 @@
 .profileCard {
   background-color: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 30px;
   width: 100%;
   max-width: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
   transition: all 0.3s ease;
 
   &:hover {
@@ -28,89 +26,54 @@
 .avatarContainer {
   position: relative;
   margin-bottom: 20px;
-}
 
-.avatar {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+  .avatar,
+  .avatarPlaceholder {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+  }
 
-.avatarPlaceholder {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background-color: #e0e0e0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 48px;
-  color: #bdbdbd;
-}
-
-.changeAvatarButton {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  background-color: #4a90e2;
-  color: #ffffff;
-  border: none;
-  border-radius: 50%;
-  width: 36px;
-  height: 35px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    background-color: #3a78c2;
-    transform: scale(1.1);
+  .avatarPlaceholder {
+    background-color: #e0e0e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 48px;
+    color: #bdbdbd;
   }
 }
 
-.hiddenFileInput {
-  display: none;
-}
-
 .profileInfo {
-  text-align: center;
-  width: 100%;
-}
+  margin-top: 10px;
 
-.userName {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #333333;
-}
+  .userName {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333333;
+  }
 
-.userAbout {
-  font-size: 16px;
-  color: #666666;
-  margin-bottom: 20px;
-}
+  .editButton {
+    margin-top: 20px;
+    background-color: #4a90e2;
+    color: #ffffff;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 
-.editButton {
-  background-color: #4a90e2;
-  color: #ffffff;
-  border: none;
-  border-radius: 20px;
-  padding: 10px 20px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-
-  &:hover {
-    background-color: #3a78c2;
+    &:hover {
+      background-color: #3a78c2;
+    }
   }
 }
 
@@ -118,8 +81,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
+  width: 100%;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
@@ -133,88 +96,83 @@
   padding: 30px;
   width: 100%;
   max-width: 400px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 
-.editFormTitle {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: #333333;
-}
-
-.formField {
-  margin-bottom: 20px;
-
-  label {
-    display: block;
-    margin-bottom: 5px;
+  .editFormTitle {
+    font-size: 24px;
     font-weight: bold;
-    color: #555555;
+    margin-bottom: 20px;
+    color: #333333;
+    text-align: center;
   }
 
-  input,
-  textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #dddddd;
-    border-radius: 4px;
-    font-size: 14px;
+  .formField {
+    margin-bottom: 20px;
 
-    &:focus {
-      outline: none;
-      border-color: #4a90e2;
-      box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #555555;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #dddddd;
+      border-radius: 6px;
+      font-size: 16px;
+
+      &:focus {
+        outline: none;
+        border-color: #4a90e2;
+        box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+      }
     }
   }
 
-  textarea {
-    resize: vertical;
-    min-height: 100px;
-  }
-}
-
-.formActions {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.saveButton,
-.cancelButton {
-  flex: 1;
-  padding: 10px;
-  border: none;
-  border-radius: 4px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-.saveButton {
-  background-color: #4caf50;
-  color: #ffffff;
-
-  &:hover {
-    background-color: #45a049;
+  .formActions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
   }
 
-  &:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
+  .saveButton,
+  .cancelButton {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
   }
-}
 
-.cancelButton {
-  background-color: #f44336;
-  color: #ffffff;
+  .saveButton {
+    background-color: #4caf50;
+    color: #ffffff;
 
-  &:hover {
-    background-color: #da3131;
+    &:hover {
+      background-color: #45a049;
+    }
+
+    &:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+  }
+
+  .cancelButton {
+    background-color: #f44336;
+    color: #ffffff;
+
+    &:hover {
+      background-color: #da3131;
+    }
   }
 }
 
@@ -223,7 +181,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: calc(100vh - 80px); // Учитывая высоту хедера
   font-size: 18px;
   color: #666666;
 }

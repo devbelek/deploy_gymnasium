@@ -10,23 +10,6 @@ import { DebounceInput as Input } from "react-debounce-input";
 import { useGetSearchQuery } from "@/redux/api/search";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { useGetAccountQuery } from "@/redux/api/profile";
-import { FaUserCircle } from "react-icons/fa"; // Иконка пользователя по умолчанию
-
-// Добавляем функцию getImageUrl
-const getImageUrl = (imageUrl: string | null | undefined) => {
-  if (!imageUrl) return '';
-  if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
-    // Удаляем протокол и домен из URL
-    const path = imageUrl.replace(/^https?:\/\/[^/]+/, '');
-    return `${process.env.NEXT_PUBLIC_API}${path}`;
-  } else if (imageUrl.startsWith('/')) {
-    // Если путь начинается с '/', добавляем домен
-    return `${process.env.NEXT_PUBLIC_API}${imageUrl}`;
-  } else {
-    // Иначе добавляем '/' и домен
-    return `${process.env.NEXT_PUBLIC_API}/${imageUrl}`;
-  }
-};
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -37,7 +20,6 @@ const Header = () => {
   const { isKyrgyz, setIsKyrgyz, t } = useLanguageStore();
 
   const { data: account } = useGetAccountQuery(null);
-  console.log(account, "account");
 
   const searchRequest = useMemo(() => {
     if (query.length < 2) return null;
@@ -163,22 +145,11 @@ const Header = () => {
 
             <div className={scss.auth}>
               {account ? (
-                // Если пользователь авторизован, отображаем аватар
+                // Если пользователь авторизован, отображаем текст "Профиль"
                 <Link href="/profile">
-                  <div className={scss.avatarContainer}>
-                    {account.avatar ? (
-                      <Image
-                        src={getImageUrl(account.avatar)}
-                        alt="Аватар"
-                        width={40}
-                        height={40}
-                        className={scss.avatar}
-                      />
-                    ) : (
-                      // Если аватара нет, отображаем иконку пользователя
-                      <FaUserCircle size={40} />
-                    )}
-                  </div>
+                  <button className={scss.profileButton}>
+                    {t("Профиль", "Профиль")}
+                  </button>
                 </Link>
               ) : (
                 // Если пользователь не авторизован, отображаем кнопку "Войти"
@@ -189,8 +160,6 @@ const Header = () => {
             </div>
           </div>
         </div>
-
-        {/* Остальной код... */}
       </div>
     </header>
   );

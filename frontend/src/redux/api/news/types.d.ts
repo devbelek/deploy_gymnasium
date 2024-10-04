@@ -11,6 +11,7 @@ namespace NEWS {
     description: string;
     description_ky: null | string;
     description_ru: null | string;
+    comments_count: number;
   }
 
   interface IComment {

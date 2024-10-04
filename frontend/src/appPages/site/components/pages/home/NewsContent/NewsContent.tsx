@@ -39,7 +39,10 @@ const NewsContent: React.FC = () => {
               <p>{isKyrgyz ? (item.description_ky || '') : (item.description_ru || '')}</p>
               <article className={scss.end}>
                 <span>{item.created_at.slice(0, 10)}</span>
-                <LuMessagesSquare />
+                <div className={scss.comments}>
+                  <LuMessagesSquare />
+                  <span>{item.comments_count}</span>
+                </div>
               </article>
             </div>
           ))}
