@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useGetAccountQuery, useUpdateAccountMutation } from "@/redux/api/profile";
 import { useForm } from "react-hook-form";
 import { FaEdit, FaUser, FaSave, FaTimes } from 'react-icons/fa';
+import Image from 'next/image';
 import styles from './Profile.module.scss';
 
 interface ProfileFormData {
@@ -12,7 +13,7 @@ interface ProfileFormData {
   avatar: FileList | null;
 }
 
-const getImageUrl = (imageUrl: string) => {
+const getImageUrl = (imageUrl: string | null | undefined) => {
   if (!imageUrl) return '';
   const path = imageUrl.replace(/^https?:\/\/[^/]+/, '');
   return `${process.env.NEXT_PUBLIC_API}${path}`;
@@ -76,15 +77,17 @@ const Profile: React.FC = () => {
     setIsEditing(true);
   };
 
-  return (
+    return (
     <div className={styles.profileContainer}>
       <div className={styles.profileCard}>
         <div className={styles.avatarContainer}>
           {previewUrl || data?.avatar ? (
-            <img
+            <Image
               src={previewUrl || getImageUrl(data?.avatar) || '/default-avatar.png'}
               alt="Аватар"
               className={styles.avatar}
+              width={200} //
+              height={200}
             />
           ) : (
             <FaUser className={styles.avatarPlaceholder} />
