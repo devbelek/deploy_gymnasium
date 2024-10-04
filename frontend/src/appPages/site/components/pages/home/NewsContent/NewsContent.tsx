@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import { useGetNewsQuery } from "@/redux/api/news";
 import scss from "./NewsContent.module.scss";
 import Image from "next/image";
@@ -11,7 +12,7 @@ const getImageUrl = (imageUrl: string) => {
   return `${process.env.NEXT_PUBLIC_API}/media${cleanUrl}`;
 };
 
-const NewsContent = () => {
+const NewsContent: React.FC = () => {
   const { data: news } = useGetNewsQuery();
   const { isKyrgyz, t } = useLanguageStore();
 
