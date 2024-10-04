@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { useGetGalleryQuery } from "@/redux/api/gallery";
 import scss from "./GalleryMainContent.module.scss";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
@@ -25,10 +26,11 @@ const ZoomedImage: React.FC<ZoomedImageProps> = ({
   return (
     <div className={scss.zoomedImageOverlay}>
       <div className={scss.zoomedImageWrapper}>
-        <img
+        <Image
           src={getImageUrl(currentImage.image)}
           alt={currentImage.content}
-          style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }}
+          layout="fill"
+          objectFit="contain"
         />
         <button
           className={`${scss.navButton} ${scss.prevButton}`}
@@ -52,7 +54,6 @@ const ZoomedImage: React.FC<ZoomedImageProps> = ({
 };
 
 const getImageUrl = (imageUrl: string) => {
-  // Убираем лишний префикс, если он есть
   const cleanUrl = imageUrl.replace(/^https?:\/\/[^/]+\/media/, '');
   return `${process.env.NEXT_PUBLIC_API}/media${cleanUrl}`;
 };
@@ -136,10 +137,12 @@ const GalleryMainContent: React.FC = () => {
             {data?.map((item: GALLERY.IGallery, index: number) => (
               <div key={index} className={scss.galleryItem}>
                 <span onClick={() => handleImageClick(index)}>
-                  <img
+                  <Image
                     src={getImageUrl(item.image)}
                     alt={item.content}
-                    style={{ width: '100%', height: 'auto' }}
+                    width={300}
+                    height={200}
+                    layout="responsive"
                   />
                 </span>
               </div>
