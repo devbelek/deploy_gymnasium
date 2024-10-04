@@ -17,9 +17,7 @@ const getImageUrl = (imageUrl: string) => {
 const GalleryMainContent: React.FC = () => {
   const { data: galleryData } = useGetGalleryQuery();
   const { data: videosData } = useGetVideosQuery();
-  const [currentImageIndex, setCurrentImageIndex] = useState<number | null>(
-    null
-  );
+  const [currentImageIndex, setCurrentImageIndex] = useState<number | null>(null);
   const [currentTab, setCurrentTab] = useState<"photos" | "videos">("photos");
   const [selectedVideo, setSelectedVideo] = useState<VIDEO.IVideo | null>(null);
 
@@ -39,23 +37,19 @@ const GalleryMainContent: React.FC = () => {
 
   const handlePrevImage = () => {
     if (galleryData && currentImageIndex !== null) {
-      setCurrentImageIndex((prevIndex) => {
-        if (prevIndex === null) {
-          return galleryData.length - 1;
-        }
-        return prevIndex > 0 ? prevIndex - 1 : galleryData.length - 1;
-      });
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex === null ? galleryData.length - 1 :
+        prevIndex > 0 ? prevIndex - 1 : galleryData.length - 1
+      );
     }
   };
 
   const handleNextImage = () => {
     if (galleryData && currentImageIndex !== null) {
-      setCurrentImageIndex((prevIndex) => {
-        if (prevIndex === null) {
-          return 0;
-        }
-        return prevIndex < galleryData.length - 1 ? prevIndex + 1 : 0;
-      });
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex === null ? 0 :
+        prevIndex < galleryData.length - 1 ? prevIndex + 1 : 0
+      );
     }
   };
 
@@ -133,45 +127,33 @@ const GalleryMainContent: React.FC = () => {
         </div>
       </div>
 
-      {/* Модальное окно для просмотра изображения */}
       {currentImageIndex !== null && currentTab === "photos" && galleryData && (
         <div className={scss.modalOverlay} onClick={handleCloseZoom}>
-          <div
-            className={scss.modalContent}
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className={scss.modalContent} onClick={(e) => e.stopPropagation()}>
             <button className={scss.closeButton} onClick={handleCloseZoom}>
               <AiOutlineClose />
             </button>
-            <Image
-              src={getImageUrl(galleryData[currentImageIndex].image)}
-              alt={galleryData[currentImageIndex].content}
-              layout="fill"
-              objectFit="contain"
-            />
-            <button
-              className={`${scss.navButton} ${scss.prevButton}`}
-              onClick={handlePrevImage}
-            >
+            <div className={scss.imageContainer}>
+              <Image
+                src={getImageUrl(galleryData[currentImageIndex].image)}
+                alt={galleryData[currentImageIndex].content}
+                layout="fill"
+                objectFit="contain"
+              />
+            </div>
+            <button className={`${scss.navButton} ${scss.prevButton}`} onClick={handlePrevImage}>
               <BiChevronLeft />
             </button>
-            <button
-              className={`${scss.navButton} ${scss.nextButton}`}
-              onClick={handleNextImage}
-            >
+            <button className={`${scss.navButton} ${scss.nextButton}`} onClick={handleNextImage}>
               <BiChevronRight />
             </button>
           </div>
         </div>
       )}
 
-      {/* Модальное окно для воспроизведения видео */}
       {selectedVideo && currentTab === "videos" && (
         <div className={scss.modalOverlay} onClick={handleCloseVideo}>
-          <div
-            className={scss.modalContent}
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className={scss.modalContent} onClick={(e) => e.stopPropagation()}>
             <button className={scss.closeButton} onClick={handleCloseVideo}>
               <AiOutlineClose />
             </button>
