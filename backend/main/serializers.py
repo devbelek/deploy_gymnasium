@@ -138,10 +138,14 @@ class SuccessfulGraduatesSerializer(BaseSerializer):
 class NewsSerializer(serializers.ModelSerializer):
     comments = CommentSerializers(many=True, read_only=True)
     author = serializers.ReadOnlyField(source='author.username')
+    comments_count = serializers.SerializerMethodField()
 
     class Meta:
         model = News
         fields = '__all__'
+
+    def get_comments_count(self, obj):
+        return obj.comments.count()
 
 
 class GallerySerializer(BaseSerializer):

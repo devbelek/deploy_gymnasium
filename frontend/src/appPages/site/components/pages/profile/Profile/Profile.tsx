@@ -3,9 +3,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useGetAccountQuery, useUpdateAccountMutation } from "@/redux/api/profile";
 import { useForm } from "react-hook-form";
-import { FaEdit, FaUser, FaSave, FaTimes } from 'react-icons/fa';
+import { FaEdit, FaUser, FaSave, FaTimes, FaSignOutAlt } from 'react-icons/fa';
 import Image from 'next/image';
 import styles from './Profile.module.scss';
+import { useRouter } from 'next/navigation';
 
 interface ProfileFormData {
   user: string;
@@ -23,6 +24,7 @@ const Profile: React.FC = () => {
   const { data, error, isLoading, refetch } = useGetAccountQuery(null);
   const [updateAccount, { isLoading: isUpdating }] = useUpdateAccountMutation();
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const router = useRouter();
 
   const { register, handleSubmit, reset, watch } = useForm<ProfileFormData>();
 
@@ -73,6 +75,11 @@ const Profile: React.FC = () => {
     setIsEditing(true);
   };
 
+  const handleLogout = () => {
+    // Перенаправление на страницу выхода
+    router.push('/accounts/logout/');
+  };
+
   return (
     <div className={styles.profileContainer}>
       <div className={styles.profileCard}>
@@ -91,11 +98,16 @@ const Profile: React.FC = () => {
         </div>
         <div className={styles.profileInfo}>
           <h2 className={styles.userName}>{data?.user}</h2>
-          {!isEditing && (
-            <button onClick={handleEdit} className={styles.editButton}>
-              <FaEdit /> Редактировать профиль
+          <div className={styles.profileActions}>
+            {!isEditing && (
+              <button onClick={handleEdit} className={styles.editButton}>
+                <FaEdit /> Редактировать профиль
+              </button>
+            )}
+            <button onClick={handleLogout} className={styles.logoutButton}>
+              <FaSignOutAlt /> Выйти
             </button>
-          )}
+          </div>
         </div>
       </div>
 

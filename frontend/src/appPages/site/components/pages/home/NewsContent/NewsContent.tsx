@@ -1,3 +1,5 @@
+// NewsContent.tsx
+
 "use client";
 import React from "react";
 import { useGetNewsQuery } from "@/redux/api/news";

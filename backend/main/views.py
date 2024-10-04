@@ -12,6 +12,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from secondary.models import NamesOfOlympia
+from django.db.models import Count
 
 
 class CachedViewSetMixin:
@@ -96,8 +97,8 @@ class GraduatesViewSet(BaseViewSet):
     filterset_class = GraduatesFilter
 
 
-class NewsViewSet(BaseViewSet):
-    queryset = News.objects.select_related('author')
+class NewsViewSet(viewsets.ModelViewSet):
+    queryset = News.objects.select_related('author').annotate(comments_count=Count('comments'))
     serializer_class = NewsSerializer
 
 
