@@ -1,8 +1,6 @@
-"use client";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useGetGalleryQuery } from "@/redux/api/gallery";
 import scss from "./GalleryMainContent.module.scss";
-import Image from "next/image";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 
 interface ZoomedImageProps {
@@ -25,12 +23,10 @@ const ZoomedImage: React.FC<ZoomedImageProps> = ({
   return (
     <div className={scss.zoomedImageOverlay}>
       <div className={scss.zoomedImageWrapper}>
-        <Image
-          src={currentImage.image}
+        <img
+          src={getImageUrl(currentImage.image)}
           alt={currentImage.content}
-          layout="fill"
-          objectFit="contain"
-          quality={100}
+          style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }}
         />
         <button
           className={`${scss.navButton} ${scss.prevButton}`}
@@ -51,6 +47,12 @@ const ZoomedImage: React.FC<ZoomedImageProps> = ({
       <div className={scss.imageCaption}>{currentImage.content}</div>
     </div>
   );
+};
+
+const getImageUrl = (imageUrl: string) => {
+  // Убираем лишний префикс, если он есть
+  const cleanUrl = imageUrl.replace(/^https?:\/\/[^/]+\/media/, '');
+  return `${process.env.NEXT_PUBLIC_API}/media${cleanUrl}`;
 };
 
 const GalleryMainContent: React.FC = () => {
@@ -132,12 +134,10 @@ const GalleryMainContent: React.FC = () => {
             {data?.map((item: GALLERY.IGallery, index: number) => (
               <div key={index} className={scss.galleryItem}>
                 <span onClick={() => handleImageClick(index)}>
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_MEDIA_URL}${item.image}`}
+                  <img
+                    src={getImageUrl(item.image)}
                     alt={item.content}
-                    layout="fill"
-                    objectFit="cover"
-                    quality={70}
+                    style={{ width: '100%', height: 'auto' }}
                   />
                 </span>
               </div>
