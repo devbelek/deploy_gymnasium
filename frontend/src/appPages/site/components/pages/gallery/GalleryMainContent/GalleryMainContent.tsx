@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import { useGetGalleryQuery } from "@/redux/api/gallery";
 import scss from "./GalleryMainContent.module.scss";
