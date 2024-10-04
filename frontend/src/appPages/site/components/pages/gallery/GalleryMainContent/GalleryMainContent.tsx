@@ -1,3 +1,4 @@
+/* GalleryMainContent.tsx */
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -56,8 +57,7 @@ const ZoomedImage: React.FC<ZoomedImageProps> = ({
 };
 
 const getImageUrl = (imageUrl: string) => {
-  const cleanUrl = imageUrl.replace(/^https?:\/\/[^/]+\/media/, '');
-  return `${process.env.NEXT_PUBLIC_API}/media${cleanUrl}`;
+  return imageUrl.startsWith("http") ? imageUrl : `${process.env.NEXT_PUBLIC_API}${imageUrl}`;
 };
 
 const GalleryMainContent: React.FC = () => {
