@@ -8,6 +8,7 @@ import scss from "./GalleryMainContent.module.scss";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import ReactPlayer from "react-player";
 import { AiOutlineClose } from "react-icons/ai";
+import { FaPlay } from "react-icons/fa";
 
 const getImageUrl = (imageUrl: string) => {
   const cleanUrl = imageUrl.replace(/^https?:\/\/[^/]+\/media/, "");
@@ -119,7 +120,11 @@ const GalleryMainContent: React.FC = () => {
                       layout="fill"
                       objectFit="cover"
                     />
+                    <div className={scss.playButton}>
+                      <FaPlay />
+                    </div>
                   </div>
+                  <div className={scss.videoTitle}>{video.title}</div>
                 </div>
               ))}
             </div>

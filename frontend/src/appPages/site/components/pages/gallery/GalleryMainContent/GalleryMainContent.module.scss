@@ -37,7 +37,7 @@
           font-size: 16px;
           cursor: pointer;
           border-radius: 5px;
-          transition: background-color 0.3s;
+          transition: background-color 0.3s, color 0.3s;
 
           &.activeTab {
             background-color: #56397b;
@@ -66,6 +66,13 @@
         overflow: hidden;
         border-radius: 10px;
         cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        &:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
 
         .imageWrapper {
           position: absolute;
@@ -81,6 +88,45 @@
           &:hover img {
             transform: scale(1.05);
           }
+
+          .playButton {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s ease;
+
+            svg {
+              font-size: 24px;
+              color: #56397b;
+            }
+
+            &:hover {
+              background-color: rgba(255, 255, 255, 1);
+            }
+          }
+        }
+
+        .videoTitle {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          padding: 10px;
+          background-color: rgba(0, 0, 0, 0.7);
+          color: #fff;
+          font-size: 14px;
+          text-align: center;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
       }
     }
