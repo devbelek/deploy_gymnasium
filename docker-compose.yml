@@ -107,7 +107,6 @@ services:
 
   frontend:
     build: ./frontend
-    command: bash -c "npm run build && npm start"
     volumes:
       - ./frontend:/app
       - /app/node_modules
