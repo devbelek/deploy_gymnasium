@@ -251,7 +251,7 @@ class Olympians(models.Model):
     student = models.ForeignKey(Students, on_delete=models.CASCADE, verbose_name=_('Ученик'))
     name_of_olympia = models.ForeignKey('secondary.NamesOfOlympia', on_delete=models.SET_NULL, null=True,
                                         verbose_name=_('Предмет'))
-    year = models.PositiveIntegerField(verbose_name='Год')
+    year = models.PositiveIntegerField(default='default_value', verbose_name='Год')
     level = models.CharField(max_length=80, default='default_value', choices=LEVEL_CHOICES, verbose_name='Уровень олимпиады')
     place = models.CharField(max_length=50, default='default_value', choices=PLACE_CHOICES, verbose_name='Место')
 
