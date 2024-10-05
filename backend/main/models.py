@@ -253,7 +253,7 @@ class Olympians(models.Model):
                                         verbose_name=_('Предмет'))
     year = models.PositiveIntegerField(verbose_name='Год')
     level = models.CharField(max_length=80, default='default_value', choices=LEVEL_CHOICES, verbose_name='Уровень олимпиады')
-    place = models.CharField(max_length=50, choices=PLACE_CHOICES, verbose_name='Место')
+    place = models.CharField(max_length=50, default='default_value', choices=PLACE_CHOICES, verbose_name='Место')
 
     class Meta:
         verbose_name = _('Олимпийцы')
