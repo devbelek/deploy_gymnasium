@@ -79,39 +79,34 @@ const Header = () => {
             <RxHamburgerMenu />
           </div>
 
-          {/* Мобилдик меню */}
-          {isMenuOpen && (
-            <div className={`${scss.mobileMenu} ${scss.active}`}>
-              <ul onClick={() => setIsMenuOpen(false)}>
-                <li>
-                  <Link href="/">{t("Башкы бет", "Главная")}</Link>
-                </li>
-                <li>
-                  <Link href="/news">{t("Жаңылыктар", "Новости")}</Link>
-                </li>
-                <li>
-                  <Link href="/students">{t("Окуучулар", "Ученики")}</Link>
-                </li>
-                <li>
-                  <Link href="/teachers">{t("Мугалимдер", "Учителя")}</Link>
-                </li>
-                <li>
-                  <Link href="/graduates">
-                    {t("Бүтүрүүчүлөр", "Выпускники")}
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/gallery">{t("Галерея", "Галерея")}</Link>
-                </li>
-                <li>
-                  <a onClick={handleScrollTo}>{t("Байланыштар", "Контакты")}</a>
-                </li>
-                <li>
-                  <Link href="/fond">{t("Фонд", "Фонд")}</Link>
-                </li>
-              </ul>
-            </div>
-          )}
+          <nav className={`${scss.nav} ${isMenuOpen ? scss.active : ""}`}>
+            <ul onClick={() => setIsMenuOpen(false)}>
+              <li>
+                <Link href="/">{t("Башкы бет", "Главная")}</Link>
+              </li>
+              <li>
+                <Link href="/news">{t("Жаңылыктар", "Новости")}</Link>
+              </li>
+              <li>
+                <Link href="/students">{t("Окуучулар", "Ученики")}</Link>
+              </li>
+              <li>
+                <Link href="/teachers">{t("Мугалимдер", "Учителя")}</Link>
+              </li>
+              <li>
+                <Link href="/graduates">{t("Бүтүрүүчүлөр", "Выпускники")}</Link>
+              </li>
+              <li>
+                <Link href="/gallery">{t("Галерея", "Галерея")}</Link>
+              </li>
+              <li>
+                <a onClick={handleScrollTo}>{t("Байланыштар", "Контакты")}</a>
+              </li>
+              <li>
+                <Link href="/fond">{t("Фонд", "Фонд")}</Link>
+              </li>
+            </ul>
+          </nav>
 
           <div className={scss.rightSection}>
             <div className={scss.search}>
