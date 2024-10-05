@@ -22,7 +22,12 @@ const nextConfig = {
                 protocol: 'http',
                 hostname: '3-gymnasium.kg',
                 pathname: '/**',
-             },
+            },
+            {
+                protocol: 'https',
+                hostname: 'img.youtube.com',
+                pathname: '/vi/**',
+            },
         ],
     },
 };
