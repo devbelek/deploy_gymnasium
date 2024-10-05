@@ -15,6 +15,12 @@ const getImageUrl = (imageUrl: string) => {
   return `${process.env.NEXT_PUBLIC_API}/media${cleanUrl}`;
 };
 
+const getYoutubeId = (url: string) => {
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  const match = url.match(regExp);
+  return (match && match[2].length === 11) ? match[2] : null;
+};
+
 const GalleryMainContent: React.FC = () => {
   const { data: galleryData } = useGetGalleryQuery();
   const { data: videosData } = useGetVideosQuery();
@@ -107,26 +113,31 @@ const GalleryMainContent: React.FC = () => {
           )}
           {currentTab === "videos" && (
             <div className={scss.galleryGrid}>
-              {videosData?.map((video) => (
-                <div
-                  key={video.id}
-                  className={scss.galleryItem}
-                  onClick={() => handleVideoClick(video)}
-                >
-                  <div className={scss.imageWrapper}>
-                    <Image
-                      src={`https://img.youtube.com/vi/${video.youtube_id}/hqdefault.jpg`}
-                      alt={video.title}
-                      layout="fill"
-                      objectFit="cover"
-                    />
-                    <div className={scss.playButton}>
-                      <FaPlay />
+              {videosData?.map((video) => {
+                const youtubeId = getYoutubeId(video.youtube_id);
+                return (
+                  <div
+                    key={video.id}
+                    className={scss.galleryItem}
+                    onClick={() => handleVideoClick(video)}
+                  >
+                    <div className={scss.imageWrapper}>
+                      {youtubeId && (
+                        <Image
+                          src={`https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`}
+                          alt={video.title}
+                          layout="fill"
+                          objectFit="cover"
+                        />
+                      )}
+                      <div className={scss.playButton}>
+                        <FaPlay />
+                      </div>
                     </div>
+                    <div className={scss.videoTitle}>{video.title}</div>
                   </div>
-                  <div className={scss.videoTitle}>{video.title}</div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>
@@ -164,7 +175,7 @@ const GalleryMainContent: React.FC = () => {
             </button>
             <div className={scss.videoWrapper}>
               <ReactPlayer
-                url={`https://www.youtube.com/watch?v=${selectedVideo.youtube_id}`}
+                url={`https://www.youtube.com/watch?v=${getYoutubeId(selectedVideo.youtube_id)}`}
                 controls
                 width="100%"
                 height="100%"
