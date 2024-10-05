@@ -1,12 +1,14 @@
 "use client";
-
-import React, { useState, useRef, useEffect } from 'react';
-import { useGetAccountQuery, useUpdateAccountMutation } from "@/redux/api/profile";
+import React, { useState, useRef, useEffect } from "react";
+import {
+  useGetAccountQuery,
+  useUpdateAccountMutation,
+} from "@/redux/api/profile";
 import { useForm } from "react-hook-form";
-import { FaEdit, FaUser, FaSave, FaTimes, FaSignOutAlt } from 'react-icons/fa';
-import Image from 'next/image';
-import styles from './Profile.module.scss';
-import { useRouter } from 'next/navigation';
+import { FaEdit, FaUser, FaSave, FaTimes, FaSignOutAlt } from "react-icons/fa";
+import Image from "next/image";
+import styles from "./Profile.module.scss";
+import { useRouter } from "next/navigation";
 
 interface ProfileFormData {
   user: string;
@@ -14,8 +16,8 @@ interface ProfileFormData {
 }
 
 const getImageUrl = (imageUrl: string | null | undefined) => {
-  if (!imageUrl) return '';
-  const path = imageUrl.replace(/^https?:\/\/[^/]+/, '');
+  if (!imageUrl) return "";
+  const path = imageUrl.replace(/^https?:\/\/[^/]+/, "");
   return `${process.env.NEXT_PUBLIC_API}${path}`;
 };
 
@@ -56,18 +58,18 @@ const Profile: React.FC = () => {
   const onSubmit = async (formData: ProfileFormData) => {
     try {
       const formDataToSend = new FormData();
-      formDataToSend.append('user', formData.user);
+      formDataToSend.append("user", formData.user);
       if (formData.avatar && formData.avatar.length > 0) {
-        formDataToSend.append('avatar', formData.avatar[0]);
+        formDataToSend.append("avatar", formData.avatar[0]);
       }
 
       await updateAccount(formDataToSend).unwrap();
       setIsEditing(false);
       refetch();
-      alert('Профиль успешно обновлен');
+      alert("Профиль успешно обновлен");
     } catch (error) {
       console.error("Не удалось обновить профиль", error);
-      alert('Произошла ошибка при обновлении профиля');
+      alert("Произошла ошибка при обновлении профиля");
     }
   };
 
@@ -77,7 +79,7 @@ const Profile: React.FC = () => {
 
   const handleLogout = () => {
     // Перенаправление на страницу выхода
-    router.push('/accounts/logout/');
+    router.push("/accounts/logout/");
   };
 
   return (
@@ -86,7 +88,9 @@ const Profile: React.FC = () => {
         <div className={styles.avatarContainer}>
           {previewUrl || data?.avatar ? (
             <Image
-              src={previewUrl || getImageUrl(data?.avatar) || '/default-avatar.png'}
+              src={
+                previewUrl || getImageUrl(data?.avatar) || "/default-avatar.png"
+              }
               alt="Аватар"
               className={styles.avatar}
               width={120}
@@ -131,10 +135,18 @@ const Profile: React.FC = () => {
                 />
               </div>
               <div className={styles.formActions}>
-                <button type="submit" disabled={isUpdating} className={styles.saveButton}>
-                  <FaSave /> {isUpdating ? 'Сохранение...' : 'Сохранить'}
+                <button
+                  type="submit"
+                  disabled={isUpdating}
+                  className={styles.saveButton}
+                >
+                  <FaSave /> {isUpdating ? "Сохранение..." : "Сохранить"}
                 </button>
-                <button type="button" onClick={() => setIsEditing(false)} className={styles.cancelButton}>
+                <button
+                  type="button"
+                  onClick={() => setIsEditing(false)}
+                  className={styles.cancelButton}
+                >
                   <FaTimes /> Отмена
                 </button>
               </div>
