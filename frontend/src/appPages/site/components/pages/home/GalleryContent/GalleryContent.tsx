@@ -28,13 +28,13 @@ const GalleryContent: React.FC = () => {
 
   const handlePrevImage = () => {
     if (data && currentImageIndex !== null) {
-      setCurrentImageIndex((prevIndex) => (prevIndex === 0 ? data.length - 1 : prevIndex - 1));
+      setCurrentImageIndex((prevIndex) => (prevIndex === null || prevIndex === 0 ? data.length - 1 : prevIndex - 1));
     }
   };
 
   const handleNextImage = () => {
     if (data && currentImageIndex !== null) {
-      setCurrentImageIndex((prevIndex) => (prevIndex === data.length - 1 ? 0 : prevIndex + 1));
+      setCurrentImageIndex((prevIndex) => (prevIndex === null || prevIndex === data.length - 1 ? 0 : prevIndex + 1));
     }
   };
 
