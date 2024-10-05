@@ -159,6 +159,8 @@
 
     .profileImage {
       cursor: pointer;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
     }
 
@@ -177,8 +179,10 @@
 
     .profileMenu {
       position: absolute;
-      top: 100%;
+      top: 47px;
       right: 0;
+      width: 160px;
+      height: 100px;
       background-color: white;
       border: 1px solid #ddd;
       border-radius: 4px;
@@ -188,15 +192,17 @@
       button {
         display: block;
         width: 100%;
-        padding: 10px;
+        padding: 20px;
         text-align: left;
+        font-size: 18px;
+        font-weight: 500;
         border: none;
-        background: none;
-        color: #333;
+        color: #413f3f;
         cursor: pointer;
 
         &:hover {
           background-color: #f5f5f5;
+          background: rgb(176, 169, 169);
         }
       }
     }
@@ -223,7 +229,7 @@
       &.active {
         display: block;
         position: absolute;
-        top: 100%;
+        top: 40px;
         left: 0;
         right: 0;
         z-index: 100;
