@@ -79,38 +79,7 @@ const Header = () => {
             <RxHamburgerMenu />
           </div>
 
-          <nav className={`${scss.nav} ${isMenuOpen ? scss.active : ""}`}>
-            <ul onClick={() => setIsMenuOpen(false)}>
-              <li className={scss.disp}>
-                <Link href="/">{t("Башкы бет", "Главная")}</Link>
-              </li>
-              <li>
-                <Link href="/news">{t("Жаңылыктар", "Новости")}</Link>
-              </li>
-              <li>
-                <Link href="/students">{t("Окуучулар", "Ученики")}</Link>
-              </li>
-              <li>
-                <Link href="/teachers">{t("Мугалимдер", "Учителя")}</Link>
-              </li>
-              <li>
-                <Link href="/graduates">
-                  {t("Бүтүрүүчүлөр", "Выпускники")}
-                </Link>
-              </li>
-              <li>
-                <Link href="/gallery">{t("Галерея", "Галерея")}</Link>
-              </li>
-              <li>
-                <a onClick={handleScrollTo}>{t("Байланыштар", "Контакты")}</a>
-              </li>
-              <li>
-                <Link href="/fond">{t("Фонд", "Фонд")}</Link>
-              </li>
-            </ul>
-          </nav>
-
-          {/* Мобильное меню */}
+          {/* Мобилдик меню */}
           {isMenuOpen && (
             <div className={`${scss.mobileMenu} ${scss.active}`}>
               <ul onClick={() => setIsMenuOpen(false)}>
@@ -179,17 +148,13 @@ const Header = () => {
 
             <div className={scss.auth}>
               {account ? (
-                // Если пользователь авторизован, отображаем текст "Профиль"
                 <Link href="/profile">
                   <button className={scss.profileButton}>
                     {t("Профиль", "Профиль")}
                   </button>
                 </Link>
               ) : (
-                // Если пользователь не авторизован, отображаем кнопку "Войти"
-                <button onClick={handleNavigate}>
-                  {t("Кирүү", "Войти")}
-                </button>
+                <button onClick={handleNavigate}>{t("Кирүү", "Войти")}</button>
               )}
             </div>
           </div>
