@@ -79,7 +79,7 @@ class UserProfile(models.Model):
 
 
 class Comment(models.Model):
-    news = models.ForeignKey('main.News', on_delete=models.CASCADE, related_name='comments', verbose_name=_('Связка с "Новости"'))
+    news = models.ForeignKey('main.News', on_delete=models.CASCADE, related_name='comments', verbose_name=_('Связка с "Новости"'), null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Автор'))
     text = models.TextField(verbose_name=_('Комментарий'))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Дата создания'))
