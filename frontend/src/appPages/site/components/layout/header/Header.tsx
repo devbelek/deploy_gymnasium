@@ -12,16 +12,16 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const router = useRouter();
-  const profileMenuRef = useRef(null);
+  const profileMenuRef = useRef<HTMLDivElement>(null);
 
   const { isKyrgyz, setIsKyrgyz, t } = useLanguageStore();
   const { data: account } = useGetAccountQuery(null);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: MouseEvent) => {
       if (
         profileMenuRef.current &&
-        !profileMenuRef.current.contains(event.target)
+        !profileMenuRef.current.contains(event.target as Node)
       ) {
         setIsProfileMenuOpen(false);
       }
