@@ -1,21 +1,63 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, {
+  ChangeEvent,
+  useEffect,
+  useMemo,
+  useState,
+  useRef,
+} from "react";
+import scss from "./Header.module.scss";
+import logo from "../../../../../assets/logo.svg";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { DebounceInput as Input } from "react-debounce-input";
+import { useGetSearchQuery } from "@/redux/api/search";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { useGetAccountQuery } from "@/redux/api/profile";
-import scss from "./Header.module.scss";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const router = useRouter();
+  const [query, setQuery] = useState<string>("");
+  const [hasFocusInput, setHasFocusInput] = useState(false);
   const profileMenuRef = useRef<HTMLDivElement>(null);
 
   const { isKyrgyz, setIsKyrgyz, t } = useLanguageStore();
+
   const { data: account } = useGetAccountQuery(null);
+
+  const searchRequest = useMemo(() => {
+    if (query.length < 2) return null;
+    if (/^\d+$/.test(query)) {
+      return { school_class__grade: query };
+    }
+    return { full_name: query };
+  }, [query]);
+
+  const { data, error, isLoading } = useGetSearchQuery(searchRequest!, {
+    skip: !searchRequest,
+  });
+
+  useEffect(() => {
+    if (hasFocusInput && query.length >= 1) {
+      router.push(`/search?query=${encodeURIComponent(query)}`);
+    }
+  }, [query, hasFocusInput, router]);
+
+  const handleNavigate = () => {
+    router.push("https://3-gymnasium.kg/accounts/");
+  };
+
+  const handleLogout = () => {
+    router.push("/accounts/logout/");
+  };
+
+  const toggleProfileMenu = () => {
+    setIsProfileMenuOpen(!isProfileMenuOpen);
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -33,29 +75,71 @@ const Header = () => {
     };
   }, []);
 
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
+  };
+
+  const handleBlur = () => {
+    setQuery("");
+    setHasFocusInput(false);
+  };
+
+  const handleScrollTo = () => {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+  };
+
   const handleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const toggleProfileMenu = () => {
-    setIsProfileMenuOpen(!isProfileMenuOpen);
-  };
+  const renderProfileButton = () => {
+    if (!account) {
+      return <button onClick={handleNavigate}>{t("Кирүү", "Войти")}</button>;
+    }
 
-  const handleLogout = () => {
-    router.push("/accounts/logout/");
+    if (account.avatar) {
+      return (
+        <Image
+          src={account.avatar}
+          alt="Profile"
+          width={32}
+          height={32}
+          className={scss.profileImage}
+          onClick={toggleProfileMenu}
+        />
+      );
+    }
+
+    return (
+      <div className={scss.profileInitial} onClick={toggleProfileMenu}>
+        {account.user.charAt(0).toUpperCase()}
+      </div>
+    );
   };
 
   return (
     <header className={scss.header}>
-      <div className={scss.container}>
+      <div className="container">
         <div className={scss.content}>
-          <Link href="/" className={scss.logo}>
-            <Image src="/logo.svg" alt="Logo" width={37} height={37} />
-            <span className={scss.schoolName}>3-гимназия</span>
-          </Link>
+          <div className={scss.logo}>
+            <Link href="/">
+              <Image
+                src={logo}
+                alt="logo"
+                width={37}
+                height={37}
+                quality={70}
+                style={{ objectFit: "contain" }}
+              />
+            </Link>
+          </div>
+
+          <div className={scss.hamburger} onClick={handleMenu}>
+            <RxHamburgerMenu />
+          </div>
 
           <nav className={`${scss.nav} ${isMenuOpen ? scss.active : ""}`}>
-            <ul>
+            <ul onClick={() => setIsMenuOpen(false)}>
               <li>
                 <Link href="/">{t("Башкы бет", "Главная")}</Link>
               </li>
@@ -75,7 +159,7 @@ const Header = () => {
                 <Link href="/gallery">{t("Галерея", "Галерея")}</Link>
               </li>
               <li>
-                <Link href="/contacts">{t("Байланыштар", "Контакты")}</Link>
+                <a onClick={handleScrollTo}>{t("Байланыштар", "Контакты")}</a>
               </li>
               <li>
                 <Link href="/fond">{t("Фонд", "Фонд")}</Link>
@@ -85,7 +169,18 @@ const Header = () => {
 
           <div className={scss.rightSection}>
             <div className={scss.search}>
-              <input type="text" placeholder={t("Издөө...", "Поиск...")} />
+              <Input
+                minLength={1}
+                maxLength={30}
+                debounceTimeout={300}
+                onChange={handleChange}
+                onFocus={() => {
+                  setHasFocusInput(true);
+                }}
+                onBlur={handleBlur}
+                value={query}
+                placeholder={t("Издөө...", "Поиск...")}
+              />
             </div>
 
             <div className={scss.language}>
@@ -104,29 +199,18 @@ const Header = () => {
             </div>
 
             <div className={scss.auth} ref={profileMenuRef}>
-              {account ? (
-                <button
-                  onClick={toggleProfileMenu}
-                  className={scss.profileButton}
-                >
-                  {account.user.charAt(0).toUpperCase()}
-                </button>
-              ) : (
-                <Link href="/accounts/login">{t("Кирүү", "Войти")}</Link>
-              )}
-
+              {renderProfileButton()}
               {isProfileMenuOpen && account && (
                 <div className={scss.profileMenu}>
-                  <Link href="/profile">
+                  <Link
+                    href="/profile"
+                    onClick={() => setIsProfileMenuOpen(false)}
+                  >
                     <button>{t("Профиль", "Профиль")}</button>
                   </Link>
                   <button onClick={handleLogout}>{t("Чыгуу", "Выйти")}</button>
                 </div>
               )}
-            </div>
-
-            <div className={scss.hamburger} onClick={handleMenu}>
-              <RxHamburgerMenu />
             </div>
           </div>
         </div>
