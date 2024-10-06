@@ -1,5 +1,5 @@
 "use client";
-import ReduxProvider from "@/appPages/site/providers/ReduxProvider";
+import ReduxProvider from "@/providers/ReduxProvider";
 import { FC, ReactNode } from "react";
 
 interface LayoutClientProps {
