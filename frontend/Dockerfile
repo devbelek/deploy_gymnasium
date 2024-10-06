@@ -15,6 +15,10 @@ COPY . .
 # Собираем приложение
 RUN npm run build
 
+# Выводим содержимое директории для отладки
+RUN ls -la /app
+RUN ls -la /app/.next
+
 # Этап запуска
 FROM node:18-alpine
 
@@ -28,6 +32,10 @@ COPY --from=builder /app/next.config.mjs ./
 
 # Устанавливаем только production-зависимости
 RUN npm ci --only=production
+
+# Выводим содержимое директории для отладки
+RUN ls -la /app
+RUN ls -la /app/.next
 
 # Указываем порт, который будет использовать приложение
 EXPOSE 3000
