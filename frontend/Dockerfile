@@ -13,7 +13,10 @@ RUN npm install react-player
 
 COPY . .
 
+RUN echo "Contents of /app before build:" && ls -la
 RUN npm run build
+RUN echo "Contents of /app after build:" && ls -la
+RUN echo "Contents of /app/.next after build:" && ls -la .next
 
 # Этап запуска
 FROM node:18-alpine
@@ -28,6 +31,9 @@ COPY --from=builder /app/next.config.mjs ./
 
 # Устанавливаем только production-зависимости
 RUN npm ci --only=production || npm install --only=production
+
+RUN echo "Contents of /app in final stage:" && ls -la
+RUN echo "Contents of /app/.next in final stage:" && ls -la .next
 
 # Указываем порт, который будет использовать приложение
 EXPOSE 3000
