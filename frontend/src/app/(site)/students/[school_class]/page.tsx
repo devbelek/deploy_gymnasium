@@ -1,5 +1,5 @@
 "use client";
-import StudentClassTable from "@/components/pages/students/StudentsClassTable/StudentsClassTable";
+import StudentsClass from "@/appPages/site/components/pages/students/StudentsClassTable/StudentsClassTable";
 import { useParams } from "next/navigation";
 import React from "react";
 
