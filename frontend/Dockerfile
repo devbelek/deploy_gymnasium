@@ -9,13 +9,10 @@ COPY package*.json ./
 # Если package-lock.json отсутствует, используем npm install вместо npm ci
 RUN if [ -f package-lock.json ]; then npm ci; else npm install; fi
 
-# Устанавливаем react-player
 RUN npm install react-player
 
-# Копируем остальные файлы проекта
 COPY . .
 
-# Собираем проект
 RUN npm run build
 
 # Этап запуска
