@@ -105,8 +105,10 @@ services:
     networks:
       - dev
 
-  frontend:
-    build: ./frontend
+frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     volumes:
       - ./frontend:/app
       - /app/node_modules
@@ -114,6 +116,8 @@ services:
     environment:
       - NEXT_PUBLIC_API=https://3-gymnasium.kg
       - NEXT_PUBLIC_ENDPOINT=api
+    ports:
+      - "3000:3000"
     networks:
       - dev
 
