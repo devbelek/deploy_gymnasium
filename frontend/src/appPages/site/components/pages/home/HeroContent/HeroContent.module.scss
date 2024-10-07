@@ -60,7 +60,7 @@
       padding: 0;
       text-align: center;
       h1 {
-        font-size: 56px;
+        font-size: 50px;
       }
 
       h2 {
@@ -71,9 +71,9 @@
       display: flex;
       justify-content: center;
       img {
-        top: -200;
-        width: 200px;
-        height: 200px;
+        top: -180px;
+        width: 180px;
+        height: 180px;
       }
     }
     .subtext {
@@ -143,7 +143,7 @@
 @media (max-width: 884px) {
   #content {
     .text {
-      padding: 20;
+      padding: 20px;
       text-align: center;
       h1 {
         font-size: 64px;
