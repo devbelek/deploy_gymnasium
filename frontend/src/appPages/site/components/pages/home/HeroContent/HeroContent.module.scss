@@ -120,20 +120,20 @@
       display: flex;
       justify-content: center;
       img {
-        top: -130;
-        width: 150px;
-        height: 150px;
+        top: -140px;
+        width: 130px;
+        height: 130px;
       }
     }
     .text {
       padding: 0;
       text-align: center;
       h1 {
-        font-size: 26px;
+        font-size: 30px;
         padding-top: 10px;
       }
       h2 {
-        font-size: 20px;
+        font-size: 26px;
       }
     }
 
@@ -149,9 +149,9 @@
       display: flex;
       justify-content: center;
       img {
-        top: -74;
-        width: 100px;
-        height: 100px;
+        top: -74px;
+        width: 90px;
+        height: 90px;
       }
     }
     .text {
@@ -166,7 +166,7 @@
     }
 
     .subtext {
-      padding: 88px;
+      padding: 80px;
     }
   }
 }
