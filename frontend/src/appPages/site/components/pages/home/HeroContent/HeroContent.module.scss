@@ -54,7 +54,7 @@
 }
 
 /* Tablet view */
-@media (min-width: 768px) {
+@media (max-width: 769px) {
   #content {
     .text {
       padding: 0;
