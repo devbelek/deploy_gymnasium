@@ -54,30 +54,30 @@
 }
 
 /* Tablet view */
-@media (max-width: 769px) {
+@media (max-width: 768px) {
   #content {
     .text {
       padding: 0;
       text-align: center;
       h1 {
-        font-size: 50px;
+        font-size: 30px;
       }
 
       h2 {
-        font-size: 36px;
+        font-size: 24px;
       }
     }
     .profileImage {
       display: flex;
       justify-content: center;
       img {
-        top: -180px;
-        width: 180px;
-        height: 180px;
+        top: -150px;
+        width: 130px;
+        height: 130px;
       }
     }
     .subtext {
-      padding: 170px;
+      padding: 110px;
     }
   }
 }
