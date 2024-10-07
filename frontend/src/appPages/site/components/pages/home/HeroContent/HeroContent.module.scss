@@ -1,6 +1,5 @@
 #content {
-  background: url("../../../../../../assets/images/6W3A8933.JPG") no-repeat
-    center/cover;
+  background: url("../../../../../../assets/images/6W3A8933.JPG") no-repeat center/cover;
   min-height: 100vh;
   position: relative;
 
@@ -14,15 +13,42 @@
   .profileImage {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 20px;
     position: relative;
+
     img {
       position: absolute;
-      top: -10;
+      top: -10px;
       border: 4px solid #fff;
       border-radius: 50%;
       width: 200px;
       height: 200px;
+      transition: opacity 0.5s ease-in-out;
+      opacity: 0;
+    }
+
+    .loaded {
+      opacity: 1; // Анимация появления изображения
+    }
+
+    .loader {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      border: 4px solid #fff;
+      border-top: 4px solid #56397b; // Цвет части спиннера
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
     }
   }
 
@@ -33,6 +59,7 @@
     flex-direction: column;
     color: #fff;
     gap: 10px;
+
     h1 {
       font-size: 48px;
       font-weight: 700;
@@ -51,6 +78,7 @@
     background-color: #56397bd2;
     padding: 96px;
   }
+
 }
 /* Larger screens */
 @media (max-width: 884px) {
@@ -95,7 +123,13 @@
         font-size: 55px;
       }
 
-      h2 {
+  /* Tablet view */
+  @media (max-width: 768px) {
+    .text {
+      padding: 0;
+      text-align: center;
+
+      h1 {
         font-size: 36px;
       }
     }
@@ -106,60 +140,81 @@
         top: -220px;
         width: 190px;
         height: 190px;
+
+      h2 {
+        font-size: 26px;
       }
     }
+
+    .profileImage {
+      img {
+        top: -150px;
+        width: 150px;
+        height: 150px;
+      }
+    }
+
     .subtext {
       padding: 170px;
+      padding: 70px;
     }
   }
-}
 
 @media (max-width: 429px) {
   #content {
+  @media (max-width: 430px) {
     .profileImage {
-      display: flex;
-      justify-content: center;
       img {
         top: -140px;
         width: 130px;
         height: 130px;
+        top: -90px;
+        width: 120px;
+        height: 120px;
       }
     }
+
     .text {
       padding: 0;
       text-align: center;
+
       h1 {
         font-size: 26px;
+        font-size: 26px !important;
         padding-top: 10px;
       }
+
       h2 {
         font-size: 24px;
+        font-size: 20px;
       }
     }
 
     .subtext {
       padding: 110px;
+      padding: 50px;
     }
   }
-}
 
-@media (max-width: 320px) {
-  #content {
+  @media (max-width: 320px) {
     .profileImage {
-      display: flex;
-      justify-content: center;
       img {
         top: -74px;
         width: 90px;
         height: 90px;
+        top: -60px;
+        width: 100px;
+        height: 100px;
       }
     }
+
     .text {
       padding-top: 20px;
 
       h1 {
         font-size: 20px;
       }
+
       h2 {
         font-size: 16px;
       }
@@ -167,6 +222,7 @@
 
     .subtext {
       padding: 80px;
+      padding: 40px;
     }
   }
 }
