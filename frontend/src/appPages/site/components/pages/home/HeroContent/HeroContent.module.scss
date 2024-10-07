@@ -157,13 +157,17 @@
       display: flex;
       justify-content: center;
       img {
-        top: -100px;
+        top: -200px;
         width: 200px;
         height: 200px;
       }
     }
 
     .text {
+      padding: 10px;
+    }
+
+    .subtext {
       padding: 190px;
     }
   }
