@@ -5,7 +5,6 @@ namespace GRADUATES {
         last_name: string;
         year: null;
         ort: number;
-        image: string;
     }
     type GetGraduatesResponse = IGraduates[];
 

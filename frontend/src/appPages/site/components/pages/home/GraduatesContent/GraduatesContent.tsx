@@ -1,82 +1,52 @@
 "use client";
-
-import React, { useState, useEffect } from 'react';
 import Image from "next/image";
+import scss from "./GraduatesContent.module.scss";
 import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
-import { useGetGraduatesQuery } from "@/redux/api/graduates";
+import { useGetSuccessfulGraduatesQuery } from "@/redux/api/successful_graduates";
+import graduateFallback from "../../../../../../assets/images/Group 1000001472.png";
 import { useLanguageStore } from "@/stores/useLanguageStore";
-import styles from './GraduatesContent.module.scss';
 
 const GraduatesContent = () => {
-  const { data: graduates, isLoading, isError } = useGetGraduatesQuery();
+  const { data } = useGetSuccessfulGraduatesQuery();
   const { isKyrgyz, t } = useLanguageStore();
-  const [currentIndex, setCurrentIndex] = useState(0);
 
-  useEffect(() => {
-    if (graduates && graduates.length > 0) {
-      const timer = setInterval(() => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % graduates.length);
-      }, 5000);
-      return () => clearInterval(timer);
-    }
-  }, [graduates]);
-
-  const handlePrev = () => {
-    if (graduates) {
-      setCurrentIndex((prevIndex) => (prevIndex - 1 + graduates.length) % graduates.length);
-    }
-  };
-
-  const handleNext = () => {
-    if (graduates) {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % graduates.length);
-    }
-  };
-
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error loading graduates data</div>;
-  if (!graduates || graduates.length === 0) return null;
-
-  const currentGraduate = graduates[currentIndex];
-
-  // Проверяем, есть ли изображение у текущего выпускника
-  const hasImage = currentGraduate.image && currentGraduate.image !== "";
+  const graduateData = data && data.length > 0 ? data[0] : null;
 
   return (
-    <div className={styles.content}>
-      <h1>{t("Бүтүрүүчүлөр", "Выпускники")}</h1>
-      <hr />
-      <div className={styles.graduateContent}>
-        <div className={styles.title}>
-          <p>{`${currentGraduate.name} ${currentGraduate.surname} ${currentGraduate.last_name}`}</p>
-          <span>
-            {currentGraduate.year && t(
-              `${currentGraduate.year} жылдын бүтүрүүчүсү`,
-              `Выпускник ${currentGraduate.year} года`
-            )}
-          </span>
-          <p>{t("ОРТ баллы", "Балл ОРТ")}: {currentGraduate.ort}</p>
-          <div className={styles.wrapper}>
-            <GrLinkPrevious onClick={handlePrev} />
-            <GrLinkNext onClick={handleNext} />
+    <section className={scss.content}>
+      <div className="container">
+        <h1>{t("Бүтүрүүчүлөр", "Выпускники")}</h1>
+        <hr />
+        <div className={scss.graduateContent}>
+          <div className={scss.title}>
+            <p>{graduateData?.content}</p>
+            <span>
+              {graduateData?.graduate?.name} {graduateData?.graduate?.last_name}
+              <br />
+              {t(
+                `${graduateData?.graduate?.year} жылдын бүтүрүүчүсү`,
+                `Выпускник ${graduateData?.graduate?.year} года`
+              )}
+            </span>
+            <div className={scss.wrapper}>
+              <GrLinkPrevious />
+              <GrLinkNext />
+            </div>
           </div>
-        </div>
-        {hasImage ? (
-          <div className={styles.image}>
+          <div className={scss.image}>
             <Image
-              src={currentGraduate.image}
-              alt={`${currentGraduate.name} ${currentGraduate.surname}`}
+              src={graduateData?.image || graduateFallback}
+              alt="graduates"
               width={340}
-              height={400}
+              height={340}
+              quality={100}
+              priority
+              objectFit="cover"
             />
           </div>
-        ) : (
-          <div className={styles.noImage}>
-            <p>{t("Фото жок", "Фото отсутствует")}</p>
-          </div>
-        )}
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 
