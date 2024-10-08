@@ -5,12 +5,32 @@ import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
 import { useGetSuccessfulGraduatesQuery } from "@/redux/api/successful_graduates";
 import graduateFallback from "../../../../../../assets/images/Group 1000001472.png";
 import { useLanguageStore } from "@/stores/useLanguageStore";
+import { useState, useEffect } from "react";
 
 const GraduatesContent = () => {
   const { data } = useGetSuccessfulGraduatesQuery();
   const { isKyrgyz, t } = useLanguageStore();
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  const graduateData = data && data.length > 0 ? data[0] : null;
+  useEffect(() => {
+    if (data && data.length > 0) {
+      const timer = setInterval(() => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % data.length);
+      }, 5000); // Переключение каждые 5 секунд
+
+      return () => clearInterval(timer);
+    }
+  }, [data]);
+
+  const handlePrev = () => {
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + data.length) % data.length);
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % data.length);
+  };
+
+  const graduateData = data && data.length > 0 ? data[currentIndex] : null;
 
   return (
     <section className={scss.content}>
@@ -29,8 +49,8 @@ const GraduatesContent = () => {
               )}
             </span>
             <div className={scss.wrapper}>
-              <GrLinkPrevious />
-              <GrLinkNext />
+              <GrLinkPrevious onClick={handlePrev} />
+              <GrLinkNext onClick={handleNext} />
             </div>
           </div>
           <div className={scss.image}>
