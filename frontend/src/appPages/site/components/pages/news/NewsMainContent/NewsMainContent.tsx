@@ -41,6 +41,60 @@ const NewsMainContent: React.FC = () => {
     setCurrentPage(page);
   };
 
+  const renderPaginationButtons = () => {
+    const pageNumbers = [];
+    const maxVisiblePages = 5;
+    let startPage, endPage;
+
+    if (totalPages <= maxVisiblePages) {
+      startPage = 1;
+      endPage = totalPages;
+    } else {
+      if (currentPage <= 3) {
+        startPage = 1;
+        endPage = 5;
+      } else if (currentPage + 2 >= totalPages) {
+        startPage = totalPages - 4;
+        endPage = totalPages;
+      } else {
+        startPage = currentPage - 2;
+        endPage = currentPage + 2;
+      }
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pageNumbers.push(
+        <button
+          key={i}
+          onClick={() => handlePageChange(i)}
+          className={currentPage === i ? scss.active : ''}
+        >
+          {i}
+        </button>
+      );
+    }
+
+    if (startPage > 1) {
+      pageNumbers.unshift(<span key="start-ellipsis">...</span>);
+      pageNumbers.unshift(
+        <button key={1} onClick={() => handlePageChange(1)}>
+          1
+        </button>
+      );
+    }
+
+    if (endPage < totalPages) {
+      pageNumbers.push(<span key="end-ellipsis">...</span>);
+      pageNumbers.push(
+        <button key={totalPages} onClick={() => handlePageChange(totalPages)}>
+          {totalPages}
+        </button>
+      );
+    }
+
+    return pageNumbers;
+  };
+
   return (
     <section className={scss.NewsMainContent}>
       <div className="container">
@@ -73,17 +127,25 @@ const NewsMainContent: React.FC = () => {
               </div>
             ))}
           </div>
-          <div className={scss.pagination}>
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+          {totalPages > 1 && (
+            <div className={scss.pagination}>
               <button
-                key={page}
-                onClick={() => handlePageChange(page)}
-                className={currentPage === page ? scss.active : ''}
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className={scss.navButton}
               >
-                {page}
+                &lt;
               </button>
-            ))}
-          </div>
+              {renderPaginationButtons()}
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className={scss.navButton}
+              >
+                &gt;
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </section>
