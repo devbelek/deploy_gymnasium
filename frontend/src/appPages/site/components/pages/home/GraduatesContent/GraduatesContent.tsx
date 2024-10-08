@@ -1,80 +1,71 @@
-"use client";
+import React, { useState, useEffect } from 'react';
 import Image from "next/image";
-import scss from "./GraduatesContent.module.scss";
 import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
 import { useGetGraduatesQuery } from "@/redux/api/graduates";
 import graduateFallback from "../../../../../../assets/images/Group 1000001472.png";
 import { useLanguageStore } from "@/stores/useLanguageStore";
-import { useState, useEffect } from "react";
 
 const GraduatesContent = () => {
-  const { data } = useGetGraduatesQuery();
+  const { data: graduates, isLoading, isError } = useGetGraduatesQuery();
   const { isKyrgyz, t } = useLanguageStore();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    if (data && data.length > 0) {
+    if (graduates && graduates.length > 0) {
       const timer = setInterval(() => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % data.length);
-      }, 5000);
-
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % graduates.length);
+      }, 5000); // Переключение каждые 5 секунд
       return () => clearInterval(timer);
     }
-  }, [data]);
+  }, [graduates]);
 
   const handlePrev = () => {
-    if (data) {
-      setCurrentIndex((prevIndex) => (prevIndex - 1 + data.length) % data.length);
+    if (graduates) {
+      setCurrentIndex((prevIndex) => (prevIndex - 1 + graduates.length) % graduates.length);
     }
   };
 
   const handleNext = () => {
-    if (data) {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % data.length);
+    if (graduates) {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % graduates.length);
     }
   };
 
-  const graduateData = data && data.length > 0 ? data[currentIndex] : null;
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error loading graduates data</div>;
+  if (!graduates || graduates.length === 0) return null;
 
-  if (!graduateData) {
-    return null; // или можно отобразить заглушку
-  }
+  const currentGraduate = graduates[currentIndex];
 
   return (
-    <section className={scss.content}>
-      <div className="container">
-        <h1>{t("Бүтүрүүчүлөр", "Выпускники")}</h1>
-        <hr />
-        <div className={scss.graduateContent}>
-          <div className={scss.title}>
-            <p>{graduateData.surname} {graduateData.name} {graduateData.last_name}</p>
-            <span>
-              {t(
-                `${graduateData.year || ''} жылдын бүтүрүүчүсү`,
-                `Выпускник ${graduateData.year || ''} года`
-              )}
-              <br />
-              {t("ОРТ баллы", "Балл ОРТ")}: {graduateData.ort}
-            </span>
-            <div className={scss.wrapper}>
-              <GrLinkPrevious onClick={handlePrev} />
-              <GrLinkNext onClick={handleNext} />
-            </div>
-          </div>
-          <div className={scss.image}>
-            <Image
-              src={graduateData?.image || graduateFallback}
-              alt="graduates"
-              width={340}
-              height={340}
-              quality={100}
-              priority
-              objectFit="cover"
-            />
+    <div className="content">
+      <h1>{t("Бүтүрүүчүлөр", "Выпускники")}</h1>
+      <hr />
+      <div className="graduateContent">
+        <div className="title">
+          <p>{`${currentGraduate.name} ${currentGraduate.surname} ${currentGraduate.last_name}`}</p>
+          <span>
+            {currentGraduate.year && t(
+              `${currentGraduate.year} жылдын бүтүрүүчүсү`,
+              `Выпускник ${currentGraduate.year} года`
+            )}
+          </span>
+          <p>{t("ОРТ баллы", "Балл ОРТ")}: {currentGraduate.ort}</p>
+          <div className="wrapper">
+            <GrLinkPrevious onClick={handlePrev} />
+            <GrLinkNext onClick={handleNext} />
           </div>
         </div>
+        <div className="image">
+          <Image
+            src={currentGraduate.image || graduateFallback}
+            alt={`${currentGraduate.name} ${currentGraduate.surname}`}
+            width={340}
+            height={400}
+          />
+        </div>
       </div>
-    </section>
+    </div>
   );
 };
 
