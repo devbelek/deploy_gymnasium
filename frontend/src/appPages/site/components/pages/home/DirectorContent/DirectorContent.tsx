@@ -1,6 +1,8 @@
 import Image from "next/image";
+import Link from "next/link";
 import scss from "./DirectorContent.module.scss";
 import director from "../../../../../../assets/images/Rectangle 719.png";
+
 const DirectorContent = () => {
   return (
     <section className={scss.content}>
@@ -33,6 +35,9 @@ const DirectorContent = () => {
               Стал прототипом героя сериала «<span>Агай</span>». Гимназия <br />
               уделяет внимание инновациям и развитию учеников.
             </p>
+            <Link href="/ваша-ссылка-здесь">
+              <button className={scss.moreDetailsBtn}>Подробнее</button>
+            </Link>
           </div>
         </div>
       </div>
