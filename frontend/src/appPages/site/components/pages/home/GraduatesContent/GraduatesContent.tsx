@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from 'react';
 import Image from "next/image";
 import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
