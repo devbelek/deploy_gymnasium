@@ -47,27 +47,14 @@ const GraduatesContent = () => {
         <hr />
         <div className={scss.graduateContent}>
           <div className={scss.title}>
-            <p>{graduateData.content || `${graduateData.surname} ${graduateData.name} ${graduateData.last_name}`}</p>
+            <p>{graduateData.surname} {graduateData.name} {graduateData.last_name}</p>
             <span>
-              {graduateData.graduate ? (
-                <>
-                  {graduateData.graduate.name} {graduateData.graduate.last_name}
-                  <br />
-                  {t(
-                    `${graduateData.graduate.year} жылдын бүтүрүүчүсү`,
-                    `Выпускник ${graduateData.graduate.year} года`
-                  )}
-                </>
-              ) : (
-                <>
-                  {t(
-                    `${graduateData.year || ''} жылдын бүтүрүүчүсү`,
-                    `Выпускник ${graduateData.year || ''} года`
-                  )}
-                  <br />
-                  {graduateData.ort && `${t("ОРТ баллы", "Балл ОРТ")}: ${graduateData.ort}`}
-                </>
+              {t(
+                `${graduateData.year || ''} жылдын бүтүрүүчүсү`,
+                `Выпускник ${graduateData.year || ''} года`
               )}
+              <br />
+              {t("ОРТ баллы", "Балл ОРТ")}: {graduateData.ort}
             </span>
             <div className={scss.wrapper}>
               <GrLinkPrevious onClick={handlePrev} />
@@ -76,7 +63,7 @@ const GraduatesContent = () => {
           </div>
           <div className={scss.image}>
             <Image
-              src={graduateData.image || graduateFallback}
+              src={graduateData?.image || graduateFallback}
               alt="graduates"
               width={340}
               height={340}
