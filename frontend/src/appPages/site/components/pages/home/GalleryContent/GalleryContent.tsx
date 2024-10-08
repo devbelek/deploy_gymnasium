@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useGetGalleryQuery } from "@/redux/api/gallery";
@@ -9,9 +9,11 @@ import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import scss from "./GalleryContent.module.scss";
 
 const GalleryContent: React.FC = () => {
-  const { data } = useGetGalleryQuery();
+  const { data, isLoading } = useGetGalleryQuery();
   const { isKyrgyz, t } = useLanguageStore();
-  const [currentImageIndex, setCurrentImageIndex] = useState<number | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState<number | null>(
+    null
+  );
   const router = useRouter();
 
   const handleNavigate = () => {
@@ -28,13 +30,17 @@ const GalleryContent: React.FC = () => {
 
   const handlePrevImage = () => {
     if (data && currentImageIndex !== null) {
-      setCurrentImageIndex((prevIndex) => (prevIndex === null || prevIndex === 0 ? data.length - 1 : prevIndex - 1));
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex === null || prevIndex === 0 ? data.length - 1 : prevIndex - 1
+      );
     }
   };
 
   const handleNextImage = () => {
     if (data && currentImageIndex !== null) {
-      setCurrentImageIndex((prevIndex) => (prevIndex === null || prevIndex === data.length - 1 ? 0 : prevIndex + 1));
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex === null || prevIndex === data.length - 1 ? 0 : prevIndex + 1
+      );
     }
   };
 
@@ -46,14 +52,32 @@ const GalleryContent: React.FC = () => {
             <h1>{t("Сүрөт галереясы", "Фотогалерея")}</h1>
             <hr />
           </div>
-          <div className={scss.galleryGrid}>
-            {data?.slice(0, 6).map((item, index) => (
-              <div key={index} className={scss.galleryItem} onClick={() => handleImageClick(index)}>
-                <div className={scss.imageWrapper}>
-                  <Image src={item.image} alt="img" layout="fill" objectFit="cover" quality={75} />
-                </div>
-              </div>
-            ))}
+          <div className={scss.galleryHorizontalScroll}>
+            {isLoading
+              ? Array(6)
+                  .fill(0)
+                  .map((_, index) => (
+                    <div key={index} className={scss.skeletonItem}>
+                      <div className={scss.skeleton}></div>
+                    </div>
+                  ))
+              : data?.slice(0, 6).map((item, index) => (
+                  <div
+                    key={index}
+                    className={scss.galleryItem}
+                    onClick={() => handleImageClick(index)}
+                  >
+                    <div className={scss.imageWrapper}>
+                      <Image
+                        src={item.image}
+                        alt="img"
+                        layout="fill"
+                        objectFit="cover"
+                        quality={75}
+                      />
+                    </div>
+                  </div>
+                ))}
           </div>
           <div className={scss.buttonContainer}>
             <button className={scss.button} onClick={handleNavigate}>
@@ -65,7 +89,10 @@ const GalleryContent: React.FC = () => {
 
       {currentImageIndex !== null && data && (
         <div className={scss.modalOverlay} onClick={handleCloseZoom}>
-          <div className={scss.modalContent} onClick={(e) => e.stopPropagation()}>
+          <div
+            className={scss.modalContent}
+            onClick={(e) => e.stopPropagation()}
+          >
             <button className={scss.closeButton} onClick={handleCloseZoom}>
               <AiOutlineClose />
             </button>
@@ -77,10 +104,16 @@ const GalleryContent: React.FC = () => {
                 objectFit="contain"
               />
             </div>
-            <button className={`${scss.navButton} ${scss.prevButton}`} onClick={handlePrevImage}>
+            <button
+              className={`${scss.navButton} ${scss.prevButton}`}
+              onClick={handlePrevImage}
+            >
               <BiChevronLeft />
             </button>
-            <button className={`${scss.navButton} ${scss.nextButton}`} onClick={handleNextImage}>
+            <button
+              className={`${scss.navButton} ${scss.nextButton}`}
+              onClick={handleNextImage}
+            >
               <BiChevronRight />
             </button>
           </div>
