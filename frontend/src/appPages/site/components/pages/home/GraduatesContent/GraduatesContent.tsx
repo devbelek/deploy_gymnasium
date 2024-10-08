@@ -2,13 +2,13 @@
 import Image from "next/image";
 import scss from "./GraduatesContent.module.scss";
 import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
-import { useGetSuccessfulGraduatesQuery } from "@/redux/api/successful_graduates";
+import { useGetGraduatesQuery } from "@/redux/api/graduates";
 import graduateFallback from "../../../../../../assets/images/Group 1000001472.png";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { useState, useEffect } from "react";
 
 const GraduatesContent = () => {
-  const { data } = useGetSuccessfulGraduatesQuery();
+  const { data } = useGetGraduatesQuery();
   const { isKyrgyz, t } = useLanguageStore();
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -16,21 +16,29 @@ const GraduatesContent = () => {
     if (data && data.length > 0) {
       const timer = setInterval(() => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % data.length);
-      }, 5000); // Переключение каждые 5 секунд
+      }, 5000);
 
       return () => clearInterval(timer);
     }
   }, [data]);
 
   const handlePrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + data.length) % data.length);
+    if (data) {
+      setCurrentIndex((prevIndex) => (prevIndex - 1 + data.length) % data.length);
+    }
   };
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % data.length);
+    if (data) {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % data.length);
+    }
   };
 
   const graduateData = data && data.length > 0 ? data[currentIndex] : null;
+
+  if (!graduateData) {
+    return null; // или можно отобразить заглушку
+  }
 
   return (
     <section className={scss.content}>
@@ -39,14 +47,14 @@ const GraduatesContent = () => {
         <hr />
         <div className={scss.graduateContent}>
           <div className={scss.title}>
-            <p>{graduateData?.content}</p>
+            <p>{graduateData.surname} {graduateData.name} {graduateData.last_name}</p>
             <span>
-              {graduateData?.graduate?.name} {graduateData?.graduate?.last_name}
-              <br />
               {t(
-                `${graduateData?.graduate?.year} жылдын бүтүрүүчүсү`,
-                `Выпускник ${graduateData?.graduate?.year} года`
+                `${graduateData.year || ''} жылдын бүтүрүүчүсү`,
+                `Выпускник ${graduateData.year || ''} года`
               )}
+              <br />
+              {t("ОРТ баллы", "Балл ОРТ")}: {graduateData.ort}
             </span>
             <div className={scss.wrapper}>
               <GrLinkPrevious onClick={handlePrev} />
@@ -55,7 +63,7 @@ const GraduatesContent = () => {
           </div>
           <div className={scss.image}>
             <Image
-              src={graduateData?.image || graduateFallback}
+              src={graduateFallback}
               alt="graduates"
               width={340}
               height={340}
