@@ -88,7 +88,14 @@
   .GalleryMainContent {
     .gallery_card {
       overflow-x: auto;
-      grid-template-columns: repeat(6, 1fr);
+      display: flex;
+    }
+
+    .galleryItem {
+      img {
+        width: 350px;
+        height: 250px;
+      }
     }
   }
 }
