@@ -35,7 +35,7 @@ const DirectorContent = () => {
               Стал прототипом героя сериала «<span>Агай</span>». Гимназия <br />
               уделяет внимание инновациям и развитию учеников.
             </p>
-            <Link href="/ваша-ссылка-здесь">
+            <Link href="https://limon.kg/ru/news:76566">
               <button className={scss.moreDetailsBtn}>Подробнее</button>
             </Link>
           </div>
