@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useMemo } from "react";
 import scss from "./NewsMainContent.module.scss";
 import Image from "next/image";
 import { useGetNewsQuery } from "@/redux/api/news";
@@ -17,9 +17,28 @@ const NewsMainContent: React.FC = () => {
   const { data: news } = useGetNewsQuery();
   const router = useRouter();
   const { isKyrgyz, t } = useLanguageStore();
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 9;
+
+  const sortedNews = useMemo(() => {
+    return news
+      ? [...news].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+      : [];
+  }, [news]);
+
+  const currentNews = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    return sortedNews.slice(startIndex, startIndex + itemsPerPage);
+  }, [sortedNews, currentPage]);
+
+  const totalPages = Math.ceil((sortedNews?.length || 0) / itemsPerPage);
 
   const handleNavigate = (id: number) => {
     router.push(`/news/${id}`);
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
   };
 
   return (
@@ -31,7 +50,7 @@ const NewsMainContent: React.FC = () => {
             <hr />
           </div>
           <div className={scss.news_cards}>
-            {news?.map((item) => (
+            {currentNews.map((item) => (
               <div
                 key={item.id}
                 className={scss.news_card}
@@ -52,6 +71,17 @@ const NewsMainContent: React.FC = () => {
                   </div>
                 </div>
               </div>
+            ))}
+          </div>
+          <div className={scss.pagination}>
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              <button
+                key={page}
+                onClick={() => handlePageChange(page)}
+                className={currentPage === page ? scss.active : ''}
+              >
+                {page}
+              </button>
             ))}
           </div>
         </div>
