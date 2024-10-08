@@ -198,7 +198,8 @@
   .GalleryMainContent {
     .content {
       .galleryGrid {
-        grid-template-columns: 1fr;
+        overflow-x: auto;
+        grid-template-columns: repeat(6, 1fr);
       }
     }
   }
