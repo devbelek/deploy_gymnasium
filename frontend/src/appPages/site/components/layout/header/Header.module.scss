@@ -211,20 +211,45 @@
   }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 884px) {
   .header {
     position: absolute;
     background: none;
     .hamburger {
       font-size: 50px;
+      display: flex;
     }
 
     .nav {
       display: none;
       background: #8b54a7a1;
+      transition: all 0.3s ease-in-out;
+
       &.active {
-        display: grid;
+        display: block;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        padding: 10px 0;
       }
+
+      ul {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 0;
+
+        li {
+          padding: 5px 0;
+          border-bottom: 1px solid #fff;
+
+          &:last-child {
+            border-bottom: none;
+          }
+        }
+      }
+
       a {
         font-size: 20px;
       }
@@ -255,87 +280,6 @@
       .normal {
         font-size: 26px;
       }
-    }
-  }
-}
-
-@media (max-width: 884px) {
-  .header {
-    position: absolute;
-    background: none;
-    .content {
-      align-items: center;
-    }
-
-    .hamburger {
-      display: flex;
-      font-size: 50px;
-    }
-
-    .nav {
-      display: none;
-      background: #8b54a7a1;
-      transition: all 0.3s ease-in-out;
-
-      &.active {
-        display: block;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        z-index: 100;
-        padding: 10px 0;
-      }
-
-      &.active {
-        display: none;
-      }
-      .disp {
-        display: block;
-      }
-
-      ul {
-        flex-direction: column;
-        align-items: center;
-        padding: 10px 0;
-
-        li {
-          padding: 5px 0;
-          border-bottom: 1px solid #fff;
-
-          &:last-child {
-            border-bottom: none;
-          }
-        }
-      }
-
-      a {
-        font-size: 30px;
-      }
-    }
-
-    .search {
-      display: none;
-    }
-
-    .language {
-      .bold {
-        font-size: 26px;
-      }
-
-      .normal {
-        font-size: 26px;
-      }
-    }
-
-    .auth {
-      button {
-        font-size: 26px;
-      }
-    }
-
-    .logo {
-      display: none;
     }
   }
 }
@@ -389,12 +333,6 @@
         padding: 10px 0;
       }
 
-      &.active {
-        display: none;
-      }
-      .disp {
-        display: block;
-      }
       a {
         font-size: 30px;
       }
@@ -426,13 +364,6 @@
       background-color: #8b54a77a;
       display: none;
       transition: all 0.3s ease-in-out;
-
-      &.active {
-        display: none;
-      }
-      .disp {
-        display: block;
-      }
 
       &.active {
         display: block;
@@ -510,13 +441,6 @@
     .nav {
       a {
         font-size: 14px;
-      }
-
-      &.active {
-        display: block;
-      }
-      .disp {
-        display: block;
       }
     }
 

@@ -24,6 +24,7 @@ const Header = () => {
   const [query, setQuery] = useState<string>("");
   const [hasFocusInput, setHasFocusInput] = useState(false);
   const profileMenuRef = useRef<HTMLDivElement>(null);
+  const navRef = useRef<HTMLDivElement>(null);
 
   const { isKyrgyz, setIsKyrgyz, t } = useLanguageStore();
 
@@ -92,6 +93,34 @@ const Header = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 884) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        navRef.current &&
+        !navRef.current.contains(event.target as Node) &&
+        window.innerWidth <= 884
+      ) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const renderProfileButton = () => {
     if (!account) {
       return <button onClick={handleNavigate}>{t("Кирүү", "Войти")}</button>;
@@ -138,7 +167,10 @@ const Header = () => {
             <RxHamburgerMenu />
           </div>
 
-          <nav className={`${scss.nav} ${isMenuOpen ? scss.active : ""}`}>
+          <nav
+            ref={navRef}
+            className={`${scss.nav} ${isMenuOpen ? scss.active : ""}`}
+          >
             <ul onClick={() => setIsMenuOpen(false)}>
               <li>
                 <Link href="/">{t("Башкы бет", "Главная")}</Link>
