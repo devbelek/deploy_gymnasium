@@ -9,7 +9,7 @@ import { useLanguageStore } from "@/stores/useLanguageStore";
 
 interface DonationItem {
   id: number;
-  user: number | string; // Өзгөртүлдү: user саны же тексти болушу мүмкүн
+  user: number | string;
   amount: string;
   date: string;
   comment: string | null;
@@ -35,6 +35,13 @@ const FondContent: React.FC = () => {
 
   const closeModal = () => {
     setSelectedImage(null);
+  };
+
+  const getImageUrl = (confirmationFile: string) => {
+    if (confirmationFile.startsWith("http")) {
+      return confirmationFile;
+    }
+    return `${process.env.NEXT_PUBLIC_ENDPOINT}${confirmationFile}`;
   };
 
   return (
@@ -63,12 +70,18 @@ const FondContent: React.FC = () => {
                   <div key={item.id} className={scss.donationItem}>
                     <div className={scss.donorInfo}>
                       <Image
-                        src={item.confirmation_file || "/placeholder.jpg"}
+                        src={getImageUrl(item.confirmation_file)}
                         alt={item.user.toString()}
                         width={60}
                         height={60}
                         className={scss.donorImage}
-                        onClick={() => handleImageClick(item.confirmation_file)}
+                        onClick={() =>
+                          handleImageClick(getImageUrl(item.confirmation_file))
+                        }
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = "/placeholder.jpg";
+                        }}
                       />
                       <h2 className={scss.donor}>
                         {t("Жөнөтүүчү", "Отправитель")}: {item.user}
