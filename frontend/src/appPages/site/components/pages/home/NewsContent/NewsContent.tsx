@@ -1,5 +1,3 @@
-// NewsContent.tsx
-
 "use client";
 import React from "react";
 import { useGetNewsQuery } from "@/redux/api/news";
@@ -10,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 
 const getImageUrl = (imageUrl: string) => {
-  const cleanUrl = imageUrl.replace(/^https?:\/\/[^/]+\/media/, '');
+  const cleanUrl = imageUrl.replace(/^https?:\/\/[^/]+\/media/, "");
   return `${process.env.NEXT_PUBLIC_API}/media${cleanUrl}`;
 };
 
@@ -23,22 +21,38 @@ const NewsContent: React.FC = () => {
     router.push("/news");
   };
 
+  // Сортировка новостей по дате создания (от новых к старым)
+  const sortedNews = news
+    ?.slice()
+    .sort(
+      (a, b) =>
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    );
+
   return (
     <section id={scss.content}>
       <div className="container">
         <h1>{t("Жаңылыктар", "Новости")}</h1>
         <div className={scss.newsCard}>
-          {news?.slice(0, 6).map((item) => (
+          {sortedNews?.slice(0, 6).map((item) => (
             <div className={scss.card} key={item.id}>
               <Image
                 src={getImageUrl(item.image)}
-                alt={isKyrgyz ? (item.description_ky || '') : (item.description_ru || '')}
+                alt={
+                  isKyrgyz
+                    ? item.description_ky || ""
+                    : item.description_ru || ""
+                }
                 width={300}
                 height={200}
                 priority
                 quality={70}
               />
-              <p>{isKyrgyz ? (item.description_ky || '') : (item.description_ru || '')}</p>
+              <p>
+                {isKyrgyz
+                  ? item.description_ky || ""
+                  : item.description_ru || ""}
+              </p>
               <article className={scss.end}>
                 <span>{item.created_at.slice(0, 10)}</span>
                 <div className={scss.comments}>
