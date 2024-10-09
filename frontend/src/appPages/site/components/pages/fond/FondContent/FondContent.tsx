@@ -7,18 +7,29 @@ import Link from "next/link";
 import Image from "next/image";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 
-const FondContent = () => {
+interface DonationItem {
+  id: number;
+  user: number | string; // Өзгөртүлдү: user саны же тексти болушу мүмкүн
+  amount: string;
+  date: string;
+  comment: string | null;
+  confirmation_file: string;
+  is_verified: boolean;
+  verification_message: string;
+}
+
+const FondContent: React.FC = () => {
   const { data, isLoading, isError } = useGetFondQuery();
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const { isKyrgyz, t } = useLanguageStore();
 
   const totalPrice = data
-    ? data.reduce((total, item) => {
+    ? data.reduce((total: number, item: DonationItem) => {
         return item.is_verified ? total + Math.floor(+item.amount) : total;
       }, 0)
     : 0;
 
-  const handleImageClick = (imageUrl) => {
+  const handleImageClick = (imageUrl: string) => {
     setSelectedImage(imageUrl);
   };
 
@@ -34,9 +45,7 @@ const FondContent = () => {
           <hr className={scss.divider} />
 
           {isLoading && (
-            <p className={scss.message}>
-              {t("Жүктөлүүдө...", "Загрузка...")}
-            </p>
+            <p className={scss.message}>{t("Жүктөлүүдө...", "Загрузка...")}</p>
           )}
           {isError && (
             <p className={scss.message}>
@@ -49,17 +58,17 @@ const FondContent = () => {
 
           {data && data.length > 0 ? (
             <div className={scss.donationsList}>
-              {data.map((item) =>
+              {data.map((item: DonationItem) =>
                 item.is_verified ? (
                   <div key={item.id} className={scss.donationItem}>
                     <div className={scss.donorInfo}>
                       <Image
-                        src={item.image || "/placeholder.jpg"}
-                        alt={item.user}
+                        src={item.confirmation_file || "/placeholder.jpg"}
+                        alt={item.user.toString()}
                         width={60}
                         height={60}
                         className={scss.donorImage}
-                        onClick={() => handleImageClick(item.image)}
+                        onClick={() => handleImageClick(item.confirmation_file)}
                       />
                       <h2 className={scss.donor}>
                         {t("Жөнөтүүчү", "Отправитель")}: {item.user}
@@ -77,10 +86,7 @@ const FondContent = () => {
             </div>
           ) : (
             <p className={scss.message}>
-              {t(
-                "Кайрымдуулук табылган жок.",
-                "Пожертвований не найдено."
-              )}
+              {t("Кайрымдуулук табылган жок.", "Пожертвований не найдено.")}
             </p>
           )}
 
