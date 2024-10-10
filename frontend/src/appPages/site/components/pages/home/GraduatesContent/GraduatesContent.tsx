@@ -1,4 +1,5 @@
 "use client";
+import { useState, useEffect } from 'react';
 import Image from "next/image";
 import scss from "./GraduatesContent.module.scss";
 import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
@@ -10,13 +11,44 @@ import { useRouter } from "next/navigation";
 const GraduatesContent = () => {
   const { data } = useGetSuccessfulGraduatesQuery();
   const { isKyrgyz, t } = useLanguageStore();
-
-  const graduateData = data && data.length > 0 ? data[0] : null;
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const router = useRouter();
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      handleNext();
+    }, 5000); // Смена слайда каждые 5 секунд
+
+    return () => clearInterval(interval);
+  }, [currentIndex, data]);
+
+  const handlePrevious = () => {
+    if (!isAnimating && data) {
+      setIsAnimating(true);
+      setCurrentIndex((prevIndex) =>
+        prevIndex === 0 ? data.length - 1 : prevIndex - 1
+      );
+      setTimeout(() => setIsAnimating(false), 500);
+    }
+  };
+
+  const handleNext = () => {
+    if (!isAnimating && data) {
+      setIsAnimating(true);
+      setCurrentIndex((prevIndex) =>
+        prevIndex === data.length - 1 ? 0 : prevIndex + 1
+      );
+      setTimeout(() => setIsAnimating(false), 500);
+    }
+  };
+
   const handleNavigate = () => {
     router.push("/graduates");
   };
+
+  const graduateData = data && data.length > 0 ? data[currentIndex] : null;
 
   return (
     <section className={scss.content}>
@@ -24,7 +56,7 @@ const GraduatesContent = () => {
         <div className={scss.allGraduates}>
           <h1>{t("Бүтүрүүчүлөр", "Выпускники")}</h1>
           <hr />
-          <div className={scss.graduateContent}>
+          <div className={`${scss.graduateContent} ${isAnimating ? scss.animating : ''}`}>
             <div className={scss.title}>
               <p>{graduateData?.content}</p>
               <span>
@@ -37,8 +69,8 @@ const GraduatesContent = () => {
                 )}
               </span>
               <div className={scss.wrapper}>
-                <GrLinkPrevious />
-                <GrLinkNext />
+                <GrLinkPrevious onClick={handlePrevious} />
+                <GrLinkNext onClick={handleNext} />
               </div>
             </div>
             <div className={scss.image}>
