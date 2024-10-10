@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   useGetAccountQuery,
   useUpdateAccountMutation,
@@ -21,7 +21,6 @@ import styles from "./Profile.module.scss";
 interface ProfileFormData {
   user: string;
   avatar: FileList | null;
-  about: string | null;
 }
 
 const getImageUrl = (imageUrl: string | null | undefined) => {
@@ -47,7 +46,6 @@ const Profile: React.FC = () => {
     if (data) {
       reset({
         user: data.user,
-        about: data.about,
       });
       setPreviewUrl(data.avatar ? getImageUrl(data.avatar) : null);
     }
@@ -75,16 +73,11 @@ const Profile: React.FC = () => {
       if (formData.avatar && formData.avatar.length > 0) {
         formDataToSend.append("avatar", formData.avatar[0]);
       }
-      if (formData.about !== null) {
-        formDataToSend.append("about", formData.about);
-      }
 
       const result = await updateAccount(formDataToSend).unwrap();
       setIsEditing(false);
-      reset({
-        user: result.user,
-        about: result.about,
-      });
+      // Update the local state with the new data
+      setValue("user", result.user);
       setPreviewUrl(result.avatar ? getImageUrl(result.avatar) : null);
       refetch();
       alert("Профиль ийгиликтүү жаңыртылды");
@@ -129,11 +122,10 @@ const Profile: React.FC = () => {
         </div>
         <div className={styles.profileInfo}>
           <h2 className={styles.userName}>{watch("user")}</h2>
-          <p className={styles.userAbout}>{watch("about")}</p>
           <div className={styles.profileActions}>
             {!isEditing && (
               <button onClick={handleEdit} className={styles.editButton}>
-                <FaEdit />
+                <FaEdit />{" "}
                 <span className={styles.buttonText}>Профилди өзгөртүү</span>
               </button>
             )}
@@ -152,10 +144,6 @@ const Profile: React.FC = () => {
               <div className={styles.formField}>
                 <label htmlFor="user">Аты</label>
                 <input id="user" {...register("user", { required: true })} />
-              </div>
-              <div className={styles.formField}>
-                <label htmlFor="about">Жөнүндө</label>
-                <textarea id="about" {...register("about")} />
               </div>
               <div className={styles.formField}>
                 <label htmlFor="avatar">Аватарды өзгөртүү</label>
