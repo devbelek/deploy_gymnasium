@@ -37,7 +37,8 @@ const Profile: React.FC = () => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const router = useRouter();
 
-  const { register, handleSubmit, reset, watch } = useForm<ProfileFormData>();
+  const { register, handleSubmit, reset, watch, setValue } =
+    useForm<ProfileFormData>();
 
   const watchAvatar = watch("avatar");
 
@@ -73,8 +74,11 @@ const Profile: React.FC = () => {
         formDataToSend.append("avatar", formData.avatar[0]);
       }
 
-      await updateAccount(formDataToSend).unwrap();
+      const result = await updateAccount(formDataToSend).unwrap();
       setIsEditing(false);
+      // Update the local state with the new data
+      setValue("user", result.user);
+      setPreviewUrl(result.avatar ? getImageUrl(result.avatar) : null);
       refetch();
       alert("Профиль ийгиликтүү жаңыртылды");
     } catch (error) {
@@ -117,7 +121,7 @@ const Profile: React.FC = () => {
           </div>
         </div>
         <div className={styles.profileInfo}>
-          <h2 className={styles.userName}>{data?.user}</h2>
+          <h2 className={styles.userName}>{watch("user")}</h2>
           <div className={styles.profileActions}>
             {!isEditing && (
               <button onClick={handleEdit} className={styles.editButton}>
