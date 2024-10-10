@@ -4,7 +4,7 @@ import "./globals.scss";
 import LayoutClient from "./layout.client";
 
 const inter = Inter({ subsets: ["latin"] });
-const notoSans = Noto_Sans({ subsets: ["latin", "cyrillic"] }); // Добавляем латинский и кириллический
+const notoSans = Noto_Sans({ subsets: ["latin", "cyrillic"] });
 
 export const metadata: Metadata = {
   title: "Экспериментальная гимназия №3",
