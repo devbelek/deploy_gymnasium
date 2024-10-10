@@ -1,255 +1,313 @@
 .GraduatesMainContent {
-  .content {
-    padding: 80px 0 50px 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
-  }
-
-  .titleText {
-    font-size: 24px;
-    font-weight: 600;
-    line-height: 1.4;
-    text-align: center;
-    color: #000000;
-    position: relative;
-    animation: fadeIn 0.7s ease-out;
-
-    &::after {
-      content: "";
-      position: absolute;
-      bottom: -8px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 50px;
-      border-bottom: 2px solid black;
+    margin-top: 30px;
+    .content {
+      padding: 80px 0 50px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
     }
-  }
-
-  .mainContent {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
-
-    &_title {
-      font-size: 28px;
-      font-weight: 700;
+  
+    .titleText {
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 1.4;
       text-align: center;
-      animation: fadeIn 0.7s ease-out 0.3s both;
+      color: #000000;
+      position: relative;
+      animation: fadeIn 0.7s ease-out;
+  
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50px;
+        border-bottom: 2px solid black;
+      }
     }
-  }
-
-  .graduates {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-    width: 100%;
-    justify-items: center;
-  }
-
-  .mainContent_graduates {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: slideInFromTop 0.7s ease-out forwards;
-
-    @for $i from 1 through 12 {
-      &:nth-child(#{$i}) {
-        animation-delay: #{$i * 0.1}s;
+  
+    .mainContent {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+  
+      &_title {
+        font-size: 28px;
+        font-weight: 700;
+        text-align: center;
+        animation: fadeIn 0.7s ease-out 0.3s both;
+      }
+    }
+  
+    .graduates {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(300px, 1fr));
+      gap: 38px;
+      width: 100%;
+      justify-items: center;
+    }
+  
+    .mainContent_graduates {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideInFromTop 0.7s ease-out forwards;
+  
+      @for $i from 1 through 12 {
+        &:nth-child(#{$i}) {
+          animation-delay: #{$i * 0.1}s;
+        }
+      }
+    }
+  
+    .graduates_Img {
+      width: 100%;
+      max-width: 350px;
+      height: 450px;
+      object-fit: cover;
+      border-radius: 15px;
+      border: 5px solid #fb8f8f;
+      border-bottom-width: 8px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: zoom-in;
+  
+      &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+    }
+  
+    .graduateinfo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+  
+    .nameInfo {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-align: center;
+      padding: 15px 0;
+    }
+  
+    .graduateName {
+      font-size: 28px;
+      font-weight: 600;
+      line-height: 1.2;
+  
+      > div {
+        margin-bottom: 5px;
+      }
+    }
+  
+    .graduateDate {
+      font-size: 24px;
+      font-weight: 400;
+      color: rgb(72, 70, 70);
+    }
+  
+    .hr {
+      border: none;
+      border-top: 1px solid rgb(156, 156, 156);
+      width: 70%;
+      margin: 10px 0;
+    }
+  
+    .biography {
+      padding: 15px 0;
+    }
+  
+    .graduateBio {
+      font-size: 20px;
+      font-weight: 400;
+      color: rgb(84, 80, 80);
+      line-height: 1.5;
+      text-align: center;
+    }
+  
+    .zoomOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      cursor: zoom-out;
+  
+      .zoomContainer {
+        position: relative;
+        width: 80%;
+        height: 80%;
+        max-width: 1200px;
+        max-height: 800px;
+      }
+  
+      img {
+        object-fit: contain;
+        border-radius: 15px;
+      }
+    }
+  
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  
+    @keyframes slideInFromTop {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  
+    // Медиа сурамдар үчүн жооптуу дизайн
+    @media (max-width: 1140px) {
+      .titleText {
+        font-size: 20px;
+      }
+  
+      .mainContent_title {
+        font-size: 24px;
+      }
+  
+      .graduates_Img {
+        height: 400px;
+      }
+  
+      .graduateName {
+        font-size: 22px;
+      }
+  
+      .graduateDate,
+      .graduateBio {
+        font-size: 14px;
+      }
+    }
+  
+    @media (max-width: 884px) {
+      .content {
+        padding: 60px 0 30px 0;
+        gap: 20px;
+      }
+  
+      .titleText {
+        font-size: 26px;
+      }
+  
+      .graduates {
+        grid-template-columns: repeat(2, minmax(300px, 1fr));
+      }
+  
+      .mainContent_title {
+        font-size: 28px;
+      }
+  
+      .graduates_Img {
+        height: 350px;
+      }
+  
+      .graduateName {
+        font-size: 28px;
+      }
+  
+      .graduateDate {
+        font-size: 22px;
+      }
+      .graduateBio {
+        font-size: 20px;
+        font-weight: 400;
+      }
+    }
+  
+    @media (max-width: 768px) {
+      .content {
+        padding: 60px 0 30px 0;
+        gap: 20px;
+      }
+  
+      .titleText {
+        font-size: 28px;
+      }
+  
+      .graduates {
+        grid-template-columns: repeat(2, minmax(300px, 1fr));
+      }
+  
+      .mainContent_title {
+        font-size: 28px;
+      }
+  
+      .graduates_Img {
+        height: 350px;
+      }
+  
+      .graduateName {
+        font-size: 28px;
+      }
+  
+      .graduateDate {
+        font-size: 22px;
+      }
+  
+      .graduateBio {
+        font-size: 18px;
+      }
+    }
+  
+    @media (max-width: 480px) {
+      .content {
+        padding: 40px 0 20px 0;
+        gap: 15px;
+      }
+  
+      .titleText {
+        font-size: 16px;
+      }
+  
+      .mainContent_title {
+        font-size: 20px;
+      }
+  
+      .graduates {
+        grid-template-columns: repeat(1, minmax(300px, 1fr));
+      }
+  
+      .graduates_Img {
+        height: 300px;
+      }
+  
+      .graduateName {
+        font-size: 28px;
+      }
+  
+      .graduateDate {
+        font-size: 20px;
+      }
+      .graduateBio {
+        font-size: 16px;
       }
     }
   }
-
-  .graduates_Img {
-    width: 100%;
-    max-width: 350px;
-    height: 450px;
-    object-fit: cover;
-    border-radius: 15px;
-    border: 5px solid #fb8f8f;
-    border-bottom-width: 8px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: zoom-in;
-
-    &:hover {
-      transform: scale(1.05);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    }
-  }
-
-  .graduateinfo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-  }
-
-  .nameInfo {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    text-align: center;
-    padding: 15px 0;
-  }
-
-  .graduateName {
-    font-size: 24px;
-    font-weight: 600;
-    line-height: 1.2;
-
-    > div {
-      margin-bottom: 5px;
-    }
-  }
-
-  .graduateDate {
-    font-size: 16px;
-    font-weight: 300;
-  }
-
-  .hr {
-    border: none;
-    border-top: 1px solid rgb(156, 156, 156);
-    width: 70%;
-    margin: 10px 0;
-  }
-
-  .biography {
-    padding: 15px 0;
-  }
-
-  .graduateBio {
-    font-size: 16px;
-    font-weight: 300;
-    line-height: 1.5;
-    text-align: center;
-  }
-
-  .zoomOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    cursor: zoom-out;
-
-    img {
-      max-width: 90%;
-      max-height: 90%;
-      object-fit: contain;
-      border-radius: 15px;
-    }
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes slideInFromTop {
-    from {
-      opacity: 0;
-      transform: translateY(-20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  // Медиа сурамдар үчүн жооптуу дизайн
-  @media (max-width: 1140px) {
-    .titleText {
-      font-size: 20px;
-    }
-
-    .mainContent_title {
-      font-size: 24px;
-    }
-
-    .graduates_Img {
-      height: 400px;
-    }
-
-    .graduateName {
-      font-size: 22px;
-    }
-
-    .graduateDate,
-    .graduateBio {
-      font-size: 14px;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .content {
-      padding: 60px 0 30px 0;
-      gap: 20px;
-    }
-
-    .titleText {
-      font-size: 18px;
-    }
-
-    .mainContent_title {
-      font-size: 22px;
-    }
-
-    .graduates_Img {
-      height: 350px;
-    }
-
-    .graduateName {
-      font-size: 20px;
-    }
-
-    .graduateDate,
-    .graduateBio {
-      font-size: 13px;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .content {
-      padding: 40px 0 20px 0;
-      gap: 15px;
-    }
-
-    .titleText {
-      font-size: 16px;
-    }
-
-    .mainContent_title {
-      font-size: 20px;
-    }
-
-    .graduates_Img {
-      height: 300px;
-    }
-
-    .graduateName {
-      font-size: 18px;
-    }
-
-    .graduateDate,
-    .graduateBio {
-      font-size: 12px;
-    }
-  }
-}
+  

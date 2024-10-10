@@ -80,12 +80,14 @@ const GraduatesMainContent = () => {
       </div>
       {selectedImage && (
         <div className={scss.zoomOverlay} onClick={handleCloseZoom}>
-          <Image
-            src={selectedImage}
-            alt="Zoomed graduate"
-            layout="fill"
-            objectFit="contain"
-          />
+          <div className={scss.zoomContainer}>
+            <Image
+              src={selectedImage}
+              alt="Zoomed graduate"
+              layout="fill"
+              objectFit="contain"
+            />
+          </div>
         </div>
       )}
     </section>
