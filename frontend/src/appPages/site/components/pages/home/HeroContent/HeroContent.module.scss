@@ -114,6 +114,34 @@
   }
 }
 
+@media (max-width: 576px) {
+  #content {
+    .text {
+      padding: 0;
+      text-align: center;
+      h1 {
+        font-size: 40px;
+      }
+
+      h2 {
+        font-size: 36px;
+      }
+    }
+    .profileImage {
+      display: flex;
+      justify-content: center;
+      img {
+        top: -220px;
+        width: 190px;
+        height: 190px;
+      }
+    }
+    .subtext {
+      padding: 140px;
+    }
+  }
+}
+
 @media (max-width: 429px) {
   #content {
     .profileImage {
