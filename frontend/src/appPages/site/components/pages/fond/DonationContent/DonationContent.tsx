@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 import { usePostDonationsMutation } from "@/redux/api/fond";
 import { SubmitHandler, useForm } from "react-hook-form";
 import styles from "./DonationContent.module.scss";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
 interface CreateDonationRequest {
   amount: number;
@@ -24,6 +25,7 @@ const DonationContent: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const { isKyrgyz, t } = useLanguageStore();
 
   const {
     register,
@@ -36,7 +38,7 @@ const DonationContent: React.FC = () => {
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/csrf/`, {
-      credentials: 'include',
+      credentials: "include",
     });
   }, []);
 
@@ -58,15 +60,20 @@ const DonationContent: React.FC = () => {
     const file = data.confirmation_file[0];
     if (file) {
       console.log("File type:", file.type);
-      if (file.type !== 'application/pdf') {
-        alert("Пожалуйста, выберите файл в формате PDF.");
+      if (file.type !== "application/pdf") {
+        alert(
+          t(
+            "PDF форматындагы файлды тандаңыз.",
+            "Пожалуйста, выберите файл в формате PDF."
+          )
+        );
         setIsLoading(false);
         return;
       }
       formData.append("confirmation_file", file);
     } else {
       console.error("No file selected");
-      alert("Пожалуйста, выберите файл.");
+      alert(t("Файлды тандаңыз.", "Пожалуйста, выберите файл."));
       setIsLoading(false);
       return;
     }
@@ -83,19 +90,27 @@ const DonationContent: React.FC = () => {
     try {
       const result = await postDonationsMutation(formData).unwrap();
       console.log("API response:", result);
-      alert("Пожертвование успешно отправлено!");
+      alert(t("Ийгиликтүү жөнөтүлдү!", "Успешно отправлено!"));
     } catch (error) {
       console.error("Full error object:", error);
-      if (error && typeof error === 'object' && 'response' in error) {
+      if (error && typeof error === "object" && "response" in error) {
         const errorWithResponse = error as ErrorWithResponse;
         if (errorWithResponse.response) {
           console.error("Response data:", errorWithResponse.response.data);
           console.error("Response status:", errorWithResponse.response.status);
-          console.error("Response headers:", errorWithResponse.response.headers);
+          console.error(
+            "Response headers:",
+            errorWithResponse.response.headers
+          );
         }
       }
       console.error("Error sending donation:", error);
-      alert("Произошла ошибка при отправке пожертвования. Пожалуйста, попробуйте еще раз.");
+      alert(
+        t(
+          "Жөнөтүүдө ката кетти. Кайра аракет кылыңыз.",
+          "Произошла ошибка при отправке . Пожалуйста, попробуйте еще раз."
+        )
+      );
     } finally {
       setIsLoading(false);
     }
@@ -108,19 +123,31 @@ const DonationContent: React.FC = () => {
   return (
     <div className={styles.donationContent}>
       <div className={styles.content}>
-        <h2 className={styles.heading}>Сделать пожертвование</h2>
+        <h2 className={styles.heading}>
+          {t("Акча толуктоо", "Сделать пополнение")}
+        </h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.formGroup}>
-            <label className={styles.label} htmlFor="amount">Сумма (сом):</label>
+            <label className={styles.label} htmlFor="amount">
+              {t("Сумма (сом):", "Сумма (сом):")}
+            </label>
             <input
               className={styles.input}
               type="number"
               id="amount"
               step="0.01"
               {...register("amount", {
-                required: "Сумма обязательна",
-                min: { value: 0.01, message: "Сумма должна быть больше 0" },
-                validate: (value) => !isNaN(value) || "Введите корректное число"
+                required: t("Сумма милдеттүү", "Сумма обязательна"),
+                min: {
+                  value: 0.01,
+                  message: t(
+                    "Сумма 0дөн чоң болушу керек",
+                    "Сумма должна быть больше 0"
+                  ),
+                },
+                validate: (value) =>
+                  !isNaN(value) ||
+                  t("Туура сан киргизиңиз", "Введите корректное число"),
               })}
             />
             {errors.amount && (
@@ -129,22 +156,31 @@ const DonationContent: React.FC = () => {
           </div>
 
           <div className={styles.formGroup}>
-            <label className={styles.label} htmlFor="confirmation_file">Квитанция о переводе (только PDF):</label>
+            <label className={styles.label} htmlFor="confirmation_file">
+              {t(
+                "Которуу квитанциясы (PDF гана):",
+                "Квитанция о переводе (только PDF):"
+              )}
+            </label>
             <input
               type="file"
               id="confirmation_file"
               accept=".pdf"
-              style={{ display: 'none' }}
+              style={{ display: "none" }}
               {...register("confirmation_file", {
-                required: "Файл обязателен",
+                required: t("Файл милдеттүү", "Файл обязателен"),
               })}
               ref={(e) => {
                 register("confirmation_file").ref(e);
                 fileInputRef.current = e;
               }}
             />
-            <button type="button" onClick={handleFileButtonClick} className={styles.fileButton}>
-              {selectedFileName || "Выберите файл"}
+            <button
+              type="button"
+              onClick={handleFileButtonClick}
+              className={styles.fileButton}
+            >
+              {selectedFileName || t("Файлды тандаңыз", "Выберите файл")}
             </button>
             {errors.confirmation_file && (
               <span className={styles.error}>
@@ -154,12 +190,24 @@ const DonationContent: React.FC = () => {
           </div>
 
           <div className={styles.formGroup}>
-            <label className={styles.label} htmlFor="comment">Комментарий:</label>
-            <textarea className={styles.textarea} id="comment" {...register("comment")} />
+            <label className={styles.label} htmlFor="comment">
+              {t("Комментарий:", "Комментарий:")}
+            </label>
+            <textarea
+              className={styles.textarea}
+              id="comment"
+              {...register("comment")}
+            />
           </div>
 
-          <button type="submit" className={styles.submitButton} disabled={isLoading}>
-            {isLoading ? 'Отправка...' : 'Отправить'}
+          <button
+            type="submit"
+            className={styles.submitButton}
+            disabled={isLoading}
+          >
+            {isLoading
+              ? t("Жөнөтүлүүдө...", "Отправка...")
+              : t("Жөнөтүү", "Отправить")}
           </button>
         </form>
       </div>

@@ -98,9 +98,7 @@ const FondContent: React.FC = () => {
               )}
             </div>
           ) : (
-            <p className={scss.message}>
-              {t("Кайрымдуулук табылган жок.", "Пожертвований не найдено.")}
-            </p>
+            <p className={scss.message}>{t("табылган жок.", " не найдено.")}</p>
           )}
 
           <div className={scss.totalPrice}>
@@ -114,7 +112,7 @@ const FondContent: React.FC = () => {
 
           <Link href="/fond/donation" className={scss.donateLink}>
             <button className={scss.donateButton}>
-              {t("Акча салуу", "Пожертвовать")}
+              {t("Акча салуу", "Пополнение")}
             </button>
           </Link>
         </div>
