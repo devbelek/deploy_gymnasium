@@ -8,7 +8,7 @@ import { useLanguageStore } from "@/stores/useLanguageStore";
 const GraduatesMainContent = () => {
   const { data, isLoading, isError } = useGetSuccessfulGraduatesQuery();
   const { isKyrgyz, t } = useLanguageStore();
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   if (isLoading)
     return (
