@@ -158,7 +158,7 @@ class Donation(models.Model):
     date = models.DateTimeField(auto_now_add=True, verbose_name='Дата')
     comment = models.CharField(max_length=300, blank=True, null=True)
     confirmation_file = models.FileField(upload_to='checks/%Y/%m/%d/', blank=False, validators=[validate_file_extension], verbose_name='Квитанция о переводе')
-    requisite = models.CharField(max_length=200, blank=False, verbose_name='Реквизиты')
+    requisite = models.CharField(max_length=200, blank=False, verbose_name='Реквизиты', default='+996')
     is_verified = models.BooleanField(default=False, verbose_name='Статус подтверждения')
     verification_message = models.TextField(blank=True)
 
