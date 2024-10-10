@@ -20,7 +20,7 @@
   .hamburger {
     font-size: 1.5rem;
     cursor: pointer;
-    color: #ffffff;
+    color: #61038d;
     display: none;
   }
 
@@ -82,7 +82,7 @@
       border-bottom-left-radius: 12px;
       border-right: none;
       font-size: 14px;
-      background: #ffffff77;
+      background: #48454577;
       outline: none;
 
       &:focus {
@@ -104,10 +104,12 @@
     .searchToggle {
       background: none;
       border: none;
-      color: #fff;
-      font-size: 24px;
+      color: #ededed;
+      filter: drop-shadow(2px 3px 2px #350254);
+      font-size: 30px;
       cursor: pointer;
-      padding: 8px;
+      font-weight: 900;
+      padding: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -131,20 +133,21 @@
       input {
         width: 100%;
         padding: 12px;
-        border: 2px solid #fff;
+        border: 2px solid #756a6a;
         border-radius: 12px;
         font-size: 16px;
         background: rgba(255, 255, 255, 0.9);
         outline: none;
-        color: #4d2c5e;
+        color: #ffffff;
 
         &::placeholder {
-          color: #4d2c5e;
+          color: #f6f6f6;
           opacity: 0.7;
         }
 
         &:focus {
-          background: #fff;
+          background: #3d3838;
+          color: white;
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
       }
@@ -157,7 +160,8 @@
       }
 
       .searchToggle {
-        color: #fff;
+        color: #40025b;
+        font-weight: 900;
       }
     }
   }
@@ -285,6 +289,7 @@
     .hamburger {
       font-size: 50px;
       display: flex;
+      color: #8c00ff;
     }
 
     .nav {
@@ -331,8 +336,12 @@
       z-index: 101;
 
       .searchInputWrapper {
+        position: absolute;
+        transition: all 0.3s ease-in-out;
+        right: -30px;
+        margin-top: 8px;
         input {
-          background: rgba(255, 255, 255, 0.95);
+          background: rgba(61, 54, 54, 0.95);
         }
       }
     }
@@ -490,7 +499,17 @@
       }
 
       .searchToggle {
-        font-size: 20px;
+        font-size: 26px;
+        cursor: pointer;
+        margin-left: 10px;
+      }
+
+      .searchInputWrapper {
+        position: absolute;
+        top: 50px;
+        transition: all 0.3s ease-in-out;
+        left: 20px;
+        margin-top: 8px;
       }
 
       .searchInputWrapper input {
