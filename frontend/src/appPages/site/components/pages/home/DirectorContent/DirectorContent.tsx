@@ -1,9 +1,12 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import scss from "./DirectorContent.module.scss";
 import director from "../../../../../../assets/images/Rectangle 719.png";
+import { useLanguageStore } from "@/stores/useLanguageStore";
 
 const DirectorContent = () => {
+  const { isKyrgyz, t } = useLanguageStore();
   return (
     <section className={scss.content}>
       <div className="container">
@@ -36,7 +39,10 @@ const DirectorContent = () => {
               уделяет внимание инновациям и развитию учеников.
             </p>
             <Link href="https://limon.kg/ru/news:76566">
-              <button className={scss.moreDetailsBtn}>Подробнее</button>
+              <button className={scss.moreDetailsBtn}>
+                {" "}
+                {t("Kененирээк", "Подробнее")}{" "}
+              </button>
             </Link>
           </div>
         </div>

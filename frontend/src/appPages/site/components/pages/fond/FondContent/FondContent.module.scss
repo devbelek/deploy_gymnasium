@@ -50,10 +50,29 @@
     }
   }
 
+  .donorInfo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .donorImage {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
   .donor {
     font-size: 20px;
     color: #34495e;
-    margin-bottom: 10px;
   }
 
   .amount {
@@ -65,6 +84,7 @@
 
   .totalPrice {
     margin-top: 20px;
+    text-align: center;
 
     span {
       font-size: 22px;
@@ -111,6 +131,20 @@
       box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
     }
   }
+
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    cursor: pointer;
+  }
 }
 
 @media (max-width: 768px) {
@@ -138,6 +172,27 @@
     .donateButton {
       padding: 12px 30px;
       font-size: 16px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .fondContent {
+    .donorInfo {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .donorImage {
+      margin-bottom: 10px;
+    }
+
+    .donor {
+      font-size: 16px;
+    }
+
+    .amount {
+      font-size: 18px;
     }
   }
 }
