@@ -1,402 +1,255 @@
-.titleText {
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 27.24px;
-  text-align: center;
-  color: #000000;
-  position: relative;
-}
-.loading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100vh;
-  text-align: center;
-}
-.error {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100vh;
-  text-align: center;
-  width: 100%;
-  text-align: center;
-}
-.content {
-  padding: 80px 0 50px 0;
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.titleText {
-  animation: fadeIn 0.7s ease-out;
-}
-
-@keyframes slideInFromTop {
-  0% {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animateFromTop {
-  animation: slideInFromTop 0.7s ease-out forwards;
-}
-
-.animateFromLeft:nth-child(1) {
-  animation-delay: 0.1s;
-}
-
-.animateFromLeft:nth-child(2) {
-  animation-delay: 0.3s;
-}
-
-.animateFromLeft:nth-child(3) {
-  animation-delay: 0.6s;
-}
-.animateFromLeft:nth-child(4) {
-  animation-delay: 0.9s;
-}
-.animateFromLeft:nth-child(5) {
-  animation-delay: 0.12s;
-}
-.animateFromLeft:nth-child(6) {
-  animation-delay: 0.15s;
-}
-.animateFromLeft:nth-child(7) {
-  animation-delay: 0.18s;
-}
-
-.animateFromLeft:nth-child(8) {
-  animation-delay: 0.21s;
-}
-
-.animateFromLeft:nth-child(9) {
-  animation-delay: 0.24s;
-}
-.animateFromLeft:nth-child(10) {
-  animation-delay: 0.27s;
-}
-.animateFromLeft:nth-child(11) {
-  animation-delay: 0.3s;
-}
-.animateFromLeft:nth-child(12) {
-  animation-delay: 0.33s;
-}
-
-.loading {
-  width: 100%;
-  text-align: center;
-}
-.error {
-  width: 100%;
-  text-align: center;
-}
-
-.titleText::after {
-  content: "";
-  position: absolute;
-  bottom: -2px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 50px;
-  border-bottom: 2px solid black;
-}
-.content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 30px;
-}
-
-.graduateName {
-  font-size: 34px;
-  font-weight: 600;
-  line-height: 36.72px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  flex-direction: column;
-}
-
-.graduateDate {
-  font-size: 15px;
-  font-weight: 300;
-  line-height: 18px;
-  text-align: center;
-}
-
-.graduateBio {
-  font-size: 15px;
-  font-weight: 300;
-  line-height: 18px;
-  text-align: center;
-}
-
-.graduates_Img {
-  border-bottom: 8px solid #fb8f8f;
-  border-right: 5px solid #fb8f8f;
-  border-left: 5px solid #fb8f8f;
-  width: 350px;
-  object-fit: cover;
-  border-radius: 15px;
-  height: 450px;
-}
-
-.mainContent_graduates {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.graduates {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 20px;
-  justify-items: start;
-
-  align-items: flex-start;
-  justify-content: flex-start;
-}
-
-.mainContent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 30px;
-}
-
-.nameInfo {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  padding: 15px 0;
-}
-
-.biography {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  padding: 15px 0;
-}
-
-.hr {
-  border-bottom: 1px solid rgb(156, 156, 156);
-  width: 70%;
-  margin: 0 auto;
-}
-
-@media (max-width: 1140px) {
-  .graduates {
-    grid-template-columns: 1fr 1fr;
-  }
-
+.GraduatesMainContent {
   .content {
-    gap: 20px;
+    padding: 80px 0 50px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
   }
 
   .titleText {
-    font-size: 17px;
-    font-weight: 500;
-  }
-  .mainContent_title {
-    font-size: 20px;
-    font-weight: 700;
-  }
-  .graduates_Img {
-    width: 300px;
-    height: 400px;
-  }
-
-  .graduateName {
-    font-size: 28px;
-    font-weight: 500;
-    line-height: 24px;
-  }
-
-  .graduateDate {
-    font-size: 13px;
-    font-weight: 200;
-    line-height: 15px;
-  }
-
-  .graduateBio {
-    font-size: 13px;
-    font-weight: 200;
-    line-height: 15px;
-  }
-
-  .mainContent_graduates {
-    gap: 5px;
-  }
-}
-
-@media (max-width: 760px) {
-  .content {
-    gap: 10px;
-  }
-  .nameInfo {
-    gap: 10px;
-    padding: 10px 0;
-  }
-  .graduates {
-    grid-template-columns: 1fr;
-  }
-  .mainContent_title {
-    font-size: 17px;
+    font-size: 24px;
     font-weight: 600;
+    line-height: 1.4;
+    text-align: center;
+    color: #000000;
+    position: relative;
+    animation: fadeIn 0.7s ease-out;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      border-bottom: 2px solid black;
+    }
   }
-  .titleText {
-    font-size: 15px;
-    font-weight: 500;
+
+  .mainContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+
+    &_title {
+      font-size: 28px;
+      font-weight: 700;
+      text-align: center;
+      animation: fadeIn 0.7s ease-out 0.3s both;
+    }
   }
-  .graduates_Img {
-    width: 250px;
-    border-bottom: 5px solid #fb8f8f;
-    border-right: 3px solid #fb8f8f;
-    border-left: 3px solid #fb8f8f;
-    height: 300px;
+
+  .graduates {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    width: 100%;
+    justify-items: center;
   }
+
   .mainContent_graduates {
-    gap: 0px;
-  }
-  .mainContent_graduates {
-    flex-direction: row;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideInFromTop 0.7s ease-out forwards;
+
+    @for $i from 1 through 12 {
+      &:nth-child(#{$i}) {
+        animation-delay: #{$i * 0.1}s;
+      }
+    }
+  }
+
+  .graduates_Img {
+    width: 100%;
+    max-width: 350px;
+    height: 450px;
+    object-fit: cover;
+    border-radius: 15px;
+    border: 5px solid #fb8f8f;
+    border-bottom-width: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: zoom-in;
+
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .graduateinfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .nameInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+    padding: 15px 0;
   }
 
   .graduateName {
     font-size: 24px;
-    font-weight: 400;
-    line-height: 20px;
+    font-weight: 600;
+    line-height: 1.2;
+
+    > div {
+      margin-bottom: 5px;
+    }
   }
 
   .graduateDate {
-    font-size: 10px;
-    font-weight: 100;
-    line-height: 12px;
+    font-size: 16px;
+    font-weight: 300;
+  }
+
+  .hr {
+    border: none;
+    border-top: 1px solid rgb(156, 156, 156);
+    width: 70%;
+    margin: 10px 0;
+  }
+
+  .biography {
+    padding: 15px 0;
   }
 
   .graduateBio {
-    font-size: 10px;
-    font-weight: 100;
-    line-height: 12px;
-  }
-}
-
-@media (max-width: 480px) {
-  .content {
-    gap: 10px;
-  }
-  .nameInfo {
-    gap: 5px;
-    padding: 5px 0;
-  }
-  .graduates {
-    grid-template-columns: 1fr;
-  }
-  .mainContent_title {
-    font-size: 14px;
-    font-weight: 500;
-  }
-  .titleText {
-    font-size: 12px;
-    font-weight: 400;
-  }
-  .graduates_Img {
-    width: 200px;
-    height: 250px;
-  }
-  .mainContent_graduates {
-    gap: 0px;
-  }
-  .mainContent_graduates {
-    flex-direction: row;
-    gap: 15px;
-  }
-
-  .graduateName {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 300;
-    line-height: 15px;
+    line-height: 1.5;
+    text-align: center;
   }
 
-  .graduateDate {
-    font-size: 7px;
-    font-weight: 100;
-    line-height: 10px;
+  .zoomOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    cursor: zoom-out;
+
+    img {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+      border-radius: 15px;
+    }
   }
 
-  .graduateBio {
-    font-size: 7px;
-    font-weight: 100;
-    line-height: 10px;
-  }
-}
-
-@media (max-width: 380px) {
-  .content {
-    gap: 10px;
-  }
-  .nameInfo {
-    gap: 3px;
-    padding: 3px 0;
-  }
-  .graduates {
-    grid-template-columns: 1fr;
-  }
-  .mainContent_title {
-    font-size: 12px;
-    font-weight: 400;
-  }
-  .titleText {
-    font-size: 10px;
-    font-weight: 300;
-  }
-  .graduates_Img {
-    width: 150px;
-    height: 200px;
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
-  .mainContent_graduates {
-    flex-direction: row;
-    gap: 13px;
+  @keyframes slideInFromTop {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
-  .graduateName {
-    font-size: 17px;
-    font-weight: 300;
-    line-height: 13px;
+  // Медиа сурамдар үчүн жооптуу дизайн
+  @media (max-width: 1140px) {
+    .titleText {
+      font-size: 20px;
+    }
+
+    .mainContent_title {
+      font-size: 24px;
+    }
+
+    .graduates_Img {
+      height: 400px;
+    }
+
+    .graduateName {
+      font-size: 22px;
+    }
+
+    .graduateDate,
+    .graduateBio {
+      font-size: 14px;
+    }
   }
 
-  .graduateDate {
-    font-size: 5px;
-    font-weight: 100;
-    line-height: 7px;
+  @media (max-width: 768px) {
+    .content {
+      padding: 60px 0 30px 0;
+      gap: 20px;
+    }
+
+    .titleText {
+      font-size: 18px;
+    }
+
+    .mainContent_title {
+      font-size: 22px;
+    }
+
+    .graduates_Img {
+      height: 350px;
+    }
+
+    .graduateName {
+      font-size: 20px;
+    }
+
+    .graduateDate,
+    .graduateBio {
+      font-size: 13px;
+    }
   }
 
-  .graduateBio {
-    font-size: 5px;
-    font-weight: 100;
-    line-height: 7px;
+  @media (max-width: 480px) {
+    .content {
+      padding: 40px 0 20px 0;
+      gap: 15px;
+    }
+
+    .titleText {
+      font-size: 16px;
+    }
+
+    .mainContent_title {
+      font-size: 20px;
+    }
+
+    .graduates_Img {
+      height: 300px;
+    }
+
+    .graduateName {
+      font-size: 18px;
+    }
+
+    .graduateDate,
+    .graduateBio {
+      font-size: 12px;
+    }
   }
 }
