@@ -35,7 +35,7 @@ class DonationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Donation
-        fields = ['id', 'user', 'amount', 'date', 'confirmation_file', 'comment', 'is_verified']
+        fields = ['id', 'user', 'amount', 'date', 'confirmation_file', 'comment', 'requisite', 'is_verified']
         read_only_fields = ['user', 'is_verified']
 
 

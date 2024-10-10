@@ -57,15 +57,6 @@ class UserProfile(models.Model):
         verbose_name = "Личные кабинеты пользователей"
         verbose_name_plural = "Личные кабинеты пользователей"
 
-    # @receiver(post_save, sender=User)
-    # def create_user_profile(sender, instance, created, **kwargs):
-    #     if created:
-    #         UserProfile.objects.create(user=instance)
-    #
-    # @receiver(post_save, sender=User)
-    # def save_user_profile(sender, instance, **kwargs):
-    #     instance.profile.save()
-
     def save(self, *args, **kwargs):
         if not self.pk:
             logger.info(f"Создание нового профиля пользователя: {self.user.username}")
@@ -167,11 +158,12 @@ class Donation(models.Model):
     date = models.DateTimeField(auto_now_add=True, verbose_name='Дата')
     comment = models.CharField(max_length=300, blank=True, null=True)
     confirmation_file = models.FileField(upload_to='checks/%Y/%m/%d/', blank=False, validators=[validate_file_extension], verbose_name='Квитанция о переводе')
+    requisite = models.CharField(max_length=200, blank=False, verbose_name='Реквизиты')
     is_verified = models.BooleanField(default=False, verbose_name='Статус подтверждения')
     verification_message = models.TextField(blank=True)
 
     def __str__(self):
-        return f"{self.user.username} - {self.amount} - {self.date}"
+        return f"{self.user.username} - {self.amount} - {self.date} - {self.requisite}"
 
     class Meta:
         verbose_name = "Не подтвержденные переводы средств"
