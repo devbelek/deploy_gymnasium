@@ -226,6 +226,17 @@ const NewsDetailContent: React.FC = () => {
     [isLoggedIn, likeComment, t]
   );
 
+  const SkeletonCard = () => (
+    <div className={`${scss.news_card} ${scss.skeleton}`}>
+      <div className={scss.skeleton_image}></div>
+      <div className={scss.skeleton_title}></div>
+      <div className={scss.news_end}>
+        <div className={scss.skeleton_date}></div>
+        <div className={scss.skeleton_comments}></div>
+      </div>
+    </div>
+  );
+
   const renderCommentForm = useCallback(
     (onSubmit: () => void, cancelAction: () => void) => (
       <div className={scss.commentForm}>

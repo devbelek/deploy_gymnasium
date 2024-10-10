@@ -362,8 +362,9 @@
       max-height: 90%;
 
       .enlargedAvatar {
-        max-width: 100%;
-        max-height: 90vh;
+        width: 600px;
+        height: 600px;
+        object-fit: cover;
         border-radius: 10px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
       }
@@ -473,6 +474,18 @@
         padding: 20px;
       }
     }
+
+    .enlargedAvatarOverlay {
+      .enlargedAvatarContainer {
+        .enlargedAvatar {
+          width: 400px;
+          height: 400px;
+          object-fit: cover;
+          border-radius: 10px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+      }
+    }
   }
 }
 
@@ -555,6 +568,18 @@
       .loginPrompt {
         font-size: 14px;
         padding: 15px;
+      }
+    }
+
+    .enlargedAvatarOverlay {
+      .enlargedAvatarContainer {
+        .enlargedAvatar {
+          width: 260px;
+          height: 260px;
+          object-fit: cover;
+          border-radius: 10px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
       }
     }
   }

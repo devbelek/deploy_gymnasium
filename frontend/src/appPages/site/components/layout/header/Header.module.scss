@@ -457,6 +457,97 @@
   }
 }
 
+@media (max-width: 768px) {
+  .header {
+    background: none;
+
+    .hamburger {
+      display: flex;
+      align-items: center;
+      font-size: 48px;
+      color: #640ea7;
+      cursor: pointer;
+    }
+
+    .search {
+      display: none;
+    }
+
+    .mobileSearch {
+      &.active {
+        .searchInputWrapper {
+          width: 240px;
+        }
+      }
+    }
+
+    .searchInputWrapper {
+      position: absolute;
+      top: 50px;
+      transition: all 0.3s ease-in-out;
+      left: 20px;
+      margin-top: 8px;
+    }
+
+    .logo {
+      display: none;
+    }
+
+    .language {
+      background: #8b54a77a;
+
+      .bold {
+        font-size: 24px;
+      }
+
+      .normal {
+        font-size: 24px;
+      }
+    }
+
+    .auth {
+      button {
+        font-size: 26px;
+      }
+    }
+
+    .nav {
+      display: none;
+      background: #8b54a7a1;
+      transition: all 0.3s ease-in-out;
+
+      &.active {
+        display: block;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        padding: 10px 0;
+      }
+
+      a {
+        font-size: 30px;
+      }
+
+      ul {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 0;
+
+        li {
+          padding: 5px 0;
+          border-bottom: 1px solid #fff;
+
+          &:last-child {
+            border-bottom: none;
+          }
+        }
+      }
+    }
+  }
+}
+
 @media (max-width: 430px) {
   .header {
     background: none;
