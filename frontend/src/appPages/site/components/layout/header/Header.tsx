@@ -12,6 +12,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { IoSearchOutline } from "react-icons/io5";
+import { IoMdClose } from "react-icons/io";
 import { DebounceInput as Input } from "react-debounce-input";
 import { useGetSearchQuery } from "@/redux/api/search";
 import { useLanguageStore } from "@/stores/useLanguageStore";
@@ -20,11 +22,13 @@ import { useGetAccountQuery } from "@/redux/api/profile";
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const router = useRouter();
   const [query, setQuery] = useState<string>("");
   const [hasFocusInput, setHasFocusInput] = useState(false);
   const profileMenuRef = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLDivElement>(null);
+  const mobileSearchRef = useRef<HTMLDivElement>(null);
 
   const { isKyrgyz, setIsKyrgyz, t } = useLanguageStore();
 
@@ -59,6 +63,34 @@ const Header = () => {
   const toggleProfileMenu = () => {
     setIsProfileMenuOpen(!isProfileMenuOpen);
   };
+
+  const toggleMobileSearch = () => {
+    setIsMobileSearchOpen(!isMobileSearchOpen);
+    if (!isMobileSearchOpen) {
+      setTimeout(() => {
+        const mobileInput = document.querySelector(
+          ".mobile-search-input"
+        ) as HTMLInputElement;
+        if (mobileInput) mobileInput.focus();
+      }, 100);
+    }
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        mobileSearchRef.current &&
+        !mobileSearchRef.current.contains(event.target as Node)
+      ) {
+        setIsMobileSearchOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -97,6 +129,7 @@ const Header = () => {
     const handleResize = () => {
       if (window.innerWidth > 884) {
         setIsMenuOpen(false);
+        setIsMobileSearchOpen(false);
       }
     };
 
@@ -213,6 +246,36 @@ const Header = () => {
                 value={query}
                 placeholder={t("Издөө...", "Поиск...")}
               />
+            </div>
+
+            <div
+              ref={mobileSearchRef}
+              className={`${scss.mobileSearch} ${
+                isMobileSearchOpen ? scss.active : ""
+              }`}
+            >
+              <button
+                className={scss.searchToggle}
+                onClick={toggleMobileSearch}
+                aria-label="Toggle search"
+              >
+                {isMobileSearchOpen ? <IoMdClose /> : <IoSearchOutline />}
+              </button>
+              <div className={scss.searchInputWrapper}>
+                <Input
+                  className="mobile-search-input"
+                  minLength={1}
+                  maxLength={30}
+                  debounceTimeout={300}
+                  onChange={handleChange}
+                  onFocus={() => {
+                    setHasFocusInput(true);
+                  }}
+                  onBlur={handleBlur}
+                  value={query}
+                  placeholder={t("Издөө...", "Поиск...")}
+                />
+              </div>
             </div>
 
             <div className={scss.language}>
