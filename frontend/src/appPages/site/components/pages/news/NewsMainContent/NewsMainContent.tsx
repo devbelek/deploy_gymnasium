@@ -1,28 +1,62 @@
 "use client";
-
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import scss from "./NewsMainContent.module.scss";
 import Image from "next/image";
 import { useGetNewsQuery } from "@/redux/api/news";
 import { LuMessagesSquare } from "react-icons/lu";
 import { useRouter } from "next/navigation";
 import { useLanguageStore } from "@/stores/useLanguageStore";
+import { motion, AnimatePresence } from "framer-motion";
 
 const getImageUrl = (imageUrl: string) => {
   const cleanUrl = imageUrl.replace(/^https?:\/\/[^/]+\/media/, "");
   return `${process.env.NEXT_PUBLIC_API}/media${cleanUrl}`;
 };
 
+export namespace NEWS {
+  export interface INews {
+    id: number;
+    author: string;
+    image: string;
+    content: string;
+    content_ky: string;
+    content_ru: string;
+    created_at: string;
+    updated_at: string;
+    description: string;
+    description_ky: string;
+    description_ru: string;
+    comments_count: number;
+  }
+}
+
 const NewsMainContent: React.FC = () => {
-  const { data: news } = useGetNewsQuery();
+  // Обновленная типизация с selectFromResult
+  const { data: news, isLoading } = useGetNewsQuery(undefined, {
+    selectFromResult: (result) => ({
+      data: result.data as NEWS.INews[] | undefined,
+      isLoading: result.isLoading,
+    }),
+  });
+
   const router = useRouter();
   const { isKyrgyz, t } = useLanguageStore();
   const [currentPage, setCurrentPage] = useState(1);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
   const itemsPerPage = 9;
+
+  useEffect(() => {
+    if (news && !isLoading) {
+      setTimeout(() => setIsDataLoaded(true), 500); // Delay to show transition
+    }
+  }, [news, isLoading]);
 
   const sortedNews = useMemo(() => {
     return news
-      ? [...news].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+      ? [...news].sort(
+          (a: NEWS.INews, b: NEWS.INews) =>
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        )
       : [];
   }, [news]);
 
@@ -67,7 +101,7 @@ const NewsMainContent: React.FC = () => {
         <button
           key={i}
           onClick={() => handlePageChange(i)}
-          className={currentPage === i ? scss.active : ''}
+          className={currentPage === i ? scss.active : ""}
         >
           {i}
         </button>
@@ -95,6 +129,46 @@ const NewsMainContent: React.FC = () => {
     return pageNumbers;
   };
 
+  const SkeletonCard = () => (
+    <motion.div
+      className={`${scss.news_card} ${scss.skeleton}`}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <div className={scss.skeleton_image}></div>
+      <div className={scss.skeleton_title}></div>
+      <div className={scss.skeleton_date}></div>
+    </motion.div>
+  );
+
+  const NewsCard = ({ item }: { item: NEWS.INews }) => (
+    <motion.div
+      className={scss.news_card}
+      onClick={() => handleNavigate(item.id)}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <Image
+        src={getImageUrl(item.image)}
+        alt={isKyrgyz ? item.description_ky || "" : item.description_ru || ""}
+        width={266}
+        height={220}
+      />
+      <h2>
+        {isKyrgyz ? item.description_ky || "" : item.description_ru || ""}
+      </h2>
+      <div className={scss.news_end}>
+        <p>{item.created_at.slice(0, 10)}</p>
+        <div className={scss.comments}>
+          <LuMessagesSquare />
+          <span>{item.comments_count}</span>
+        </div>
+      </div>
+    </motion.div>
+  );
+
   return (
     <section className={scss.NewsMainContent}>
       <div className="container">
@@ -103,32 +177,26 @@ const NewsMainContent: React.FC = () => {
             <h1>{t("Жаңылыктар", "Новости")}</h1>
             <hr />
           </div>
-          <div className={scss.news_cards}>
-            {currentNews.map((item) => (
-              <div
-                key={item.id}
-                className={scss.news_card}
-                onClick={() => handleNavigate(item.id)}
-              >
-                <Image
-                  src={getImageUrl(item.image)}
-                  alt={isKyrgyz ? item.description_ky || "" : item.description_ru || ""}
-                  width={266}
-                  height={220}
-                />
-                <h2>{isKyrgyz ? item.description_ky || "" : item.description_ru || ""}</h2>
-                <div className={scss.news_end}>
-                  <p>{item.created_at.slice(0, 10)}</p>
-                  <div className={scss.comments}>
-                    <LuMessagesSquare />
-                    <span>{item.comments_count}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          {totalPages > 1 && (
-            <div className={scss.pagination}>
+          <AnimatePresence>
+            <div className={scss.news_cards}>
+              {!isDataLoaded
+                ? Array(itemsPerPage)
+                    .fill(null)
+                    .map((_, index) => (
+                      <SkeletonCard key={`skeleton-${index}`} />
+                    ))
+                : currentNews.map((item) => (
+                    <NewsCard key={item.id} item={item} />
+                  ))}
+            </div>
+          </AnimatePresence>
+          {totalPages > 1 && isDataLoaded && (
+            <motion.div
+              className={scss.pagination}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3 }}
+            >
               <button
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
@@ -144,7 +212,7 @@ const NewsMainContent: React.FC = () => {
               >
                 &gt;
               </button>
-            </div>
+            </motion.div>
           )}
         </div>
       </div>
