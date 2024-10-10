@@ -19,7 +19,7 @@ const GraduatesContent = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       handleNext();
-    }, 5000); // Смена слайда каждые 5 секунд
+    }, 5000); //
 
     return () => clearInterval(interval);
   }, [currentIndex, data]);
