@@ -38,7 +38,7 @@ const GraduatesFirstTab = () => {
         );
     }
 
-    const filterData = (year) => {
+    const filterData = (year:string) => {
         if (year) {
             const result = data.filter((graduate) => graduate.year === year);
             setFilteredData(result);
