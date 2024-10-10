@@ -8,12 +8,20 @@ import { useGetGraduatesQuery } from "@/redux/api/graduates";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { motion, AnimatePresence } from "framer-motion";
 
+interface Graduate {
+    surname: string;
+    name: string;
+    last_name: string;
+    year: number;
+    ort: number;
+}
+
 const GraduatesFirstTab = () => {
     const { data, isLoading, isError } = useGetGraduatesQuery();
-    const [filteredData, setFilteredData] = useState(data || []);
+    const [filteredData, setFilteredData] = useState<Graduate[]>([]);
     const { isKyrgyz, t } = useLanguageStore();
     const [show, setShow] = useState(false);
-    const [selectedYear, setSelectedYear] = useState(null);
+    const [selectedYear, setSelectedYear] = useState<number | null>(null);
 
     useEffect(() => {
         if (data) {
@@ -38,7 +46,7 @@ const GraduatesFirstTab = () => {
         );
     }
 
-    const filterData = (year:string) => {
+    const filterData = (year?: number) => {
         if (year) {
             const result = data.filter((graduate) => graduate.year === year);
             setFilteredData(result);

@@ -12,7 +12,7 @@ const api = index.injectEndpoints({
                 url: `${ENDPOINTS}/graduates/`,
                 method: "GET",
             }),
-            providesTags: ["news"],
+            providesTags: ["graduates"],
         }),
     }),
 });
