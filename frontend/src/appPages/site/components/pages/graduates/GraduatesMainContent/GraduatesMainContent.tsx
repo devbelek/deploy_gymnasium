@@ -21,7 +21,7 @@ const GraduatesMainContent = () => {
       </div>
     );
 
-  const handleImageClick = (imageSrc) => {
+  const handleImageClick = (imageSrc: string) => {
     setSelectedImage(imageSrc);
   };
 
