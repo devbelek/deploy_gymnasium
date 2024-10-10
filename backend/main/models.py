@@ -109,7 +109,7 @@ class TitleModel(models.Model):
         abstract = True
 
 
-class Students(PersonModel, ImageModel):
+class Students(PersonModel):
     president = 'Президент'
     muzh_soviet = 'Муж.совет'
     zhen_soviet = 'Жен.совет'
