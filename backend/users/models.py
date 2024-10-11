@@ -186,6 +186,7 @@ class ConfirmedDonation(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='confirmed_donations', verbose_name='Пользователь')
     date = models.DateTimeField(auto_now_add=True, verbose_name='Дата')
     comment = models.CharField(max_length=255, blank=True, null=True, verbose_name='Комментарий')
+    requisite = models.CharField(max_length=200, blank=False, verbose_name='Реквизиты', default='+996')
 
     def __str__(self):
         return f"{self.user.username} - {self.donation.amount} - {self.date}"

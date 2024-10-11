@@ -45,7 +45,7 @@ class ConfirmedDonationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ConfirmedDonation
-        fields = ['id', 'user', 'amount', 'date', 'comment']
+        fields = ['id', 'user', 'amount', 'date', 'comment', 'requisite']
 
 
 class UserProfileSerializers(serializers.ModelSerializer):

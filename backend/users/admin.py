@@ -8,7 +8,7 @@ admin.site.register(Like)
 
 
 class DonationAdmin(admin.ModelAdmin):
-    list_display = ('user', 'amount', 'requisite', 'date', 'is_verified')
+    list_display = ('user', 'amount', 'date', 'is_verified')
     readonly_fields = ('user', 'amount', 'date', 'comment', 'confirmation_file')
     list_filter = ('is_verified',)
     actions = ['mark_as_verified']
@@ -34,4 +34,4 @@ admin.site.register(Donation, DonationAdmin)
 
 @admin.register(ConfirmedDonation)
 class ConfirmedDonationAdmin(admin.ModelAdmin):
-    readonly_fields = ['donation', 'user', 'date', 'comment']
+    readonly_fields = ['donation', 'user', 'date', 'comment', 'requisite']
