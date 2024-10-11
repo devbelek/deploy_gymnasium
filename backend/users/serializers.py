@@ -53,7 +53,7 @@ class UserProfileSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = UserProfile
-        exclude = ['id']
+        exclude = ['id', 'user']
 
 
 class CommentReplySerializers(serializers.ModelSerializer):
