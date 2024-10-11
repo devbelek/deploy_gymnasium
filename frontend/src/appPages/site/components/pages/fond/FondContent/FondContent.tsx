@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useGetFondQuery } from "@/redux/api/fond";
 import scss from "./FondContent.module.scss";
 import Link from "next/link";
@@ -20,8 +20,9 @@ interface DonationItem {
 
 const FondContent: React.FC = () => {
   const { data, isLoading, isError } = useGetFondQuery();
-  const [selectedFile, setSelectedFile] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const { isKyrgyz, t } = useLanguageStore();
+  const [userAvatars, setUserAvatars] = useState<Record<string, string>>({});
 
   const totalPrice = data
     ? data.reduce((total: number, item: DonationItem) => {
@@ -29,50 +30,68 @@ const FondContent: React.FC = () => {
       }, 0)
     : 0;
 
-  const handleFileClick = (fileUrl: string) => {
-    setSelectedFile(fileUrl);
+  const handleImageClick = (imageUrl: string) => {
+    setSelectedImage(imageUrl);
   };
 
   const closeModal = () => {
-    setSelectedFile(null);
+    setSelectedImage(null);
   };
 
-  const getFileUrl = (confirmationFile: string) => {
+  const getImageUrl = (confirmationFile: string) => {
     if (confirmationFile.startsWith("http")) {
       return confirmationFile;
     }
     return `${process.env.NEXT_PUBLIC_ENDPOINT}${confirmationFile}`;
   };
 
-  const isPDF = (fileUrl: string) => {
-    return fileUrl.toLowerCase().endsWith('.pdf');
-  };
+  const fetchUserAvatars = useCallback(async () => {
+    if (data) {
+      const uniqueUsers = Array.from(
+        new Set(data.map((donation: DonationItem) => donation.user.toString()))
+      );
+      const newUserAvatars: Record<string, string> = {};
 
-  const renderFilePreview = (fileUrl: string) => {
-    if (isPDF(fileUrl)) {
-      return (
-        <div className={scss.pdfPreview} onClick={() => handleFileClick(fileUrl)}>
-          <img src="/path/to/pdf-icon.png" alt="PDF file" />
-          <span>View PDF</span>
-        </div>
-      );
-    } else {
-      return (
-        <Image
-          src={fileUrl}
-          alt="Donor confirmation"
-          width={60}
-          height={60}
-          className={scss.donorImage}
-          onClick={() => handleFileClick(fileUrl)}
-          onError={(e) => {
-            const target = e.target as HTMLImageElement;
-            target.src = "/placeholder.jpg";
-          }}
-        />
-      );
+      for (const username of uniqueUsers) {
+        try {
+          const response = await fetch(
+            `${process.env.NEXT_PUBLIC_API}/${process.env.NEXT_PUBLIC_ENDPOINT}/user-info/?username=${username}`,
+            {
+              method: "GET",
+              credentials: "include",
+            }
+          );
+          if (response.ok) {
+            const userData = await response.json();
+            newUserAvatars[username] =
+              userData.avatar ||
+              `https://api.dicebear.com/6.x/initials/svg?seed=${username}`;
+          } else {
+            newUserAvatars[
+              username
+            ] = `https://api.dicebear.com/6.x/initials/svg?seed=${username}`;
+          }
+        } catch (error) {
+          console.error(
+            t(
+              `${username} үчүн аватарды алууда ката:`,
+              `Ошибка при получении аватара для ${username}:`
+            ),
+            error
+          );
+          newUserAvatars[
+            username
+          ] = `https://api.dicebear.com/6.x/initials/svg?seed=${username}`;
+        }
+      }
+
+      setUserAvatars(newUserAvatars);
     }
-  };
+  }, [data, t]);
+
+  useEffect(() => {
+    fetchUserAvatars();
+  }, [fetchUserAvatars]);
 
   return (
     <div className={scss.fondContent}>
@@ -99,7 +118,20 @@ const FondContent: React.FC = () => {
                 item.is_verified ? (
                   <div key={item.id} className={scss.donationItem}>
                     <div className={scss.donorInfo}>
-                      {renderFilePreview(getFileUrl(item.confirmation_file))}
+                      <Image
+                        src={userAvatars[item.user.toString()] || "/placeholder.jpg"}
+                        alt={item.user.toString()}
+                        width={60}
+                        height={60}
+                        className={scss.donorImage}
+                        onClick={() =>
+                          handleImageClick(userAvatars[item.user.toString()] || "/placeholder.jpg")
+                        }
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = "/placeholder.jpg";
+                        }}
+                      />
                       <h2 className={scss.donor}>
                         {t("Жөнөтүүчү", "Отправитель")}: {item.user}
                       </h2>
@@ -135,18 +167,14 @@ const FondContent: React.FC = () => {
         </div>
       </div>
 
-      {selectedFile && (
+      {selectedImage && (
         <div className={scss.modal} onClick={closeModal}>
-          {isPDF(selectedFile) ? (
-            <iframe src={selectedFile} width="100%" height="100%" />
-          ) : (
-            <Image
-              src={selectedFile}
-              alt="Enlarged donor confirmation"
-              layout="fill"
-              objectFit="contain"
-            />
-          )}
+          <Image
+            src={selectedImage}
+            alt="Enlarged donor"
+            layout="fill"
+            objectFit="contain"
+          />
         </div>
       )}
     </div>
