@@ -57,7 +57,7 @@ const TeachersMainContent: React.FC = () => {
                 <Image
                   onClick={() => router.push(`/teachers/${teacher.id}`)}
                   src={teacher?.image}
-                  alt="img"
+                  alt="Teacher"
                   width={700}
                   height={500}
                   priority

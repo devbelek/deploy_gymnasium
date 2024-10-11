@@ -1,5 +1,16 @@
 import StudentsParliament from "@/appPages/site/components/pages/students/StudentsParliament/StudentsParliament";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Окуучулар | N3 Экспериментальная гимназия",
+  description: "Биздин окуучулар - алардын жетишкендиктери жана таланттары.",
+  openGraph: {
+    title: "Ученики N3 Экспериментальной гимназии",
+    description: "Наши талантливые и целеустремленные ученики",
+  },
+};
+
 const page = () => <StudentsParliament />;
 
 export default page;

@@ -84,6 +84,7 @@ const GraduatesMainContent = () => {
             <Image
               src={selectedImage}
               alt="Zoomed graduate"
+              quality={70}
               layout="fill"
               objectFit="contain"
             />

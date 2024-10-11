@@ -33,7 +33,7 @@ const TeacherDetailedContent = () => {
           <div className={scss.detail}>
             <Image
               src={data?.image!}
-              alt="img"
+              alt="Teacher details..."
               width={700}
               height={500}
               quality={70}

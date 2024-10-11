@@ -10,10 +10,9 @@ const HeroContent = () => {
   return (
     <section id={scss.content}>
       <div className="container">
-        {/* Circular Profile Image */}
         <div className={scss.content}>
           <div className={scss.profileImage}>
-            <Image src={heroImage} alt="Profile" />
+            <Image src={heroImage} alt="Profile" quality={70} />
             <div className={scss.text}>
               <h1>
                 {t(
