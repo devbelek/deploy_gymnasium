@@ -117,7 +117,7 @@ CKEDITOR_CONFIGS = {
         'height': '200px',
         'toolbarCanCollapse': True,
         'uiColor': '#f0f0f0',
-        'removePlugins': 'elementspath',
+        'removePlugins': 'elementspath,wordcount',  # добавлен wordcount
         'extraPlugins': 'font,maximize',
         'fontSize_sizes': (
             '8/8px;9/9px;10/10px;11/11px;12/12px;14/14px;16/16px;18/18px;'
@@ -128,6 +128,10 @@ CKEDITOR_CONFIGS = {
             'Times New Roman/Times New Roman, Times, serif;'
             'Verdana'
         ),
+        'removeButtons': '',  # удалены все ограничения на кнопки
+        'allowedContent': True,  # разрешает любой контент
+        'enterMode': 2,  # использует <br> вместо <p>
+        'forcePasteAsPlainText': False,  # позволяет вставлять форматированный текст
     },
 }
 
