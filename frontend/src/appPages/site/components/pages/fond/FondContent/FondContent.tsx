@@ -20,7 +20,7 @@ interface DonationItem {
 
 const FondContent: React.FC = () => {
   const { data, isLoading, isError } = useGetFondQuery();
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const { isKyrgyz, t } = useLanguageStore();
 
   const totalPrice = data
@@ -29,19 +29,49 @@ const FondContent: React.FC = () => {
       }, 0)
     : 0;
 
-  const handleImageClick = (imageUrl: string) => {
-    setSelectedImage(imageUrl);
+  const handleFileClick = (fileUrl: string) => {
+    setSelectedFile(fileUrl);
   };
 
   const closeModal = () => {
-    setSelectedImage(null);
+    setSelectedFile(null);
   };
 
-  const getImageUrl = (confirmationFile: string) => {
+  const getFileUrl = (confirmationFile: string) => {
     if (confirmationFile.startsWith("http")) {
       return confirmationFile;
     }
     return `${process.env.NEXT_PUBLIC_ENDPOINT}${confirmationFile}`;
+  };
+
+  const isPDF = (fileUrl: string) => {
+    return fileUrl.toLowerCase().endsWith('.pdf');
+  };
+
+  const renderFilePreview = (fileUrl: string) => {
+    if (isPDF(fileUrl)) {
+      return (
+        <div className={scss.pdfPreview} onClick={() => handleFileClick(fileUrl)}>
+          <img src="/path/to/pdf-icon.png" alt="PDF file" />
+          <span>View PDF</span>
+        </div>
+      );
+    } else {
+      return (
+        <Image
+          src={fileUrl}
+          alt="Donor confirmation"
+          width={60}
+          height={60}
+          className={scss.donorImage}
+          onClick={() => handleFileClick(fileUrl)}
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = "/placeholder.jpg";
+          }}
+        />
+      );
+    }
   };
 
   return (
@@ -69,20 +99,7 @@ const FondContent: React.FC = () => {
                 item.is_verified ? (
                   <div key={item.id} className={scss.donationItem}>
                     <div className={scss.donorInfo}>
-                      <Image
-                        src={getImageUrl(item.confirmation_file)}
-                        alt={item.user.toString()}
-                        width={60}
-                        height={60}
-                        className={scss.donorImage}
-                        onClick={() =>
-                          handleImageClick(getImageUrl(item.confirmation_file))
-                        }
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.src = "/placeholder.jpg";
-                        }}
-                      />
+                      {renderFilePreview(getFileUrl(item.confirmation_file))}
                       <h2 className={scss.donor}>
                         {t("Жөнөтүүчү", "Отправитель")}: {item.user}
                       </h2>
@@ -118,14 +135,18 @@ const FondContent: React.FC = () => {
         </div>
       </div>
 
-      {selectedImage && (
+      {selectedFile && (
         <div className={scss.modal} onClick={closeModal}>
-          <Image
-            src={selectedImage}
-            alt="Enlarged donor"
-            layout="fill"
-            objectFit="contain"
-          />
+          {isPDF(selectedFile) ? (
+            <iframe src={selectedFile} width="100%" height="100%" />
+          ) : (
+            <Image
+              src={selectedFile}
+              alt="Enlarged donor confirmation"
+              layout="fill"
+              objectFit="contain"
+            />
+          )}
         </div>
       )}
     </div>
