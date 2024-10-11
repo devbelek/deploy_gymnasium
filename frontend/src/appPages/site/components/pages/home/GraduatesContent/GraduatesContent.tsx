@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Image from "next/image";
 import scss from "./GraduatesContent.module.scss";
 import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
@@ -16,25 +16,7 @@ const GraduatesContent = () => {
 
   const router = useRouter();
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      handleNext();
-    }, 5000); //
-
-    return () => clearInterval(interval);
-  }, [currentIndex, data]);
-
-  const handlePrevious = () => {
-    if (!isAnimating && data) {
-      setIsAnimating(true);
-      setCurrentIndex((prevIndex) =>
-        prevIndex === 0 ? data.length - 1 : prevIndex - 1
-      );
-      setTimeout(() => setIsAnimating(false), 500);
-    }
-  };
-
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (!isAnimating && data) {
       setIsAnimating(true);
       setCurrentIndex((prevIndex) =>
@@ -42,7 +24,25 @@ const GraduatesContent = () => {
       );
       setTimeout(() => setIsAnimating(false), 500);
     }
-  };
+  }, [isAnimating, data]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      handleNext();
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [handleNext]);
+
+  const handlePrevious = useCallback(() => {
+    if (!isAnimating && data) {
+      setIsAnimating(true);
+      setCurrentIndex((prevIndex) =>
+        prevIndex === 0 ? data.length - 1 : prevIndex - 1
+      );
+      setTimeout(() => setIsAnimating(false), 500);
+    }
+  }, [isAnimating, data]);
 
   const handleNavigate = () => {
     router.push("/graduates");
