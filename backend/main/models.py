@@ -349,6 +349,7 @@ class News(ImageModel, ContentModel, TimestampedModel):
     def __str__(self):
         return f'Новость от {self.created_at.strftime("%Y-%m-%d")}'
 
+
 #df
 class Gallery(ImageModel, ContentModel):
     title = models.CharField(max_length=200, verbose_name=_('Заголовок'))
