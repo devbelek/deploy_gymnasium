@@ -9,7 +9,9 @@ export const metadata: Metadata = {
     title: "Фонд N3 Экспериментальной гимназии",
     description: "Поддержка талантливых учеников и развитие образования",
   },
-  canonical: "https://3-gymnasium.kg/fond/",
+  alternates: {
+    canonical: "https://3-gymnasium.kg/fond/",
+  },
 };
 
 const page = () => <FondPage />;
