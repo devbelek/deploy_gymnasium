@@ -2,7 +2,9 @@ import HomePage from "@/appPages/site/components/pages/HomePage";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  canonical: "https://3-gymnasium.kg/",
+  alternates: {
+    canonical: "https://3-gymnasium.kg/",
+  },
   title: "Башкы бет",
   description:
     "N3 Экспериментальная гимназия имени Гапыра Мадаминова - инновационное образование для будущих лидеров Кыргызстана",
