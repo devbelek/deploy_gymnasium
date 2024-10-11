@@ -39,6 +39,9 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  icons: {
+    icon: "/favicon.ico", // Бул жерде favicon'ду көрсөтүүдөбүз
+  },
 };
 
 export default function RootLayout({
