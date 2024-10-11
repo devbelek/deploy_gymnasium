@@ -2,7 +2,6 @@
 import React from "react";
 import scss from "./Footer.module.scss";
 import {
-  FaFacebookF,
   FaInstagram,
   FaTelegram,
   FaYoutube,
@@ -19,7 +18,8 @@ const Footer = () => {
   if (isLoading) return <div>Жүктөлүүдө...</div>;
   if (isError) return <div>Ката кетти</div>;
 
-  const contactData = data?.[0];
+  // Явно указываем, что data это массив IContact
+  const contactData = data && data.length > 0 ? data[0] : undefined;
 
   return (
     <footer className={scss.footer}>

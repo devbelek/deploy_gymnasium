@@ -3,10 +3,10 @@ declare namespace CONTACTS {
     phone_number: string;
     address: string;
     instagram: string;
-    whatsapp: string;
+    youtube: string;
     telegram: string;
   }
-  
-  type GetContactsResponse = IContact;
+
+  type GetContactsResponse = IContact[];
   type GetContactsRequest = void;
 }
