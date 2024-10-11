@@ -5,7 +5,7 @@ import {
   FaFacebookF,
   FaInstagram,
   FaTelegram,
-  FaWhatsapp,
+  FaYoutube,
 } from "react-icons/fa";
 import logo from "../../../../../assets/logo.svg";
 import Image from "next/image";
@@ -18,6 +18,8 @@ const Footer = () => {
 
   if (isLoading) return <div>Жүктөлүүдө...</div>;
   if (isError) return <div>Ката кетти</div>;
+
+  const contactData = data?.[0];
 
   return (
     <footer className={scss.footer}>
@@ -55,54 +57,47 @@ const Footer = () => {
             <strong>{t("Дарек", "Адрес")}</strong>
             <br />
             <br />
-            {data && data.address}
+            {contactData?.address}
             <br />
             <br />
             <strong>{t("Байланыштар", "Контакты")}</strong>
             <br />
             <br />
-            {data && data.phone_number && data.phone_number.map((phone, index) => (
-              <div key={index} className={scss.phone_number}>
-                {phone}
+            {contactData?.phone_number && (
+              <div className={scss.phone_number}>
+                {contactData.phone_number}
               </div>
-            ))}
+            )}
           </div>
 
           <div className={scss.section}>
             <strong>{t("Социалдык тармактар", "Социальные сети")}</strong>
             <div className={scss.social}>
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FaFacebookF />
-              </a>
-              {data && data.instagram && (
+              {contactData?.instagram && (
                 <a
-                  href={data.instagram}
+                  href={contactData.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   <FaInstagram />
                 </a>
               )}
-              {data && data.telegram && (
+              {contactData?.telegram && (
                 <a
-                  href={data.telegram}
+                  href={contactData.telegram}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   <FaTelegram />
                 </a>
               )}
-              {data && data.whatsapp && (
+              {contactData?.youtube && (
                 <a
-                  href={`https://wa.me/${data.whatsapp}`}
+                  href={contactData.youtube}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <FaWhatsapp />
+                  <FaYoutube />
                 </a>
               )}
             </div>
