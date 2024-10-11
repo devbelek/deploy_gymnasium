@@ -4,19 +4,20 @@ import scss from "./Footer.module.scss";
 import {
   FaFacebookF,
   FaInstagram,
-  FaTwitter,
-  FaLinkedinIn,
   FaTelegram,
   FaWhatsapp,
 } from "react-icons/fa";
 import logo from "../../../../../assets/logo.svg";
 import Image from "next/image";
 import { useLanguageStore } from "@/stores/useLanguageStore";
-import { useGetContactsQuery } from "@/redux/contacts";
+import { useGetContactsQuery } from "@/redux/api/Contacts";
 
 const Footer = () => {
+  const { data, isLoading, isError } = useGetContactsQuery();
   const { t } = useLanguageStore();
-  const { data: contacts, isLoading, error } = useGetContactsQuery();
+
+  if (isLoading) return <div>Жүктөлүүдө...</div>;
+  if (isError) return <div>Ката кетти</div>;
 
   return (
     <footer className={scss.footer}>
@@ -51,40 +52,56 @@ const Footer = () => {
           </div>
 
           <div className={scss.section}>
-            <p>
-              <strong>{t("Дарек", "Адрес")}</strong>
-              <br />
-              <br />
-              {contacts?.address}
-              <br />
-              <br />
-              <strong>{t("Байланыштар", "Контакты")}</strong>
-              <br />
-              <br />
-              {contacts?.phone_number.map((phone, index) => (
-                <React.Fragment key={index}>
-                  {phone}
-                  <br />
-                </React.Fragment>
-              ))}
-            </p>
+            <strong>{t("Дарек", "Адрес")}</strong>
+            <br />
+            <br />
+            {data && data.address}
+            <br />
+            <br />
+            <strong>{t("Байланыштар", "Контакты")}</strong>
+            <br />
+            <br />
+            {data && data.phone_number && data.phone_number.map((phone, index) => (
+              <div key={index} className={scss.phone_number}>
+                {phone}
+              </div>
+            ))}
           </div>
 
           <div className={scss.section}>
             <strong>{t("Социалдык тармактар", "Социальные сети")}</strong>
             <div className={scss.social}>
-              {contacts?.instagram && (
-                <a href={contacts.instagram} target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaFacebookF />
+              </a>
+              {data && data.instagram && (
+                <a
+                  href={data.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <FaInstagram />
                 </a>
               )}
-              {contacts?.telegram && (
-                <a href={contacts.telegram} target="_blank" rel="noopener noreferrer">
+              {data && data.telegram && (
+                <a
+                  href={data.telegram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <FaTelegram />
                 </a>
               )}
-              {contacts?.whatsapp && (
-                <a href={contacts.whatsapp} target="_blank" rel="noopener noreferrer">
+              {data && data.whatsapp && (
+                <a
+                  href={`https://wa.me/${data.whatsapp}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <FaWhatsapp />
                 </a>
               )}
@@ -102,5 +119,5 @@ const Footer = () => {
     </footer>
   );
 };
-//,
+
 export default Footer;
