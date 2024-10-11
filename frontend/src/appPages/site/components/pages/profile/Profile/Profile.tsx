@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   useGetAccountQuery,
   useUpdateAccountMutation,
@@ -67,8 +67,14 @@ const Profile: React.FC = () => {
     try {
       const formDataToSend = new FormData();
       formDataToSend.append("user", formData.user);
+
       if (formData.avatar && formData.avatar.length > 0) {
         formDataToSend.append("avatar", formData.avatar[0]);
+      }
+
+      // Отладочный вывод для проверки содержимого formData
+      for (let [key, value] of formDataToSend.entries()) {
+        console.log(`${key}: ${value}`);
       }
 
       const result = await updateAccount(formDataToSend).unwrap();
