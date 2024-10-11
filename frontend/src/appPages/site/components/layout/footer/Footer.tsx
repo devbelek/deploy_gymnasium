@@ -4,15 +4,20 @@ import scss from "./Footer.module.scss";
 import {
   FaFacebookF,
   FaInstagram,
-  FaTwitter,
-  FaLinkedinIn,
+  FaTelegram,
+  FaWhatsapp,
 } from "react-icons/fa";
 import logo from "../../../../../assets/logo.svg";
 import Image from "next/image";
 import { useLanguageStore } from "@/stores/useLanguageStore";
+import { useGetContactsQuery } from "@/redux/api/Contacts";
 
 const Footer = () => {
+  const { data, isLoading, isError } = useGetContactsQuery();
   const { t } = useLanguageStore();
+
+  if (isLoading) return <div>Жүктөлүүдө...</div>;
+  if (isError) return <div>Ката кетти</div>;
 
   return (
     <footer className={scss.footer}>
@@ -47,51 +52,68 @@ const Footer = () => {
           </div>
 
           <div className={scss.section}>
-            <p>
-              <strong>{t("Дарек", "Адрес")}</strong>
-              <br />
-              <br />
-              {t(
-                "Баткен облусу, Лейлек району,",
-                "Баткенская область, Лейлекский район,"
-              )}{" "}
-              <br />
-              {t("Борбордук айылы", "село Центральное")} <br />
-              {t("Жаштык айылы", "село Жаштык")}
-              <br />
-              <br />
-              <strong>{t("Байланыштар", "Контакты")}</strong>
-              <br />
-              <br />
-              +9963123456789
-              <br />
-              +996703123456
-              <br />
-              +996556123456
-              <br />
-            </p>
+            <strong>{t("Дарек", "Адрес")}</strong>
+            <br />
+            <br />
+            {t(
+              "Баткен облусу, Лейлек району,",
+              "Баткенская область, Лейлекский район,"
+            )}
+            <br />
+            {t("Борбордук айылы", "село Центральное")} <br />
+            {t("Жаштык айылы", "село Жаштык")}
+            <br />
+            <br />
+            <strong>{t("Байланыштар", "Контакты")}</strong>
+            <br />
+            <br />
+            {data && data.phone_number && (
+              <div className={scss.phone_number}>{data.phone_number}</div>
+            )}
           </div>
 
           <div className={scss.section}>
             <strong>{t("Социалдык тармактар", "Социальные сети")}</strong>
             <div className={scss.social}>
-              <a href="https://facebook.com">
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <FaFacebookF />
               </a>
-              <a href="https://instagram.com">
-                <FaInstagram />
-              </a>
-              <a href="https://twitter.com">
-                <FaTwitter />
-              </a>
-              <a href="https://linkedin.com">
-                <FaLinkedinIn />
-              </a>
+              {data && data.instagram && (
+                <a
+                  href={data.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FaInstagram />
+                </a>
+              )}
+              {data && data.telegram && (
+                <a
+                  href={data.telegram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FaTelegram />
+                </a>
+              )}
+              {data && data.whatsapp && (
+                <a
+                  href={`https://wa.me/${data.whatsapp}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FaWhatsapp />
+                </a>
+              )}
             </div>
           </div>
         </div>
         <div className={scss.copyright}>
-          © 2023{" "}
+          © {new Date().getFullYear()}{" "}
           {t(
             "Автордук укук == Developers. Бардык укуктар корголгон.",
             "Copyright by == Developers. Все права защищены."

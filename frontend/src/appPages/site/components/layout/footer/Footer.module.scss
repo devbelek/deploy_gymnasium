@@ -25,6 +25,10 @@
       flex: 1;
       margin-right: 2rem;
 
+      .phone_number {
+        color: rgb(0, 0, 0);
+      }
+
       &:last-child {
         margin-right: 0;
       }
