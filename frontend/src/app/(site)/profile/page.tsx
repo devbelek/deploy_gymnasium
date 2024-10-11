@@ -9,7 +9,9 @@ export const metadata: Metadata = {
     title: "Личный профиль ученика",
     description: "Доступ к персональной информации и успеваемости",
   },
-  canonical: "https://3-gymnasium.kg/profile/",
+  alternates: {
+    canonical: "https://3-gymnasium.kg/profile/",
+  },
 };
 
 const page = () => <ProfilePage />;

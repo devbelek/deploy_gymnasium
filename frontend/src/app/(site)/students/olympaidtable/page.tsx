@@ -8,7 +8,9 @@ export const metadata: Metadata = {
     title: "Ученики N3 Экспериментальной гимназии",
     description: "Наши талантливые и целеустремленные ученики",
   },
-  canonical: "https://3-gymnasium.kg/studens/olympaidtable/",
+  alternates: {
+    canonical: "https://3-gymnasium.kg/studens/olympaidtable/",
+  },
 };
 
 const page = () => <OlympaidTable />;

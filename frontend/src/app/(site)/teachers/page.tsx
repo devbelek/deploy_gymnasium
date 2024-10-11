@@ -8,7 +8,9 @@ export const metadata: Metadata = {
     title: "Педагогический состав N3 Экспериментальной гимназии",
     description: "Опытные и квалифицированные преподаватели",
   },
-  canonical: "https://3-gymnasium.kg/teachers/",
+  alternates: {
+    canonical: "https://3-gymnasium.kg/teachers/",
+  },
 };
 
 const page = () => <TeachersPage />;

@@ -8,7 +8,9 @@ export const metadata: Metadata = {
     title: "Новости N3 Экспериментальной гимназии",
     description: "Актуальные события и достижения нашей гимназии",
   },
-  canonical: "https://3-gymnasium.kg/news/",
+  alternates: {
+    canonical: "https://3-gymnasium.kg/news/",
+  },
 };
 
 const page = () => <NewsPage />;

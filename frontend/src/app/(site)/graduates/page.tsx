@@ -9,7 +9,9 @@ export const metadata: Metadata = {
     title: "Выпускники N3 Экспериментальной гимназии",
     description: "Истории успеха наших выпускников",
   },
-  canonical: "https://3-gymnasium.kg/graduates/",
+  alternates: {
+    canonical: "https://3-gymnasium.kg/graduates/",
+  },
 };
 
 const page = () => <GraduatesPage />;

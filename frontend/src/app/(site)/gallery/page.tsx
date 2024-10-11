@@ -8,7 +8,9 @@ export const metadata: Metadata = {
     title: "Галерея N3 Экспериментальной гимназии",
     description: "Яркие моменты школьной жизни в фотографиях и видео",
   },
-  canonical: "https://3-gymnasium.kg/gallery/",
+  alternates: {
+    canonical: "https://3-gymnasium.kg/gallery/",
+  },
 };
 
 const page = () => <GalleryPage />;

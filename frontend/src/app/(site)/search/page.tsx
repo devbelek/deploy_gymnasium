@@ -8,7 +8,9 @@ export const metadata: Metadata = {
     title: "Поиск по сайту гимназии",
     description: "Быстрый доступ к нужной информации",
   },
-  canonical: "https://3-gymnasium.kg/search/",
+  alternates: {
+    canonical: "https://3-gymnasium.kg/search/",
+  },
 };
 
 const page = () => <Search />;
