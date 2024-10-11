@@ -6,13 +6,17 @@ import {
   FaInstagram,
   FaTwitter,
   FaLinkedinIn,
+  FaTelegram,
+  FaWhatsapp,
 } from "react-icons/fa";
 import logo from "../../../../../assets/logo.svg";
 import Image from "next/image";
 import { useLanguageStore } from "@/stores/useLanguageStore";
+import { useGetContactsQuery } from "@/redux/contacts";
 
 const Footer = () => {
   const { t } = useLanguageStore();
+  const { data: contacts, isLoading, error } = useGetContactsQuery();
 
   return (
     <footer className={scss.footer}>
@@ -51,50 +55,47 @@ const Footer = () => {
               <strong>{t("Дарек", "Адрес")}</strong>
               <br />
               <br />
-              {t(
-                "Баткен облусу, Лейлек району,",
-                "Баткенская область, Лейлекский район,"
-              )}{" "}
-              <br />
-              {t("Борбордук айылы", "село Центральное")} <br />
-              {t("Жаштык айылы", "село Жаштык")}
+              {contacts?.address}
               <br />
               <br />
               <strong>{t("Байланыштар", "Контакты")}</strong>
               <br />
               <br />
-              +9963123456789
-              <br />
-              +996703123456
-              <br />
-              +996556123456
-              <br />
+              {contacts?.phone_number.map((phone, index) => (
+                <React.Fragment key={index}>
+                  {phone}
+                  <br />
+                </React.Fragment>
+              ))}
             </p>
           </div>
 
           <div className={scss.section}>
             <strong>{t("Социалдык тармактар", "Социальные сети")}</strong>
             <div className={scss.social}>
-              <a href="https://facebook.com">
-                <FaFacebookF />
-              </a>
-              <a href="https://instagram.com">
-                <FaInstagram />
-              </a>
-              <a href="https://twitter.com">
-                <FaTwitter />
-              </a>
-              <a href="https://linkedin.com">
-                <FaLinkedinIn />
-              </a>
+              {contacts?.instagram && (
+                <a href={contacts.instagram} target="_blank" rel="noopener noreferrer">
+                  <FaInstagram />
+                </a>
+              )}
+              {contacts?.telegram && (
+                <a href={contacts.telegram} target="_blank" rel="noopener noreferrer">
+                  <FaTelegram />
+                </a>
+              )}
+              {contacts?.whatsapp && (
+                <a href={contacts.whatsapp} target="_blank" rel="noopener noreferrer">
+                  <FaWhatsapp />
+                </a>
+              )}
             </div>
           </div>
         </div>
         <div className={scss.copyright}>
-          © 2023{" "}
+          © {new Date().getFullYear()}{" "}
           {t(
-            "Автордук укук == Developers. Бардык укуктар корголгон.",
-            "Copyright by == Developers. Все права защищены."
+            "Бардык укуктар корголгон.",
+            "Все права защищены."
           )}
         </div>
       </div>
