@@ -20,7 +20,7 @@ const StudentsPage = () => {
             <div className="container">
                 <div className={scss.content}>
                     <h1 className={scss.Title}>
-                        {t("Баардык окуучулар", "Все ученики")}
+                        {t("Бардык окуучулар", "Все ученики")}
                     </h1>
                     <div className={scss.heroContent}>
                         <div

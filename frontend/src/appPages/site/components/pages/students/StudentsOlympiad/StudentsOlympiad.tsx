@@ -9,7 +9,7 @@ const StudentsOlympiad = () => {
             <Link href={"students/olympians"} className={scss.OlimpBlock}>
                 <h1 className={scss.OlimpBlock_text}>
                     {" "}
-                    {t("Олимпия катышуучулары", "Участники олимпиады")}{" "}
+                    {t("Олимпияда катышуучулары", "Участники олимпиады")}{" "}
                 </h1>
             </Link>
         </section>

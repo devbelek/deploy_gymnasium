@@ -23,7 +23,7 @@ const StudentsParliament = () => {
                 className={scss.ParliamBlock}
             >
                 <h1 className={scss.ParliamBlock_text}>
-                    {t("Мектеп парламенти", "Школьный парламент")}
+                    {t("Координациялык кеңеш", "Координационный кенеш")}
                 </h1>
             </Link>
         </section>
