@@ -189,8 +189,8 @@ class SchoolParliament(models.Model):
                                               null=True, verbose_name=_('Должность'))
 
     class Meta:
-        verbose_name = _('Парламент нашей гимназии')
-        verbose_name_plural = _('Парламент нашей гимназии')
+        verbose_name = _('Координационный кенеш')
+        verbose_name_plural = _('Координационный кенеш')
 
     def __str__(self):
         return f"Парламент ID: {self.id} - Должность: {self.type_of_administrator_id}"
