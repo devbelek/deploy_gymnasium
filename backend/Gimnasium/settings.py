@@ -104,6 +104,35 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator', },
 ]
 
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': [
+            ['Format', 'Font', 'FontSize', 'Bold', 'Italic', 'Underline', '-',
+             'NumberedList', 'BulletedList', '-', 'JustifyLeft', 'JustifyCenter',
+             'JustifyRight', 'JustifyBlock', 'Image', 'Link', 'Unlink', 'Table',
+             'Source', 'Maximize'],
+        ],
+        'width': 'auto',
+        'height': '200px',
+        'toolbarCanCollapse': True,
+        'uiColor': '#f0f0f0',
+        'removePlugins': 'elementspath',
+        'extraPlugins': 'font,maximize',
+        'fontSize_sizes': (
+            '8/8px;9/9px;10/10px;11/11px;12/12px;14/14px;16/16px;18/18px;'
+            '20/20px;22/22px;24/24px;26/26px;28/28px;36/36px;48/48px;72/72px'
+        ),
+        'font_names': (
+            'Arial/Arial, Helvetica, sans-serif;'
+            'Times New Roman/Times New Roman, Times, serif;'
+            'Verdana'
+        ),
+    },
+}
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_IMAGE_BACKEND = "pillow"
+
 LANGUAGE_CODE = 'ru'
 TIME_ZONE = 'Asia/Bishkek'
 USE_I18N = True

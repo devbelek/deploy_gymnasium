@@ -16,6 +16,7 @@ import io
 from django.core.files.base import ContentFile
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from ckeditor.fields import RichTextField
 
 logger = logging.getLogger(__name__)
 
@@ -72,7 +73,7 @@ class UserProfile(models.Model):
 class Comment(models.Model):
     news = models.ForeignKey('main.News', on_delete=models.CASCADE, related_name='comments', verbose_name=_('Связка с "Новости"'), null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Автор'))
-    text = models.TextField(verbose_name=_('Комментарий'))
+    text = RichTextField(verbose_name=_('Комментарий'))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Дата создания'))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_('Дата обновления'))
     parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='replies')

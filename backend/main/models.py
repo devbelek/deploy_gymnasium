@@ -9,6 +9,7 @@ from django.utils.translation import gettext_lazy as _
 from PIL import Image
 import io
 from django.core.files.base import ContentFile
+from ckeditor.fields import RichTextField
 
 
 class CompressedImageField(models.ImageField):
@@ -96,7 +97,7 @@ class ImageModel(models.Model):
 
 
 class ContentModel(models.Model):
-    content = models.TextField(verbose_name=_('Контент'))
+    content = RichTextField(verbose_name=_('Контент'))
 
     class Meta:
         abstract = True
@@ -339,7 +340,7 @@ class Graduates(PersonModel):
 
 class News(ImageModel, ContentModel, TimestampedModel):
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Автор'))
-    description = models.CharField(max_length=300, verbose_name=_('Описание'))
+    description = RichTextField(max_length=300, verbose_name=_('Описание'))
 
     class Meta:
         verbose_name = _('Новости')
@@ -362,7 +363,7 @@ class Gallery(ImageModel, ContentModel):
 
 class Video(models.Model):
     title = models.CharField(max_length=200, verbose_name=_('Заголовок'))
-    description = models.TextField(blank=True, verbose_name=_('Описание'))
+    description = RichTextField(blank=True, verbose_name=_('Описание'))
     youtube_id = models.CharField(max_length=200, unique=True, verbose_name=_('Ссылка на видео'))
 
     class Meta:
@@ -386,8 +387,8 @@ class Teachers(PersonModel, ImageModel):
     teachers_status = models.CharField(max_length=100, default='Active', choices=TEACHER_STATUS, blank=False, verbose_name=_('Статус'))
     experience = models.CharField(max_length=200, choices=EXPERIENCE_CHOICES, verbose_name=_('Опыт'))
     subject = models.CharField(max_length=200, verbose_name=_('Предмет'))
-    education = models.TextField(blank=True, verbose_name=_('Образование'))
-    successes = models.TextField(blank=True, verbose_name=_('Успехи'))
+    education = RichTextField(blank=True, verbose_name=_('Образование'))
+    successes = RichTextField(blank=True, verbose_name=_('Успехи'))
 
     class Meta:
         verbose_name = _('Учитель')
