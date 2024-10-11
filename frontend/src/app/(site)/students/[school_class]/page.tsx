@@ -1,4 +1,3 @@
-"use client";
 import StudentsClass from "@/appPages/site/components/pages/students/StudentsClassTable/StudentsClassTable";
 import { useParams } from "next/navigation";
 import type { Metadata } from "next";
