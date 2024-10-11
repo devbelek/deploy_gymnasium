@@ -9,7 +9,7 @@ const api = index.injectEndpoints({
       CONTACTS.GetContactsRequest
     >({
       query: () => ({
-        url: `${ENDPOINTS}/Contacts/`,
+        url: `${ENDPOINTS}/contacts/`,
         method: "GET",
       }),
       providesTags: ["Contacts"],
