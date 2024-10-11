@@ -1,6 +1,6 @@
 declare namespace CONTACTS {
   interface IContact {
-    phone_number: string[];
+    phone_number: string;
     address: string;
     instagram: string;
     whatsapp: string;
