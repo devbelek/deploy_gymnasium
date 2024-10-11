@@ -38,11 +38,8 @@ const FondContent: React.FC = () => {
     setSelectedImage(null);
   };
 
-  const getImageUrl = (confirmationFile: string) => {
-    if (confirmationFile.startsWith("http")) {
-      return confirmationFile;
-    }
-    return `${process.env.NEXT_PUBLIC_ENDPOINT}${confirmationFile}`;
+  const getDefaultAvatar = (username: string) => {
+    return `https://api.dicebear.com/6.x/initials/svg?seed=${username}`;
   };
 
   const fetchUserAvatars = useCallback(async () => {
@@ -63,13 +60,9 @@ const FondContent: React.FC = () => {
           );
           if (response.ok) {
             const userData = await response.json();
-            newUserAvatars[username] =
-              userData.avatar ||
-              `https://api.dicebear.com/6.x/initials/svg?seed=${username}`;
+            newUserAvatars[username] = userData.avatar || getDefaultAvatar(username);
           } else {
-            newUserAvatars[
-              username
-            ] = `https://api.dicebear.com/6.x/initials/svg?seed=${username}`;
+            newUserAvatars[username] = getDefaultAvatar(username);
           }
         } catch (error) {
           console.error(
@@ -79,9 +72,7 @@ const FondContent: React.FC = () => {
             ),
             error
           );
-          newUserAvatars[
-            username
-          ] = `https://api.dicebear.com/6.x/initials/svg?seed=${username}`;
+          newUserAvatars[username] = getDefaultAvatar(username);
         }
       }
 
@@ -119,18 +110,14 @@ const FondContent: React.FC = () => {
                   <div key={item.id} className={scss.donationItem}>
                     <div className={scss.donorInfo}>
                       <Image
-                        src={userAvatars[item.user.toString()] || "/placeholder.jpg"}
+                        src={userAvatars[item.user.toString()] || getDefaultAvatar(item.user.toString())}
                         alt={item.user.toString()}
                         width={60}
                         height={60}
                         className={scss.donorImage}
                         onClick={() =>
-                          handleImageClick(userAvatars[item.user.toString()] || "/placeholder.jpg")
+                          handleImageClick(userAvatars[item.user.toString()] || getDefaultAvatar(item.user.toString()))
                         }
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.src = "/placeholder.jpg";
-                        }}
                       />
                       <h2 className={scss.donor}>
                         {t("Жөнөтүүчү", "Отправитель")}: {item.user}
