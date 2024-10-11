@@ -7,11 +7,19 @@ User = get_user_model()
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
-    username = serializers.CharField(source='user.username', read_only=True)
+    username = serializers.CharField(source='user.username')
 
     class Meta:
         model = UserProfile
         fields = ['username', 'avatar']
+
+    def update(self, instance, validated_data):
+        user_data = validated_data.pop('user', None)
+        if user_data:
+            user = instance.user
+            user.username = user_data.get('username', user.username)
+            user.save()
+        return super().update(instance, validated_data)
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -49,11 +57,19 @@ class ConfirmedDonationSerializer(serializers.ModelSerializer):
 
 
 class UserProfileSerializers(serializers.ModelSerializer):
-    user = serializers.ReadOnlyField(source='user.username')
+    user = serializers.CharField(source='user.username')
 
     class Meta:
         model = UserProfile
-        fields = '__all__'
+        fields = ['user', 'avatar']
+
+    def update(self, instance, validated_data):
+        user_data = validated_data.pop('user', None)
+        if user_data:
+            user = instance.user
+            user.username = user_data.get('username', user.username)
+            user.save()
+        return super().update(instance, validated_data)
 
 
 class CommentReplySerializers(serializers.ModelSerializer):
