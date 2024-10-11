@@ -1,5 +1,4 @@
-"use client";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   useGetAccountQuery,
   useUpdateAccountMutation,
@@ -62,10 +61,6 @@ const Profile: React.FC = () => {
     }
   }, [watchAvatar]);
 
-  if (isLoading) return <div className={styles.loading}>Жүктөлүүдө...</div>;
-  if (error)
-    return <div className={styles.error}>Маалыматты жүктөөдө ката кетти</div>;
-
   const onSubmit = async (formData: ProfileFormData) => {
     try {
       const formDataToSend = new FormData();
@@ -76,14 +71,13 @@ const Profile: React.FC = () => {
 
       const result = await updateAccount(formDataToSend).unwrap();
       setIsEditing(false);
-      // Update the local state with the new data
       setValue("user", result.user);
       setPreviewUrl(result.avatar ? getImageUrl(result.avatar) : null);
-      refetch();
-      alert("Профиль ийгиликтүү жаңыртылды");
+      await refetch();
+      alert("Профиль успешно обновлен");
     } catch (error) {
-      console.error("Профилди жаңыртууда ката кетти", error);
-      alert("Профилди жаңыртууда ката кетти");
+      console.error("Ошибка при обновлении профиля", error);
+      alert("Ошибка при обновлении профиля");
     }
   };
 
@@ -99,15 +93,16 @@ const Profile: React.FC = () => {
     setIsZoomed(true);
   };
 
+  if (isLoading) return <div className={styles.loading}>Загрузка...</div>;
+  if (error) return <div className={styles.error}>Ошибка при загрузке данных</div>;
+
   return (
     <div className={styles.profileContainer}>
       <div className={styles.profileCard}>
         <div className={styles.avatarContainer} onClick={handleZoom}>
           {previewUrl || data?.avatar ? (
             <Image
-              src={
-                previewUrl || getImageUrl(data?.avatar) || "/default-avatar.png"
-              }
+              src={previewUrl || getImageUrl(data?.avatar) || "/default-avatar.png"}
               alt="Аватар"
               className={styles.avatar}
               width={120}
@@ -125,12 +120,11 @@ const Profile: React.FC = () => {
           <div className={styles.profileActions}>
             {!isEditing && (
               <button onClick={handleEdit} className={styles.editButton}>
-                <FaEdit />{" "}
-                <span className={styles.buttonText}>Профилди өзгөртүү</span>
+                <FaEdit /> <span className={styles.buttonText}>Изменить профиль</span>
               </button>
             )}
             <button onClick={handleLogout} className={styles.logoutButton}>
-              <FaSignOutAlt /> <span className={styles.buttonText}>Чыгуу</span>
+              <FaSignOutAlt /> <span className={styles.buttonText}>Выйти</span>
             </button>
           </div>
         </div>
@@ -139,14 +133,14 @@ const Profile: React.FC = () => {
       {isEditing && (
         <div className={styles.editFormOverlay}>
           <div className={styles.editForm}>
-            <h3 className={styles.editFormTitle}>Профилди өзгөртүү</h3>
+            <h3 className={styles.editFormTitle}>Изменить профиль</h3>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className={styles.formField}>
-                <label htmlFor="user">Аты</label>
+                <label htmlFor="user">Имя</label>
                 <input id="user" {...register("user", { required: true })} />
               </div>
               <div className={styles.formField}>
-                <label htmlFor="avatar">Аватарды өзгөртүү</label>
+                <label htmlFor="avatar">Изменить аватар</label>
                 <input
                   type="file"
                   id="avatar"
@@ -161,14 +155,14 @@ const Profile: React.FC = () => {
                   disabled={isUpdating}
                   className={styles.saveButton}
                 >
-                  <FaSave /> {isUpdating ? "Сакталууда..." : "Сактоо"}
+                  <FaSave /> {isUpdating ? "Сохранение..." : "Сохранить"}
                 </button>
                 <button
                   type="button"
                   onClick={() => setIsEditing(false)}
                   className={styles.cancelButton}
                 >
-                  <FaTimes /> Жокко чыгаруу
+                  <FaTimes /> Отмена
                 </button>
               </div>
             </form>
@@ -180,9 +174,7 @@ const Profile: React.FC = () => {
         <div className={styles.zoomOverlay} onClick={() => setIsZoomed(false)}>
           <div className={styles.zoomContent}>
             <Image
-              src={
-                previewUrl || getImageUrl(data?.avatar) || "/default-avatar.png"
-              }
+              src={previewUrl || getImageUrl(data?.avatar) || "/default-avatar.png"}
               alt="Аватар"
               className={styles.zoomedAvatar}
               width={300}
