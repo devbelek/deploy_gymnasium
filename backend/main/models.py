@@ -340,7 +340,7 @@ class Graduates(PersonModel):
 
 class News(ImageModel, ContentModel, TimestampedModel):
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Автор'))
-    description = RichTextField(max_length=300, verbose_name=_('Описание'))
+    description = RichTextField(verbose_name=_('Описание'))
 
     class Meta:
         verbose_name = _('Новости')
