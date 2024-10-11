@@ -1,9 +1,6 @@
-"use client";
-
 import React, { useState, useEffect, useRef } from "react";
 import { usePostDonationsMutation } from "@/redux/api/fond";
 import { SubmitHandler, useForm } from "react-hook-form";
-import styles from "./DonationContent.module.scss";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 
 interface CreateDonationRequest {
@@ -51,7 +48,6 @@ const DonationContent: React.FC = () => {
   }, [watchFile]);
 
   const onSubmit: SubmitHandler<CreateDonationRequest> = async (data) => {
-    console.log("onSubmit called with data:", data);
     setIsLoading(true);
 
     const formData = new FormData();
@@ -59,7 +55,6 @@ const DonationContent: React.FC = () => {
 
     const file = data.confirmation_file[0];
     if (file) {
-      console.log("File type:", file.type);
       if (file.type !== "application/pdf") {
         alert(
           t(
@@ -72,7 +67,6 @@ const DonationContent: React.FC = () => {
       }
       formData.append("confirmation_file", file);
     } else {
-      console.error("No file selected");
       alert(t("Файлды тандаңыз.", "Пожалуйста, выберите файл."));
       setIsLoading(false);
       return;
@@ -82,33 +76,15 @@ const DonationContent: React.FC = () => {
       formData.append("comment", data.comment);
     }
 
-    console.log("FormData contents:");
-    formData.forEach((value, key) => {
-      console.log(key, value);
-    });
-
     try {
       const result = await postDonationsMutation(formData).unwrap();
-      console.log("API response:", result);
       alert(t("Ийгиликтүү жөнөтүлдү!", "Успешно отправлено!"));
     } catch (error) {
-      console.error("Full error object:", error);
-      if (error && typeof error === "object" && "response" in error) {
-        const errorWithResponse = error as ErrorWithResponse;
-        if (errorWithResponse.response) {
-          console.error("Response data:", errorWithResponse.response.data);
-          console.error("Response status:", errorWithResponse.response.status);
-          console.error(
-            "Response headers:",
-            errorWithResponse.response.headers
-          );
-        }
-      }
       console.error("Error sending donation:", error);
       alert(
         t(
           "Жөнөтүүдө ката кетти. Кайра аракет кылыңыз.",
-          "Произошла ошибка при отправке . Пожалуйста, попробуйте еще раз."
+          "Произошла ошибка при отправке. Пожалуйста, попробуйте еще раз."
         )
       );
     } finally {
@@ -121,96 +97,94 @@ const DonationContent: React.FC = () => {
   };
 
   return (
-    <div className={styles.donationContent}>
-      <div className={styles.content}>
-        <h2 className={styles.heading}>
-          {t("Акча толуктоо", "Сделать пополнение")}
-        </h2>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className={styles.formGroup}>
-            <label className={styles.label} htmlFor="amount">
-              {t("Сумма (сом):", "Сумма (сом):")}
-            </label>
-            <input
-              className={styles.input}
-              type="number"
-              id="amount"
-              step="0.01"
-              {...register("amount", {
-                required: t("Сумма милдеттүү", "Сумма обязательна"),
-                min: {
-                  value: 0.01,
-                  message: t(
-                    "Сумма 0дөн чоң болушу керек",
-                    "Сумма должна быть больше 0"
-                  ),
-                },
-                validate: (value) =>
-                  !isNaN(value) ||
-                  t("Туура сан киргизиңиз", "Введите корректное число"),
-              })}
-            />
-            {errors.amount && (
-              <span className={styles.error}>{errors.amount.message}</span>
+    <div className="p-4 bg-white rounded-lg shadow-md">
+      <h2 className="text-2xl font-bold mb-4">
+        {t("Акча толуктоо", "Сделать пополнение")}
+      </h2>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <div>
+          <label className="block mb-2" htmlFor="amount">
+            {t("Сумма (сом):", "Сумма (сом):")}
+          </label>
+          <input
+            className="w-full p-2 border rounded"
+            type="number"
+            id="amount"
+            step="0.01"
+            {...register("amount", {
+              required: t("Сумма милдеттүү", "Сумма обязательна"),
+              min: {
+                value: 0.01,
+                message: t(
+                  "Сумма 0дөн чоң болушу керек",
+                  "Сумма должна быть больше 0"
+                ),
+              },
+              validate: (value) =>
+                !isNaN(value) ||
+                t("Туура сан киргизиңиз", "Введите корректное число"),
+            })}
+          />
+          {errors.amount && (
+            <span className="text-red-500 text-sm">{errors.amount.message}</span>
+          )}
+        </div>
+
+        <div>
+          <label className="block mb-2" htmlFor="confirmation_file">
+            {t(
+              "Которуу квитанциясы (PDF гана):",
+              "Квитанция о переводе (только PDF):"
             )}
-          </div>
-
-          <div className={styles.formGroup}>
-            <label className={styles.label} htmlFor="confirmation_file">
-              {t(
-                "Которуу квитанциясы (PDF гана):",
-                "Квитанция о переводе (только PDF):"
-              )}
-            </label>
-            <input
-              type="file"
-              id="confirmation_file"
-              accept=".pdf"
-              style={{ display: "none" }}
-              {...register("confirmation_file", {
-                required: t("Файл милдеттүү", "Файл обязателен"),
-              })}
-              ref={(e) => {
-                register("confirmation_file").ref(e);
-                fileInputRef.current = e;
-              }}
-            />
-            <button
-              type="button"
-              onClick={handleFileButtonClick}
-              className={styles.fileButton}
-            >
-              {selectedFileName || t("Файлды тандаңыз", "Выберите файл")}
-            </button>
-            {errors.confirmation_file && (
-              <span className={styles.error}>
-                {errors.confirmation_file.message}
-              </span>
-            )}
-          </div>
-
-          <div className={styles.formGroup}>
-            <label className={styles.label} htmlFor="comment">
-              {t("Комментарий:", "Комментарий:")}
-            </label>
-            <textarea
-              className={styles.textarea}
-              id="comment"
-              {...register("comment")}
-            />
-          </div>
-
+          </label>
+          <input
+            type="file"
+            id="confirmation_file"
+            accept=".pdf"
+            className="hidden"
+            {...register("confirmation_file", {
+              required: t("Файл милдеттүү", "Файл обязателен"),
+            })}
+            ref={(e) => {
+              register("confirmation_file").ref(e);
+              fileInputRef.current = e;
+            }}
+          />
           <button
-            type="submit"
-            className={styles.submitButton}
-            disabled={isLoading}
+            type="button"
+            onClick={handleFileButtonClick}
+            className="p-2 bg-gray-200 rounded hover:bg-gray-300"
           >
-            {isLoading
-              ? t("Жөнөтүлүүдө...", "Отправка...")
-              : t("Жөнөтүү", "Отправить")}
+            {selectedFileName || t("Файлды тандаңыз", "Выберите файл")}
           </button>
-        </form>
-      </div>
+          {errors.confirmation_file && (
+            <span className="text-red-500 text-sm">
+              {errors.confirmation_file.message}
+            </span>
+          )}
+        </div>
+
+        <div>
+          <label className="block mb-2" htmlFor="comment">
+            {t("Комментарий:", "Комментарий:")}
+          </label>
+          <textarea
+            className="w-full p-2 border rounded"
+            id="comment"
+            {...register("comment")}
+          />
+        </div>
+
+        <button
+          type="submit"
+          className="w-full p-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-400"
+          disabled={isLoading}
+        >
+          {isLoading
+            ? t("Жөнөтүлүүдө...", "Отправка...")
+            : t("Жөнөтүү", "Отправить")}
+        </button>
+      </form>
     </div>
   );
 };
