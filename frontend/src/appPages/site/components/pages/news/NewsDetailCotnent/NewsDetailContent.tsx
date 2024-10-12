@@ -405,7 +405,7 @@ const NewsDetailContent: React.FC = () => {
             <hr />
           </div>
           <div className={scss.newsContent}>
-            <h1>{parse(isKyrgyz ? newsData.description_ky : newsData.description_ru)}</h1> {/* Парсинг описания */}
+            <h1>{parse(isKyrgyz ? newsData.description_ky ?? '' : newsData.description_ru ?? '')}</h1> {/* Парсинг описания */}
             <Image
               src={newsData.image}
               alt="img"
@@ -414,7 +414,7 @@ const NewsDetailContent: React.FC = () => {
               quality={70}
               property="img"
             />
-            <p>{parse(isKyrgyz ? newsData.content_ky : newsData.content_ru)}</p> {/* Парсинг контента */}
+            <p>{parse(isKyrgyz ? newsData.content_ky ?? '' : newsData.content_ru ?? '')}</p> {/* Парсинг контента */}
             <div className={scss.newsInfo}>
               <p>
                 {t("Автор", "Автор")}: {newsData.author}
