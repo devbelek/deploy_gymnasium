@@ -342,8 +342,8 @@ class Graduates(PersonModel):
 class News(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Автор'))
     image = models.ImageField(upload_to='images/', verbose_name=_('Изображение'))
+    title = models.CharField(max_length=200, verbose_name=_('Заголовок'))
     description = RichTextField(verbose_name=_('Описание'))
-    content = RichTextField(verbose_name=_('Контент'))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Дата создания'))
 
     class Meta:
@@ -359,9 +359,9 @@ class News(models.Model):
     display_description.short_description = "Описание"
 
     def display_content(self):
-        return mark_safe(self.content)
+        return mark_safe(self.title)
 
-    display_content.short_description = "Контент"
+    display_content.short_description = "Заголовок"
 
 
 class Gallery(ImageModel, ContentModel):
