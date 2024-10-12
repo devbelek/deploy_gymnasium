@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 import { useGetNewsQuery } from "@/redux/api/news";
 import scss from "./NewsContent.module.scss";
@@ -8,7 +7,6 @@ import { LuMessagesSquare } from "react-icons/lu";
 import { useRouter } from "next/navigation";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import parse from "html-react-parser";
-import { NEWS } from "@/types/news"; // Импорттоо керек болушу мүмкүн
 
 const getImageUrl = (imageUrl: string) => {
   const cleanUrl = imageUrl.replace(/^https?:\/\/[^/]+\/media/, "");
