@@ -12,7 +12,7 @@ const CKEditorWrapper: React.FC<CKEditorWrapperProps> = ({ value, onChange }) =>
     <CKEditor
       editor={ClassicEditor}
       data={value}
-      onChange={(_, editor) => {
+      onChange={(_event: unknown, editor: any) => {
         const data = editor.getData();
         onChange(data);
       }}
