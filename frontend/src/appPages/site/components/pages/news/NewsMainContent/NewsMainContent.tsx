@@ -20,9 +20,9 @@ export namespace NEWS {
     id: number;
     author: string;
     image: string;
-    content: string;
-    content_ky: string;
-    content_ru: string;
+    title: string;
+    title_ky: string;
+    title_ru: string;
     created_at: string;
     updated_at: string;
     description: string;
