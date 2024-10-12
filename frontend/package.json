@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-react": "^5.1.0",
+    "@ckeditor/ckeditor5-build-classic": "^38.0.0",
     "@chakra-ui/react": "^2.8.2",
     "@react-spring/three": "^9.7.4",
     "@react-three/drei": "^9.114.0",

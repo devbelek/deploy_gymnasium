@@ -7,6 +7,7 @@ import { LuMessagesSquare } from "react-icons/lu";
 import { useRouter } from "next/navigation";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { motion, AnimatePresence } from "framer-motion";
+import parse from 'html-react-parser';
 
 const getImageUrl = (imageUrl: string) => {
   const cleanUrl = imageUrl.replace(/^https?:\/\/[^/]+\/media/, "");
@@ -31,7 +32,6 @@ export namespace NEWS {
 }
 
 const NewsMainContent: React.FC = () => {
-  // Обновленная типизация с selectFromResult
   const { data: news, isLoading } = useGetNewsQuery(undefined, {
     selectFromResult: (result) => ({
       data: result.data as NEWS.INews[] | undefined,
@@ -47,7 +47,7 @@ const NewsMainContent: React.FC = () => {
 
   useEffect(() => {
     if (news && !isLoading) {
-      setTimeout(() => setIsDataLoaded(true), 500); // Delay to show transition
+      setTimeout(() => setIsDataLoaded(true), 500);
     }
   }, [news, isLoading]);
 
@@ -157,7 +157,7 @@ const NewsMainContent: React.FC = () => {
         height={220}
       />
       <h2>
-        {isKyrgyz ? item.description_ky || "" : item.description_ru || ""}
+        {parse(isKyrgyz ? item.description_ky || "" : item.description_ru || "")}
       </h2>
       <div className={scss.news_end}>
         <p>{item.created_at.slice(0, 10)}</p>
