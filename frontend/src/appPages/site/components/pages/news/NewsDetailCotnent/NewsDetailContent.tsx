@@ -22,7 +22,7 @@ import {
 } from "@/redux/api/news";
 import { useGetAccountQuery } from "@/redux/api/profile";
 import { useLanguageStore } from "@/stores/useLanguageStore";
-import parse from "html-react-parser"; // Для рендеринга HTML
+import parse from 'html-react-parser'; // Импортируем html-react-parser
 
 const NewsDetailContent: React.FC = () => {
   const router = useRouter();
@@ -343,7 +343,7 @@ const NewsDetailContent: React.FC = () => {
             </span>
           </div>
         </div>
-        <p className={scss.commentContent}>{comment.text}</p>
+        <p className={scss.commentContent}>{parse(comment.text)}</p> {/* Парсинг текста */}
         {renderCommentActions(comment, depth)}
         {editingComment &&
           editingComment.id === comment.id &&
@@ -405,9 +405,7 @@ const NewsDetailContent: React.FC = () => {
             <hr />
           </div>
           <div className={scss.newsContent}>
-            <h1>
-              {isKyrgyz ? newsData.description_ky : newsData.description_ru}
-            </h1>
+            <h1>{parse(isKyrgyz ? newsData.description_ky : newsData.description_ru)}</h1> {/* Парсинг описания */}
             <Image
               src={newsData.image}
               alt="img"
@@ -416,7 +414,7 @@ const NewsDetailContent: React.FC = () => {
               quality={70}
               property="img"
             />
-            <div>{parse(isKyrgyz ? newsData.content_ky : newsData.content_ru)}</div>
+            <p>{parse(isKyrgyz ? newsData.content_ky : newsData.content_ru)}</p> {/* Парсинг контента */}
             <div className={scss.newsInfo}>
               <p>
                 {t("Автор", "Автор")}: {newsData.author}
