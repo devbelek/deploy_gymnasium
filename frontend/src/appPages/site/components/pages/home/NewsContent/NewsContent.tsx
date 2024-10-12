@@ -8,6 +8,7 @@ import { LuMessagesSquare } from "react-icons/lu";
 import { useRouter } from "next/navigation";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import parse from "html-react-parser";
+import { NEWS } from "@/types/news"; // Импорттоо керек болушу мүмкүн
 
 const getImageUrl = (imageUrl: string) => {
   const cleanUrl = imageUrl.replace(/^https?:\/\/[^/]+\/media/, "");
@@ -26,7 +27,7 @@ const NewsContent: React.FC = () => {
   const sortedNews = news
     ?.slice()
     .sort(
-      (a, b) =>
+      (a: NEWS.INews, b: NEWS.INews) =>
         new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
     );
 
@@ -35,7 +36,7 @@ const NewsContent: React.FC = () => {
       <div className="container">
         <h1>{t("Жаңылыктар", "Новости")}</h1>
         <div className={scss.newsCard}>
-          {sortedNews?.slice(0, 6).map((item) => (
+          {sortedNews?.slice(0, 6).map((item: NEWS.INews) => (
             <div className={scss.card} key={item.id}>
               <Image
                 src={getImageUrl(item.image)}
