@@ -1,3 +1,8 @@
+import { api as index } from "..";
+import { getCSRFToken } from "./csrf";
+
+const ENDPOINTS = process.env.NEXT_PUBLIC_ENDPOINT;
+
 const api = index.injectEndpoints({
   endpoints: (build) => ({
     getNews: build.query<NEWS.GetNewsResponse, NEWS.GetNewsRequest>({

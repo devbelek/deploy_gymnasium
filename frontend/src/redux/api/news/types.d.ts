@@ -1,8 +1,3 @@
-import { api as index } from "..";
-import { getCSRFToken } from "./csrf";
-
-const ENDPOINTS = process.env.NEXT_PUBLIC_ENDPOINT;
-
 namespace NEWS {
   export interface INews {
     id: number;
