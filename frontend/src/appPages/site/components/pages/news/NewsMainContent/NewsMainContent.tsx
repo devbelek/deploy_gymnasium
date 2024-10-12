@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useMemo, useEffect } from "react";
 import scss from "./NewsMainContent.module.scss";
 import Image from "next/image";
