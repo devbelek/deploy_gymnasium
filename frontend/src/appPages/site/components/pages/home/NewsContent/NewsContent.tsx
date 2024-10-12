@@ -6,6 +6,7 @@ import Image from "next/image";
 import { LuMessagesSquare } from "react-icons/lu";
 import { useRouter } from "next/navigation";
 import { useLanguageStore } from "@/stores/useLanguageStore";
+import parse from "html-react-parser"; // Импортируем html-react-parser
 
 const getImageUrl = (imageUrl: string) => {
   const cleanUrl = imageUrl.replace(/^https?:\/\/[^/]+\/media/, "");
@@ -48,11 +49,8 @@ const NewsContent: React.FC = () => {
                 priority
                 quality={70}
               />
-              <p>
-                {isKyrgyz
-                  ? item.description_ky || ""
-                  : item.description_ru || ""}
-              </p>
+              {/* Используем html-react-parser для корректного отображения HTML-контента */}
+              <p>{parse(isKyrgyz ? item.description_ky || "" : item.description_ru || "")}</p>
               <article className={scss.end}>
                 <span>{item.created_at.slice(0, 10)}</span>
                 <div className={scss.comments}>
