@@ -22,6 +22,7 @@ import {
 } from "@/redux/api/news";
 import { useGetAccountQuery } from "@/redux/api/profile";
 import { useLanguageStore } from "@/stores/useLanguageStore";
+import parse from "html-react-parser"; // Для рендеринга HTML
 
 const NewsDetailContent: React.FC = () => {
   const router = useRouter();
@@ -415,7 +416,7 @@ const NewsDetailContent: React.FC = () => {
               quality={70}
               property="img"
             />
-            <p>{isKyrgyz ? newsData.content_ky : newsData.content_ru}</p>
+            <div>{parse(isKyrgyz ? newsData.content_ky : newsData.content_ru)}</div>
             <div className={scss.newsInfo}>
               <p>
                 {t("Автор", "Автор")}: {newsData.author}
