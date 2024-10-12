@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     follow: true,
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: "/frontend/public/photo_2024-10-12_22-16-01.jpg",
   },
   verification: {
     google: "sWC8t61RsOMADPl4aT6U7ANIj7WhC68H6hsacwre4ZI",
