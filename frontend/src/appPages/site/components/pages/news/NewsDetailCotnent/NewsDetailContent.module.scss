@@ -46,11 +46,11 @@
       h1 {
         color: #333333;
         width: 100%;
-        font-size: 32px;
+        font-size: 30px;
         font-weight: 800;
         line-height: 1.3;
-        text-align: center;
         max-width: 1100px;
+        text-align: start;
         margin: 0 auto;
       }
 
@@ -404,91 +404,66 @@
     margin-top: 80px;
 
     .content {
-      .commentsSection {
-        h2 {
+      .newsContent {
+        img {
+          width: 100%;
+          max-width: 900px;
+          height: 560px;
+          object-fit: cover;
+          border-radius: 10px;
+        }
+
+        /* Описание */
+        p {
+          width: 100%;
+          font-size: 14px;
+        }
+
+        h1 {
+          color: #333333;
           font-size: 24px;
-        }
-
-        .comment {
-          padding: 20px;
-
-          &.reply {
-            margin-left: 30px;
-          }
-
-          .commentHeader {
-            .avatar {
-              width: 40px;
-              height: 40px;
-            }
-
-            .commentInfo {
-              .commentAuthor {
-                font-size: 16px;
-              }
-
-              .commentDate {
-                font-size: 12px;
-              }
-            }
-          }
-
-          .commentContent {
-            font-size: 15px;
-          }
-
-          .commentActions {
-            .actionButton {
-              font-size: 14px;
-
-              svg {
-                width: 18px;
-                height: 18px;
-              }
-            }
-          }
+          font-weight: 700;
+          line-height: 1.4;
+          text-align: start;
         }
       }
     }
+  }
+}
 
-    .fixedCommentForm {
-      .addComment,
-      .replyForm {
-        .replyingTo,
-        .addNewComment {
-          font-size: 18px;
-        }
+@media (max-width: 576px) {
+  .NewsDetailContent {
+    margin-top: 80px;
 
-        .commentForm {
-          padding: 20px;
-
-          textarea {
-            font-size: 15px;
-          }
-
-          .formActions {
-            button {
-              padding: 12px 20px;
-              font-size: 15px;
-            }
-          }
-        }
-      }
-
-      .loginPrompt {
-        font-size: 16px;
-        padding: 20px;
-      }
-    }
-
-    .enlargedAvatarOverlay {
-      .enlargedAvatarContainer {
-        .enlargedAvatar {
-          width: 400px;
+    .content {
+      .newsContent {
+        img {
+          width: 100%;
+          max-width: 900px;
           height: 400px;
           object-fit: cover;
           border-radius: 10px;
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+          color: #333333;
+          font-size: 22px;
+          font-weight: 700;
+          line-height: 1.3;
+          text-align: start;
+        }
+
+        p {
+          width: 100%;
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 1.6;
+          text-align: center; /* Центрирование текста описания */
+          color: #333333;
+          max-width: 1100px; /* Ограничение ширины текста для лучшей читаемости */
+          margin-left: auto;
+          margin-right: auto; /* Центрирование */
+          padding: 0;
         }
       }
     }
@@ -500,49 +475,26 @@
     margin-top: 80px;
 
     .content {
-      .commentsSection {
-        h2 {
-          font-size: 22px;
+      .newsContent {
+        img {
+          width: 100%;
+          max-width: 900px;
+          height: 300px;
+          object-fit: cover;
+          border-radius: 10px;
         }
 
-        .comment {
-          padding: 15px;
+        h1 {
+          color: #333333;
+          font-size: 20px;
+          font-weight: 700;
+          line-height: 1.3;
+          text-align: start;
+        }
 
-          &.reply {
-            margin-left: 20px;
-          }
-
-          .commentHeader {
-            .avatar {
-              width: 35px;
-              height: 35px;
-            }
-
-            .commentInfo {
-              .commentAuthor {
-                font-size: 15px;
-              }
-
-              .commentDate {
-                font-size: 11px;
-              }
-            }
-          }
-
-          .commentContent {
-            font-size: 14px;
-          }
-
-          .commentActions {
-            .actionButton {
-              font-size: 13px;
-
-              svg {
-                width: 16px;
-                height: 16px;
-              }
-            }
-          }
+        p {
+          width: 100%;
+          font-size: 12px;
         }
       }
     }
@@ -585,6 +537,32 @@
           object-fit: cover;
           border-radius: 10px;
           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 320px) {
+  .NewsDetailContent {
+    .content {
+      .newsContent {
+        img {
+          max-width: 900px;
+          height: 200px;
+        }
+
+        h1 {
+          color: #333333;
+          font-size: 20px;
+          font-weight: 700;
+          line-height: 1.3;
+          text-align: start;
+        }
+
+        p {
+          width: 100%;
+          font-size: 10px;
         }
       }
     }
