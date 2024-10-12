@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useGetNewsQuery } from "@/redux/api/news";
-import styles from "./NewsContent.module.scss";
+import scss from "./NewsContent.module.scss";
 import Image from "next/image";
 import { LuMessagesSquare } from "react-icons/lu";
 import { useRouter } from "next/navigation";
@@ -16,45 +16,50 @@ const getImageUrl = (imageUrl: string) => {
 const NewsContent: React.FC = () => {
   const { data: news } = useGetNewsQuery();
   const { isKyrgyz, t } = useLanguageStore();
-  const router = useRouter();
 
+  const router = useRouter();
   const handleNavigate = () => {
     router.push("/news");
   };
 
   const sortedNews = news
     ?.slice()
-    .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+    .sort(
+      (a, b) =>
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    );
 
   return (
-    <section className={styles.content}>
-      <div className={styles.container}>
+    <section id={scss.content}>
+      <div className="container">
         <h1>{t("Жаңылыктар", "Новости")}</h1>
-        <div className={styles.newsGrid}>
+        <div className={scss.newsCard}>
           {sortedNews?.slice(0, 6).map((item) => (
-            <div className={styles.card} key={item.id}>
+            <div className={scss.card} key={item.id}>
               <Image
                 src={getImageUrl(item.image)}
-                alt={isKyrgyz ? item.description_ky || "" : item.description_ru || ""}
+                alt={
+                  isKyrgyz
+                    ? item.description_ky || ""
+                    : item.description_ru || ""
+                }
                 width={300}
                 height={200}
                 priority
                 quality={70}
               />
-              <div className={styles.cardContent}>
-                <p>{parse(isKyrgyz ? item.description_ky || "" : item.description_ru || "")}</p>
-                <div className={styles.cardFooter}>
-                  <span>{new Date(item.created_at).toLocaleDateString()}</span>
-                  <div className={styles.comments}>
-                    <LuMessagesSquare />
-                    <span>{item.comments_count}</span>
-                  </div>
+              <p>{parse(isKyrgyz ? item.description_ky || "" : item.description_ru || "")}</p>
+              <article className={scss.end}>
+                <span>{item.created_at.slice(0, 10)}</span>
+                <div className={scss.comments}>
+                  <LuMessagesSquare />
+                  <span>{item.comments_count}</span>
                 </div>
-              </div>
+              </article>
             </div>
           ))}
         </div>
-        <div className={styles.buttonContainer}>
+        <div className={scss.buttonContainer}>
           <button onClick={handleNavigate}>
             {t("Бардык жаңылыктар", "Все новости")}
           </button>
