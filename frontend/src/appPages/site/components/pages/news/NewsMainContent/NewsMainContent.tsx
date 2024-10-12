@@ -1,4 +1,3 @@
-"use client";
 import React, { useState, useMemo, useEffect } from "react";
 import scss from "./NewsMainContent.module.scss";
 import Image from "next/image";
@@ -160,7 +159,7 @@ const NewsMainContent: React.FC = () => {
         {parse(isKyrgyz ? item.description_ky || "" : item.description_ru || "")}
       </h2>
       <div className={scss.news_end}>
-        <p>{item.created_at.slice(0, 10)}</p>
+        <p>{new Date(item.created_at).toLocaleDateString()}</p>
         <div className={scss.comments}>
           <LuMessagesSquare />
           <span>{item.comments_count}</span>
