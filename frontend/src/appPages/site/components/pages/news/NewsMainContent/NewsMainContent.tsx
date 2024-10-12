@@ -7,7 +7,7 @@ import { LuMessagesSquare } from "react-icons/lu";
 import { useRouter } from "next/navigation";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import { motion, AnimatePresence } from "framer-motion";
-import parse from 'html-react-parser';
+import parse from "html-react-parser";
 
 const getImageUrl = (imageUrl: string) => {
   const cleanUrl = imageUrl.replace(/^https?:\/\/[^/]+\/media/, "");
@@ -156,7 +156,7 @@ const NewsMainContent: React.FC = () => {
         width={266}
         height={220}
       />
-      <h2>
+      <h2 className={scss.news_title}>
         {parse(isKyrgyz ? item.description_ky || "" : item.description_ru || "")}
       </h2>
       <div className={scss.news_end}>
