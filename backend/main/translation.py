@@ -19,7 +19,7 @@ class SuccessfulGraduatesTranslationOptions(TranslationOptions):
 
 @register(News)
 class NewsTranslationOptions(TranslationOptions):
-    fields = ('content', 'description')
+    fields = ('title', 'description')
 
 
 @register(Teachers)
