@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.core.cache import cache
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.utils.safestring import mark_safe
 from loguru import logger
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -349,6 +350,10 @@ class News(ImageModel, ContentModel, TimestampedModel):
     def __str__(self):
         return f'Новость от {self.created_at.strftime("%Y-%m-%d")}'
 
+    def display_description(self):
+        return mark_safe(self.description)
+
+    display_description.short_description = "Описание"
 
 
 class Gallery(ImageModel, ContentModel):
@@ -364,7 +369,7 @@ class Gallery(ImageModel, ContentModel):
 
 class Video(models.Model):
     title = models.CharField(max_length=200, verbose_name=_('Заголовок'))
-    description = RichTextField(blank=True, verbose_name=_('Описание'))
+    description = models.TextField(blank=True, verbose_name=_('Описание'))
     youtube_id = models.CharField(max_length=200, unique=True, verbose_name=_('Ссылка на видео'))
 
     class Meta:
@@ -388,8 +393,8 @@ class Teachers(PersonModel, ImageModel):
     teachers_status = models.CharField(max_length=100, default='Active', choices=TEACHER_STATUS, blank=False, verbose_name=_('Статус'))
     experience = models.CharField(max_length=200, choices=EXPERIENCE_CHOICES, verbose_name=_('Опыт'))
     subject = models.CharField(max_length=200, verbose_name=_('Предмет'))
-    education = RichTextField(blank=True, verbose_name=_('Образование'))
-    successes = RichTextField(blank=True, verbose_name=_('Успехи'))
+    education = models.TextField(blank=True, verbose_name=_('Образование'))
+    successes = models.TextField(blank=True, verbose_name=_('Успехи'))
 
     class Meta:
         verbose_name = _('Учитель')
