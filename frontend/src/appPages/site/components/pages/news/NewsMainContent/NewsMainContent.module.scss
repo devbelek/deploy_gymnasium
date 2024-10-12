@@ -68,6 +68,12 @@
           color: #333333;
           flex-grow: 1;
           margin: 10px 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2; /* Ограничение на 2 строки текста */
+          -webkit-box-orient: vertical;
+          max-width: 100%;
         }
 
         .news_end {
@@ -260,6 +266,7 @@
           h2,
           .skeleton_title {
             font-size: 16px;
+            -webkit-line-clamp: 2; /* Ограничение на 2 строки */
           }
         }
       }
@@ -285,6 +292,7 @@
           h2,
           .skeleton_title {
             font-size: 15px;
+            -webkit-line-clamp: 2; /* Ограничение на 2 строки */
           }
         }
       }
@@ -314,6 +322,7 @@
           h2,
           .skeleton_title {
             font-size: 15px;
+            -webkit-line-clamp: 2; /* Ограничение на 2 строки */
           }
           .news_end {
             width: 100%;
@@ -345,6 +354,7 @@
           h2,
           .skeleton_title {
             font-size: 14px;
+            -webkit-line-clamp: 2; /* Ограничение на 2 строки */
           }
         }
       }
