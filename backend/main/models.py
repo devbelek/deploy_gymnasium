@@ -339,9 +339,12 @@ class Graduates(PersonModel):
         return f"Выпускники {self.year} года: {self.name} {self.surname}"
 
 
-class News(ImageModel, ContentModel, TimestampedModel):
+class News(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Автор'))
+    image = models.ImageField(upload_to='images/', verbose_name=_('Изображение'))
     description = RichTextField(verbose_name=_('Описание'))
+    content = RichTextField(verbose_name=_('Контент'))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Дата создания'))
 
     class Meta:
         verbose_name = _('Новости')
@@ -354,6 +357,11 @@ class News(ImageModel, ContentModel, TimestampedModel):
         return mark_safe(self.description)
 
     display_description.short_description = "Описание"
+
+    def display_content(self):
+        return mark_safe(self.content)
+
+    display_content.short_description = "Контент"
 
 
 class Gallery(ImageModel, ContentModel):

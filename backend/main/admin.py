@@ -1,3 +1,4 @@
+from ckeditor.widgets import CKEditorWidget
 from django.contrib import admin
 from .models import *
 from modeltranslation.admin import TranslationAdmin
@@ -37,8 +38,23 @@ class SuccessfulGraduatesAdmin(TranslationAdmin):
 
 @admin.register(News)
 class NewsAdmin(TranslationAdmin):
-    list_display = ("content", 'description')
-    fieldsets = []
+    list_display = ('author', 'created_at', 'display_description', 'display_content')
+
+    formfield_overrides = {
+        models.TextField: {'widget': CKEditorWidget},
+    }
+
+    fieldsets = (
+        ('Основные', {
+            'fields': ('author', 'image', 'description', 'content'),
+        }),
+        ('Кыргызский перевод', {
+            'fields': ('content_ky', 'description_ky'),
+        }),
+        ('Русский перевод', {
+            'fields': ('content_ru', 'description_ru'),
+        }),
+    )
 
     class Media:
         js = (
