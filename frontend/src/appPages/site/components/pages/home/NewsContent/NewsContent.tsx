@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import { useGetNewsQuery } from "@/redux/api/news";
 import scss from "./NewsContent.module.scss";
@@ -38,17 +39,15 @@ const NewsContent: React.FC = () => {
             <div className={scss.card} key={item.id}>
               <Image
                 src={getImageUrl(item.image)}
-                alt={
-                  isKyrgyz
-                    ? item.title_ky || ""
-                    : item.title_ru || ""
-                }
+                alt={isKyrgyz ? item.title_ky || "" : item.title_ru || ""}
                 width={300}
                 height={200}
                 priority
                 quality={70}
               />
-              <p>{parse(isKyrgyz ? <item className="title"></item>_ky || "" : item.title_ru || "")}</p>
+              <p>
+                {parse(isKyrgyz ? item.title_ky || "" : item.title_ru || "")}
+              </p>
               <article className={scss.end}>
                 <span>{item.created_at.slice(0, 10)}</span>
                 <div className={scss.comments}>
