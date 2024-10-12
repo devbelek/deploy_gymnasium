@@ -24,10 +24,20 @@ class GalleryAdmin(admin.ModelAdmin):
 class SuccessfulGraduatesAdmin(TranslationAdmin):
     list_display = ("content",)
 
+    class Media:
+        js = (
+            'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
+            'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js',
+            'modeltranslation/js/tabbed_translation_fields.js',
+        )
+        css = {
+            'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
+        }
+
 
 @admin.register(News)
 class NewsAdmin(TranslationAdmin):
-    list_display = ("content", 'description', 'display_description', 'display_content',)
+    list_display = ('author', 'created_at', 'display_description', 'display_content')
     fieldsets = []
 
 
@@ -62,3 +72,13 @@ class TeachersAdmin(TranslationAdmin):
     def get_full_name(self, obj):
         return f"{obj.name} {obj.surname} {obj.last_name}"
     get_full_name.short_description = 'ФИО'
+
+    class Media:
+        js = (
+            'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
+            'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js',
+            'modeltranslation/js/tabbed_translation_fields.js',
+        )
+        css = {
+            'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
+        }
