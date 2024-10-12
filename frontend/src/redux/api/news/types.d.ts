@@ -1,5 +1,10 @@
+import { api as index } from "..";
+import { getCSRFToken } from "./csrf";
+
+const ENDPOINTS = process.env.NEXT_PUBLIC_ENDPOINT;
+
 namespace NEWS {
-  interface INews {
+  export interface INews {
     id: number;
     author: string;
     image: string;
@@ -14,7 +19,7 @@ namespace NEWS {
     comments_count: number;
   }
 
-  interface IComment {
+  export interface IComment {
     id: number;
     author: string;
     text: string;
@@ -25,27 +30,31 @@ namespace NEWS {
     replies: IComment[];
   }
 
-  type GetNewsResponse = INews[];
-  type GetNewsRequest = void;
-  type GetDetNewsResponse = INews;
-  type GetDetNewsRequest = string | number;
+  export type GetNewsResponse = INews[];
+  export type GetNewsRequest = void;
+  export type GetDetNewsResponse = INews;
+  export type GetDetNewsRequest = string | number;
 
-  type GetCommentsResponse = IComment[];
-  type GetCommentsRequest = number;
+  export type GetCommentsResponse = IComment[];
+  export type GetCommentsRequest = number;
 
-  type AddCommentResponse = IComment;
-  type AddCommentRequest = { newsId: number; text: string; parentId?: number };
+  export type AddCommentResponse = IComment;
+  export type AddCommentRequest = {
+    newsId: number;
+    text: string;
+    parentId?: number;
+  };
 
-  type UpdateCommentResponse = IComment;
-  type UpdateCommentRequest = {
+  export type UpdateCommentResponse = IComment;
+  export type UpdateCommentRequest = {
     commentId: number;
     text: string;
     parentId?: number;
   };
 
-  type DeleteCommentResponse = void;
-  type DeleteCommentRequest = { commentId: number; parentId?: number };
+  export type DeleteCommentResponse = void;
+  export type DeleteCommentRequest = { commentId: number; parentId?: number };
 
-  type LikeCommentResponse = { detail: string };
-  type LikeCommentRequest = { commentId: number };
+  export type LikeCommentResponse = { detail: string };
+  export type LikeCommentRequest = { commentId: number };
 }
