@@ -3,9 +3,9 @@ namespace NEWS {
     id: number;
     author: string;
     image: string;
-    content: string;
-    content_ky: string;
-    content_ru: string;
+    title: string;
+    title_ky: string;
+    title_ru: string;
     created_at: string;
     updated_at: string;
     description: string;
@@ -37,7 +37,11 @@ namespace NEWS {
   type AddCommentRequest = { newsId: number; text: string; parentId?: number };
 
   type UpdateCommentResponse = IComment;
-  type UpdateCommentRequest = { commentId: number; text: string; parentId?: number };
+  type UpdateCommentRequest = {
+    commentId: number;
+    text: string;
+    parentId?: number;
+  };
 
   type DeleteCommentResponse = void;
   type DeleteCommentRequest = { commentId: number; parentId?: number };

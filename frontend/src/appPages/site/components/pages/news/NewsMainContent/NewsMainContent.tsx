@@ -158,7 +158,7 @@ const NewsMainContent: React.FC = () => {
         height={220}
       />
       <h2 className={scss.news_title}>
-        {parse(isKyrgyz ? item.description_ky || "" : item.description_ru || "")}
+        {parse(isKyrgyz ? item.title_ky || "" : item.title_ru || "")}
       </h2>
       <div className={scss.news_end}>
         <p>{new Date(item.created_at).toLocaleDateString()}</p>

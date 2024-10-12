@@ -40,15 +40,15 @@ const NewsContent: React.FC = () => {
                 src={getImageUrl(item.image)}
                 alt={
                   isKyrgyz
-                    ? item.description_ky || ""
-                    : item.description_ru || ""
+                    ? item.title_ky || ""
+                    : item.title_ru || ""
                 }
                 width={300}
                 height={200}
                 priority
                 quality={70}
               />
-              <p>{parse(isKyrgyz ? item.description_ky || "" : item.description_ru || "")}</p>
+              <p>{parse(isKyrgyz ? <item className="title"></item>_ky || "" : item.title_ru || "")}</p>
               <article className={scss.end}>
                 <span>{item.created_at.slice(0, 10)}</span>
                 <div className={scss.comments}>
