@@ -342,7 +342,7 @@ class Graduates(PersonModel):
 class News(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Автор'))
     image = models.ImageField(upload_to='images/', verbose_name=_('Изображение'))
-    title = models.CharField(max_length=200, verbose_name=_('Заголовок'))
+    title = models.CharField(max_length=200, default='Заголовок', verbose_name=_('Заголовок'))
     description = RichTextField(verbose_name=_('Описание'))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Дата создания'))
 
