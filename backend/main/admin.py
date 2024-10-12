@@ -1,4 +1,3 @@
-from ckeditor.widgets import CKEditorWidget
 from django.contrib import admin
 from .models import *
 from modeltranslation.admin import TranslationAdmin
@@ -25,46 +24,11 @@ class GalleryAdmin(admin.ModelAdmin):
 class SuccessfulGraduatesAdmin(TranslationAdmin):
     list_display = ("content",)
 
-    class Media:
-        js = (
-            'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
-            'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js',
-            'modeltranslation/js/tabbed_translation_fields.js',
-        )
-        css = {
-            'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
-        }
-
 
 @admin.register(News)
 class NewsAdmin(TranslationAdmin):
-    list_display = ('author', 'created_at', 'display_description', 'display_content')
-
-    formfield_overrides = {
-        models.TextField: {'widget': CKEditorWidget},
-    }
-
-    fieldsets = (
-        ('Основные', {
-            'fields': ('author', 'image', 'description', 'content'),
-        }),
-        ('Кыргызский перевод', {
-            'fields': ('content_ky', 'description_ky'),
-        }),
-        ('Русский перевод', {
-            'fields': ('content_ru', 'description_ru'),
-        }),
-    )
-
-    class Media:
-        js = (
-            'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
-            'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js',
-            'modeltranslation/js/tabbed_translation_fields.js',
-        )
-        css = {
-            'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
-        }
+    list_display = ("content", 'description', 'display_description', 'display_content',)
+    fieldsets = []
 
 
 @admin.register(Students)
@@ -98,13 +62,3 @@ class TeachersAdmin(TranslationAdmin):
     def get_full_name(self, obj):
         return f"{obj.name} {obj.surname} {obj.last_name}"
     get_full_name.short_description = 'ФИО'
-
-    class Media:
-        js = (
-            'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
-            'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js',
-            'modeltranslation/js/tabbed_translation_fields.js',
-        )
-        css = {
-            'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
-        }
