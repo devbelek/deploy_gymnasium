@@ -42,8 +42,8 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
   },
-  other: {
-    "google-site-verification": "sWC8t61RsOMADPl4aT6U7ANIj7WhC68H6hsacwre4ZI",
+  verification: {
+    google: "sWC8t61RsOMADPl4aT6U7ANIj7WhC68H6hsacwre4ZI",
   },
 };
 
