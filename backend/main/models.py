@@ -311,7 +311,7 @@ class Graduates(PersonModel):
             MaxValueValidator(get_current_year())
         ]
     )
-    ort = models.PositiveSmallIntegerField(verbose_name=_('ОРТ'), blank=False)
+    ort = models.PositiveSmallIntegerField(verbose_name=_('ОРТ'), blank=True, null=True)
     kl_rukovoditel = models.ForeignKey(
         'Teachers',
         on_delete=models.CASCADE,
