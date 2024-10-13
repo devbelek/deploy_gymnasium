@@ -5,6 +5,7 @@ import scss from "./TeachersMainContent.module.scss";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useLanguageStore } from "@/stores/useLanguageStore";
+import TeachersSkeleton from "./TeachersSkeleton"; // Жаңы импорт
 
 const TeachersMainContent: React.FC = () => {
   const { data, isLoading, error } = useGetTeachersQuery();
@@ -13,7 +14,7 @@ const TeachersMainContent: React.FC = () => {
   const { isKyrgyz, t } = useLanguageStore();
 
   if (isLoading) {
-    return <div>{t("Жүктөлүүдө...", "Загрузка...")}</div>;
+    return <TeachersSkeleton />; // Жүктөө учурунда скелетонду көрсөтөбүз
   }
 
   if (error) {

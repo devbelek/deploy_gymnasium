@@ -20,9 +20,9 @@ export namespace NEWS {
     id: number;
     author: string;
     image: string;
-    content: string;
-    content_ky: string;
-    content_ru: string;
+    title: string;
+    title_ky: string;
+    title_ru: string;
     created_at: string;
     updated_at: string;
     description: string;
@@ -158,7 +158,7 @@ const NewsMainContent: React.FC = () => {
         height={220}
       />
       <h2 className={scss.news_title}>
-        {parse(isKyrgyz ? item.description_ky || "" : item.description_ru || "")}
+        {parse(isKyrgyz ? item.title_ky || "" : item.title_ru || "")}
       </h2>
       <div className={scss.news_end}>
         <p>{new Date(item.created_at).toLocaleDateString()}</p>

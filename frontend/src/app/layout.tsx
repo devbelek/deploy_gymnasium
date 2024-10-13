@@ -21,6 +21,7 @@ export const metadata: Metadata = {
     "образование в Кыргызстане",
     "инновационное обучение",
   ],
+
   authors: [{ name: "N3 Экспериментальная гимназия" }],
   creator: "N3 Экспериментальная гимназия",
   publisher: "N3 Экспериментальная гимназия",
@@ -40,7 +41,10 @@ export const metadata: Metadata = {
     follow: true,
   },
   icons: {
-    icon: "/favicon.ico", // Бул жерде favicon'ду көрсөтүүдөбүз
+    icon: "/favicon.ico",
+  },
+  verification: {
+    google: "sWC8t61RsOMADPl4aT6U7ANIj7WhC68H6hsacwre4ZI",
   },
 };
 

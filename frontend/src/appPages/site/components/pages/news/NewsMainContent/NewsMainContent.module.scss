@@ -62,18 +62,25 @@
         }
 
         h2 {
-          font-size: 17px;
+          font-size: 19px;
           font-weight: 400;
           text-align: center;
-          color: #333333;
+          color: #333;
           flex-grow: 1;
           margin: 10px 0;
-          overflow: hidden;
+          overflow: scroll;
           text-overflow: ellipsis;
           display: -webkit-box;
-          -webkit-line-clamp: 2; /* Ограничение на 2 строки текста */
+          line-clamp: 3;
           -webkit-box-orient: vertical;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
           max-width: 100%;
+          max-height: 4.5em;
+        }
+
+        h2::-webkit-scrollbar {
+          display: none;
         }
 
         .news_end {

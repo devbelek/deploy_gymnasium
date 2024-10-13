@@ -25,7 +25,7 @@ const NewsContent: React.FC = () => {
   const sortedNews = news
     ?.slice()
     .sort(
-      (a, b) =>
+      (a: NEWS.INews, b: NEWS.INews) =>
         new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
     );
 
@@ -34,21 +34,19 @@ const NewsContent: React.FC = () => {
       <div className="container">
         <h1>{t("Жаңылыктар", "Новости")}</h1>
         <div className={scss.newsCard}>
-          {sortedNews?.slice(0, 6).map((item) => (
+          {sortedNews?.slice(0, 6).map((item: NEWS.INews) => (
             <div className={scss.card} key={item.id}>
               <Image
                 src={getImageUrl(item.image)}
-                alt={
-                  isKyrgyz
-                    ? item.description_ky || ""
-                    : item.description_ru || ""
-                }
+                alt={isKyrgyz ? item.title_ky || "" : item.title_ru || ""}
                 width={300}
                 height={200}
                 priority
                 quality={70}
               />
-              <p>{parse(isKyrgyz ? item.description_ky || "" : item.description_ru || "")}</p>
+              <p>
+                {parse(isKyrgyz ? item.title_ky || "" : item.title_ru || "")}
+              </p>
               <article className={scss.end}>
                 <span>{item.created_at.slice(0, 10)}</span>
                 <div className={scss.comments}>
