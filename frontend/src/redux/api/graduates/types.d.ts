@@ -4,7 +4,7 @@ namespace GRADUATES {
         name: string;
         last_name: string;
         year: number;
-        ort: number;
+        ort: number | null;
     }
     type GetGraduatesResponse = IGraduates[];
 

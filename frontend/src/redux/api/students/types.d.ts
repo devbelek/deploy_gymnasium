@@ -2,13 +2,13 @@ namespace STUDENTS {
     interface IStudent {
         name: string;
         surname: string;
-        last_name: string;
+        last_name: string | null;
         year: number;
         olympian_status?: { choosing: string };
         school_class: { grade: string; parallel: string };
         classroom_teacher: [
             {
-                last_name: string;
+                last_name: string | null;
                 name: string;
                 surname: string;
             }

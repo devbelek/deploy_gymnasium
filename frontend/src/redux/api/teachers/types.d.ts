@@ -4,7 +4,7 @@ namespace TEACHERS {
     teachers_status: string;
     surname: string;
     name: string;
-    last_name: string;
+    last_name: string | null;
     experience: string;
     subject: string;
     subject_ky: string;

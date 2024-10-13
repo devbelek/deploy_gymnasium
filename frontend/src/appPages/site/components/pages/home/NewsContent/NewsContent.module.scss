@@ -24,7 +24,7 @@
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: flex-start;
 
     .card {
       background-color: #fff6f6;
@@ -50,21 +50,21 @@
         object-fit: cover;
         border-radius: 10px;
       }
+
       p {
         width: 100%;
-        height: 80%;
         padding-top: 10px;
         height: 4.5em;
         font-size: 1rem;
         line-height: 1.5;
         color: #333;
-        overflow-y: scroll;
+        overflow-y: auto;
         scrollbar-width: none;
         -ms-overflow-style: none;
       }
 
       p::-webkit-scrollbar {
-        display: none; /* скрывает скролл в WebKit браузерах (Chrome, Safari) */
+        display: none;
       }
 
       .end {
@@ -119,43 +119,65 @@
   }
 }
 
-/* Extra small mobile view */
 @media (max-width: 320px) {
   #content {
-    /* Ваши дополнительные стили для маленьких экранов */
+    .newsCard {
+      .card {
+        width: 280px;
+        height: auto;
+      }
+    }
   }
 }
 
-/* Small mobile view */
 @media (max-width: 430px) {
   #content {
     .newsCard {
       flex-wrap: nowrap;
       overflow-x: auto;
-      gap: 1px;
+      gap: 15px;
+      padding-bottom: 20px;
+      scroll-snap-type: x mandatory;
+      justify-content: flex-start;
 
       .card {
-        margin-right: 20px;
-        min-width: 300px;
+        scroll-snap-align: center;
+        flex: 0 0 auto;
+        width: 280px;
+        min-width: 280px;
+        height: 360px;
+        margin-right: 0;
+      }
+
+      &::after {
+        content: "";
+        padding-right: 20px;
       }
 
       &::-webkit-scrollbar {
-        display: none;
+        height: 4px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: #56397b;
+        border-radius: 4px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background-color: #f1f1f1;
       }
     }
   }
 }
 
-/* Mobile view */
 @media (max-width: 767px) {
   #content {
     .newsCard {
-      justify-content: center;
+      justify-content: flex-start;
     }
   }
 }
 
-/* Tablet view */
 @media (min-width: 768px) {
   #content {
     .newsCard {
@@ -164,7 +186,6 @@
   }
 }
 
-/* Desktop view */
 @media (min-width: 1024px) {
   #content {
     .newsCard {
