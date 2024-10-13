@@ -54,24 +54,30 @@ const TeachersMainContent: React.FC = () => {
           </div>
           <div className={scss.teacher_cards}>
             {filteredTeachers?.map((teacher) => (
-              <div key={teacher.id!} className={scss.teacher}>
-                <Image
-                  onClick={() => router.push(`/teachers/${teacher.id}`)}
-                  src={teacher?.image}
-                  alt="Teacher"
-                  width={700}
-                  height={500}
-                  priority
-                  quality={70}
-                />
+              <div key={teacher.id} className={scss.teacher}>
+                {teacher?.image ? (
+                  <Image
+                    onClick={() => router.push(`/teachers/${teacher.id}`)}
+                    src={teacher.image}
+                    alt={`${teacher.name} ${teacher.surname}`}
+                    width={700}
+                    height={500}
+                    priority
+                    quality={70}
+                  />
+                ) : (
+                  <div>No Image Available</div> // Сүрөт жок болсо текст же альтернатива
+                )}
                 <h1>
                   {teacher.surname} {teacher.name}
                   <br />
-                  {teacher.last_name}
+                  {teacher.last_name || ""}
                 </h1>
                 <hr />
                 <p style={{ width: "100%", maxWidth: "230px" }}>
-                  {isKyrgyz ? teacher.subject_ky : teacher.subject_ru}
+                  {isKyrgyz
+                    ? teacher.subject_ky || "Сабак жок"
+                    : teacher.subject_ru || "Предмет не указан"}
                 </p>
               </div>
             ))}
