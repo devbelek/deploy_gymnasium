@@ -1,3 +1,4 @@
+"use client";
 import scss from "./TeachersPage.module.scss";
 import TeachersMainContent from "./teachers/TeachersMainContent/TeachersMainContent";
 

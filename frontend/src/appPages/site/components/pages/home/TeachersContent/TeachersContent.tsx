@@ -5,7 +5,6 @@ import circle from "../../../../../../assets/images/Ellipse 19.png";
 import teacher from "../../../../../../assets/images/teacher.png";
 import { useRouter } from "next/navigation";
 import { useLanguageStore } from "@/stores/useLanguageStore";
-import { useGetCommentsQuery } from "@/redux/api/news";
 
 const TeachersContent = () => {
   const router = useRouter();
