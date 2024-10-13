@@ -8,6 +8,7 @@ import { FaTelegram } from "react-icons/fa";
 import { FaVk } from "react-icons/fa6";
 import { AiFillInstagram } from "react-icons/ai";
 import { useLanguageStore } from "@/stores/useLanguageStore";
+import TeacherImg from "../../../../../../assets/images/teacher_img.jpg";
 
 const TeacherDetailedContent = () => {
   const { teacher } = useParams();
@@ -31,14 +32,25 @@ const TeacherDetailedContent = () => {
       <div className="container">
         <div className={scss.contentDetail}>
           <div className={scss.detail}>
-            <Image
-              src={data?.image!}
-              alt="Teacher details..."
-              width={700}
-              height={500}
-              quality={70}
-              priority
-            />
+            {data?.image ? (
+              <Image
+                src={data?.image!}
+                alt="img"
+                width={700}
+                height={500}
+                quality={70}
+                priority
+              />
+            ) : (
+              <Image
+                src={TeacherImg}
+                alt="img"
+                width={700}
+                height={500}
+                quality={70}
+                priority
+              />
+            )}
             <div className={scss.detailText}>
               <h1>
                 {data?.surname} {data?.name} {data?.last_name}

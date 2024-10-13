@@ -68,6 +68,7 @@ const TeachersMainContent: React.FC = () => {
                   />
                 ) : (
                   <Image
+                    onClick={() => router.push(`/teachers/${teacher.id}`)}
                     src={TeacherImg}
                     alt={`${teacher.name} ${teacher.surname}`}
                     width={700}
