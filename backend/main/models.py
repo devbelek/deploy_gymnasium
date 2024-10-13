@@ -80,7 +80,7 @@ class PersonModel(models.Model):
 
 
 class ImageModel(models.Model):
-    image = CompressedImageField(upload_to='images/%Y/%m/%d/', verbose_name=_('Изображение'),blank=True, null=True)
+    image = CompressedImageField(upload_to='images/%Y/%m/%d/', verbose_name=_('Изображение'), blank=True, null=True)
 
     class Meta:
         abstract = True
