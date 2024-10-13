@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useLanguageStore } from "@/stores/useLanguageStore";
 import TeachersSkeleton from "./TeachersSkeleton";
+import TeacherImg from "../../../../../../assets/images/teacher_img.jpg";
 
 const TeachersMainContent: React.FC = () => {
   const { data, isLoading, error } = useGetTeachersQuery();
@@ -66,7 +67,14 @@ const TeachersMainContent: React.FC = () => {
                     quality={70}
                   />
                 ) : (
-                  <div>No Image Available</div> // Сүрөт жок болсо текст же альтернатива
+                  <Image
+                    src={TeacherImg}
+                    alt={`${teacher.name} ${teacher.surname}`}
+                    width={700}
+                    height={500}
+                    priority
+                    quality={70}
+                  /> // Сүрөт жок болсо текст же альтернатива
                 )}
                 <h1>
                   {teacher.surname} {teacher.name}
