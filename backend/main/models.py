@@ -56,7 +56,7 @@ class TimestampedModel(models.Model):
 class PersonModel(models.Model):
     surname = models.CharField(max_length=25, db_index=True, verbose_name=_('Фамилия'))
     name = models.CharField(max_length=25, db_index=True, verbose_name=_('Имя'))
-    last_name = models.CharField(max_length=25, verbose_name=_('Отчество'))
+    last_name = models.CharField(max_length=25, verbose_name=_('Отчество'), blank=True, null=True)
 
     class Meta:
         abstract = True
@@ -80,7 +80,7 @@ class PersonModel(models.Model):
 
 
 class ImageModel(models.Model):
-    image = CompressedImageField(upload_to='images/%Y/%m/%d/', verbose_name=_('Изображение'))
+    image = CompressedImageField(upload_to='images/%Y/%m/%d/', verbose_name=_('Изображение'), blank=True, null=True)
 
     class Meta:
         abstract = True
@@ -311,7 +311,7 @@ class Graduates(PersonModel):
             MaxValueValidator(get_current_year())
         ]
     )
-    ort = models.PositiveSmallIntegerField(verbose_name=_('ОРТ'), blank=False)
+    ort = models.PositiveSmallIntegerField(verbose_name=_('ОРТ'), blank=True, null=True)
     kl_rukovoditel = models.ForeignKey(
         'Teachers',
         on_delete=models.CASCADE,
