@@ -4,17 +4,17 @@ const ENDPOINTS = process.env.NEXT_PUBLIC_ENDPOINT;
 
 const api = index.injectEndpoints({
   endpoints: (build) => ({
-    getDonations: build.query<
-      DONATIONS.GetDonationsResponse,
-      DONATIONS.GetDonationsRequest
+    getRekvizit: build.query<
+      REKVIZIT.GetRekvizitResponse,
+      REKVIZIT.GetRekvizitRequest
     >({
       query: () => ({
-        url: `${ENDPOINTS}/donations/`,
+        url: `${ENDPOINTS}/donations-requisite/`,
         method: "GET",
       }),
-      providesTags: ["donations"],
+      providesTags: ["rekvizit"],
     }),
   }),
 });
 
-export const { useGetDonationsQuery } = api;
+export const { useGetRekvizitQuery } = api;

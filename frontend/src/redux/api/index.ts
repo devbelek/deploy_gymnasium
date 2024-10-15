@@ -39,7 +39,8 @@ export const api = createApi({
     "about",
     "old_teachers",
     "comments",
-    "videos"
+    "videos",
+    "rekvizit",
   ],
   endpoints: () => ({}),
 });
