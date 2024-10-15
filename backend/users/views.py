@@ -1,8 +1,8 @@
 from rest_framework.views import APIView
-from .models import UserProfile, Comment, CommentReply, Like, Donation, ConfirmedDonation
+from .models import UserProfile, Comment, CommentReply, Like, Donation, ConfirmedDonation, DonationRequisite
 from .serializers import (
     UserProfileSerializers, CommentSerializers, CommentReplySerializers,
-    LikeSerializers, RegisterSerializer, DonationSerializer, ConfirmedDonationSerializer
+    LikeSerializers, RegisterSerializer, DonationSerializer, ConfirmedDonationSerializer, DonationRequisiteSerializer
 )
 from rest_framework import viewsets, generics, status
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, AllowAny
@@ -64,6 +64,16 @@ def user_auth_status(request):
         })
 
 
+class DonationRequisiteViewSet(viewsets.ModelViewSet):
+    queryset = DonationRequisite.objects.all()
+    serializer_class = DonationRequisiteSerializer
+
+
+class DonationViewSet(viewsets.ModelViewSet):
+    queryset = Donation.objects.all()
+    serializer_class = DonationSerializer
+
+
 class UserProfileDetailView(generics.RetrieveAPIView):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
@@ -73,62 +83,6 @@ class UserProfileDetailView(generics.RetrieveAPIView):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
-
-
-class DonationsViewSet(viewsets.ModelViewSet):
-    queryset = Donation.objects.all().order_by('-date')
-    serializer_class = DonationSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
-
-    def list(self, request, *args, **kwargs):
-        logger.info(f"Пользователь {request.user.username} запросил список пожертвований.")
-        return super().list(request, *args, **kwargs)
-
-    def create(self, request, *args, **kwargs):
-        logger.info(f"Пользователь {request.user.username} инициировал создание пожертвования.")
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        donation = self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        logger.info(f"Пожертвование ID: {donation.id} создано пользователем {request.user.username}.")
-        return Response({"message": "Чек принят на проверку"}, status=status.HTTP_202_ACCEPTED, headers=headers)
-
-    def perform_create(self, serializer):
-        donation = serializer.save(user=self.request.user)
-        if donation.confirmation_file:
-            logger.info(f"Запуск задачи проверки чека для пожертвования ID: {donation.id}")
-            verify_receipt.delay(donation.id)
-        return donation
-
-    def update(self, request, *args, **kwargs):
-        logger.info(f"Пользователь {request.user.username} пытается обновить пожертвование ID: {kwargs.get('pk')}")
-        return super().update(request, *args, **kwargs)
-
-    def destroy(self, request, *args, **kwargs):
-        logger.info(f"Пользователь {request.user.username} пытается удалить пожертвование ID: {kwargs.get('pk')}")
-        return super().destroy(request, *args, **kwargs)
-
-
-class ConfirmedDonationViewSet(viewsets.ModelViewSet):
-    queryset = ConfirmedDonation.objects.all().order_by('-date')
-    serializer_class = ConfirmedDonationSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
-
-    def list(self, request, *args, **kwargs):
-        logger.info(f"Пользователь {request.user.username} запросил список подтвержденных пожертвований.")
-        return super().list(request, *args, **kwargs)
-
-    def create(self, request, *args, **kwargs):
-        logger.info(f"Пользователь {request.user.username} инициировал подтверждение пожертвования.")
-        return super().create(request, *args, **kwargs)
-
-    def update(self, request, *args, **kwargs):
-        logger.info(f"Пользователь {request.user.username} обновляет подтвержденное пожертвование ID: {kwargs.get('pk')}")
-        return super().update(request, *args, **kwargs)
-
-    def destroy(self, request, *args, **kwargs):
-        logger.info(f"Пользователь {request.user.username} пытается удалить подтвержденное пожертвование ID: {kwargs.get('pk')}")
-        return super().destroy(request, *args, **kwargs)
 
 
 class UserProfileDetail(generics.RetrieveUpdateAPIView):

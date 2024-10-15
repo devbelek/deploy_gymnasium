@@ -1,7 +1,7 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
-from .views import UserProfileDetail, CommentViewSet, CommentReplyViewSet, LikeViewSet, DonationsViewSet, \
-    ConfirmedDonationViewSet
+from .views import UserProfileDetail, CommentViewSet, CommentReplyViewSet, LikeViewSet, DonationViewSet, \
+    DonationRequisiteViewSet
 from . import views
 from .views import UserProfileDetailView
 
@@ -9,8 +9,8 @@ router = DefaultRouter()
 router.register(r'comments', CommentViewSet)
 router.register(r'comment_replies', CommentReplyViewSet)
 router.register(r'likes', LikeViewSet)
-router.register(r'donations', DonationsViewSet)
-router.register(r'confirmed_donations', ConfirmedDonationViewSet)
+router.register(r'donations', DonationViewSet)
+router.register(r'donations-requisite', DonationRequisiteViewSet)
 
 
 urlpatterns = [

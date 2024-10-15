@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import UserProfile, Comment, CommentReply, Like, ConfirmedDonation, Donation
+from .models import UserProfile, Comment, CommentReply, Like, ConfirmedDonation, Donation, DonationRequisite
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -38,22 +38,16 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
 
 
-class DonationSerializer(serializers.ModelSerializer):
-    user = serializers.ReadOnlyField(source='user.username')
+class DonationRequisiteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DonationRequisite
+        fields = ['id', 'requisite']
 
+
+class DonationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Donation
-        fields = ['id', 'user', 'amount', 'date', 'confirmation_file', 'comment', 'requisite', 'is_verified']
-        read_only_fields = ['user', 'is_verified']
-
-
-class ConfirmedDonationSerializer(serializers.ModelSerializer):
-    user = serializers.ReadOnlyField(source='user.username')
-    amount = serializers.ReadOnlyField(source='donation.amount')
-
-    class Meta:
-        model = ConfirmedDonation
-        fields = ['id', 'user', 'amount', 'date', 'comment', 'requisite']
+        fields = ['id', 'surname', 'name', 'count']
 
 
 class UserProfileSerializers(serializers.ModelSerializer):

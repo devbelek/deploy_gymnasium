@@ -71,7 +71,8 @@ class UserProfile(models.Model):
 
 
 class Comment(models.Model):
-    news = models.ForeignKey('main.News', on_delete=models.CASCADE, related_name='comments', verbose_name=_('Связка с "Новости"'), null=True)
+    news = models.ForeignKey('main.News', on_delete=models.CASCADE, related_name='comments',
+                             verbose_name=_('Связка с "Новости"'), null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Автор'))
     text = models.TextField(verbose_name=_('Комментарий'))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Дата создания'))
@@ -105,7 +106,8 @@ class Comment(models.Model):
 
 
 class CommentReply(models.Model):
-    parent_comment = models.ForeignKey(Comment, related_name='comment_replies', on_delete=models.CASCADE, verbose_name='Комментарий', null=True)
+    parent_comment = models.ForeignKey(Comment, related_name='comment_replies', on_delete=models.CASCADE,
+                                       verbose_name='Комментарий', null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Автор')
     text = models.TextField(verbose_name='Ответ')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
@@ -120,7 +122,8 @@ class CommentReply(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.pk:
-            logger.info(f"Создание ответа от пользователя: {self.author.username} на комментарий ID: {self.parent_comment.id}")
+            logger.info(
+                f"Создание ответа от пользователя: {self.author.username} на комментарий ID: {self.parent_comment.id}")
         else:
             logger.info(f"Обновление ответа (ID: {self.pk}) от пользователя: {self.author.username}")
         super().save(*args, **kwargs)
@@ -153,60 +156,74 @@ class Like(models.Model):
         super().delete(*args, **kwargs)
 
 
+class DonationRequisite(models.Model):
+    requisite = models.CharField(max_length=200, blank=False, verbose_name='Реквизиты', default='+996')
+
+    def __str__(self):
+        return f'Реквизит: {self.requisite}'
+
+
 class Donation(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='donations', verbose_name='Пользователь')
-    amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Сумма(сом)')
-    date = models.DateTimeField(auto_now_add=True, verbose_name='Дата')
-    comment = models.CharField(max_length=300, blank=True, null=True)
-    confirmation_file = models.FileField(upload_to='checks/%Y/%m/%d/', blank=False, validators=[validate_file_extension], verbose_name='Квитанция о переводе')
-    requisite = models.CharField(max_length=200, blank=False, verbose_name='Реквизиты', default='+996')
-    is_verified = models.BooleanField(default=False, verbose_name='Статус подтверждения')
-    verification_message = models.TextField(blank=True)
-
-    def __str__(self):
-        return f"{self.user.username} - {self.amount} - {self.date} - {self.requisite}"
-
-    class Meta:
-        verbose_name = "Не подтвержденные переводы средств"
-        verbose_name_plural = "Не подтвержденные переводы средств"
-
-    def save(self, *args, **kwargs):
-        if not self.pk:
-            logger.info(f"Пользователь {self.user.username} сделал пожертвование на сумму {self.amount} сом.")
-        else:
-            logger.info(f"Обновление пожертвования ID: {self.pk} от пользователя {self.user.username}. Статус подтверждения: {self.is_verified}")
-        super().save(*args, **kwargs)
-
-    def delete(self, *args, **kwargs):
-        logger.info(f"Удаление пожертвования ID: {self.pk} от пользователя {self.user.username}")
-        super().delete(*args, **kwargs)
+    surname = models.CharField(max_length=150, verbose_name='Фамилия')
+    name = models.CharField(max_length=150, verbose_name='Имя')
+    count = models.PositiveIntegerField(verbose_name='Сумма')
 
 
-class ConfirmedDonation(models.Model):
-    donation = models.OneToOneField(Donation, on_delete=models.CASCADE, related_name='confirmed_donation', verbose_name='Перевод')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='confirmed_donations', verbose_name='Пользователь')
-    date = models.DateTimeField(auto_now_add=True, verbose_name='Дата')
-    comment = models.CharField(max_length=255, blank=True, null=True, verbose_name='Комментарий')
-    requisite = models.CharField(max_length=200, blank=False, verbose_name='Реквизиты', default='+996')
 
-    def __str__(self):
-        return f"{self.user.username} - {self.donation.amount} - {self.date}"
+# class Donation(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='donations', verbose_name='Пользователь')
+#     amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Сумма(сом)')
+#     date = models.DateTimeField(auto_now_add=True, verbose_name='Дата')
+#     comment = models.CharField(max_length=300, blank=True, null=True)
+#     confirmation_file = models.FileField(upload_to='checks/%Y/%m/%d/', blank=False, validators=[validate_file_extension], verbose_name='Квитанция о переводе')
+#     requisite = models.CharField(max_length=200, blank=False, verbose_name='Реквизиты', default='+996')
+#     is_verified = models.BooleanField(default=False, verbose_name='Статус подтверждения')
+#     verification_message = models.TextField(blank=True)
+#
+#     def __str__(self):
+#         return f"{self.user.username} - {self.amount} - {self.date} - {self.requisite}"
+#
+#     class Meta:
+#         verbose_name = "Не подтвержденные переводы средств"
+#         verbose_name_plural = "Не подтвержденные переводы средств"
+#
+#     def save(self, *args, **kwargs):
+#         if not self.pk:
+#             logger.info(f"Пользователь {self.user.username} сделал пожертвование на сумму {self.amount} сом.")
+#         else:
+#             logger.info(f"Обновление пожертвования ID: {self.pk} от пользователя {self.user.username}. Статус подтверждения: {self.is_verified}")
+#         super().save(*args, **kwargs)
+#
+#     def delete(self, *args, **kwargs):
+#         logger.info(f"Удаление пожертвования ID: {self.pk} от пользователя {self.user.username}")
+#         super().delete(*args, **kwargs)
 
-    @property
-    def amount(self):
-        return self.donation.amount
 
-    class Meta:
-        verbose_name = "Подтвержденные переводы средств"
-        verbose_name_plural = "Подтвержденные переводы средств"
-
-    def save(self, *args, **kwargs):
-        if not self.pk:
-            logger.info(f"Пожертвование ID: {self.donation.id} пользователя {self.user.username} подтверждено.")
-        else:
-            logger.info(f"Обновление подтвержденного пожертвования ID: {self.pk} пользователя {self.user.username}")
-        super().save(*args, **kwargs)
-
-    def delete(self, *args, **kwargs):
-        logger.info(f"Удаление подтвержденного пожертвования ID: {self.pk} пользователя {self.user.username}")
-        super().delete(*args, **kwargs)
+# class ConfirmedDonation(models.Model):
+#     donation = models.OneToOneField(Donation, on_delete=models.CASCADE, related_name='confirmed_donation', verbose_name='Перевод')
+#     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='confirmed_donations', verbose_name='Пользователь')
+#     date = models.DateTimeField(auto_now_add=True, verbose_name='Дата')
+#     comment = models.CharField(max_length=255, blank=True, null=True, verbose_name='Комментарий')
+#     requisite = models.CharField(max_length=200, blank=False, verbose_name='Реквизиты', default='+996')
+#
+#     def __str__(self):
+#         return f"{self.user.username} - {self.donation.amount} - {self.date}"
+#
+#     @property
+#     def amount(self):
+#         return self.donation.amount
+#
+#     class Meta:
+#         verbose_name = "Подтвержденные переводы средств"
+#         verbose_name_plural = "Подтвержденные переводы средств"
+#
+#     def save(self, *args, **kwargs):
+#         if not self.pk:
+#             logger.info(f"Пожертвование ID: {self.donation.id} пользователя {self.user.username} подтверждено.")
+#         else:
+#             logger.info(f"Обновление подтвержденного пожертвования ID: {self.pk} пользователя {self.user.username}")
+#         super().save(*args, **kwargs)
+#
+#     def delete(self, *args, **kwargs):
+#         logger.info(f"Удаление подтвержденного пожертвования ID: {self.pk} пользователя {self.user.username}")
+#         super().delete(*args, **kwargs)
