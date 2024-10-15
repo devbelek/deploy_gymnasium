@@ -53,38 +53,38 @@ services:
     networks:
       - dev
 
-  celery_worker:
-    build: ./backend
-    command: celery -A Gimnasium worker --loglevel=info --pool=solo
-    volumes:
-      - ./backend:/app
-      - /root/deploy_gymnasium/backend/staticfiles/:/app/staticfiles
-      - /root/deploy_gymnasium/backend/media/:/app/media
-    env_file:
-      - ./.env
-    depends_on:
-      - web
-      - db
-      - redis
-    networks:
-      - dev
+#  celery_worker:
+#    build: ./backend
+#    command: celery -A Gimnasium worker --loglevel=info --pool=solo
+#    volumes:
+#      - ./backend:/app
+#      - /root/deploy_gymnasium/backend/staticfiles/:/app/staticfiles
+#      - /root/deploy_gymnasium/backend/media/:/app/media
+#    env_file:
+#      - ./.env
+#    depends_on:
+#      - web
+#      - db
+#      - redis
+#    networks:
+#      - dev
 
-  celery_beat:
-    build: ./backend
-    command: celery -A Gimnasium beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
-    volumes:
-      - ./backend:/app
-      - /root/deploy_gymnasium/backend/staticfiles/:/app/staticfiles
-      - /root/deploy_gymnasium/backend/media/:/app/media
-    env_file:
-      - ./.env
-    depends_on:
-      - web
-      - db
-      - redis
-      - celery_worker
-    networks:
-      - dev
+#  celery_beat:
+#    build: ./backend
+#    command: celery -A Gimnasium beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+#    volumes:
+#      - ./backend:/app
+#      - /root/deploy_gymnasium/backend/staticfiles/:/app/staticfiles
+#      - /root/deploy_gymnasium/backend/media/:/app/media
+#    env_file:
+#      - ./.env
+#    depends_on:
+#      - web
+#      - db
+#      - redis
+#      - celery_worker
+#    networks:
+#      - dev
 
   nginx:
     build:
