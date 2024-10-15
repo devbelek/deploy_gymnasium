@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import scss from "./GraduatesFirstTab.module.scss";
 import profile from "../../../../../../assets/images/defaultProfile.png";
@@ -13,7 +12,7 @@ interface Graduate {
   name: string;
   last_name: string;
   year: number;
-  ort: number | null;
+  ort: number;
 }
 
 const GraduatesFirstTab = () => {
@@ -22,6 +21,10 @@ const GraduatesFirstTab = () => {
   const { isKyrgyz, t } = useLanguageStore();
   const [show, setShow] = useState(false);
   const [selectedYear, setSelectedYear] = useState<number | null>(null);
+
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const graduatesPerPage = 100;
 
   useEffect(() => {
     if (data) {
@@ -51,6 +54,70 @@ const GraduatesFirstTab = () => {
       setSelectedYear(null);
     }
     setShow(false);
+    setCurrentPage(1); // Reset to the first page when filtering
+  };
+
+  // Pagination logic
+  const indexOfLastGraduate = currentPage * graduatesPerPage;
+  const indexOfFirstGraduate = indexOfLastGraduate - graduatesPerPage;
+  const currentGraduates = filteredData.slice(
+    indexOfFirstGraduate,
+    indexOfLastGraduate
+  );
+  const totalPages = Math.ceil(filteredData.length / graduatesPerPage);
+
+  const paginate = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const renderPagination = () => {
+    const pageNumbers = [];
+    const maxPagesToShow = 5;
+    const lowerLimit = Math.max(2, currentPage - 2);
+    const upperLimit = Math.min(totalPages - 1, currentPage + 2);
+
+    // Always show the first page
+    pageNumbers.push(1);
+
+    // Show "..." before the current block if needed
+    if (lowerLimit > 2) {
+      pageNumbers.push(-1);
+    }
+
+    // Show pages in the range of current page
+    for (let i = lowerLimit; i <= upperLimit; i++) {
+      pageNumbers.push(i);
+    }
+
+    // Show "..." after the current block if needed
+    if (upperLimit < totalPages - 1) {
+      pageNumbers.push(-2);
+    }
+
+    // Always show the last page
+    pageNumbers.push(totalPages);
+
+    return pageNumbers.map((number, index) => {
+      if (number === -1 || number === -2) {
+        return (
+          <span key={index} className={scss.dots}>
+            ...
+          </span>
+        );
+      }
+      return (
+        <button
+          key={index}
+          className={`${scss.pageButton} ${
+            currentPage === number ? scss.activePage : ""
+          }`}
+          onClick={() => paginate(number)}
+          disabled={currentPage === number}
+        >
+          {number < 10 ? `0${number}` : number}
+        </button>
+      );
+    });
   };
 
   const uniqueYears = Array.from(
@@ -117,9 +184,11 @@ const GraduatesFirstTab = () => {
             </div>
             <div className={scss.tableContent}>
               <div className={scss.hr}></div>
-              {filteredData.map((item, index) => (
+              {currentGraduates.map((item, index) => (
                 <div key={index} className={scss.studentInfo}>
-                  <h1 className={scss.tableTextNumber}>{index + 1}</h1>
+                  <h1 className={scss.tableTextNumber}>
+                    {indexOfFirstGraduate + index + 1}
+                  </h1>
                   <h1 className={scss.tableName}>
                     <Image
                       className={scss.studentIcon}
@@ -133,6 +202,18 @@ const GraduatesFirstTab = () => {
                 </div>
               ))}
             </div>
+          </div>
+          {/* Pagination */}
+          <div className={scss.pagination}>
+            {renderPagination()}
+            {currentPage < totalPages && (
+              <button
+                className={scss.pageButton}
+                onClick={() => paginate(currentPage + 1)}
+              >
+                {t("Кийинки", "Далее")}
+              </button>
+            )}
           </div>
         </div>
       </div>
