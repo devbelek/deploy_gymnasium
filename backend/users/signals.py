@@ -3,7 +3,7 @@ from django.dispatch import receiver
 from django.contrib.auth.models import User
 from allauth.account.models import EmailAddress
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
-from .models import UserProfile, Donation, ConfirmedDonation
+from .models import UserProfile, Donation
 from loguru import logger
 
 
@@ -30,12 +30,12 @@ class MySocialAccountAdapter(DefaultSocialAccountAdapter):
                 pass
 
 
-@receiver(post_save, sender=Donation)
-def create_confirmed_donation(sender, instance, created, **kwargs):
-    if instance.is_verified and not hasattr(instance, 'confirmed_donation'):
-        logger.info(f"Создание подтверждённого пожертвования для ID: {instance.id}")
-        ConfirmedDonation.objects.create(
-            donation=instance,
-            user=instance.user,
-            comment=instance.comment
-        )
+# @receiver(post_save, sender=Donation)
+# def create_confirmed_donation(sender, instance, created, **kwargs):
+#     if instance.is_verified and not hasattr(instance, 'confirmed_donation'):
+#         logger.info(f"Создание подтверждённого пожертвования для ID: {instance.id}")
+#         ConfirmedDonation.objects.create(
+#             donation=instance,
+#             user=instance.user,
+#             comment=instance.comment
+#         )
