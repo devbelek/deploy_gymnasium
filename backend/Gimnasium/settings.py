@@ -230,13 +230,13 @@ REST_FRAMEWORK = {
 SOCIALACCOUNT_ADAPTER = 'users.signals.MySocialAccountAdapter'
 ACCOUNT_ADAPTER = 'users.adapters.MyAccountAdapter'
 
-CELERY_BROKER_URL = os.environ.get('REDIS_URL')
-CELERY_RESULT_BACKEND = os.environ.get('REDIS_URL')
-
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'Asia/Bishkek'
+# CELERY_BROKER_URL = os.environ.get('REDIS_URL')
+# CELERY_RESULT_BACKEND = os.environ.get('REDIS_URL')
+#
+# CELERY_ACCEPT_CONTENT = ['json']
+# CELERY_TASK_SERIALIZER = 'json'
+# CELERY_RESULT_SERIALIZER = 'json'
+# CELERY_TIMEZONE = 'Asia/Bishkek'
 
 SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_SAMESITE = 'Lax'
@@ -263,13 +263,13 @@ CACHES = {
         }
     }
 }
-CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
-CELERY_BEAT_SCHEDULE = {
-    'delete_old_media_files': {
-        'task': 'users.tasks.delete_old_media_files',
-        'schedule': crontab(minute='*'),
-    }
-}
+# CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+# CELERY_BEAT_SCHEDULE = {
+#     'delete_old_media_files': {
+#         'task': 'users.tasks.delete_old_media_files',
+#         'schedule': crontab(minute='*'),
+#     }
+# }
 
 CACHE_TTL = 60 * 1
 
