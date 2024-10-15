@@ -7,7 +7,6 @@ from .serializers import (
 from rest_framework import viewsets, generics, status
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, AllowAny
 from rest_framework.response import Response
-from .tasks import verify_receipt
 from loguru import logger
 from django.core.exceptions import PermissionDenied
 from rest_framework.decorators import action
