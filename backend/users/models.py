@@ -162,12 +162,22 @@ class DonationRequisite(models.Model):
     def __str__(self):
         return f'Реквизит: {self.requisite}'
 
+    class Meta:
+        verbose_name = 'Реквизит'
+        verbose_name_plural = 'Реквизиты'
+
 
 class Donation(models.Model):
     surname = models.CharField(max_length=150, verbose_name='Фамилия', default='')
     name = models.CharField(max_length=150, verbose_name='Имя', default='')
     count = models.PositiveIntegerField(verbose_name='Сумма', default=0)
 
+    def __str__(self):
+        return f'{self.name} {self.surname}'
+
+    class Meta:
+        verbose_name = 'Пополнение'
+        verbose_name_plural = 'Пополнения'
 
 
 # class Donation(models.Model):
