@@ -1,8 +1,8 @@
 from rest_framework.views import APIView
-from .models import UserProfile, Comment, CommentReply, Like, Donation, ConfirmedDonation, DonationRequisite
+from .models import UserProfile, Comment, CommentReply, Like, Donation, DonationRequisite
 from .serializers import (
     UserProfileSerializers, CommentSerializers, CommentReplySerializers,
-    LikeSerializers, RegisterSerializer, DonationSerializer, ConfirmedDonationSerializer, DonationRequisiteSerializer
+    LikeSerializers, RegisterSerializer, DonationSerializer, DonationRequisiteSerializer
 )
 from rest_framework import viewsets, generics, status
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, AllowAny
