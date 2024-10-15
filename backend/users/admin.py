@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import UserProfile, Comment, CommentReply, Like, Donation, ConfirmedDonation, DonationRequisite
+from .models import UserProfile, Comment, CommentReply, Like, Donation, DonationRequisite
 
 admin.site.register(UserProfile)
 admin.site.register(Comment)
