@@ -12,7 +12,7 @@ interface Graduate {
   name: string;
   last_name: string;
   year: number;
-  ort: number;
+  ort: number | null;
 }
 
 const GraduatesFirstTab = () => {
