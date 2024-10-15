@@ -157,10 +157,11 @@ class Like(models.Model):
 
 
 class DonationRequisite(models.Model):
-    requisite = models.CharField(max_length=200, blank=False, verbose_name='Реквизиты', default='+996')
+    requisite_first = models.CharField(max_length=200, blank=True, null=True, verbose_name='Реквизит номер телефона', default='')
+    requisite_second = models.CharField(max_length=200, blank=True, null=True, verbose_name='Реквизит Карточка', default='')
 
     def __str__(self):
-        return f'Реквизит: {self.requisite}'
+        return f'Реквизит: {self.requisite_first} {self.requisite_second}'
 
     class Meta:
         verbose_name = 'Реквизит'

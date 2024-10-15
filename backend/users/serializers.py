@@ -41,13 +41,13 @@ class RegisterSerializer(serializers.ModelSerializer):
 class DonationRequisiteSerializer(serializers.ModelSerializer):
     class Meta:
         model = DonationRequisite
-        fields = ['id', 'requisite']
+        fields = '__all__'
 
 
 class DonationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Donation
-        fields = ['id', 'surname', 'name', 'count']
+        fields = '__all__'
 
 
 class UserProfileSerializers(serializers.ModelSerializer):

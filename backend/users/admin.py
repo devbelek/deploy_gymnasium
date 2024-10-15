@@ -9,8 +9,7 @@ admin.site.register(Like)
 
 @admin.register(DonationRequisite)
 class DonationRequisiteAdmin(admin.ModelAdmin):
-    list_display = ['id', 'requisite']
-    search_fields = ['requisite']
+    list_display = ['id', 'requisite_first', 'requisite_second']
 
 
 @admin.register(Donation)
