@@ -164,8 +164,8 @@ class DonationRequisite(models.Model):
 
 
 class Donation(models.Model):
-    surname = models.CharField(max_length=150, verbose_name='Фамилия')
-    name = models.CharField(max_length=150, verbose_name='Имя')
+    surname = models.CharField(max_length=150, verbose_name='Фамилия', default='')
+    name = models.CharField(max_length=150, verbose_name='Имя', default='')
     count = models.PositiveIntegerField(verbose_name='Сумма', default=0)
 
 
