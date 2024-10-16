@@ -436,10 +436,6 @@ const NewsDetailContent: React.FC = () => {
                 {t("Жарыяланган күнү", "Дата публикации")}:{" "}
                 {new Date(newsData.created_at).toLocaleString()}
               </p>
-              <p>
-                {t("Акыркы жаңыртуу", "Последнее обновление")}:{" "}
-                {new Date(newsData.updated_at).toLocaleString()}
-              </p>
             </div>
             <hr />
           </div>
