@@ -1,3 +1,4 @@
+import Script from "next/script";
 import type { Metadata } from "next";
 import { Inter, Noto_Sans } from "next/font/google";
 import "./globals.scss";
@@ -16,12 +17,13 @@ export const metadata: Metadata = {
     "N3 Экспериментальная гимназия имени Гапыра Мадаминова в Кыргызстане - инновационное учебное заведение, применяющее современные технологии для развития творческих и интеллектуальных способностей учеников.",
   keywords: [
     "3-гимназия",
-    "экспериментальная гимназия",
-    "Гапыр Мадаминов",
+    "Экспрементальная гимназия",
+    "Гимназия Гапыр Мадаминова",
+    "3 gymnasium",
+    "3-гимназия Баткен",
     "образование в Кыргызстане",
-    "инновационное обучение",
+    "N3 гимназия",
   ],
-
   authors: [{ name: "N3 Экспериментальная гимназия" }],
   creator: "N3 Экспериментальная гимназия",
   publisher: "N3 Экспериментальная гимназия",
@@ -55,6 +57,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
+      <head>
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=G-7P6Z0V3Z3R`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-7P6Z0V3Z3R');
+          `}
+        </Script>
+      </head>
       <body className={`${inter.className} ${notoSans.className}`}>
         <LayoutClient>{children}</LayoutClient>
       </body>
