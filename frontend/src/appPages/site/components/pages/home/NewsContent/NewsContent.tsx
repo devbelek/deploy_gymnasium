@@ -29,6 +29,14 @@ const NewsContent: React.FC = () => {
         new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
     );
 
+  const getTitle = (item: NEWS.INews) => {
+    if (isKyrgyz) {
+      return item.title_ky || "";
+    }
+    // Если русский текст отсутствует, возвращаем кыргызский
+    return item.title_ru || item.title_ky || "";
+  };
+
   return (
     <section id={scss.content}>
       <div className="container">
@@ -38,15 +46,13 @@ const NewsContent: React.FC = () => {
             <div className={scss.card} key={item.id}>
               <Image
                 src={getImageUrl(item.image)}
-                alt={isKyrgyz ? item.title_ky || "" : item.title_ru || ""}
+                alt={getTitle(item)}
                 width={300}
                 height={200}
                 priority
                 quality={70}
               />
-              <p>
-                {parse(isKyrgyz ? item.title_ky || "" : item.title_ru || "")}
-              </p>
+              <p>{parse(getTitle(item))}</p>
               <article className={scss.end}>
                 <span>{item.created_at.slice(0, 10)}</span>
                 <div className={scss.comments}>
