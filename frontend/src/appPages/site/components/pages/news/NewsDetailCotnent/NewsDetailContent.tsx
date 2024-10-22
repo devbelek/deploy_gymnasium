@@ -22,7 +22,7 @@ import {
 } from "@/redux/api/news";
 import { useGetAccountQuery } from "@/redux/api/profile";
 import { useLanguageStore } from "@/stores/useLanguageStore";
-import parse from "html-react-parser"; // Импортируем html-react-parser
+import parse from "html-react-parser";
 
 const NewsDetailContent: React.FC = () => {
   const router = useRouter();
@@ -66,6 +66,20 @@ const NewsDetailContent: React.FC = () => {
   const [updateComment] = useUpdateCommentMutation();
   const [deleteComment] = useDeleteCommentMutation();
   const [likeComment] = useLikeCommentMutation();
+
+  // Функция для безопасного получения контента с учетом языка
+  const getLocalizedContent = useCallback(
+    (kyContent: string | null, ruContent: string | null) => {
+      if (isKyrgyz) {
+        // Если выбран кыргызский интерфейс
+        return kyContent || ruContent || ""; // Если нет кыргызского контента, показываем русский
+      } else {
+        // Если выбран русский интерфейс
+        return ruContent || kyContent || ""; // Если нет русского контента, показываем кыргызский
+      }
+    },
+    [isKyrgyz]
+  );
 
   useEffect(() => {
     const checkAuthStatus = async () => {
@@ -343,8 +357,7 @@ const NewsDetailContent: React.FC = () => {
             </span>
           </div>
         </div>
-        <p className={scss.commentContent}>{parse(comment.text)}</p>{" "}
-        {/* Парсинг текста */}
+        <p className={scss.commentContent}>{parse(comment.text)}</p>
         {renderCommentActions(comment, depth)}
         {editingComment &&
           editingComment.id === comment.id &&
@@ -396,7 +409,6 @@ const NewsDetailContent: React.FC = () => {
         {t("Жаңылык табылган жок", "Новость не найдена")}
       </div>
     );
-
   return (
     <div className={scss.NewsDetailContent}>
       <div className="container">
@@ -407,11 +419,8 @@ const NewsDetailContent: React.FC = () => {
           </div>
           <div className={scss.newsContent}>
             <h1>
-              {parse(
-                isKyrgyz ? newsData.title_ky ?? "" : newsData.title_ru ?? ""
-              )}
-            </h1>{" "}
-            {/* Парсинг описания */}
+              {parse(getLocalizedContent(newsData.title_ky, newsData.title_ru))}
+            </h1>
             <Image
               src={newsData.image}
               alt="img"
@@ -422,12 +431,12 @@ const NewsDetailContent: React.FC = () => {
             />
             <p>
               {parse(
-                isKyrgyz
-                  ? newsData.description_ky ?? ""
-                  : newsData.description_ru ?? ""
+                getLocalizedContent(
+                  newsData.description_ky,
+                  newsData.description_ru
+                )
               )}
-            </p>{" "}
-            {/* Парсинг контента */}
+            </p>
             <div className={scss.newsInfo}>
               <p>
                 {t("Автор", "Автор")}: {newsData.author}
@@ -435,6 +444,10 @@ const NewsDetailContent: React.FC = () => {
               <p>
                 {t("Жарыяланган күнү", "Дата публикации")}:{" "}
                 {new Date(newsData.created_at).toLocaleString()}
+              </p>
+              <p>
+                {t("Акыркы жаңыртуу", "Последнее обновление")}:{" "}
+                {new Date(newsData.updated_at).toLocaleString()}
               </p>
             </div>
             <hr />

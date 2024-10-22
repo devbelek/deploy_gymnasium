@@ -23,6 +23,19 @@ const TeachersMainContent: React.FC = () => {
     }
   }, [data]);
 
+  // Функция для получения контента на нужном языке
+  const getContent = (
+    kyContent: string | undefined,
+    ruContent: string | undefined,
+    defaultText: { ky: string; ru: string }
+  ) => {
+    if (isKyrgyz) {
+      return kyContent || defaultText.ky;
+    } else {
+      return ruContent || kyContent || defaultText.ru;
+    }
+  };
+
   const SkeletonCard = () => (
     <div className={`${scss.teacher} ${scss.skeleton}`}>
       <div className={scss.skeletonImage}></div>
@@ -54,13 +67,22 @@ const TeachersMainContent: React.FC = () => {
         <div className={scss.content}>
           <div className={scss.head}>
             <div className={scss.head_buttons}>
-              <button onClick={() => setFilter("current")}>
+              <button
+                onClick={() => setFilter("current")}
+                className={filter === "current" ? scss.activeButton : ""}
+              >
                 {t("Азыркы мугалимдер", "Текущие учителя")}
               </button>
-              <button onClick={() => setFilter(null)}>
+              <button
+                onClick={() => setFilter(null)}
+                className={filter === null ? scss.activeButton : ""}
+              >
                 {t("Бардык мугалимдер", "Все учителя")}
               </button>
-              <button onClick={() => setFilter("former")}>
+              <button
+                onClick={() => setFilter("former")}
+                className={filter === "former" ? scss.activeButton : ""}
+              >
                 {t("Мурунку мугалимдер", "Бывшие учителя")}
               </button>
             </div>
@@ -92,6 +114,7 @@ const TeachersMainContent: React.FC = () => {
                           height={500}
                           priority
                           quality={70}
+                          className={scss.teacherImage}
                         />
                       ) : (
                         <Image
@@ -102,6 +125,7 @@ const TeachersMainContent: React.FC = () => {
                           height={500}
                           priority
                           quality={70}
+                          className={scss.teacherImage}
                         />
                       )}
                       <h1>
@@ -111,9 +135,10 @@ const TeachersMainContent: React.FC = () => {
                       </h1>
                       <hr />
                       <p style={{ width: "100%", maxWidth: "230px" }}>
-                        {isKyrgyz
-                          ? teacher.subject_ky || "Сабак жок"
-                          : teacher.subject_ru || "Предмет не указан"}
+                        {getContent(teacher.subject_ky, teacher.subject_ru, {
+                          ky: "Сабак жок",
+                          ru: "Предмет не указан",
+                        })}
                       </p>
                     </>
                   )}
