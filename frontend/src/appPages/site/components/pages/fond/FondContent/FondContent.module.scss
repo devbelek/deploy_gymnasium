@@ -1,12 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap");
+
+.container {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+
 .content {
-  margin: 80px 0;
-  font-family: Arial, sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: "Roboto", sans-serif;
+  animation: fadeIn 1s ease-out;
+}
+
+.margins {
+  margin: 40px 0;
 }
 
 .sectionTitle {
-  font-size: 2rem;
-  color: #333;
-  margin-bottom: 1rem;
+  font-size: 2.5rem;
+  color: #2c3e50;
+  margin-bottom: 2rem;
   text-align: center;
   position: relative;
 
@@ -15,36 +30,86 @@
     display: block;
     width: 50px;
     height: 3px;
-    background-color: #007bff;
+    background-color: #3498db;
     margin: 0.5rem auto;
-    transition: width 0.3s ease;
+    transition: width 0.3s ease, background-color 0.3s ease;
   }
 
   &:hover::after {
     width: 100px;
+    background-color: #e74c3c;
   }
 }
 
 .rekvizity {
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
 }
 
 .rekvizityList {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
 }
 
 .rekvizitItem {
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  padding: 1rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #ffffff;
+  border-radius: 12px;
+  height: 200px;
+  perspective: 1000px;
+  cursor: pointer;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  &.active {
+    transform: rotateY(180deg);
+  }
+
+  .rekvizitFront,
+  .rekvizitBack {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+  }
+
+  .rekvizitFront {
+    background-color: #3498db;
+    color: white;
+    border-radius: 12px;
+
+    h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    .clickInfo {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+  }
+
+  .rekvizitBack {
+    background-color: #2ecc71;
+    color: white;
+    transform: rotateY(180deg);
+    border-radius: 12px;
+
+    p {
+      font-size: 1.2rem;
+      text-align: center;
+    }
+  }
 
   &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   }
 }
 
@@ -53,19 +118,26 @@
 }
 
 .totalDonation {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   text-align: center;
-  margin-bottom: 1.5rem;
-  padding: 1rem;
-  background-color: #e9ecef;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  // animation: pulseAnimation 2s infinite;
+
+  &:hover {
+    transform: scale(1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
 }
 
 .totalAmount {
   font-weight: bold;
-  color: #28a745;
+  color: #27ae60;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .donationTable {
@@ -76,7 +148,7 @@
 
 .tableHeader {
   display: flex;
-  background-color: #007bff;
+  background-color: #3498db;
   color: white;
   font-weight: bold;
   padding: 1rem;
@@ -90,11 +162,13 @@
 
 .tableRow {
   display: flex;
-  background-color: #f8f9fa;
-  transition: background-color 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.7);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  animation: fadeIn 0.5s ease-out;
 
   &:hover {
-    background-color: #e9ecef;
+    background-color: rgba(255, 255, 255, 0.9);
+    transform: scale(1);
   }
 }
 
@@ -104,9 +178,30 @@
   border-bottom: 1px solid #dee2e6;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulseAnimation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 @media (max-width: 768px) {
   .rekvizityList {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .tableHeader,
@@ -115,7 +210,7 @@
   }
 
   .totalDonation {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
   }
 }
 
@@ -125,7 +220,15 @@
   }
 
   .sectionTitle {
-    font-size: 1.5rem;
+    font-size: 2rem;
+  }
+
+  .rekvizityList {
+    grid-template-columns: 1fr;
+  }
+
+  .rekvizitItem {
+    height: 180px;
   }
 
   .tableHeader,
@@ -134,6 +237,6 @@
   }
 
   .totalDonation {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
   }
 }

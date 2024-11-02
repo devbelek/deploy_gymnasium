@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useMemo, useEffect } from "react";
 import scss from "./NewsMainContent.module.scss";
 import Image from "next/image";
@@ -45,6 +44,15 @@ const NewsMainContent: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const itemsPerPage = 9;
+
+  // Функция для получения текста с учетом языка и фолбэка
+  const getLocalizedText = (kyText: string, ruText: string) => {
+    if (isKyrgyz) {
+      return kyText || ""; // Кыргызча текст
+    }
+    // Орусча текст жок болсо, кыргызча текстке которобуз
+    return ruText || kyText || "";
+  };
 
   useEffect(() => {
     if (news && !isLoading) {
@@ -153,12 +161,12 @@ const NewsMainContent: React.FC = () => {
     >
       <Image
         src={getImageUrl(item.image)}
-        alt={isKyrgyz ? item.description_ky || "" : item.description_ru || ""}
+        alt={getLocalizedText(item.description_ky, item.description_ru)}
         width={266}
         height={220}
       />
       <h2 className={scss.news_title}>
-        {parse(isKyrgyz ? item.title_ky || "" : item.title_ru || "")}
+        {parse(getLocalizedText(item.title_ky, item.title_ru))}
       </h2>
       <div className={scss.news_end}>
         <p>{new Date(item.created_at).toLocaleDateString()}</p>

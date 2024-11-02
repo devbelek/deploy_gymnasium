@@ -27,6 +27,18 @@ const TeacherDetailedContent = () => {
     );
   }
 
+  // Функция для проверки и получения контента
+  const getContent = (
+    kyContent: string | undefined,
+    ruContent: string | undefined
+  ) => {
+    if (isKyrgyz) {
+      return kyContent || ""; // Кыргызча контент
+    } else {
+      return ruContent || kyContent || ""; // Орусча контент жок болсо кыргызчасын көрсөтөбүз
+    }
+  };
+
   return (
     <section className={scss.content}>
       <div className="container">
@@ -58,7 +70,7 @@ const TeacherDetailedContent = () => {
               <div className={scss.oput}>
                 <h3>
                   {t("Мугалим", "Учитель")}:{" "}
-                  {isKyrgyz ? data?.subject_ky : data?.subject_ru}
+                  {getContent(data?.subject_ky, data?.subject_ru)}
                 </h3>
                 <h3>
                   {t("Тажрыйба", "Опыт")}: {data?.experience}
@@ -66,7 +78,7 @@ const TeacherDetailedContent = () => {
               </div>
               <div className={scss.education}>
                 <h3>{t("Билими", "Образование")}:</h3>
-                <p>{isKyrgyz ? data?.education_ky : data?.education_ru}</p>
+                <p>{getContent(data?.education_ky, data?.education_ru)}</p>
               </div>
               <div className={scss.share}>
                 <h3>{t("Бөлүшүү", "Поделиться")}:</h3>
@@ -89,7 +101,7 @@ const TeacherDetailedContent = () => {
           </div>
           <div className={scss.success}>
             <h3>{t("Ийгиликтери", "Успехи")}:</h3>
-            <p>{isKyrgyz ? data?.successes_ky : data?.successes_ru}</p>
+            <p>{getContent(data?.successes_ky, data?.successes_ru)}</p>
           </div>
         </div>
       </div>
