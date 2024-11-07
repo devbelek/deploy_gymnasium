@@ -20,6 +20,8 @@ services:
 #      - "9000:9000"
     networks:
       - dev
+    restart: always
+
 
   db:
     image: postgres:13-alpine
@@ -40,6 +42,8 @@ services:
       retries: 5
     networks:
       - dev
+    restart: always
+
 
   redis:
     image: redis:alpine
@@ -52,8 +56,10 @@ services:
       retries: 5
     networks:
       - dev
+    restart: always
 
-#  celery_worker:
+
+  #  celery_worker:
 #    build: ./backend
 #    command: celery -A Gimnasium worker --loglevel=info --pool=solo
 #    volumes:
@@ -104,6 +110,8 @@ services:
       - frontend
     networks:
       - dev
+    restart: always
+
 
   frontend:
     build: ./frontend
@@ -116,6 +124,8 @@ services:
       - NEXT_PUBLIC_ENDPOINT=api
     networks:
       - dev
+    restart: always
+
 
 volumes:
   postgres_data:
