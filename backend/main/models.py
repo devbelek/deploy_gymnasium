@@ -379,19 +379,13 @@ class Video(TimestampedModel):
     title = models.CharField(max_length=200, verbose_name=_('Заголовок'))
     description = models.TextField(blank=True, verbose_name=_('Описание'))
     youtube_id = models.CharField(max_length=200, unique=True, verbose_name=_('Ссылка на видео'))
-    created_at = models.DateTimeField(auto_now_add=True, db_index=True, verbose_name=_('Дата создания'))
-    updated_at = models.DateTimeField(auto_now=True, verbose_name=_('Дата обновления'))
 
     class Meta:
         verbose_name = _('Видео-Галерея')
         verbose_name_plural = _('Видео-Галерея')
-        app_label = 'main'
 
     def __str__(self):
         return self.title
-
-    def get_youtube_embed_url(self):
-        return f"https://www.youtube.com/embed/{self.youtube_id}"
 
 
 class Teachers(PersonModel, ImageModel):
