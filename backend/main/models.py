@@ -383,6 +383,7 @@ class Video(TimestampedModel):
     class Meta:
         verbose_name = _('Видео-Галерея')
         verbose_name_plural = _('Видео-Галерея')
+        db_table = 'main_video'
 
     def __str__(self):
         return self.title
