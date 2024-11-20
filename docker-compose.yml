@@ -1,7 +1,8 @@
 services:
   web:
     build: ./backend
-    command: bash -c "tail -f /dev/null"
+    command: >
+      bash -c "./manage.py collectstatic --noinput && ./manage.py makemigrations && ./manage.py migrate && gunicorn --bind 0.0.0.0:9000 --workers 4 --threads 2 --worker-class gthread --timeout 120 Gimnasium.wsgi:application"
     volumes:
       - ./backend:/app
       - ./.env:/app/.env
