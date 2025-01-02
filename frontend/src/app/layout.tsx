@@ -3,9 +3,21 @@ import type { Metadata } from "next";
 import { Inter, Noto_Sans } from "next/font/google";
 import "./globals.scss";
 import LayoutClient from "./layout.client";
+import { Suspense } from "react";
 
-const inter = Inter({ subsets: ["latin"] });
-const notoSans = Noto_Sans({ subsets: ["latin", "cyrillic"] });
+const inter = Inter({
+ subsets: ["latin"],
+ display: 'swap',
+ preload: true,
+ fallback: ['system-ui', 'arial'],
+});
+
+const notoSans = Noto_Sans({
+ subsets: ["latin", "cyrillic"],
+ display: 'swap',
+ preload: true,
+ fallback: ['system-ui', 'arial'],
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://3-gymnasium.kg"),
@@ -51,29 +63,41 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children,
+ children,
 }: Readonly<{
-  children: React.ReactNode;
+ children: React.ReactNode;
 }>) {
-  return (
-    <html lang="ru">
-      <head>
-        <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=G-7P6Z0V3Z3R`}
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-7P6Z0V3Z3R');
-          `}
-        </Script>
-      </head>
-      <body className={`${inter.className} ${notoSans.className}`}>
-        <LayoutClient>{children}</LayoutClient>
-      </body>
-    </html>
-  );
+ return (
+   <html lang="ru">
+     <head>
+       <Script
+         src={`https://www.googletagmanager.com/gtag/js?id=G-7P6Z0V3Z3R`}
+         strategy="lazyOnload"
+       />
+       <Script id="google-analytics" strategy="lazyOnload">
+         {`
+           window.dataLayer = window.dataLayer || [];
+           function gtag(){dataLayer.push(arguments);}
+           gtag('js', new Date());
+           gtag('config', 'G-7P6Z0V3Z3R', {
+             page_path: window.location.pathname,
+           });
+         `}
+       </Script>
+       <link
+         rel="preconnect"
+         href="https://3-gymnasium.kg"
+         crossOrigin="anonymous"
+       />
+     </head>
+     <body
+       className={`${inter.className} ${notoSans.className}`}
+       suppressHydrationWarning={true}
+     >
+       <Suspense fallback={<div>Loading...</div>}>
+         <LayoutClient>{children}</LayoutClient>
+       </Suspense>
+     </body>
+   </html>
+ );
 }

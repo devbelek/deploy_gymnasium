@@ -6,5 +6,9 @@ export const store = configureStore({
     [api.reducerPath]: api.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(api.middleware),
+    getDefaultMiddleware({
+      serializableCheck: false,
+      immutableCheck: false
+    }).concat(api.middleware),
+  devTools: process.env.NODE_ENV !== 'production'
 });
