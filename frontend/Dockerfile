@@ -3,7 +3,7 @@ FROM node:18-alpine AS builder
 WORKDIR /app
 COPY package*.json ./
 RUN npm install --legacy-peer-deps
-RUN npm install -D @next/bundle-analyzer
+RUN npm install -D @next/bundle-analyzer next-pwa
 
 COPY . .
 RUN npm run build
@@ -20,8 +20,6 @@ COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 
 USER nextjs
-
-ENV PORT 3000
 EXPOSE 3000
 
 CMD ["node", "server.js"]
