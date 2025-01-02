@@ -1,11 +1,13 @@
 FROM node:18-alpine AS builder
 
 WORKDIR /app
-COPY package*.json ./
-RUN npm ci
+COPY package.json ./
+COPY pnpm-lock.yaml ./
+RUN npm install -g pnpm
+RUN pnpm install --frozen-lockfile
 
 COPY . .
-RUN npm run build
+RUN pnpm run build
 
 FROM node:18-alpine AS runner
 WORKDIR /app
@@ -21,7 +23,7 @@ COPY --from=builder /app/.next/static ./.next/static
 
 USER nextjs
 
-EXPOSE 3000
 ENV PORT 3000
+EXPOSE 3000
 
 CMD ["node", "server.js"]
