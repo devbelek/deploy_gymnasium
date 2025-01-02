@@ -1,19 +1,17 @@
 FROM node:18-alpine AS builder
 
 WORKDIR /app
-COPY package.json ./
-COPY pnpm-lock.yaml ./
-RUN npm install -g pnpm
-RUN pnpm install --frozen-lockfile
+
+COPY package*.json ./
+RUN npm install --legacy-peer-deps
 
 COPY . .
-RUN pnpm run build
+RUN npm run build
 
 FROM node:18-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
-
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
