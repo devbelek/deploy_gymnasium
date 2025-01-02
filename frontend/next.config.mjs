@@ -1,5 +1,5 @@
-// next.config.mjs
 import withBundleAnalyzer from '@next/bundle-analyzer';
+import withPWA from 'next-pwa';
 
 const config = {
   poweredByHeader: false,
@@ -8,12 +8,22 @@ const config = {
   images: {
     domains: ['3-gymnasium.kg'],
     minimumCacheTTL: 60,
-    formats: ['image/webp'],
+    formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256],
+    loader: 'default',
+    unoptimized: false
   },
 
   webpack: (config, { dev, isServer }) => {
+    if (!dev && !isServer) {
+      Object.assign(config.resolve.alias, {
+        'react': 'preact/compat',
+        'react-dom/test-utils': 'preact/test-utils',
+        'react-dom': 'preact/compat',
+      });
+    }
+
     config.optimization = {
       ...config.optimization,
       minimize: !dev,
@@ -23,8 +33,18 @@ const config = {
       splitChunks: {
         chunks: 'all',
         maxInitialRequests: 25,
-        minSize: 20000
-      }
+        minSize: 20000,
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name(module) {
+              const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+              return `vendor.${packageName.replace('@', '')}`;
+            },
+          },
+        },
+      },
+      runtimeChunk: 'single'
     };
 
     return config;
@@ -34,10 +54,12 @@ const config = {
     optimizeCss: true,
     scrollRestoration: true,
     workerThreads: true,
-    legacyBrowsers: false
+    legacyBrowsers: false,
+    serverActions: true,
+    typedRoutes: true
   }
 };
 
 export default withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true'
-})(config);
+})(withPWA(config));
