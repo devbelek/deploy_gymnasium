@@ -125,6 +125,7 @@ services:
       - NODE_ENV=production
       - NEXT_PUBLIC_API=https://3-gymnasium.kg
       - NEXT_PUBLIC_ENDPOINT=api
+      - NODE_TLS_REJECT_UNAUTHORIZED=0
     networks:
       - dev
     restart: always
