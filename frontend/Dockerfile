@@ -2,8 +2,10 @@ FROM node:18-alpine AS builder
 WORKDIR /app
 COPY package*.json ./
 RUN npm install --legacy-peer-deps
-RUN npm install @tanstack/react-query
+RUN npm install @tanstack/react-query critters
 COPY . .
+
+# Отключите оптимизацию CSS в next.config.js
 RUN npm run build
 
 FROM node:18-alpine AS runner
@@ -17,6 +19,7 @@ COPY --from=builder /app/next.config.mjs ./
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
+
 USER nextjs
 EXPOSE 3000
 CMD ["npm", "start"]

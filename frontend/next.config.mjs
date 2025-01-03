@@ -27,9 +27,8 @@ const config = {
   },
 
   experimental: {
-    optimizeCss: true,
-    scrollRestoration: true,
-    workerThreads: true
+    workerThreads: true,
+    scrollRestoration: true
   }
 };
 
