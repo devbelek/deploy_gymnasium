@@ -1,62 +1,49 @@
 services:
   web:
     build: ./backend
-    command: gunicorn --workers 4 --threads 4 --worker-class gthread --bind 0.0.0.0:9000 Gimnasium.wsgi:application
+    command: >
+      bash -c "./manage.py collectstatic --noinput && ./manage.py makemigrations && ./manage.py migrate && gunicorn --bind 0.0.0.0:9000 --workers 4 --threads 2 --worker-class gthread --timeout 120 Gimnasium.wsgi:application"
     volumes:
       - ./backend:/app
-      - static_volume:/app/staticfiles 
-      - media_volume:/app/media
-    environment:
-      - PYTHONUNBUFFERED=1
-      - DJANGO_SETTINGS_MODULE=Gimnasium.settings
-    deploy:
-      resources:
-        limits:
-          memory: 1G
+      - ./.env:/app/.env
+      - /root/deploy_gymnasium/backend/staticfiles/:/app/staticfiles
+      - /root/deploy_gymnasium/backend/media/:/app/media
+    env_file:
+      - ./.env
     depends_on:
-      db:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
+      - db
+      - redis
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      - REDIS_URL=redis://redis:6379/0
+#    ports:
+#      - "9000:9000"
+    networks:
+      - dev
+    restart: always
 
-  frontend:
-    build:
-      context: ./frontend
-      target: runner
-    environment:
-      - NODE_ENV=production
-    deploy:
-      resources:
-        limits:
-          memory: 1G
-          
-  nginx:
-    build: ./nginx
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - static_volume:/app/staticfiles
-      - media_volume:/app/media
-      - ./certbot/conf:/etc/letsencrypt
-    depends_on:
-      - web
-      - frontend
 
   db:
     image: postgres:13-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - ./.env
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_PORT=${POSTGRES_PORT}
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - dev
+    restart: always
+
 
   redis:
     image: redis:alpine
@@ -67,13 +54,82 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - dev
+    restart: always
+
+
+  #  celery_worker:
+#    build: ./backend
+#    command: celery -A Gimnasium worker --loglevel=info --pool=solo
+#    volumes:
+#      - ./backend:/app
+#      - /root/deploy_gymnasium/backend/staticfiles/:/app/staticfiles
+#      - /root/deploy_gymnasium/backend/media/:/app/media
+#    env_file:
+#      - ./.env
+#    depends_on:
+#      - web
+#      - db
+#      - redis
+#    networks:
+#      - dev
+
+#  celery_beat:
+#    build: ./backend
+#    command: celery -A Gimnasium beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+#    volumes:
+#      - ./backend:/app
+#      - /root/deploy_gymnasium/backend/staticfiles/:/app/staticfiles
+#      - /root/deploy_gymnasium/backend/media/:/app/media
+#    env_file:
+#      - ./.env
+#    depends_on:
+#      - web
+#      - db
+#      - redis
+#      - celery_worker
+#    networks:
+#      - dev
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - /root/deploy_gymnasium/backend/staticfiles/:/app/staticfiles
+      - /root/deploy_gymnasium/backend/media/:/app/media
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - ./frontend/build:/usr/share/nginx/html
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - web
+      - frontend
+    networks:
+      - dev
+    restart: always
+
+
+  frontend:
+    build: ./frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NEXT_PUBLIC_API=https://3-gymnasium.kg
+      - NEXT_PUBLIC_ENDPOINT=api
+    networks:
+      - dev
+    restart: always
+
 
 volumes:
   postgres_data:
   redis_data:
-  static_volume:
-  media_volume:
 
 networks:
-  default:
-    driver: bridge
+  dev:
