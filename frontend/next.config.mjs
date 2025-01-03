@@ -1,3 +1,4 @@
+// next.config.mjs
 const config = {
   output: 'standalone',
   poweredByHeader: false,
@@ -8,20 +9,13 @@ const config = {
     minimumCacheTTL: 60,
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256],
-    loader: 'default',
-    unoptimized: false
+    imageSizes: [16, 32, 48, 64, 96, 128, 256]
   },
 
-  webpack: (config, { dev }) => {
-    config.optimization = {
-      ...config.optimization,
-      minimize: !dev,
-      splitChunks: {
-        chunks: 'all',
-        maxInitialRequests: 25,
-        minSize: 20000
-      }
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': '/app/src'  // Добавляем алиас для src папки
     };
     return config;
   },
