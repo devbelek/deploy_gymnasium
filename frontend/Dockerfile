@@ -24,14 +24,15 @@ ENV PORT 3000
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Копируем необходимые файлы из builder
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+# Копируем все необходимые файлы
+COPY --from=builder /app/package.json ./
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
 
 USER nextjs
 
 EXPOSE 3000
 
-# Запускаем сервер
-CMD ["node", "server.js"]
+# Меняем команду запуска
+CMD ["npm", "run", "start"]
