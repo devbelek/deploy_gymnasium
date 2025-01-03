@@ -1,4 +1,3 @@
-// next.config.mjs
 const config = {
  output: 'standalone',
  poweredByHeader: false,
@@ -26,24 +25,11 @@ const config = {
    config.optimization = {
      ...config.optimization,
      minimize: !dev,
-     minimizer: [
-       ...config.optimization.minimizer || [],
-     ],
      splitChunks: {
        chunks: 'all',
        maxInitialRequests: 25,
-       minSize: 20000,
-       cacheGroups: {
-         vendor: {
-           test: /[\\/]node_modules[\\/]/,
-           name(module) {
-             const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
-             return `vendor.${packageName.replace('@', '')}`;
-           },
-         },
-       },
-     },
-     runtimeChunk: 'single'
+       minSize: 20000
+     }
    };
 
    return config;
@@ -52,10 +38,7 @@ const config = {
  experimental: {
    optimizeCss: true,
    scrollRestoration: true,
-   workerThreads: true,
-   legacyBrowsers: false,
-   serverActions: true,
-   typedRoutes: true
+   workerThreads: true
  }
 };
 
