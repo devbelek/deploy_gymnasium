@@ -115,11 +115,14 @@ services:
 
   frontend:
     build: ./frontend
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-      - /app/.next
+    command: npm start # добавим явную команду
+    # уберем монтирование исходников
+    # volumes:
+    #   - ./frontend:/app
+    #   - /app/node_modules
+    #   - /app/.next
     environment:
+      - NODE_ENV=production
       - NEXT_PUBLIC_API=https://3-gymnasium.kg
       - NEXT_PUBLIC_ENDPOINT=api
     networks:

@@ -1,38 +1,31 @@
-FROM node:18-alpine AS builder
-
+FROM node:18-alpine AS deps
 WORKDIR /app
-
-# Копируем только package.json
 COPY package.json ./
+RUN npm install --production
 
-# Устанавливаем зависимости
-RUN npm install
-
-# Копируем исходники
+FROM node:18-alpine AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-
-# Собираем приложение
 RUN npm run build
 
 FROM node:18-alpine AS runner
-
 WORKDIR /app
-
 ENV NODE_ENV production
-ENV PORT 3000
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Копируем все необходимые файлы
-COPY --from=builder /app/package.json ./
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/next.config.mjs ./
 COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
 
 USER nextjs
 
 EXPOSE 3000
+ENV PORT 3000
+ENV HOSTNAME "0.0.0.0"
 
-# Меняем команду запуска
-CMD ["npm", "run", "start"]
+CMD ["npm", "start"]
