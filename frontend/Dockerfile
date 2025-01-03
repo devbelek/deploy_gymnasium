@@ -1,15 +1,21 @@
 FROM node:18-alpine AS deps
 WORKDIR /app
+
+# Копируем файлы package*.json
 COPY package.json ./
-RUN npm install --production
+
+# Устанавливаем все зависимости, включая devDependencies
+RUN npm install --legacy-peer-deps
+RUN npm install -D typescript @types/node eslint
 
 FROM node:18-alpine AS builder
 WORKDIR /app
+
+# Копируем зависимости и исходники
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Создаем симлинк для src папки
-RUN ln -s /app/src /src
+# Собираем приложение
 RUN npm run build
 
 FROM node:18-alpine AS runner
@@ -19,13 +25,11 @@ ENV NODE_ENV production
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Копируем все необходимые файлы
-COPY --from=builder --chown=nextjs:nodejs /app/src ./src
-COPY --from=builder --chown=nextjs:nodejs /app/next.config.mjs ./
-COPY --from=builder --chown=nextjs:nodejs /app/public ./public
-COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
-COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
-COPY --from=builder --chown=nextjs:nodejs /app/package.json ./
+COPY --from=builder /app/next.config.mjs ./
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/package.json ./
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/node_modules ./node_modules
 
 USER nextjs
 EXPOSE 3000

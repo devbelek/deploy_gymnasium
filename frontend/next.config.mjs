@@ -15,7 +15,7 @@ const config = {
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
-      '@': '/app/src'  // Добавляем алиас для src папки
+      '@': '/app/src'
     };
     return config;
   },
