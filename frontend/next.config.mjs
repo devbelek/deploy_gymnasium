@@ -1,6 +1,4 @@
-import withBundleAnalyzer from '@next/bundle-analyzer';
-import withPWA from 'next-pwa';
-
+// next.config.mjs
 const config = {
  output: 'standalone',
  poweredByHeader: false,
